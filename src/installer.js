@@ -115,7 +115,7 @@ export async function buildPlan({ root = process.cwd(), registry, resources, pre
     host_resources: hostResources,
     project_entrypoint: existing.has("AGENTS.md") ? "AGENTS.md (additive pointer block)" : "AGENTS.md (new)",
     settings: [".agent-foundry/settings/foundry-settings.yaml", ".agent-foundry/settings/model-roster.yaml"],
-    safety: ["No existing project file will be overwritten.", "Existing agent instruction files are preserved.", "Host-specific commands and skills are generated only for detected hosts.", "Conflicts stop installation and require owner resolution."]
+    safety: ["No existing project file will be overwritten.", "Existing agent instruction files are preserved.", "Host-specific commands and skills are generated only for detected hosts.", "Conflicts stop installation by default; --skip-conflicts leaves existing paths untouched."]
   };
 }
 
