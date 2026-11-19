@@ -1,0 +1,10 @@
+"use strict";
+const test=require("node:test"),assert=require("node:assert/strict");
+const {args,hash,safe,parseRegistry,select}=require("../bin/agent-foundry");
+test("parses quoted multiword values",()=>assert.equal(args(["init","--project","folder with spaces"]).options.project,"folder with spaces"));
+test("rejects missing option values",()=>assert.throws(()=>args(["init","--project"]),/Missing value/));
+test("parses resource registry",()=>assert.equal(parseRegistry("resources:\n  - id: sample\n    type: skill\n    path: skills/SKILL.md\n")[0].path,"skills/SKILL.md"));
+test("rejects duplicate IDs",()=>assert.throws(()=>parseRegistry("resources:\n  - id: x\n    type: skill\n    path: x\n  - id: x\n    type: skill\n    path: y\n"),/Invalid registry/));
+test("blocks path traversal",()=>{assert.throws(()=>safe("/tmp/project","../outside"),/traversal/);assert.throws(()=>safe("/tmp/project","/etc/passwd"),/Unsafe/);});
+test("hashes deterministically",()=>assert.equal(hash("abc"),hash("abc")));
+test("selects only known resources",()=>{assert.deepEqual(select([{id:"a"}],"balanced","a"),[{id:"a"}]);assert.throws(()=>select([],"balanced","missing"),/Unknown/);});
