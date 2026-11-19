@@ -41,5 +41,5 @@ test("hashes are stable", () => {
 
 test("capability classifier keeps existing project practices", () => {
   const result = classifyCapabilities({ capabilities: [{ id: "tests", label: "Tests", present: true, matches: ["tests"] }] });
-  assert.equal(result[0].action, "KEEP_OR_LINK");
+  assert.equal(result[0].action, "KEEP");
 });
