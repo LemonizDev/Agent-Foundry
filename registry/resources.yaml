@@ -229,3 +229,16 @@ resources:
     version: 0.1.0
     status: draft
     portability: adaptable
+
+  - id: explain-model-selection
+    type: command
+    path: commands/explain-model-selection.md
+    version: 0.1.0
+    status: draft
+    portability: adaptable
+  - id: test-model
+    type: command
+    path: commands/test-model.md
+    version: 0.1.0
+    status: draft
+    portability: adaptable
