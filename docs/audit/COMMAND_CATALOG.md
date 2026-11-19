@@ -45,3 +45,16 @@ Each tool adapter must state:
 - Validation evidence
 
 Do not emit native files until the platform's current command mechanism has been verified. Some hosts may require a prompt file, a skill, a workflow, or a tool-specific command registration.
+
+
+## Additional command contracts drafted in the next capability increment
+
+| Command contract | User intent | Underlying capability | Important limitation |
+|---|---|---|---|
+| `commands/close-session.md` | Close/finish a chat while preserving useful project learnings | `skills/session-learning/SKILL.md` + `workflows/session-close.md` | Prepares context for closure; cannot close the host UI without a supported API |
+| `commands/settings.md` | Inspect or change Agent Foundry settings conversationally | Project-local settings manifest | Host adapter must expose settings editing |
+| `commands/edit-model-roster.md` | Edit the user's available model list | Task-aware model delegation architecture | Roster is project-owned; no universal model catalogue is assumed |
+| `commands/explain-model-selection.md` | Explain the routing decision for a task | Task classifier + model roster | Explains recommendation; does not dispatch a worker |
+| `commands/test-model.md` | Run bounded capability checks for a configured model | Model evaluation procedure | Must not make paid calls or update ratings without owner approval |
+
+These are canonical command contracts, not verified native slash-command implementations. The exact syntax and registration must be provided by a tested host adapter.
