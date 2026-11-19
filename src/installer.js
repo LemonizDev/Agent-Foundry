@@ -5,7 +5,7 @@ import { resolveResources } from "./registry.js";
 import { scanProject } from "./project-scanner.js";
 import { renderHostArtifacts } from "./host-adapters.js";
 import { validateModelRoster } from "./model-router.js";
-import { FOUNDARY_DIR, atomicWrite, exists, mergeInstruction, safeRelative, sha256, walk } from "./utils.js";
+import { FOUNDARY_DIR, assertNoSymlinkPath, atomicWrite, exists, mergeInstruction, safeRelative, sha256, walk } from "./utils.js";
 
 const PRESETS = {
   minimal: [
@@ -133,6 +133,7 @@ export async function applyPlan(plan, { root = plan.project_root, registry, fetc
   const activeResources = [];
   const activeHostResources = [];
   for (const item of plan.resources) {
+    await assertNoSymlinkPath(base, item.destination);
     const file = path.join(base, safeRelative(item.destination));
     if (await exists(file)) {
       if (skipConflicts) continue;
@@ -149,7 +150,10 @@ export async function applyPlan(plan, { root = plan.project_root, registry, fetc
     activeHostResources.push(item);
   }
   const protectedDestinations = [".agent-foundry/instructions.md", ".agent-foundry/README.md", ".agent-foundry/settings/foundry-settings.yaml", ".agent-foundry/settings/model-roster.yaml"];
-  for (const rel of protectedDestinations) if (await exists(path.join(base, safeRelative(rel)))) throw new Error("Refusing to overwrite existing file: " + rel);
+  for (const rel of protectedDestinations) {
+    await assertNoSymlinkPath(base, rel);
+    if (await exists(path.join(base, safeRelative(rel)))) throw new Error("Refusing to overwrite existing file: " + rel);
+  }
 
   const staged = [];
   const sourceById = new Map();
@@ -198,6 +202,7 @@ export async function applyPlan(plan, { root = plan.project_root, registry, fetc
   const createdFiles = [];
   const backups = new Map();
   const writeOwned = async (rel, content, preserveExisting = false) => {
+    await assertNoSymlinkPath(base, rel);
     const file = path.join(base, safeRelative(rel));
     const existed = await exists(file);
     if (existed && preserveExisting && !backups.has(rel)) backups.set(rel, await fs.readFile(file, "utf8"));
@@ -250,18 +255,21 @@ export async function applyPlan(plan, { root = plan.project_root, registry, fetc
 export async function validateInstallation(root = process.cwd()) {
   const base = path.resolve(root);
   const manifestPath = path.join(base, FOUNDARY_DIR, "manifest.json");
+  await assertNoSymlinkPath(base, FOUNDARY_DIR + "/manifest.json");
   if (!await exists(manifestPath)) throw new Error("No Agent Foundry installation found.");
   const manifest = JSON.parse(await fs.readFile(manifestPath, "utf8"));
   if (manifest.manifest_version !== 1 || !Array.isArray(manifest.installed_resources)) throw new Error("Unsupported or malformed installation manifest.");
   const issues = [], warnings = [];
   for (const item of manifest.installed_resources) {
     const file = path.join(base, safeRelative(item.installed_path));
+    try { await assertNoSymlinkPath(base, item.installed_path); } catch (error) { issues.push({ path: item.installed_path, issue: "SYMLINK_BLOCKED", detail: error.message }); continue; }
     if (!await exists(file)) { issues.push({ path: item.installed_path, issue: "MISSING" }); continue; }
     const current = sha256(await fs.readFile(file));
     if (current !== item.installed_sha256) warnings.push({ path: item.installed_path, issue: "OWNER_MODIFIED", note: "Local changes are preserved and will block automatic updates." });
   }
   for (const item of manifest.settings ?? []) {
     const file = path.join(base, safeRelative(item.path));
+    try { await assertNoSymlinkPath(base, item.path); } catch (error) { issues.push({ path: item.path, issue: "SYMLINK_BLOCKED", detail: error.message }); continue; }
     if (!await exists(file)) issues.push({ path: item.path, issue: "MISSING" });
     else if (sha256(await fs.readFile(file)) !== item.installed_sha256) warnings.push({ path: item.path, issue: "OWNER_CONFIGURED", note: "Project-owned settings differ from the original template." });
   }
@@ -300,6 +308,7 @@ export async function updateInstallation({ root = process.cwd(), registry, fetch
     const resource = registry.resources.find(entry => entry.id === item.id);
     if (!resource) { conflicts.push({ id: item.id, reason: "Resource no longer exists in registry" }); continue; }
     const file = path.join(base, safeRelative(item.installed_path));
+    try { await assertNoSymlinkPath(base, item.installed_path); } catch (error) { conflicts.push({ id: item.id, reason: error.message }); continue; }
     if (!await exists(file)) { conflicts.push({ id: item.id, reason: "Installed file is missing" }); continue; }
     const current = sha256(await fs.readFile(file));
     if (current !== item.installed_sha256) { conflicts.push({ id: item.id, reason: "Local modifications detected" }); continue; }
