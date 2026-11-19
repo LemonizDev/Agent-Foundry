@@ -20,6 +20,12 @@ Review the plan. To apply it:
 npx --yes --package github:LemonizDev/Agent-Foundry agent-foundry init --preset auto --apply
 ```
 
+If the plan identifies paths that already exist, do not overwrite them. Rerun with `--skip-conflicts` to leave those paths untouched and install the remaining resources:
+
+```bash
+npx --yes --package github:LemonizDev/Agent-Foundry agent-foundry init --preset auto --apply --skip-conflicts
+```
+
 The CLI asks for explicit confirmation. Choose a preset with --preset auto|minimal|balanced|autonomous-engineer|visual-engineer|research-engineer. The auto preset starts with the autonomous-engineer baseline and adds visual QA resources when graphics/rendering signals are detected. Use a custom resource selection when you need exact control. To use a custom resource selection, pass comma-separated registry IDs:
 
 ```bash
@@ -77,7 +83,7 @@ The CLI can also be invoked through npx using the GitHub package spec shown abov
 
 - Installation is plan-first and requires explicit approval.
 - Existing AGENTS.md content is preserved. The CLI adds only a marked pointer block.
-- The installer refuses to overwrite pre-existing resource destinations.
+- The installer refuses to overwrite pre-existing resource destinations. An explicit --skip-conflicts option lets the owner install the remaining resources while leaving collisions untouched.
 - The manifest records hashes so updates can detect local edits.
 - The model roster belongs to the consuming project. Never store API keys or provider credentials in it.
 - The CLI generates host-specific skills, commands and specialist agent files for detected Codex-compatible, Claude Code, OpenCode, Kilo Code and Cline projects. Runtime discovery and execution have not yet been validated inside every host.
