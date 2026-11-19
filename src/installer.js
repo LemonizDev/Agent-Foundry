@@ -122,6 +122,7 @@ export async function buildPlan({ root = process.cwd(), registry, resources, pre
 export async function applyPlan(plan, { root = plan.project_root, registry, fetchText = globalThis.fetch, skipConflicts = false } = {}) {
   const base = path.resolve(root);
   const foundryDir = path.join(base, FOUNDARY_DIR);
+  await assertNoSymlinkPath(base, FOUNDARY_DIR + "/manifest.json");
   if (await exists(path.join(foundryDir, "manifest.json"))) throw new Error("Agent Foundry is already installed. Use update after reviewing local modifications.");
   const entrypointPaths = ["AGENTS.md"];
   if (plan.detected_hosts.includes("claude-code")) entrypointPaths.push("CLAUDE.md");
