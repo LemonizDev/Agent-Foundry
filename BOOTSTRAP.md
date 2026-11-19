@@ -16,7 +16,7 @@ The agent inspects the project, selects relevant resources, explains what it int
     your-project/
     ├── AGENTS.md
     └── .agent-foundry/
-        ├── manifest.yaml
+        ├── manifest.json
         ├── instructions.md
         ├── resources/
         └── README.md
