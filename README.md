@@ -300,6 +300,10 @@ Agent Foundry is under active development. The resource library and architecture
 
 Do not treat a draft resource or documented design as a production-validated feature.
 
+## License status
+
+The repository does not yet contain a LICENSE file. Until the owner selects and adds an open-source license, do not assume that reuse, redistribution or modification rights have been granted. A public GitHub repository is not automatically open source.
+
 ## Contributing
 
 Useful contributions include:
