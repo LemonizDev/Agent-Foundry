@@ -81,3 +81,9 @@
 - Native host adapters, root instruction integration, resource dependency resolution, robust rollback, full update/migration and end-to-end project scenarios remain outstanding.
 - Package publication and repository licensing remain owner decisions.
 - CI execution has not yet been observed for this branch; do not describe tests as passing until the workflow reports success.
+
+
+### Validation update
+
+- Node.js 20 and 22 CI passed for the CLI test suite, including mocked plan-only, install, validate, uninstall and conflict-preservation scenarios.
+- The generated manifest format is JSON (`.agent-foundry/manifest.json`); architecture and setup references were aligned.
