@@ -168,3 +168,64 @@ resources:
     version: 0.2.0
     status: draft
     portability: domain-specific
+
+  - id: session-learning
+    type: skill
+    path: skills/session-learning/SKILL.md
+    version: 0.1.0
+    status: draft
+    portability: universal
+  - id: close-session
+    type: command
+    path: commands/close-session.md
+    version: 0.1.0
+    status: draft
+    portability: adaptable
+  - id: foundry-settings
+    type: command
+    path: commands/settings.md
+    version: 0.1.0
+    status: draft
+    portability: adaptable
+  - id: edit-model-roster
+    type: command
+    path: commands/edit-model-roster.md
+    version: 0.1.0
+    status: draft
+    portability: adaptable
+  - id: session-close
+    type: workflow
+    path: workflows/session-close.md
+    version: 0.1.0
+    status: draft
+    portability: universal
+  - id: existing-project-integration
+    type: workflow
+    path: docs/architecture/EXISTING_PROJECT_INTEGRATION.md
+    version: 0.1.0
+    status: draft
+    portability: universal
+  - id: model-delegation-architecture
+    type: standard
+    path: docs/architecture/MODEL_DELEGATION.md
+    version: 0.1.0
+    status: draft
+    portability: adaptable
+  - id: user-guide
+    type: documentation
+    path: docs/USER_GUIDE.md
+    version: 0.1.0
+    status: draft
+    portability: universal
+  - id: model-roster-template
+    type: template
+    path: templates/settings/model-roster.yaml
+    version: 0.1.0
+    status: draft
+    portability: adaptable
+  - id: foundry-settings-template
+    type: template
+    path: templates/settings/foundry-settings.yaml
+    version: 0.1.0
+    status: draft
+    portability: adaptable
