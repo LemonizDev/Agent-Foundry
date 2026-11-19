@@ -48,6 +48,8 @@ try {
     for (const item of classifyCapabilities(scan)) console.log("- " + item.label + ": " + item.action + (item.evidence.length ? " (" + item.evidence.join(", ") + ")" : ""));
     console.log("\nINSTALLATION PLAN");
     for (const item of plan.resources) console.log("- " + item.action.padEnd(14) + " " + item.id + " -> " + item.destination);
+    console.log("\\nHOST INTEGRATION (" + plan.detected_hosts.join(", ") + ")");
+    for (const item of plan.host_resources ?? []) console.log("- " + item.action.padEnd(14) + " " + item.id + " -> " + item.destination);
     console.log("- ENTRYPOINT      " + plan.project_entrypoint);
     console.log("- SETTINGS        project-local settings and owner-defined model roster");
     console.log("\nNo files have been changed.");
@@ -57,7 +59,7 @@ try {
       if (approval !== "yes") { console.log("Cancelled. No files changed."); process.exitCode = 1; }
       else {
         const result = await applyPlan(plan, { root, registry });
-        console.log("Installed " + result.installed_count + " resources. Entrypoint " + (result.entrypoint_created ? "created" : "updated additively") + ".");
+        console.log("Installed " + result.installed_count + " source resources and " + result.host_artifact_count + " host artifacts. Entrypoint " + (result.entrypoint_created ? "created" : "updated additively") + ".");
         console.log("Run agent-foundry validate and review .agent-foundry/README.md.");
       }
     }
