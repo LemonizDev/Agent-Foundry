@@ -36,7 +36,7 @@ Classification:
 | Source path | Observed content | Reuse decision | Destination |
 |---|---|---|---|
 | `.kilo/commands/PROGRESS_REPORT_RULES.md` | Six-section progress report, ASCII bars, work-weighted progress, glosses, honest caveats, uncommitted work | Reusable command/skill/reporting standard | `commands/progress-report.md`, `skills/progress-reporting/SKILL.md`, `templates/` |
-| `.kilo/commands/TEACHING_AFTER_IMPLEMENTATION.md` | Post-implementation explanation, before/after flow, progress bar, three key points, break scenarios | Reusable optional teaching/reporting command | `commands/teach-implementation.md`, `skills/explanation/` |
+| `.kilo/commands/TEACHING_AFTER_IMPLEMENTATION.md` | Post-implementation explanation, before/after flow, progress bar, three key points, break scenarios | Reusable optional teaching/reporting command | `commands/teach-implementation.md`, `skills/implementation-explanation/SKILL.md` |
 | `rules/PROGRESS_REPORT_RULES.md` | Matching progress-report rules in generic rules location | Duplicate/alias evidence; compare and retain one canonical source | `commands/` |
 | `rules/TEACHING_AFTER_IMPLEMENTATION.md` | Matching teaching rule | Duplicate/alias evidence; do not fork | `commands/teach-implementation.md` |
 | `.clinerules/dhan-ai-trader-delegation.md` | FreeBuff-native delegation policy and specialist spawn checks | Extract portable delegation policy; adapter-specific runtime instructions remain in integration | `skills/multi-agent-delegation/`, `integrations/` |
