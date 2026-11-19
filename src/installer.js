@@ -7,6 +7,11 @@ import { renderHostArtifacts } from "./host-adapters.js";
 import { validateModelRoster } from "./model-router.js";
 import { FOUNDARY_DIR, assertNoSymlinkPath, atomicWrite, exists, mergeInstruction, safeRelative, sha256, walk } from "./utils.js";
 
+const CORE_BASELINE = [
+  "engineering-principles", "agent-communication", "context-management",
+  "security-boundaries", "decision-making", "evidence-and-verification", "documentation-governance"
+];
+
 const PRESETS = {
   minimal: [
     "atomic-implementation", "project-state-management", "evidence-and-verification",
