@@ -3,7 +3,7 @@
 **Audit date:** 2026-11-19  
 **Sources:**  
 - [Dhan AI Trader](https://github.com/LemonizDev/dhan-chatgpt-connector/tree/foundation/final-trader-architecture) — branch `foundation/final-trader-architecture`
-- [Lively Wallpaper](https://github.com/LemonizDev/futuristic-lively-wallpaper/tree/main) — branch `main`
+- [Rave Engine (Lively Wallpaper project)](https://github.com/LemonizDev/futuristic-lively-wallpaper/tree/main) — branch `main`
 
 ## 1. Scope and audit method
 
