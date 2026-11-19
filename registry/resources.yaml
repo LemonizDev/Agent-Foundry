@@ -1,5 +1,40 @@
 schema_version: 1
 resources:
+  - id: engineering-principles
+    description: "Universal engineering baseline for understanding before changing, preserving project intent, incremental implementation and evidence-based completion."
+    type: standard
+    path: standards/engineering-principles.md
+    version: 0.1.0
+    status: draft
+    portability: universal
+  - id: agent-communication
+    description: "Defines clear owner communication, progress reporting, uncertainty labels and approval gates."
+    type: standard
+    path: standards/agent-communication.md
+    version: 0.1.0
+    status: draft
+    portability: universal
+  - id: context-management
+    description: "Defines canonical project context, progressive disclosure and durable session learning without transcript dumps."
+    type: standard
+    path: standards/context-management.md
+    version: 0.1.0
+    status: draft
+    portability: universal
+  - id: security-boundaries
+    description: "Sets least-privilege, secret-handling, untrusted-input and approval boundaries for AI-assisted engineering."
+    type: standard
+    path: standards/security-boundaries.md
+    version: 0.1.0
+    status: draft
+    portability: universal
+  - id: decision-making
+    description: "Provides an evidence-based procedure for comparing options, recording tradeoffs and escalating owner decisions."
+    type: standard
+    path: standards/decision-making.md
+    version: 0.1.0
+    status: draft
+    portability: universal
   - id: progress-reporting
     description: "Produces progress reports grounded in implementation, test and review evidence rather than estimates or chat memory."
     type: skill
