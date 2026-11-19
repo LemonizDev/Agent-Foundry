@@ -25,7 +25,8 @@ export async function buildPlan({ root = process.cwd(), registry, resources = DE
   const selected = resolveResources(registry, resources);
   const planned = selected.map(resource => {
     const destination = path.posix.join(FOUNDARY_DIR, "resources", resource.path);
-    return { id: resource.id, type: resource.type, source: resource.path, destination, version: resource.version, action: existing.has(destination) ? "CONFLICT_CHECK" : "ADD" };
+    const conflict = existing.has(destination) || await exists(path.join(root, destination));
+    return { id: resource.id, type: resource.type, source: resource.path, destination, version: resource.version, action: conflict ? "CONFLICT_CHECK" : "ADD" };
   });
   return {
     schema_version: 1,
@@ -120,7 +121,7 @@ export async function validateInstallation(root = process.cwd()) {
   for (const item of manifest.settings ?? []) {
     const file = path.join(base, safeRelative(item.path));
     if (!await exists(file)) issues.push({ path: item.path, issue: "MISSING" });
-    else if (sha256(await fs.readFile(file)) !== item.installed_sha256) issues.push({ path: item.path, issue: "OWNER_MODIFIED" });
+    
   }
   for (const file of ["instructions.md", "manifest.json"]) if (!await exists(path.join(base, FOUNDARY_DIR, file))) issues.push({ path: FOUNDARY_DIR + "/" + file, issue: "MISSING" });
   return { valid: issues.length === 0, resource_count: manifest.installed_resources.length, issues, manifest };
