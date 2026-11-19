@@ -96,7 +96,7 @@ export async function buildPlan({ root = process.cwd(), registry, resources, pre
     return { id: resource.id, type: resource.type, source: resource.path, destination, version: resource.version, status: resource.status ?? "unknown", action: conflict ? "CONFLICT_CHECK" : "ADD" };
   }));
   const hostResources = [];
-  for (const resource of selected.filter(item => ["skill", "command"].includes(item.type))) {
+  for (const resource of selected.filter(item => ["skill", "command", "profile"].includes(item.type))) {
     for (const artifact of renderHostArtifacts(resource, "", scan.hosts)) {
       const conflict = existing.has(artifact.installed_path) || await exists(path.join(root, artifact.installed_path));
       hostResources.push({ id: artifact.id, source: artifact.source_path, destination: artifact.installed_path, adapter_kind: artifact.adapter_kind, alias: artifact.alias, version: artifact.version, action: conflict ? "CONFLICT_CHECK" : "ADD" });
