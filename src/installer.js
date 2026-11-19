@@ -311,7 +311,8 @@ export async function updateInstallation({ root = process.cwd(), registry, fetch
   const base = path.resolve(root);
   const manifestPath = path.join(base, FOUNDARY_DIR, "manifest.json");
   await assertNoSymlinkPath(base, FOUNDARY_DIR + "/manifest.json");
-  const manifest = JSON.parse(await fs.readFile(manifestPath, "utf8"));
+  const manifestOriginal = await fs.readFile(manifestPath, "utf8");
+  const manifest = JSON.parse(manifestOriginal);
   const changed = [], conflicts = [];
   for (const item of manifest.installed_resources) {
     const resource = registry.resources.find(entry => entry.id === item.id);
@@ -332,17 +333,26 @@ export async function updateInstallation({ root = process.cwd(), registry, fetch
   }
   if (conflicts.length) return { updated: 0, planned: changed.map(x => ({ id: x.item.id, path: x.item.installed_path, version: x.resource.version })), conflicts, pending: changed.map(x => x.item.id) };
   if (!apply) return { updated: 0, planned: changed.map(x => ({ id: x.item.id, path: x.item.installed_path, version: x.resource.version })), conflicts: [], pending: [] };
-  for (const change of changed) {
-    await atomicWrite(path.join(base, safeRelative(change.item.installed_path)), change.content);
-    change.item.version = change.resource.version;
-    change.item.source_sha256 = sha256(change.source);
-    change.item.installed_sha256 = sha256(change.content);
+  const backups = [];
+  try {
+    for (const change of changed) {
+      const file = path.join(base, safeRelative(change.item.installed_path));
+      backups.push({ file, content: await fs.readFile(file, "utf8") });
+      await atomicWrite(file, change.content);
+      change.item.version = change.resource.version;
+      change.item.source_sha256 = sha256(change.source);
+      change.item.installed_sha256 = sha256(change.content);
+    }
+    manifest.source.requested_ref = registry.ref;
+    manifest.source.ref = registry.resolved_ref ?? registry.commit_sha ?? registry.ref;
+    manifest.source.commit_sha = registry.commit_sha ?? null;
+    manifest.updated_at = new Date().toISOString();
+    await atomicWrite(manifestPath, JSON.stringify(manifest, null, 2) + "\n");
+  } catch (error) {
+    for (const backup of backups.reverse()) await atomicWrite(backup.file, backup.content).catch(() => {});
+    await atomicWrite(manifestPath, manifestOriginal).catch(() => {});
+    throw new Error("Update failed and modified files were rolled back: " + error.message);
   }
-  manifest.source.requested_ref = registry.ref;
-  manifest.source.ref = registry.resolved_ref ?? registry.commit_sha ?? registry.ref;
-  manifest.source.commit_sha = registry.commit_sha ?? null;
-  manifest.updated_at = new Date().toISOString();
-  await atomicWrite(manifestPath, JSON.stringify(manifest, null, 2) + "\n");
   return { updated: changed.length, planned: changed.map(x => ({ id: x.item.id, path: x.item.installed_path, version: x.resource.version })), conflicts: [], pending: [] };
 }
 
