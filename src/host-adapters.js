@@ -64,6 +64,11 @@ export function renderHostArtifacts(resource, content, hosts = []) {
       const frontmatter = "---\ndescription: \"" + description.replaceAll('"', "'") + "\"\nmode: " + mode + permissions + "\n---\n\n";
       add(".opencode/agents/" + slug + ".md", "profile:opencode", slug, frontmatter + body.trimStart());
     }
+    if (hosts.includes("claude-code")) {
+      const tools = reviewer ? "\\ntools: Read, Grep, Glob" : "";
+      const frontmatter = "---\\nname: " + slug + "\\ndescription: \"" + description.replaceAll('"', "'") + "\"\\nmodel: inherit" + tools + "\\n---\\n\\n";
+      add(".claude/agents/" + slug + ".md", "profile:claude", slug, frontmatter + body.trimStart());
+    }
     if (hosts.includes("kilo")) {
       const permissions = reviewer ? "\npermission:\n  edit: deny\n  bash: deny" : "";
       const frontmatter = "---\ndescription: \"" + description.replaceAll('"', "'") + "\"\nmode: " + mode + permissions + "\n---\n\n";
@@ -94,7 +99,7 @@ export function describeHostSupport(hosts = []) {
     detected: hosts,
     adapters: {
       codex: { enabled: true, mechanism: ".agents/skills plus AGENTS.md", status: "generated; host runtime not exercised by installer" },
-      claude: { enabled: hosts.includes("claude-code"), mechanism: ".claude/skills plus existing CLAUDE.md pointer", status: hosts.includes("claude-code") ? "generated; host runtime not exercised by installer" : "not detected" },
+      claude: { enabled: hosts.includes("claude-code"), mechanism: ".claude/skills, .claude/agents and existing CLAUDE.md pointer", status: hosts.includes("claude-code") ? "generated; host runtime not exercised by installer" : "not detected" },
       opencode: { enabled: hosts.includes("opencode"), mechanism: ".opencode/skills and .opencode/commands", status: hosts.includes("opencode") ? "generated; host runtime not exercised by installer" : "not detected" },
       cline: { enabled: hosts.includes("cline"), mechanism: ".cline/skills", status: hosts.includes("cline") ? "generated; host runtime not exercised by installer" : "not detected" },
       kilo: { enabled: hosts.includes("kilo"), mechanism: ".kilo/skills and .kilo/commands", status: hosts.includes("kilo") ? "generated; host runtime not exercised by installer" : "not detected" }
