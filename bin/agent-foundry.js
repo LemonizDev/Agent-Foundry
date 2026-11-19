@@ -19,7 +19,7 @@ const repository = option("--repository", "LemonizDev/Agent-Foundry");
 const ref = option("--ref", "main");
 
 function help() {
-  console.log("Agent Foundry v" + VERSION + "\nA project-aware engineering environment for AI coding agents.\n\nUsage:\n  agent-foundry init [--project PATH] [--ref REF] [--resources id,id] [--apply]\n  agent-foundry inspect [--project PATH]\n  agent-foundry validate [--project PATH]\n  agent-foundry update [--project PATH] [--ref REF]\n  agent-foundry uninstall [--project PATH] --confirm\n  agent-foundry list\n  agent-foundry route --task "describe the task"\n  agent-foundry settings\n  agent-foundry version\n\ninit is plan-only by default. Review the plan, then repeat with --apply.\nExisting files are never silently overwritten.");
+  console.log("Agent Foundry v" + VERSION + "\nA project-aware engineering environment for AI coding agents.\n\nUsage:\n  agent-foundry init [--project PATH] [--preset auto|minimal|balanced|autonomous-engineer|visual-engineer|research-engineer] [--resources id,id] [--apply]\n  agent-foundry inspect [--project PATH]\n  agent-foundry validate [--project PATH]\n  agent-foundry update [--project PATH] [--ref REF]\n  agent-foundry uninstall [--project PATH] --confirm\n  agent-foundry list\n  agent-foundry route --task "describe the task"\n  agent-foundry settings\n  agent-foundry version\n\ninit is plan-only by default. Review the plan, then repeat with --apply.\nExisting files are never silently overwritten.");
 }
 
 async function ask(question) {
@@ -41,7 +41,8 @@ try {
     const registry = await loadRegistry({ repository, ref });
     const scan = await scanProject(root);
     const selected = option("--resources", "").split(",").map(x => x.trim()).filter(Boolean);
-    const plan = await buildPlan({ root, registry, resources: selected.length ? selected : undefined, repository, ref });
+    const preset = option("--preset", "auto");
+    const plan = await buildPlan({ root, registry, resources: selected.length ? selected : undefined, preset, repository, ref });
     console.log("PROJECT ASSESSMENT");
     console.log("Root: " + scan.root + "\nFiles inspected: " + scan.fileCount + "\nDetected hosts: " + (scan.hosts.join(", ") || "none"));
     console.log("\nCAPABILITY MAP");
