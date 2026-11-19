@@ -21,5 +21,5 @@ test("command aliases become host slash command names", () => {
   assert.ok(paths.includes(".opencode/commands/close.md"));
   assert.ok(paths.includes(".opencode/commands/close/session.md"));
   assert.ok(paths.includes(".kilo/commands/close.md"));
-  assert.ok(paths.includes(".kilo/commands/close/session.md"));
+  assert.ok(paths.includes(".kilo/commands/close-session.md"));
 });
