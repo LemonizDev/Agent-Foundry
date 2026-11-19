@@ -8,7 +8,7 @@ Reusable instructions, specialist roles, skills and workflows that can be select
 
 **Inspect your project → choose relevant resources → initialise once → build with a consistent standard.**
 
-[Getting Started](#get-started) · [What It Does](#what-is-agent-foundry) · [Resource Library](#resource-library) · [Roadmap](#project-status)
+[Getting Started](#get-started) · [What It Does](#what-is-agent-foundry) · [Resource Library](#what-is-in-the-library) · [Project Status](#open-source-and-community)
 
 </div>
 
@@ -90,7 +90,7 @@ A command is an entry point, not the full procedure. A skill contains the proced
 |---|---|
 | Give an agent a consistent engineering baseline | [Global instructions](core/GLOBAL_INSTRUCTIONS.md) |
 | Delegate work and coordinate multiple agents | [Multi-agent delegation](skills/multi-agent-delegation/SKILL.md) |
-| Run a multi-agent campaign | [Campaign workflow](workflows/multi-agent-campaign.md.md) |
+| Run a multi-agent campaign | [Campaign workflow](workflows/multi-agent-campaign.md) |
 | Get an evidence-based progress report | [Progress-report command](commands/progress-report.md) |
 | Explain a code change clearly | [Implementation explanation](skills/implementation-explanation/SKILL.md) |
 | Review visual output and rendering behaviour | [Visual regression](skills/visual-regression/SKILL.md) |
