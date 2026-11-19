@@ -165,20 +165,17 @@ export async function applyPlan(plan, { root = plan.project_root, registry, fetc
     "- Use the close-session command to capture durable learnings in the correct context files; do not create a transcript dump.",
     "- Native command and skill files are generated for detected hosts; check the installation manifest for exact paths."
   ].join("\n") + "\n";
-  const entrypoints = [];
-  for (const rel of entrypointPaths) {
-    const file = path.join(base, rel);
+  const createdFiles = [];
+  const backups = new Map();
+  const writeOwned = async (rel, content, preserveExisting = false) => {
+    const file = path.join(base, safeRelative(rel));
     const existed = await exists(file);
-    const original = existed ? await fs.readFile(file, "utf8") : "";
-    await atomicWrite(file, mergeInstruction(original));
-    entrypoints.push({ path: rel, created: !existed });
-  }
-
-  // All remote content and path conflicts are checked before the first project write.
-  for (const item of staged) await atomicWrite(path.join(base, safeRelative(item.installed_path)), item.content);
-  await atomicWrite(path.join(foundryDir, "instructions.md"), instructions);
-  for (const item of settings) await atomicWrite(path.join(base, item.path), item.content);
-
+    if (existed && preserveExisting && !backups.has(rel)) backups.set(rel, await fs.readFile(file, "utf8"));
+    await atomicWrite(file, content);
+    if (!existed) createdFiles.push(file);
+  };
+  const entrypoints = [];
+  const readme = "# Agent Foundry in this project\\n\\nRead instructions.md for the project entrypoint. manifest.json records installed resources and source revision. Settings are project-owned. Existing project instructions take precedence.\\n";
   const manifest = {
     manifest_version: 1,
     foundry_version: "0.4.0",
@@ -190,9 +187,25 @@ export async function applyPlan(plan, { root = plan.project_root, registry, fetc
     installed_resources: staged.map(({ content, ...item }) => item),
     settings: settings.map(item => ({ path: item.path, installed_sha256: sha256(item.content), template: true }))
   };
-  await atomicWrite(path.join(foundryDir, "manifest.json"), JSON.stringify(manifest, null, 2) + "\n");
-  const readme = "# Agent Foundry in this project\n\nRead instructions.md for the project entrypoint. manifest.json records installed resources and source revision. Settings are project-owned. Existing project instructions take precedence.\n";
-  await atomicWrite(path.join(foundryDir, "README.md"), readme);
+  try {
+    // All remote resources and templates are fetched and validated before the first project write.
+    for (const item of staged) await writeOwned(item.installed_path, item.content);
+    await writeOwned(".agent-foundry/instructions.md", instructions);
+    for (const item of settings) await writeOwned(item.path, item.content);
+    await writeOwned(".agent-foundry/README.md", readme);
+    for (const rel of entrypointPaths) {
+      const file = path.join(base, rel);
+      const existed = await exists(file);
+      const original = existed ? await fs.readFile(file, "utf8") : "";
+      await writeOwned(rel, mergeInstruction(original), true);
+      entrypoints.push({ path: rel, created: !existed });
+    }
+    await writeOwned(".agent-foundry/manifest.json", JSON.stringify(manifest, null, 2) + "\\n");
+  } catch (error) {
+    for (const file of createdFiles.reverse()) await fs.rm(file, { force: true }).catch(() => {});
+    for (const [rel, content] of backups) await atomicWrite(path.join(base, safeRelative(rel)), content).catch(() => {});
+    throw new Error("Installation failed and created files were rolled back: " + error.message);
+  }
   return { manifest, installed_count: plan.resources.length, host_artifact_count: (plan.host_resources ?? []).length, entrypoint_created: entrypoints[0]?.created ?? false };
 }
 
