@@ -32,7 +32,7 @@ try {
   else if (["version", "--version"].includes(command)) console.log(VERSION);
   else if (command === "inspect") {
     const scan = await scanProject(root);
-    const result = { root: scan.root, fileCount: scan.fileCount, manifests: scan.manifests, hosts: scan.hosts, capabilities: classifyCapabilities(scan) };
+    const result = { root: scan.root, fileCount: scan.fileCount, manifests: scan.manifests, hosts: scan.hosts, projectSignals: scan.projectSignals, capabilities: classifyCapabilities(scan) };
     console.log(JSON.stringify(result, null, 2));
   } else if (command === "list") {
     const registry = await loadRegistry({ repository, ref });
