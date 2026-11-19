@@ -34,8 +34,8 @@ These documents explain what was found in the source repositories and how it was
 | Resource category | Location |
 |---|---|
 | Portable baseline instructions | [core/](../core/GLOBAL_INSTRUCTIONS.md) |
-| User-invokable command contracts | [Progress report](../commands/progress-report.md) · [Teach implementation](../commands/teach-implementation.md) · [Close session](../commands/close-session.md) · [Settings](../commands/settings.md) · [Edit model roster](../commands/edit-model-roster.md) · [Explain model choice](../commands/explain-model-selection.md) · [Test a model](../commands/test-model.md) |
-| Task procedures | [skills/](../skills/progress-reporting/SKILL.md) |
+| User-invokable command contracts | [Audit](../commands/audit.md) · [Implement](../commands/implement.md) · [Debug](../commands/debug.md) · [Review](../commands/review.md) · [Verify](../commands/verify.md) · [Delegate](../commands/delegate.md) · [Next task](../commands/next-task.md) · [Project health](../commands/project-health.md) · [Resume](../commands/resume.md) · [Progress report](../commands/progress-report.md) · [Teach implementation](../commands/teach-implementation.md) · [Close session](../commands/close-session.md) · [Settings](../commands/settings.md) · [Edit model roster](../commands/edit-model-roster.md) · [Explain model choice](../commands/explain-model-selection.md) · [Test a model](../commands/test-model.md) |
+| Task procedures | [Repository audit](../skills/repository-audit/SKILL.md) · [Implementation planning](../skills/implementation-planning/SKILL.md) · [Debugging](../skills/debugging/SKILL.md) · [Testing](../skills/testing-and-verification/SKILL.md) · [Code review](../skills/code-review/SKILL.md) · [Architecture](../skills/architecture-design/SKILL.md) · [Session recovery](../skills/session-recovery/SKILL.md) · [Documentation](../skills/documentation-maintenance/SKILL.md) |
 | Multi-step coordination | [workflows/](../workflows/multi-agent-campaign.md) |
 | Agent role definitions | [Profile catalog](../profiles/README.md) |
 | Engineering rules | [standards/](../standards/documentation-governance.md) |
