@@ -14,4 +14,9 @@ session_learning:
   enabled: true
   auto_write: false
   require_approval_for_architecture_changes: true
+model_selection:
+  allowed_access: [] # Optional hard filter: free | paid | local | enterprise
+  preferred_access: [] # Soft preference used only after eligibility gates
+  max_latency_ms: null
+  require_high_confidence_for_high_risk: true
 model_roster: .agent-foundry/settings/model-roster.yaml
