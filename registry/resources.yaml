@@ -90,3 +90,81 @@ resources:
     version: 0.1.0
     status: draft
     portability: adaptable
+  - id: plan-reconciliation
+    type: skill
+    path: skills/plan-reconciliation/SKILL.md
+    version: 0.2.0
+    status: draft
+    portability: adaptable
+  - id: implementation-explanation
+    type: skill
+    path: skills/implementation-explanation/SKILL.md
+    version: 0.2.0
+    status: draft
+    portability: adaptable
+  - id: visual-probe-engineering
+    type: skill
+    path: skills/visual-probe-engineering/SKILL.md
+    version: 0.2.0
+    status: draft
+    portability: adaptable
+  - id: privacy-safe-evidence
+    type: skill
+    path: skills/privacy-safe-evidence/SKILL.md
+    version: 0.2.0
+    status: draft
+    portability: adaptable
+  - id: agent-execution-security
+    type: skill
+    path: skills/agent-execution-security/SKILL.md
+    version: 0.2.0
+    status: draft
+    portability: adaptable
+  - id: teach-implementation
+    type: command
+    path: commands/learning/teach-implementation/COMMAND.md
+    version: 0.2.0
+    status: draft
+    portability: adaptable
+  - id: decision-register
+    type: template
+    path: templates/governance/DECISION_REGISTER.md
+    version: 0.2.0
+    status: draft
+    portability: adaptable
+  - id: test-evidence-report
+    type: template
+    path: templates/verification/TEST_EVIDENCE_REPORT.md
+    version: 0.2.0
+    status: draft
+    portability: adaptable
+  - id: blocker-register
+    type: template
+    path: templates/governance/BLOCKER_REGISTER.md
+    version: 0.2.0
+    status: draft
+    portability: adaptable
+  - id: graphics-engineer
+    type: profile
+    path: profiles/graphics-engineer/PROFILE.md
+    version: 0.2.0
+    status: draft
+    portability: adaptable
+  - id: creative-director
+    type: profile
+    path: profiles/creative-director/PROFILE.md
+    version: 0.2.0
+    status: draft
+    portability: adaptable
+  - id: performance-qa
+    type: profile
+    path: profiles/performance-qa/PROFILE.md
+    version: 0.2.0
+    status: draft
+    portability: adaptable
+  - id: creative-lighting-director
+    type: profile
+    path: profiles/creative-lighting-director/PROFILE.md
+    version: 0.2.0
+    status: draft
+    portability: domain-specific
