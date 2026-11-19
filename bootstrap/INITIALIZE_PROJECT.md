@@ -24,7 +24,7 @@ This is an execution specification, not a request to install the entire reposito
 4. Read README, the resource model, authoring standard, registry and this workflow.
 5. Never treat the Foundry repository's own AGENTS.md as the target project's global instructions. It governs maintenance of Agent Foundry itself.
 
-## 3. Inspect the target project
+## 3. Integrate with an existing project\n\nRead [Existing Project Integration](../docs/architecture/EXISTING_PROJECT_INTEGRATION.md) before assessing an established repository. Treat installation as an additive migration, not a rewrite. Map capabilities by behaviour, not filename. Existing architecture, project context, commands, tests and agent rules are authoritative unless the owner explicitly approves a change. Classify each capability as KEEP, LINK, EXTEND, INSTALL, ADAPT, DEFER or EXCLUDE. Show this mapping in the installation plan.\n\nFor a brand-new repository, use the minimal baseline and create only the project context files needed for its type.\n\n## 4. Inspect the target project
 
 Read, without modifying:
 - Existing root agent instructions (AGENTS.md, CLAUDE.md, Copilot instructions, or equivalent).
@@ -44,7 +44,7 @@ Identify:
 
 Do not infer sensitive or business-critical requirements from filenames alone.
 
-## 4. Select resources
+## 5. Select resources
 
 Use registry/resources.yaml as the catalog. For each candidate, inspect its full content, status, portability, dependencies and source notes.
 
@@ -64,7 +64,7 @@ Create a proposed selection matrix:
 | Resource | Why relevant | Destination | Status | Existing equivalent/conflict |
 |---|---|---|---|---|
 
-## 5. Present an installation plan
+## 6. Present an installation plan
 
 Before writing files, tell the owner:
 1. What project type you detected and the evidence used.
@@ -77,7 +77,7 @@ Before writing files, tell the owner:
 
 Wait for owner approval before changing files.
 
-## 6. Install safely
+## 7. Install safely
 
 Target layout:
 
@@ -122,7 +122,7 @@ Record:
 - Explicit local overrides may live under .agent-foundry/overrides/.
 - If an installed file has diverged from its recorded hash, stop the update and offer a diff/merge.
 
-## 7. Verify the installation
+## 8. Verify the installation
 
 Check:
 - All selected files exist.
@@ -136,7 +136,7 @@ Check:
 
 Report exact checks and results. If native host loading cannot be tested, label it NOT VERIFIED.
 
-## 8. Completion report
+## 9. Completion report
 
 Provide:
 - Foundry version/commit.
@@ -150,7 +150,7 @@ Provide:
 
 Do not call the project fully configured if native host loading or important checks remain unverified.
 
-## 9. Update and uninstall expectations
+## 10. Update and uninstall expectations
 
 An update compares installed hashes with the manifest and preserves local modifications. It shows a change plan before replacing managed resources.
 
