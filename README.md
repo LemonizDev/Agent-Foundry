@@ -145,6 +145,10 @@ your-project/
     │   ├── foundry-settings.yaml     # Project-owned policies
     │   └── model-roster.yaml         # Models YOU choose to make available
     ├── resources/                    # Selected canonical resources
+    │   ├── core/GLOBAL_INSTRUCTIONS.md
+    │   ├── standards/                 # Universal engineering baseline
+    │   ├── skills/                    # Task procedures
+    │   └── workflows/                 # Multi-step coordination
     └── README.md                     # What was integrated and how to maintain it
 ```
 
