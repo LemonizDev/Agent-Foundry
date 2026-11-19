@@ -5,6 +5,7 @@ import { classifyTask, selectModel } from "../src/model-router.js";
 test("task classifier distinguishes fast work from architecture and security risk", () => {
   assert.equal(classifyTask("Find the function that parses the config").task_class, "FAST_LOOKUP");
   assert.equal(classifyTask("Rename these repetitive metadata keys").task_class, "MECHANICAL");
+  assert.equal(classifyTask("Make a simple one-line typo fix").task_class, "SMALL_TASK");
   assert.equal(classifyTask("Design a cross-module architecture migration").task_class, "ARCHITECTURE");
   const security = classifyTask("Review authentication permissions and secret handling");
   assert.equal(security.task_class, "SECURITY_CRITICAL");
