@@ -65,8 +65,8 @@ export function renderHostArtifacts(resource, content, hosts = []) {
       add(".opencode/agents/" + slug + ".md", "profile:opencode", slug, frontmatter + body.trimStart());
     }
     if (hosts.includes("claude-code")) {
-      const tools = reviewer ? "\\ntools: Read, Grep, Glob" : "";
-      const frontmatter = "---\\nname: " + slug + "\\ndescription: \"" + description.replaceAll('"', "'") + "\"\\nmodel: inherit" + tools + "\\n---\\n\\n";
+      const tools = reviewer ? "\ntools: Read, Grep, Glob" : "";
+      const frontmatter = "---\nname: " + slug + "\ndescription: \"" + description.replaceAll('"', "'") + "\"\nmodel: inherit" + tools + "\n---\n\n";
       add(".claude/agents/" + slug + ".md", "profile:claude", slug, frontmatter + body.trimStart());
     }
     if (hosts.includes("kilo")) {
