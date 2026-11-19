@@ -61,15 +61,17 @@ Run these from the consuming project:
 agent-foundry inspect
 agent-foundry validate
 agent-foundry update
-agent-foundry uninstall --confirm
+agent-foundry update --apply
+agent-foundry uninstall
+agent-foundry uninstall --apply
 ```
 
 The CLI can also be invoked through npx using the GitHub package spec shown above.
 
 - inspect: show detected project files, agent hosts, project-type signals and capability decisions.
 - validate: verify installed resources against the local manifest.
-- update: update unchanged Foundry-owned resources; stop on locally modified or missing files.
-- uninstall: remove unchanged Foundry-owned resources and its marked instruction pointer. Owner-edited settings and locally modified resources are preserved.
+- update: preview available updates; rerun with --apply and confirm to update unchanged Foundry-owned resources. Local modifications block the update rather than being overwritten.
+- uninstall: preview removal; rerun with --apply and type uninstall. Unchanged templates and resources are removed; owner-edited settings and modified files are preserved.
 
 ## Safety and limitations
 
@@ -78,7 +80,7 @@ The CLI can also be invoked through npx using the GitHub package spec shown abov
 - The installer refuses to overwrite pre-existing resource destinations.
 - The manifest records hashes so updates can detect local edits.
 - The model roster belongs to the consuming project. Never store API keys or provider credentials in it.
-- The first CLI currently installs a generic AGENTS.md entrypoint. Native host-specific slash-command registration is not yet included.
+- The CLI generates host-specific skills, commands and specialist agent files for detected Codex-compatible, Claude Code, OpenCode, Kilo Code and Cline projects. Runtime discovery and execution have not yet been validated inside every host.
 - The CLI downloads the registry and resources from GitHub over HTTPS. Signed releases and stronger provenance verification are planned.
 - The CLI is not a sandbox and does not grant safe autonomous execution to the coding agent.
 
