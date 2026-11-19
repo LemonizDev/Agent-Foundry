@@ -39,7 +39,7 @@ This register links source evidence to canonical Agent Foundry resources. The de
 | Visual probe engineering | `skills/visual-probe-engineering/SKILL.md` | DRAFT |
 | Privacy-safe evidence | `skills/privacy-safe-evidence/SKILL.md` | DRAFT |
 | Agent execution security | `skills/agent-execution-security/SKILL.md` | DRAFT |
-| Multi-agent campaign | `workflows/multi-agent-campaign.md.md` | DRAFT |
+| Multi-agent campaign | `workflows/multi-agent-campaign.md` | DRAFT |
 | Progress report | `commands/progress-report.md` | DRAFT |
 | Teach implementation | `commands/teach-implementation.md` | DRAFT |
 | Templates | `templates/` | DRAFT |
