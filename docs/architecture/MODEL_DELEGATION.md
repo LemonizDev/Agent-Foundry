@@ -4,7 +4,7 @@
 
 Select a model for the actual work rather than choosing a default model for every subagent. The selector must balance task suitability, quality risk, speed, context needs, tool support, reliability and owner constraints.
 
-The model roster is user-defined. Agent Foundry does not assume a permanent provider catalogue or hardcode models that may disappear, become paid, change IDs or lose free access.
+The model roster is user-defined. Agent Foundry does not assume a permanent provider catalogue or hardcode models that may disappear, become paid, change IDs or lose free access. A model name containing “Flash” is not proof of speed; the owner supplies a speed tier and measured latency where available.
 
 ## 2. Two separate decisions
 
@@ -36,6 +36,7 @@ Classify each as 1–3 and record rationale. Risk is a gate, not merely another 
 | Class | Typical work | Preferred model characteristics |
 |---|---|---|
 | FAST_LOOKUP | Find a symbol, explain a known setting, retrieve a small fact | Low latency, adequate instruction following, small context acceptable |
+| SMALL_TASK | One-line edits, simple bounded fixes, tiny changes | Small model with sufficient instruction adherence and easy verification |
 | MECHANICAL | Rename, format, update repetitive metadata, bounded boilerplate | Fast, inexpensive/small model, strong tool reliability |
 | ROUTINE_IMPLEMENTATION | Small feature or bug fix with clear acceptance criteria | Competent coding, tool calling, moderate reasoning |
 | RESEARCH | Compare sources, inspect unfamiliar systems, gather evidence | Strong retrieval/tool use, context handling, source discipline |
@@ -79,6 +80,8 @@ Store the roster in the consuming project, not in the universal Foundry reposito
 
 Each entry should include:
 - stable owner-defined alias;
+- size class: small, medium, large or unknown;
+- speed tier: fast, balanced, slow or unknown, supported by observed latency or provider evidence;
 - provider and exact model ID;
 - access channel/endpoint label (never store API keys here);
 - availability status and last checked date;
@@ -101,7 +104,7 @@ Capability values should be `unknown`, `low`, `medium`, `high` or an evidence-ba
 3. Identify hard requirements: tools, context, modality, structured output, risk, provider policy, latency and budget.
 4. Filter roster entries that are unavailable, prohibited, or lack required capabilities.
 5. Rank remaining candidates by task-fit, observed reliability, quality evidence, latency and cost preference.
-6. Choose the smallest/fastest model that clears the quality floor for low-risk work.
+6. Choose the smallest/fastest model that clears the quality floor for low-risk work. Small-task and mechanical workloads receive a preference for smaller models; explicit speed-sensitive tasks prefer owner-rated fast models and measured low latency.
 7. For high-risk or high-uncertainty work, choose stronger reasoning and require independent verification.
 8. Explain the selected alias, rationale, tradeoffs and fallback.
 9. If no candidate qualifies, ask the owner or report that no safe roster match exists. Never silently invent a model or use a paid fallback against policy.
