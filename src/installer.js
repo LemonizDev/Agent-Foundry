@@ -117,7 +117,7 @@ export async function buildPlan({ root = process.cwd(), registry, resources, pre
   };
 }
 
-export async function applyPlan(plan, { root = plan.project_root, registry, fetchText = globalThis.fetch } = {}) {
+export async function applyPlan(plan, { root = plan.project_root, registry, fetchText = globalThis.fetch, skipConflicts = false } = {}) {
   const base = path.resolve(root);
   const foundryDir = path.join(base, FOUNDARY_DIR);
   if (await exists(path.join(foundryDir, "manifest.json"))) throw new Error("Agent Foundry is already installed. Use update after reviewing local modifications.");
@@ -128,19 +128,41 @@ export async function applyPlan(plan, { root = plan.project_root, registry, fetc
     if (await exists(clinerules) && (await fs.stat(clinerules)).isFile()) entrypointPaths.push(".clinerules");
     else entrypointPaths.push(".clinerules/agent-foundry.md");
   }
-  const destinations = [...plan.resources.map(x => x.destination), ...(plan.host_resources ?? []).map(x => x.destination), ".agent-foundry/instructions.md", ".agent-foundry/README.md", ".agent-foundry/settings/foundry-settings.yaml", ".agent-foundry/settings/model-roster.yaml"];
-  for (const rel of destinations) if (await exists(path.join(base, safeRelative(rel)))) throw new Error("Refusing to overwrite existing file: " + rel);
+  const activeResources = [];
+  const activeHostResources = [];
+  for (const item of plan.resources) {
+    const file = path.join(base, safeRelative(item.destination));
+    if (await exists(file)) {
+      if (skipConflicts) continue;
+      throw new Error("Refusing to overwrite existing file: " + item.destination + ". Review the plan or rerun with --skip-conflicts.");
+    }
+    activeResources.push(item);
+  }
+  for (const item of plan.host_resources ?? []) {
+    const file = path.join(base, safeRelative(item.destination));
+    if (await exists(file)) {
+      if (skipConflicts) continue;
+      throw new Error("Refusing to overwrite existing host file: " + item.destination + ". Review the plan or rerun with --skip-conflicts.");
+    }
+    activeHostResources.push(item);
+  }
+  const protectedDestinations = [".agent-foundry/instructions.md", ".agent-foundry/README.md", ".agent-foundry/settings/foundry-settings.yaml", ".agent-foundry/settings/model-roster.yaml"];
+  for (const rel of protectedDestinations) if (await exists(path.join(base, safeRelative(rel)))) throw new Error("Refusing to overwrite existing file: " + rel);
 
   const staged = [];
   const sourceById = new Map();
-  for (const item of plan.resources) {
+  const sourceIds = [...new Set([...activeResources, ...activeHostResources].map(item => item.id))];
+  for (const id of sourceIds) {
+    const resource = registry.resources.find(entry => entry.id === id);
+    if (!resource) throw new Error("Resource missing from registry: " + id);
+    sourceById.set(id, await fetchSource(plan.foundry.repository, plan.foundry.ref, resource, fetchText));
+  }
+  for (const item of activeResources) {
     const resource = registry.resources.find(entry => entry.id === item.id);
-    if (!resource) throw new Error("Resource missing from registry: " + item.id);
-    const content = await fetchSource(plan.foundry.repository, plan.foundry.ref, resource, fetchText);
-    sourceById.set(item.id, content);
+    const content = sourceById.get(item.id);
     staged.push({ id: item.id, source_path: resource.path, installed_path: item.destination, version: resource.version, content, source_sha256: sha256(content), installed_sha256: sha256(content) });
   }
-  for (const item of plan.host_resources ?? []) {
+  for (const item of activeHostResources) {
     const resource = registry.resources.find(entry => entry.id === item.id);
     const source = sourceById.get(item.id);
     const artifact = renderHostArtifacts(resource, source, plan.detected_hosts).find(x => x.installed_path === item.destination && x.adapter_kind === item.adapter_kind);
@@ -216,7 +238,7 @@ export async function applyPlan(plan, { root = plan.project_root, registry, fetc
     for (const [rel, content] of backups) await atomicWrite(path.join(base, safeRelative(rel)), content).catch(() => {});
     throw new Error("Installation failed and created files were rolled back: " + error.message);
   }
-  return { manifest, installed_count: plan.resources.length, host_artifact_count: (plan.host_resources ?? []).length, entrypoint_created: entrypoints[0]?.created ?? false };
+  return { manifest, installed_count: activeResources.length, host_artifact_count: activeHostResources.length, skipped_conflicts: plan.resources.length - activeResources.length + (plan.host_resources ?? []).length - activeHostResources.length, entrypoint_created: entrypoints[0]?.created ?? false };
 }
 
 export async function validateInstallation(root = process.cwd()) {
