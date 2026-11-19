@@ -121,7 +121,13 @@ export async function applyPlan(plan, { root = plan.project_root, registry, fetc
   const base = path.resolve(root);
   const foundryDir = path.join(base, FOUNDARY_DIR);
   if (await exists(path.join(foundryDir, "manifest.json"))) throw new Error("Agent Foundry is already installed. Use update after reviewing local modifications.");
-  const entrypointPaths = ["AGENTS.md", ...(plan.detected_hosts.includes("claude-code") && await exists(path.join(base, "CLAUDE.md")) ? ["CLAUDE.md"] : [])];
+  const entrypointPaths = ["AGENTS.md"];
+  if (plan.detected_hosts.includes("claude-code")) entrypointPaths.push("CLAUDE.md");
+  if (plan.detected_hosts.includes("cline")) {
+    const clinerules = path.join(base, ".clinerules");
+    if (await exists(clinerules) && (await fs.stat(clinerules)).isFile()) entrypointPaths.push(".clinerules");
+    else entrypointPaths.push(".clinerules/agent-foundry.md");
+  }
   const destinations = [...plan.resources.map(x => x.destination), ...(plan.host_resources ?? []).map(x => x.destination), ".agent-foundry/instructions.md", ".agent-foundry/README.md", ".agent-foundry/settings/foundry-settings.yaml", ".agent-foundry/settings/model-roster.yaml"];
   for (const rel of destinations) if (await exists(path.join(base, safeRelative(rel)))) throw new Error("Refusing to overwrite existing file: " + rel);
 
