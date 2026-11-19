@@ -138,7 +138,36 @@ your-project/
     └── README.md                # What was integrated and how to maintain it
 ```
 
-The installer and automatic host adapters are not yet released. Until they are, the bootstrap procedure is an agent-executed setup contract, not a claim that a tested one-click installer already exists.
+### Install with the CLI
+
+Requirements: Node.js 20 or newer.
+
+From the root of the target project, run:
+
+```bash
+npx --yes --package github:LemonizDev/Agent-Foundry agent-foundry init
+```
+
+This inspects the repository and prints a proposed resource plan. It does not change files.
+
+After reviewing the plan, run:
+
+```bash
+npx --yes --package github:LemonizDev/Agent-Foundry agent-foundry init --apply
+```
+
+The CLI asks for explicit confirmation. It then installs the selected baseline, records ownership hashes in .agent-foundry/manifest.json and adds a marked pointer to AGENTS.md without replacing existing content.
+
+Useful lifecycle commands:
+
+```bash
+npx --yes --package github:LemonizDev/Agent-Foundry agent-foundry inspect
+npx --yes --package github:LemonizDev/Agent-Foundry agent-foundry validate
+npx --yes --package github:LemonizDev/Agent-Foundry agent-foundry update
+npx --yes --package github:LemonizDev/Agent-Foundry agent-foundry uninstall --confirm
+```
+
+The CLI is an initial cross-platform implementation, not a stable release. Native command adapters and automatic model dispatch are separate capabilities and are not implied by installing the resource library.
 
 ## The user command interface
 
