@@ -38,7 +38,7 @@ These documents explain what was found in the source repositories and how it was
 | Task procedures | [Repository audit](../skills/repository-audit/SKILL.md) · [Implementation planning](../skills/implementation-planning/SKILL.md) · [Debugging](../skills/debugging/SKILL.md) · [Testing](../skills/testing-and-verification/SKILL.md) · [Code review](../skills/code-review/SKILL.md) · [Architecture](../skills/architecture-design/SKILL.md) · [Session recovery](../skills/session-recovery/SKILL.md) · [Documentation](../skills/documentation-maintenance/SKILL.md) |
 | Multi-step coordination | [workflows/](../workflows/multi-agent-campaign.md) |
 | Agent role definitions | [Profile catalog](../profiles/README.md) |
-| Engineering rules | [standards/](../standards/documentation-governance.md) |
+| Engineering rules | [Engineering principles](../standards/engineering-principles.md) · [Agent communication](../standards/agent-communication.md) · [Context management](../standards/context-management.md) · [Security boundaries](../standards/security-boundaries.md) · [Decision-making](../standards/decision-making.md) · [Evidence](../standards/evidence-and-verification.md) · [Documentation governance](../standards/documentation-governance.md) |
 | Reusable output structures | [templates/](../templates/progress-report-template.md) |
 | Tool-specific mapping guidance | [integrations/](../integrations/README.md) |
 | Machine-readable resource catalog | [registry/resources.yaml](../registry/resources.yaml) |
