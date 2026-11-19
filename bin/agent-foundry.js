@@ -19,7 +19,7 @@ const repository = option("--repository", "LemonizDev/Agent-Foundry");
 const ref = option("--ref", "main");
 
 function help() {
-  console.log("Agent Foundry v" + VERSION + "\nA project-aware engineering environment for AI coding agents.\n\nUsage:\n  agent-foundry init [--project PATH] [--preset auto|minimal|balanced|autonomous-engineer|visual-engineer|research-engineer] [--resources id,id] [--apply]\n  agent-foundry inspect [--project PATH]\n  agent-foundry validate [--project PATH]\n  agent-foundry update [--project PATH] [--ref REF] [--apply]\n  agent-foundry uninstall [--project PATH] [--apply]\n  agent-foundry list\n  agent-foundry route --task "describe the task"\n  agent-foundry settings\n  agent-foundry version\n\ninit is plan-only by default. Review the plan, then repeat with --apply.\nExisting files are never silently overwritten.");
+  console.log("Agent Foundry v" + VERSION + "\nA project-aware engineering environment for AI coding agents.\n\nUsage:\n  agent-foundry init [--project PATH] [--preset auto|minimal|balanced|autonomous-engineer|visual-engineer|research-engineer] [--resources id,id] [--apply] [--skip-conflicts]\n  agent-foundry inspect [--project PATH]\n  agent-foundry validate [--project PATH]\n  agent-foundry update [--project PATH] [--ref REF] [--apply]\n  agent-foundry uninstall [--project PATH] [--apply]\n  agent-foundry list\n  agent-foundry route --task "describe the task"\n  agent-foundry settings\n  agent-foundry version\n\ninit is plan-only by default. Review the plan, then repeat with --apply.\nExisting files are never silently overwritten.");
 }
 
 async function ask(question) {
@@ -59,8 +59,8 @@ try {
       const approval = has("--yes") ? "yes" : await ask("Apply this plan? Type 'yes' to continue: ");
       if (approval !== "yes") { console.log("Cancelled. No files changed."); process.exitCode = 1; }
       else {
-        const result = await applyPlan(plan, { root, registry });
-        console.log("Installed " + result.installed_count + " source resources and " + result.host_artifact_count + " host artifacts. Entrypoint " + (result.entrypoint_created ? "created" : "updated additively") + ".");
+        const result = await applyPlan(plan, { root, registry, skipConflicts: has("--skip-conflicts") });
+        console.log("Installed " + result.installed_count + " source resources and " + result.host_artifact_count + " host artifacts; skipped " + result.skipped_conflicts + " pre-existing paths. Entrypoint " + (result.entrypoint_created ? "created" : "updated additively") + ".");
         console.log("Run agent-foundry validate and review .agent-foundry/README.md.");
       }
     }
