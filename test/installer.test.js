@@ -109,3 +109,18 @@ test("installer adds host-specific instruction pointers without replacing existi
   assert.match(await fs.readFile(path.join(root, "CLAUDE.md"), "utf8"), /Existing Claude rules/);
   await assert.rejects(() => fs.access(path.join(root, ".clinerules/agent-foundry.md")));
 });
+
+test("explicit skip-conflicts installs remaining resources without replacing existing files", async () => {
+  const root = await temp();
+  await fs.mkdir(path.join(root, ".agent-foundry/resources/skills"), { recursive: true });
+  await fs.writeFile(path.join(root, ".agent-foundry/resources/skills/one.md"), "# owner resource\n");
+  const resource = { id: "one", type: "skill", path: "skills/one.md", version: "1" };
+  const registry = { resources: [resource] };
+  const plan = await buildPlan({ root, registry, resources: ["one"], repository: "owner/repo", ref: "main" });
+  const fetchText = async url => ({ ok: true, text: async () => url.endsWith("model-roster.yaml") ? "models: []\n" : url.endsWith("foundry-settings.yaml") ? "version: 1\n" : "# source skill\n" });
+  await assert.rejects(() => applyPlan(plan, { root, registry, fetchText }), /Refusing to overwrite/);
+  const result = await applyPlan(plan, { root, registry, fetchText, skipConflicts: true });
+  assert.equal(result.skipped_conflicts, 1);
+  assert.match(await fs.readFile(path.join(root, ".agent-foundry/resources/skills/one.md"), "utf8"), /owner resource/);
+  assert.ok(await fs.readFile(path.join(root, ".agents/skills/one/SKILL.md"), "utf8").then(x => x.includes("source skill")));
+});
