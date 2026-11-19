@@ -5,14 +5,77 @@ import { scanProject } from "./project-scanner.js";
 import { renderHostArtifacts } from "./host-adapters.js";
 import { FOUNDARY_DIR, atomicWrite, exists, mergeInstruction, safeRelative, sha256, walk } from "./utils.js";
 
-const DEFAULT_RESOURCES = [
-  "atomic-implementation", "project-state-management", "progress-reporting",
-  "evidence-and-verification", "documentation-governance", "session-learning",
-  "close-session", "progress-report", "teach-implementation", "session-close",
-  "foundry-settings", "edit-model-roster", "model-delegation-architecture",
-  "model-roster-template", "foundry-settings-template", "lead-engineer",
-  "independent-reviewer", "agent-execution-security"
-];
+const PRESETS = {
+  minimal: [
+    "atomic-implementation", "project-state-management", "evidence-and-verification",
+    "documentation-governance", "session-learning", "close-session", "session-close",
+    "progress-report", "lead-engineer"
+  ],
+  balanced: [
+    "atomic-implementation", "repository-audit", "implementation-planning", "debugging",
+    "testing-and-verification", "code-review", "architecture-design", "documentation-maintenance",
+    "project-state-management", "progress-reporting", "session-learning", "session-recovery",
+    "plan-reconciliation", "privacy-safe-evidence", "agent-execution-security",
+    "evidence-and-verification", "documentation-governance",
+    "progress-report", "teach-implementation", "close-session", "foundry-settings",
+    "edit-model-roster", "explain-model-selection", "test-model", "audit", "implement",
+    "debug", "review", "verify", "next-task", "project-health", "resume",
+    "session-close", "foundry-settings-template", "model-roster-template",
+    "progress-report-template", "lead-engineer", "independent-reviewer"
+  ],
+  "autonomous-engineer": [
+    "atomic-implementation", "repository-audit", "implementation-planning", "debugging",
+    "testing-and-verification", "code-review", "architecture-design", "documentation-maintenance",
+    "project-state-management", "progress-reporting", "session-learning", "session-recovery",
+    "multi-agent-delegation", "multi-agent-campaign", "plan-reconciliation",
+    "privacy-safe-evidence", "agent-execution-security",
+    "evidence-and-verification", "documentation-governance",
+    "progress-report", "teach-implementation", "close-session", "foundry-settings",
+    "edit-model-roster", "explain-model-selection", "test-model", "audit", "implement",
+    "debug", "review", "verify", "delegate", "next-task", "project-health", "resume",
+    "session-close", "foundry-settings-template", "model-roster-template",
+    "progress-report-template", "delegation-assignment", "recovery-handoff",
+    "decision-register", "test-evidence-report", "blocker-register",
+    "lead-engineer", "independent-reviewer"
+  ],
+  "visual-engineer": [
+    "atomic-implementation", "repository-audit", "implementation-planning", "debugging",
+    "testing-and-verification", "code-review", "architecture-design", "documentation-maintenance",
+    "project-state-management", "progress-reporting", "session-learning", "session-recovery",
+    "multi-agent-delegation", "multi-agent-campaign", "plan-reconciliation",
+    "privacy-safe-evidence", "agent-execution-security", "visual-regression",
+    "visual-probe-engineering", "visual-quality-engineer", "graphics-engineer",
+    "creative-director", "performance-qa", "evidence-and-verification", "documentation-governance",
+    "progress-report", "teach-implementation", "close-session", "foundry-settings",
+    "edit-model-roster", "explain-model-selection", "test-model", "audit", "implement",
+    "debug", "review", "verify", "delegate", "next-task", "project-health", "resume",
+    "session-close", "foundry-settings-template", "model-roster-template",
+    "progress-report-template", "delegation-assignment", "recovery-handoff",
+    "decision-register", "test-evidence-report", "blocker-register",
+    "lead-engineer", "independent-reviewer"
+  ],
+  "research-engineer": [
+    "atomic-implementation", "repository-audit", "implementation-planning", "debugging",
+    "testing-and-verification", "code-review", "architecture-design", "documentation-maintenance",
+    "project-state-management", "progress-reporting", "session-learning", "session-recovery",
+    "plan-reconciliation", "privacy-safe-evidence", "agent-execution-security",
+    "evidence-and-verification", "documentation-governance",
+    "progress-report", "teach-implementation", "close-session", "foundry-settings",
+    "edit-model-roster", "explain-model-selection", "test-model", "audit", "implement",
+    "debug", "review", "verify", "next-task", "project-health", "resume",
+    "session-close", "foundry-settings-template", "model-roster-template",
+    "progress-report-template", "lead-engineer", "independent-reviewer"
+  ]
+};
+
+function resourcesForPreset(preset, scan) {
+  if (preset === "auto") {
+    return [...PRESETS["autonomous-engineer"], ...(scan.projectSignals.includes("visual-graphics") ? PRESETS["visual-engineer"].filter(id => ["visual-regression", "visual-probe-engineering", "visual-quality-engineer", "graphics-engineer", "creative-director", "performance-qa"].includes(id)) : [])];
+  }
+  const selected = PRESETS[preset];
+  if (!selected) throw new Error("Unknown preset: " + preset + ". Available presets: " + Object.keys(PRESETS).join(", ") + ", auto");
+  return selected;
+}
 
 async function fetchSource(repository, ref, resource, fetchText) {
   const url = "https://raw.githubusercontent.com/" + repository + "/" + ref + "/" + resource.path;
@@ -21,11 +84,12 @@ async function fetchSource(repository, ref, resource, fetchText) {
   return response.text();
 }
 
-export async function buildPlan({ root = process.cwd(), registry, resources = DEFAULT_RESOURCES, repository, ref } = {}) {
+export async function buildPlan({ root = process.cwd(), registry, resources, preset = "auto", repository, ref } = {}) {
   const projectFiles = await walk(root);
   const existing = new Set(projectFiles);
   const scan = await scanProject(root);
-  const selected = resolveResources(registry, resources);
+  const requestedResources = resources ?? resourcesForPreset(preset, scan);
+  const selected = resolveResources(registry, requestedResources);
   const planned = await Promise.all(selected.map(async resource => {
     const destination = path.posix.join(FOUNDARY_DIR, "resources", resource.path);
     const conflict = existing.has(destination) || await exists(path.join(root, destination));
@@ -43,6 +107,7 @@ export async function buildPlan({ root = process.cwd(), registry, resources = DE
     foundry: { repository, ref },
     project_root: path.resolve(root),
     selected_resource_ids: selected.map(item => item.id),
+    preset,
     detected_hosts: scan.hosts,
     resources: planned,
     host_resources: hostResources,
@@ -117,6 +182,7 @@ export async function applyPlan(plan, { root = plan.project_root, registry, fetc
   const manifest = {
     manifest_version: 1,
     foundry_version: "0.4.0",
+    preset: plan.preset,
     source: plan.foundry,
     detected_hosts: plan.detected_hosts,
     installed_at: new Date().toISOString(),
