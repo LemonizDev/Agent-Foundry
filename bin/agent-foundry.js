@@ -19,7 +19,7 @@ const repository = option("--repository", "LemonizDev/Agent-Foundry");
 const ref = option("--ref", "main");
 
 function help() {
-  console.log("Agent Foundry v" + VERSION + "\nA project-aware engineering environment for AI coding agents.\n\nUsage:\n  agent-foundry init [--project PATH] [--preset auto|minimal|balanced|autonomous-engineer|visual-engineer|research-engineer] [--resources id,id] [--apply] [--skip-conflicts]\n  agent-foundry inspect [--project PATH]\n  agent-foundry validate [--project PATH]\n  agent-foundry update [--project PATH] [--ref REF] [--apply]\n  agent-foundry uninstall [--project PATH] [--apply]\n  agent-foundry list\n  agent-foundry route --task "describe the task"\n  agent-foundry settings\n  agent-foundry version\n\ninit is plan-only by default. Review the plan, then repeat with --apply.\nExisting files are never silently overwritten.");
+  console.log("Agent Foundry v" + VERSION + "\nA project-aware engineering environment for AI coding agents.\n\nUsage:\n  agent-foundry init [--project PATH] [--preset auto|minimal|balanced|autonomous-engineer|visual-engineer|research-engineer] [--resources id,id] [--apply] [--skip-conflicts]\n  agent-foundry inspect [--project PATH]\n  agent-foundry validate [--project PATH]\n  agent-foundry update [--project PATH] [--ref REF] [--apply]\n  agent-foundry uninstall [--project PATH] [--apply]\n  agent-foundry list\n  agent-foundry route --task TASK_DESCRIPTION\n  agent-foundry settings\n  agent-foundry version\n\ninit is plan-only by default. Review the plan, then repeat with --apply.\nExisting files are never silently overwritten.");
 }
 
 async function ask(question) {
