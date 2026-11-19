@@ -127,7 +127,7 @@ export async function applyPlan(plan, { root = plan.project_root, registry, fetc
   await atomicWrite(path.join(foundryDir, "manifest.json"), JSON.stringify(manifest, null, 2) + "\n");
   const readme = "# Agent Foundry in this project\n\nRead instructions.md for the project entrypoint. manifest.json records installed resources and source revision. Settings are project-owned. Existing project instructions take precedence.\n";
   await atomicWrite(path.join(foundryDir, "README.md"), readme);
-  return { manifest, installed_count: plan.resources.length, host_artifact_count: (plan.host_resources ?? []).length, entrypoint_created: !hadAgents };
+  return { manifest, installed_count: plan.resources.length, host_artifact_count: (plan.host_resources ?? []).length, entrypoint_created: entrypoints[0]?.created ?? false };
 }
 
 export async function validateInstallation(root = process.cwd()) {
