@@ -176,6 +176,7 @@ resources:
     status: draft
     portability: universal
   - id: close-session
+    aliases: [close, "close session", "close chat"]
     type: command
     path: commands/close-session.md
     version: 0.1.0
@@ -188,6 +189,7 @@ resources:
     status: draft
     portability: adaptable
   - id: edit-model-roster
+    aliases: ["models edit", model-roster]
     type: command
     path: commands/edit-model-roster.md
     version: 0.1.0
@@ -231,12 +233,14 @@ resources:
     portability: adaptable
 
   - id: explain-model-selection
+    aliases: ["models explain"]
     type: command
     path: commands/explain-model-selection.md
     version: 0.1.0
     status: draft
     portability: adaptable
   - id: test-model
+    aliases: ["models test"]
     type: command
     path: commands/test-model.md
     version: 0.1.0
