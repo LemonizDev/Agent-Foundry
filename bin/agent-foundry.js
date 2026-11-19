@@ -7,7 +7,7 @@ import { stdin, stdout } from "node:process";
 import { loadRegistry } from "../src/registry.js";
 import { scanProject, classifyCapabilities } from "../src/project-scanner.js";
 import { buildPlan, applyPlan, validateInstallation, updateInstallation, uninstall } from "../src/installer.js";
-import { classifyTask, selectModel } from "../src/model-router.js";
+import { classifyTask, selectModel, validateModelRoster } from "../src/model-router.js";
 
 const VERSION = "0.4.0";
 const args = process.argv.slice(2);
@@ -72,6 +72,8 @@ try {
     const settingsPath = path.join(root, ".agent-foundry/settings/foundry-settings.yaml");
     const settings = yaml.load(await fs.readFile(settingsPath, "utf8")) ?? {};
     const classification = classifyTask(task);
+    const rosterIssues = validateModelRoster(roster);
+    if (rosterIssues.length) throw new Error("Model roster is invalid: " + JSON.stringify(rosterIssues));
     const selection = selectModel(classification, roster, settings);
     console.log(JSON.stringify({ task, classification, selection }, null, 2));
     if (!selection.selected) process.exitCode = 2;
@@ -81,7 +83,7 @@ try {
     console.log("Edit these project-owned files directly or ask your coding agent to update them. Never store credentials in the roster.");
   } else if (command === "validate") {
     const result = await validateInstallation(root);
-    console.log(JSON.stringify({ valid: result.valid, resource_count: result.resource_count, issues: result.issues }, null, 2));
+    console.log(JSON.stringify({ valid: result.valid, resource_count: result.resource_count, issues: result.issues, warnings: result.warnings }, null, 2));
     if (!result.valid) process.exitCode = 1;
   } else if (command === "update") {
     const registry = await loadRegistry({ repository, ref });
