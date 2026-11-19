@@ -44,12 +44,12 @@ try {
     const preset = option("--preset", "auto");
     const plan = await buildPlan({ root, registry, resources: selected.length ? selected : undefined, preset, repository, ref });
     console.log("PROJECT ASSESSMENT");
-    console.log("Root: " + scan.root + "\nFiles inspected: " + scan.fileCount + "\nDetected hosts: " + (scan.hosts.join(", ") || "none"));
+    console.log("Root: " + scan.root + "\nFiles inspected: " + scan.fileCount + "\nDetected hosts: " + (scan.hosts.join(", ") || "none") + "\nProject signals: " + (scan.projectSignals.join(", ") || "general") + "\nPreset: " + plan.preset);
     console.log("\nCAPABILITY MAP");
     for (const item of classifyCapabilities(scan)) console.log("- " + item.label + ": " + item.action + (item.evidence.length ? " (" + item.evidence.join(", ") + ")" : ""));
     console.log("\nINSTALLATION PLAN");
     for (const item of plan.resources) console.log("- " + item.action.padEnd(14) + " " + item.id + " -> " + item.destination);
-    console.log("\\nHOST INTEGRATION (" + plan.detected_hosts.join(", ") + ")");
+    console.log("\nHOST INTEGRATION (" + plan.detected_hosts.join(", ") + ")");
     for (const item of plan.host_resources ?? []) console.log("- " + item.action.padEnd(14) + " " + item.id + " -> " + item.destination);
     console.log("- ENTRYPOINT      " + plan.project_entrypoint);
     console.log("- SETTINGS        project-local settings and owner-defined model roster");
