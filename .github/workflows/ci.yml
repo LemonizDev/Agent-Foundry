@@ -6,6 +6,11 @@ on:
   pull_request:
   workflow_dispatch:
 
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -15,7 +20,32 @@ jobs:
         with:
           node-version: 20
       - run: npm install
-      - run: npm test
+      - name: Run test suite
+        id: tests
+        continue-on-error: true
+        run: |
+          npm test > test-output.txt 2>&1
+          result=$?
+          cat test-output.txt
+          echo "exit_code=$result" >> "$GITHUB_OUTPUT"
+          exit 0
+      - name: Publish test failure details to pull request
+        if: steps.tests.outputs.exit_code != '0'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const output = fs.readFileSync('test-output.txt', 'utf8').slice(-12000);
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: '### Agent Foundry CI test failure\n\n```text\n' + output + '\n```'
+            });
+      - name: Fail if tests failed
+        if: steps.tests.outputs.exit_code != '0'
+        run: exit 1
+      - run: npm run validate:repo
       - run: node bin/agent-foundry.js version
       - run: node bin/agent-foundry.js inspect --project .
       - run: npm pack --dry-run
