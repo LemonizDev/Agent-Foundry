@@ -140,3 +140,16 @@ test("uninstall preserves owner edits inside the marked instruction block", asyn
   await uninstall(root, { apply: true });
   assert.match(await fs.readFile(agentsPath, "utf8"), /OWNER CUSTOMIZED THIS POINTER/);
 });
+
+test("installer fetches all resources before writing any project files", async () => {
+  const root = await temp();
+  const resource = { id: "one", type: "skill", path: "skills/one.md", version: "1" };
+  const registry = { resources: [resource] };
+  const plan = await buildPlan({ root, registry, resources: ["one"], repository: "owner/repo", ref: "main" });
+  const fetchText = async url => url.endsWith("model-roster.yaml")
+    ? { ok: false, status: 404, text: async () => "" }
+    : { ok: true, text: async () => "# fetched resource\n" };
+  await assert.rejects(() => applyPlan(plan, { root, registry, fetchText }), /settings template/);
+  await assert.rejects(() => fs.access(path.join(root, "AGENTS.md")));
+  await assert.rejects(() => fs.access(path.join(root, ".agent-foundry/manifest.json")));
+});
