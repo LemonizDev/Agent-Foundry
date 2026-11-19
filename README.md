@@ -153,10 +153,10 @@ This inspects the repository and prints a proposed resource plan. It does not ch
 After reviewing the plan, run:
 
 ```bash
-npx --yes --package github:LemonizDev/Agent-Foundry agent-foundry init --apply
+npx --yes --package github:LemonizDev/Agent-Foundry agent-foundry init --preset auto --apply
 ```
 
-The CLI asks for explicit confirmation. It then installs the selected baseline, records ownership hashes in .agent-foundry/manifest.json and adds a marked pointer to AGENTS.md without replacing existing content.
+The CLI asks for explicit confirmation. The auto preset starts with an autonomous-engineering baseline and adds visual QA resources when the project scanner detects graphics/rendering signals. You can choose minimal, balanced, autonomous-engineer, visual-engineer or research-engineer instead. The installer records ownership hashes in .agent-foundry/manifest.json and adds marked pointers without replacing existing content.
 
 Useful lifecycle commands:
 
@@ -180,6 +180,15 @@ The portable command contracts are the user-facing layer. The CLI now implements
 | `/close` | Capture useful project learnings from the current session into the correct context files |
 | `/settings` | Show and edit project-level Agent Foundry settings |
 | `/models edit` | Edit the model roster used for task-aware delegation |
+| `/audit` | Map a repository and identify evidence-backed gaps |
+| `/implement` | Execute a bounded, approved implementation plan |
+| `/debug` | Reproduce and isolate a root cause |
+| `/review` | Run an independent, findings-first code review |
+| `/verify` | Verify acceptance criteria with explicit evidence |
+| `/delegate` | Create a bounded model-aware worker assignment |
+| `/next-task` | Recommend the highest-value next action |
+| `/project-health` | Assess project health across engineering dimensions |
+| `/resume` | Recover interrupted work from verified checkpoints |
 | `/models explain` | Explain why a model is or is not suitable for a task |
 
 CLI equivalents currently available: agent-foundry settings and agent-foundry route --task "describe the work". The latter classifies a task and ranks eligible models from the project's configured roster. It recommends; it does not dispatch a worker. Native slash-command registration is not yet available.
@@ -298,7 +307,7 @@ An integration must state which tool and version it supports, what it maps, what
 
 ## Project status
 
-Agent Foundry is under active development. The resource library and architecture are being expanded; production installation and host compatibility still need implementation and validation.
+Agent Foundry is under active development. The resource library, first CLI installer and native artifact generators are in active development. Host runtime validation, automatic provider dispatch, signed release provenance and stable release processes remain outstanding.
 
 | Capability | Status |
 |---|---|
