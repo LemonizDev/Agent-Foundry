@@ -46,3 +46,15 @@
 - Agent-first bootstrap is documented but not yet a tested installer.
 - CLI, resource selection engine, safe update/uninstall, automated validation, license and platform adapters remain incomplete.
 \n\n## 2026-11-20 — Next capability increment\n\n### Added\n- Full user guide with lifecycle diagram, command explanations, session learning and model delegation guidance.\n- Existing-project integration and migration architecture with capability mapping and additive installation rules.\n- Task-aware model delegation design with intensity dimensions, workload classes, risk gates and a user-defined model roster.\n- Close-session command, durable session-learning skill and context-consolidation workflow.\n- Settings and model-roster editing command contracts and project-local configuration templates.\n\n### Changed\n- Rewrote the README around user problems and real outcomes instead of asking newcomers to understand internal resource categories first.\n- Renamed the source project's public product identity from Lively Wallpaper to Rave Engine in Foundry's source documentation. Lively remains the host platform.\n\n### Limitations\n- Command contracts are drafts; native host slash-command support is not yet implemented or verified.\n- Session close cannot close the chat UI without a host-provided API.\n- Model selection is a routing design; automatic per-task execution requires a tested host adapter and configured roster.\n- Existing-project integration remains an agent-executed procedure until the installer is implemented.\n
+
+### Next capability increment
+
+- Reframed the README around the engineering problems solved, user journeys and visual lifecycle diagrams.
+- Added a complete user guide, existing-project integration/migration design and task-aware model delegation architecture.
+- Added the close-session command, durable session-learning skill and session-close workflow.
+- Added settings and user-defined model-roster commands with project-local YAML templates.
+- Added model explain/test command contracts and registered the new resources.
+- Renamed the source wallpaper project's public identity to **Rave Engine**, while retaining Lively Wallpaper as its host platform. Added a Rave Engine README, updated the agent mission and project context headings, and set the displayed Lively wallpaper title.
+- Validated all 40 registry resource paths against the repository tree and checked relative links in the README, user guide and documentation index. No missing paths or broken links were found.
+- Parsed the updated Lively metadata JSON successfully.
+- Native command adapters, CLI/installer, automatic routing, automated schema validation and full end-to-end setup remain unimplemented.
