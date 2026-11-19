@@ -107,3 +107,8 @@ A public stable release should not be cut until:
 - Supported host adapters have compatibility tests.
 - Security review covers installer input, path traversal, symlinks and untrusted project files.
 - README and release notes accurately describe supported capabilities.
+
+
+## Manifest format decision
+
+The CLI prototype writes `.agent-foundry/manifest.json` rather than YAML. The manifest is generated machine state: JSON provides strict parsing, deterministic serialization and no additional runtime dependency. Human-edited preferences remain YAML templates under `.agent-foundry/settings/`. The manifest schema is versioned independently through `schema_version`; consumers must reject unsupported schema versions rather than guessing.
