@@ -1,6 +1,6 @@
 # Reusable Resource Inventory — Source-First Audit
 
-**Audit date:** 2026-11-19  
+**Audit date:** 2026-11-20  
 **Sources:**  
 - [Dhan AI Trader](https://github.com/LemonizDev/dhan-chatgpt-connector/tree/foundation/final-trader-architecture) — branch `foundation/final-trader-architecture`
 - [Rave Engine (Lively Wallpaper project)](https://github.com/LemonizDev/futuristic-lively-wallpaper/tree/main) — branch `main`
@@ -35,13 +35,13 @@ Classification:
 
 | Source path | Observed content | Reuse decision | Destination |
 |---|---|---|---|
-| `.kilo/commands/PROGRESS_REPORT_RULES.md` | Six-section progress report, ASCII bars, work-weighted progress, glosses, honest caveats, uncommitted work | Reusable command/skill/reporting standard | `commands/`, `skills/progress-reporting/`, `templates/` |
-| `.kilo/commands/TEACHING_AFTER_IMPLEMENTATION.md` | Post-implementation explanation, before/after flow, progress bar, three key points, break scenarios | Reusable optional teaching/reporting command | `commands/learning/`, `skills/explanation/` |
+| `.kilo/commands/PROGRESS_REPORT_RULES.md` | Six-section progress report, ASCII bars, work-weighted progress, glosses, honest caveats, uncommitted work | Reusable command/skill/reporting standard | `commands/progress-report.md`, `skills/progress-reporting/SKILL.md`, `templates/` |
+| `.kilo/commands/TEACHING_AFTER_IMPLEMENTATION.md` | Post-implementation explanation, before/after flow, progress bar, three key points, break scenarios | Reusable optional teaching/reporting command | `commands/teach-implementation.md`, `skills/explanation/` |
 | `rules/PROGRESS_REPORT_RULES.md` | Matching progress-report rules in generic rules location | Duplicate/alias evidence; compare and retain one canonical source | `commands/` |
-| `rules/TEACHING_AFTER_IMPLEMENTATION.md` | Matching teaching rule | Duplicate/alias evidence; do not fork | `commands/learning/` |
+| `rules/TEACHING_AFTER_IMPLEMENTATION.md` | Matching teaching rule | Duplicate/alias evidence; do not fork | `commands/teach-implementation.md` |
 | `.clinerules/dhan-ai-trader-delegation.md` | FreeBuff-native delegation policy and specialist spawn checks | Extract portable delegation policy; adapter-specific runtime instructions remain in integration | `skills/multi-agent-delegation/`, `integrations/` |
 | `AGENTS.md` | Read order, policy hierarchy, inspect-before-edit, delegation, evidence, documentation, teaching, Telegram regression | Source for core instructions and many distinct standards | `core/`, `standards/`, `skills/` |
-| `USER_CONTEXT.md` | Owner-specific preferences and risk philosophy | Template for project context; personal content excluded | `templates/project/OWNER_CONTEXT.md` |
+| `USER_CONTEXT.md` | Owner-specific preferences and risk philosophy | Template for project context; personal content excluded | `templates/owner-context.md` |
 
 The progress report files are reusable rule documents, **not necessarily native slash-command implementations**. The canonical Foundry command should therefore be generated/adapted by platform-specific integrations.
 
@@ -290,3 +290,12 @@ Commands are candidate canonical invocations. Each platform integration decides 
 - Not every individual agent definition, every verification report, or every Lively probe has been read line-by-line yet. Those remain listed as inventory candidates; individual extraction requires source inspection.
 - Current branch names are used as provenance, not immutable commit IDs. Capture commit SHAs before final validated releases.
 - The next pass should inspect every candidate in the high-priority families, consolidate duplicates, and create canonical Foundry resources with individual provenance. Do not mass-copy the source repositories.
+
+
+## 7. Current Foundry implementation notes
+
+The resource library has since been generalised into flat, descriptive command, workflow and template filenames. The standard `skills/<skill-id>/SKILL.md` layout is retained because it is the portable Agent Skills package convention; supporting files belong beside the skill entrypoint.
+
+The CLI now installs from a project-aware preset, records the exact source commit SHA, generates host-native skill/command/profile files where supported, and preserves local changes through ownership hashes. Its structural scanner is heuristic; it does not replace the agent-led semantic assessment.
+
+The command and skill resources in the current registry are authored generalisations of the source practices. They should not be described as verbatim extractions of standalone slash commands or skills from Dhan/Rave Engine unless the source inventory explicitly identifies such a file.
