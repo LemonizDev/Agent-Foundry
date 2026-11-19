@@ -57,12 +57,12 @@ Load only resources relevant to the current task.
 
 ## Canonical core standards
 
-- `standards/engineering-principles.md`
-- `standards/agent-communication.md`
-- `standards/context-management.md`
-- `standards/security-boundaries.md`
-- `standards/decision-making.md`
-- `standards/evidence-and-verification.md`
-- `standards/documentation-governance.md`
+- `.agent-foundry/resources/standards/engineering-principles.md`
+- `.agent-foundry/resources/standards/agent-communication.md`
+- `.agent-foundry/resources/standards/context-management.md`
+- `.agent-foundry/resources/standards/security-boundaries.md`
+- `.agent-foundry/resources/standards/decision-making.md`
+- `.agent-foundry/resources/standards/evidence-and-verification.md`
+- `.agent-foundry/resources/standards/documentation-governance.md`
 
 Project-specific rules may extend these standards but must not silently weaken security or owner-approval boundaries.
