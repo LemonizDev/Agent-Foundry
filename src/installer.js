@@ -142,6 +142,7 @@ export async function applyPlan(plan, { root = plan.project_root, registry, fetc
     activeResources.push(item);
   }
   for (const item of plan.host_resources ?? []) {
+    await assertNoSymlinkPath(base, item.destination);
     const file = path.join(base, safeRelative(item.destination));
     if (await exists(file)) {
       if (skipConflicts) continue;
@@ -302,6 +303,7 @@ export async function validateInstallation(root = process.cwd()) {
 export async function updateInstallation({ root = process.cwd(), registry, fetchText = globalThis.fetch, apply = false } = {}) {
   const base = path.resolve(root);
   const manifestPath = path.join(base, FOUNDARY_DIR, "manifest.json");
+  await assertNoSymlinkPath(base, FOUNDARY_DIR + "/manifest.json");
   const manifest = JSON.parse(await fs.readFile(manifestPath, "utf8"));
   const changed = [], conflicts = [];
   for (const item of manifest.installed_resources) {
@@ -340,21 +342,25 @@ export async function updateInstallation({ root = process.cwd(), registry, fetch
 export async function uninstall(root = process.cwd(), { apply = false } = {}) {
   const base = path.resolve(root);
   const dir = path.join(base, FOUNDARY_DIR);
+  await assertNoSymlinkPath(base, FOUNDARY_DIR + "/manifest.json");
   const manifest = JSON.parse(await fs.readFile(path.join(dir, "manifest.json"), "utf8"));
   const removed = [], preserved = [], managedFileActions = [], settingsActions = [];
   for (const item of manifest.installed_resources ?? []) {
     const file = path.join(base, safeRelative(item.installed_path));
+    try { await assertNoSymlinkPath(base, item.installed_path); } catch { preserved.push(item.installed_path); continue; }
     if (!await exists(file)) continue;
     if (sha256(await fs.readFile(file)) === item.installed_sha256) removed.push(item.installed_path);
     else preserved.push(item.installed_path);
   }
   for (const item of manifest.settings ?? []) {
     const file = path.join(base, safeRelative(item.path));
+    try { await assertNoSymlinkPath(base, item.path); } catch { settingsActions.push({ path: item.path, action: "PRESERVE_SYMLINK" }); continue; }
     if (!await exists(file)) continue;
     settingsActions.push({ path: item.path, action: sha256(await fs.readFile(file)) === item.installed_sha256 ? "REMOVE_TEMPLATE" : "PRESERVE_OWNER_EDIT" });
   }
   for (const item of manifest.managed_files ?? []) {
     const file = path.join(base, safeRelative(item.path));
+    try { await assertNoSymlinkPath(base, item.path); } catch { managedFileActions.push({ path: item.path, action: "PRESERVE_SYMLINK" }); continue; }
     if (!await exists(file)) continue;
     if (sha256(await fs.readFile(file)) === item.installed_sha256) managedFileActions.push({ path: item.path, action: "REMOVE" });
     else managedFileActions.push({ path: item.path, action: "PRESERVE" });
@@ -362,6 +368,7 @@ export async function uninstall(root = process.cwd(), { apply = false } = {}) {
   const entrypointActions = [];
   for (const entrypoint of manifest.entrypoints ?? [{ path: "AGENTS.md", created: manifest.created_entrypoint }]) {
     const file = path.join(base, safeRelative(entrypoint.path));
+    try { await assertNoSymlinkPath(base, entrypoint.path); } catch { entrypointActions.push({ path: entrypoint.path, action: "PRESERVE_SYMLINK" }); continue; }
     if (!await exists(file)) continue;
     const text = await fs.readFile(file, "utf8");
     const startMarker = "<!-- agent-foundry:start -->";
