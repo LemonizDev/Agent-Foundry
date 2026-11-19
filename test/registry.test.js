@@ -25,6 +25,7 @@ test("safeRelative rejects traversal and absolute paths", () => {
   assert.equal(safeRelative("skills/a.md"), "skills/a.md");
   assert.throws(() => safeRelative("../../outside"), /Unsafe/);
   assert.throws(() => safeRelative("/etc/passwd"), /Unsafe/);
+  assert.throws(() => safeRelative("C:\\Windows\\system.ini"), /Unsafe/);
 });
 
 test("instruction block is idempotent and preserves existing content", () => {
