@@ -24,3 +24,16 @@ test("command aliases become host slash command names", () => {
   assert.ok(paths.includes(".kilo/commands/close.md"));
   assert.ok(paths.includes(".kilo/commands/close-session.md"));
 });
+
+test("specialist profiles become host-native agents with reviewer restrictions", () => {
+  const lead = { id: "lead-engineer", type: "profile", path: "profiles/lead-engineer.md", version: "1" };
+  const reviewer = { id: "independent-reviewer", type: "profile", path: "profiles/independent-reviewer.md", version: "1" };
+  const leadArtifacts = renderHostArtifacts(lead, "# Lead\n\n## Mission\nOwn engineering delivery.", ["opencode", "kilo"]);
+  const reviewerArtifacts = renderHostArtifacts(reviewer, "# Reviewer\n\n## Mission\nReview changes independently.", ["opencode", "kilo"]);
+  const kiloReviewer = reviewerArtifacts.find(x => x.installed_path === ".kilo/agents/independent-reviewer.md");
+  const openReviewer = reviewerArtifacts.find(x => x.installed_path === ".opencode/agents/independent-reviewer.md");
+  assert.match(leadArtifacts.find(x => x.installed_path === ".kilo/agents/lead-engineer.md").content, /mode: primary/);
+  assert.match(kiloReviewer.content, /mode: subagent/);
+  assert.match(kiloReviewer.content, /edit: deny/);
+  assert.match(openReviewer.content, /effect: deny/);
+});
