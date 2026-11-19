@@ -1,0 +1,92 @@
+schema_version: 1
+resources:
+  - id: progress-reporting
+    type: skill
+    path: skills/progress-reporting/SKILL.md
+    version: 0.1.0
+    status: draft
+    portability: adaptable
+  - id: multi-agent-delegation
+    type: skill
+    path: skills/multi-agent-delegation/SKILL.md
+    version: 0.1.0
+    status: draft
+    portability: adaptable
+  - id: visual-regression
+    type: skill
+    path: skills/visual-regression/SKILL.md
+    version: 0.1.0
+    status: draft
+    portability: adaptable
+  - id: atomic-implementation
+    type: skill
+    path: skills/atomic-implementation/SKILL.md
+    version: 0.1.0
+    status: draft
+    portability: universal
+  - id: project-state-management
+    type: skill
+    path: skills/project-state-management/SKILL.md
+    version: 0.1.0
+    status: draft
+    portability: adaptable
+  - id: multi-agent-campaign
+    type: workflow
+    path: workflows/multi-agent-campaign/WORKFLOW.md
+    version: 0.1.0
+    status: draft
+    portability: adaptable
+  - id: progress-report
+    type: command
+    path: commands/project/progress-report/COMMAND.md
+    version: 0.1.0
+    status: draft
+    portability: adaptable
+  - id: progress-report-template
+    type: template
+    path: templates/progress-report/PROGRESS_REPORT.md
+    version: 0.1.0
+    status: draft
+    portability: adaptable
+  - id: delegation-assignment
+    type: template
+    path: templates/assignments/DELEGATION_ASSIGNMENT.md
+    version: 0.1.0
+    status: draft
+    portability: adaptable
+  - id: recovery-handoff
+    type: template
+    path: templates/assignments/RECOVERY_HANDOFF.md
+    version: 0.1.0
+    status: draft
+    portability: adaptable
+  - id: evidence-and-verification
+    type: standard
+    path: standards/evidence-and-verification/STANDARD.md
+    version: 0.1.0
+    status: draft
+    portability: universal
+  - id: documentation-governance
+    type: standard
+    path: standards/documentation/STANDARD.md
+    version: 0.1.0
+    status: draft
+    portability: adaptable
+  - id: lead-engineer
+    type: profile
+    path: profiles/lead-engineer/PROFILE.md
+    version: 0.1.0
+    status: draft
+    portability: universal
+  - id: independent-reviewer
+    type: profile
+    path: profiles/independent-reviewer/PROFILE.md
+    version: 0.1.0
+    status: draft
+    portability: universal
+  - id: visual-quality-engineer
+    type: profile
+    path: profiles/visual-quality-engineer/PROFILE.md
+    version: 0.1.0
+    status: draft
+    portability: adaptable
