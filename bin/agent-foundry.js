@@ -69,8 +69,10 @@ try {
     if (!task) throw new Error("Provide --task with a description of the work to classify.");
     const rosterPath = path.join(root, ".agent-foundry/settings/model-roster.yaml");
     const roster = yaml.load(await fs.readFile(rosterPath, "utf8"));
+    const settingsPath = path.join(root, ".agent-foundry/settings/foundry-settings.yaml");
+    const settings = yaml.load(await fs.readFile(settingsPath, "utf8")) ?? {};
     const classification = classifyTask(task);
-    const selection = selectModel(classification, roster);
+    const selection = selectModel(classification, roster, settings);
     console.log(JSON.stringify({ task, classification, selection }, null, 2));
     if (!selection.selected) process.exitCode = 2;
   } else if (command === "settings") {
