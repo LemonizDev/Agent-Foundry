@@ -19,7 +19,7 @@ Do not claim host support without a reproducible test. Do not add model capabili
 
 - Keep changes focused and preserve established naming conventions.
 - Add or update tests for executable behaviour.
-- Run npm ci, npm test and npm run validate.
+- Run npm install, npm test and npm run validate. Run npm pack --dry-run to inspect the distributable package.
 - Update the changelog and documentation index.
 - Explain limitations and unsupported environments honestly.
 
