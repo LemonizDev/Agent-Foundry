@@ -19,7 +19,7 @@ const repository = option("--repository", "LemonizDev/Agent-Foundry");
 const ref = option("--ref", "main");
 
 function help() {
-  console.log("Agent Foundry v" + VERSION + "\nA project-aware engineering environment for AI coding agents.\n\nUsage:\n  agent-foundry init [--project PATH] [--preset auto|minimal|balanced|autonomous-engineer|visual-engineer|research-engineer] [--resources id,id] [--apply]\n  agent-foundry inspect [--project PATH]\n  agent-foundry validate [--project PATH]\n  agent-foundry update [--project PATH] [--ref REF] [--apply]\n  agent-foundry uninstall [--project PATH] --confirm\n  agent-foundry list\n  agent-foundry route --task "describe the task"\n  agent-foundry settings\n  agent-foundry version\n\ninit is plan-only by default. Review the plan, then repeat with --apply.\nExisting files are never silently overwritten.");
+  console.log("Agent Foundry v" + VERSION + "\nA project-aware engineering environment for AI coding agents.\n\nUsage:\n  agent-foundry init [--project PATH] [--preset auto|minimal|balanced|autonomous-engineer|visual-engineer|research-engineer] [--resources id,id] [--apply]\n  agent-foundry inspect [--project PATH]\n  agent-foundry validate [--project PATH]\n  agent-foundry update [--project PATH] [--ref REF] [--apply]\n  agent-foundry uninstall [--project PATH] [--apply]\n  agent-foundry list\n  agent-foundry route --task "describe the task"\n  agent-foundry settings\n  agent-foundry version\n\ninit is plan-only by default. Review the plan, then repeat with --apply.\nExisting files are never silently overwritten.");
 }
 
 async function ask(question) {
@@ -104,8 +104,15 @@ try {
       }
     }
   } else if (command === "uninstall") {
-    if (!has("--confirm")) throw new Error("Uninstall is destructive. Review the manifest and pass --confirm.");
-    console.log(JSON.stringify(await uninstall(root), null, 2));
+    const preview = await uninstall(root);
+    console.log("UNINSTALL PREVIEW");
+    console.log(JSON.stringify(preview, null, 2));
+    if (!has("--apply")) console.log("No files changed. Review the preview and rerun with --apply to uninstall.");
+    else {
+      const approval = has("--yes") ? "uninstall" : (await ask("Type 'uninstall' to remove unchanged Foundry-owned files: "));
+      if (approval !== "uninstall") { console.log("Cancelled. No files changed."); process.exitCode = 1; }
+      else console.log(JSON.stringify(await uninstall(root, { apply: true }), null, 2));
+    }
   } else {
     help();
     process.exitCode = 1;
