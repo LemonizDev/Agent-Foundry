@@ -27,13 +27,11 @@ test("resource dependencies refer to registered IDs", () => {
 
 test("default installer selection resolves entirely from registry", async () => {
   const { resolveResources } = await import("../src/registry.js");
-  const defaults = [
-    "atomic-implementation", "project-state-management", "progress-reporting",
-    "evidence-and-verification", "documentation-governance", "session-learning",
-    "close-session", "progress-report", "teach-implementation", "session-close",
-    "foundry-settings", "edit-model-roster", "model-delegation-architecture",
-    "model-roster-template", "foundry-settings-template", "lead-engineer",
-    "independent-reviewer", "agent-execution-security"
-  ];
-  assert.equal(resolveResources(registry, defaults).length, defaults.length);
+  const { resourcesForPreset } = await import("../src/installer.js");
+  const { scanProject } = await import("../src/project-scanner.js");
+  const scan = await scanProject(root);
+  for (const preset of ["minimal", "balanced", "autonomous-engineer", "visual-engineer", "research-engineer", "auto"]) {
+    const resources = resourcesForPreset(preset, scan);
+    assert.equal(resolveResources(registry, resources).length, resources.length, "preset " + preset + " contains unknown or duplicate resources");
+  }
 });
