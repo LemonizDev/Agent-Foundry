@@ -1,53 +1,73 @@
-# Documentation Index
+# Documentation
 
-This directory explains Agent Foundry itself: its architecture, source extraction, design decisions and authoring rules. For the reusable assets, return to the [repository README](../README.md).
+This is the documentation map for Agent Foundry. The [root README](../README.md) is the product overview and first-time visitor landing page; this index is the deeper reference map.
 
-## Start here
+## Choose your path
 
-- [User Guide](USER_GUIDE.md) — explains the product, setup, commands, model delegation and session learning in developer-facing language.
-- [Existing Project Integration](architecture/EXISTING_PROJECT_INTEGRATION.md) — how to add Foundry to an established repository without replacing its architecture or instructions.
-- [Task-Aware Model Delegation](architecture/MODEL_DELEGATION.md) — task classification and owner-defined model roster.
-- [Close-session command](../commands/close-session.md) and [session-close workflow](../workflows/session-close.md) — capture durable project learnings before ending a chat.
+<details open>
+<summary><strong>I'm new to Agent Foundry</strong></summary>
 
-## Engine and installation
+1. Read the [User Guide](USER_GUIDE.md) for the product model, workflows and limitations.
+2. Follow the [Bootstrap Guide](../BOOTSTRAP.md) to inspect and initialise a project.
+3. Review [Existing Project Integration](architecture/EXISTING_PROJECT_INTEGRATION.md) to understand the additive, conflict-aware approach.
 
-- [Engine Architecture](architecture/ENGINE_ARCHITECTURE.md) — project scanner, resource resolver, plan-first installer, manifest, updates, validation and ownership boundaries.
-- [CLI bootstrap](../BOOTSTRAP.md) — install, inspect, validate, update and uninstall.
+</details>
 
-## Start with the architecture
+<details>
+<summary><strong>I want to understand the implementation</strong></summary>
 
-- [Resource Model](architecture/RESOURCE_MODEL.md) — definitions, category boundaries, authority, portability classes, loading strategy and lifecycle.
-- [Resource Authoring Standard](standards/RESOURCE_AUTHORING_STANDARD.md) — required metadata and structures for skills, commands, workflows and templates.
+- [Engine Architecture](architecture/ENGINE_ARCHITECTURE.md) — scanner, resource resolver, installation plan, manifest, updates, validation and ownership boundaries.
+- [Resource Model](architecture/RESOURCE_MODEL.md) — resource types, metadata, authority, portability and lifecycle.
+- [Distribution and Versioning](architecture/DISTRIBUTION_AND_VERSIONING.md) — source revisions, package distribution and release design.
+- [Task-Aware Model Delegation](architecture/MODEL_DELEGATION.md) — task classification, roster eligibility, scoring and review gates.
 
-## Source audit and extraction
+</details>
 
-These documents explain what was found in the source repositories and how it was evaluated.
+<details>
+<summary><strong>I want to author or contribute resources</strong></summary>
 
-- [Reusable Resource Inventory](audit/REUSABLE_RESOURCE_INVENTORY.md) — the source-first inventory of Dhan AI Trader and Rave Engine (the Lively Wallpaper project), including reusable families and project-specific exclusions.
-- [Source Coverage](audit/SOURCE_COVERAGE.md) — what repository areas and source families were inventoried or inspected.
-- [Extraction Decisions](audit/EXTRACTION_DECISIONS.md) — rationale for generalising, adapting, deduplicating or excluding source material.
-- [Command Catalog](audit/COMMAND_CATALOG.md) — source-backed command behaviours, candidate invocations and platform-adapter cautions.
-- [Extraction Register](EXTRACTION_REGISTER.md) — source-to-resource mapping, current extraction status and remaining work.
+- [Resource Authoring Standard](standards/RESOURCE_AUTHORING_STANDARD.md) — required structures and metadata for skills, commands, workflows and templates.
+- [Contributing Guide](../CONTRIBUTING.md) — contribution expectations, validation and pull request requirements.
+- [Code of Conduct](../CODE_OF_CONDUCT.md) — community expectations.
+- [Support](../SUPPORT.md) — usage help and issue reporting.
 
-## Where to go for the reusable resources
+</details>
 
-| Resource category | Location |
+<details>
+<summary><strong>I want to audit the source material</strong></summary>
+
+These documents distinguish what was discovered, what was inspected, what was extracted and what remains unvalidated.
+
+- [Reusable Resource Inventory](audit/REUSABLE_RESOURCE_INVENTORY.md) — source-first inventory of Dhan AI Trader and Rave Engine.
+- [Source Coverage](audit/SOURCE_COVERAGE.md) — repository areas and source families inventoried or inspected.
+- [Extraction Decisions](audit/EXTRACTION_DECISIONS.md) — rationale for generalising, adapting, deduplicating or excluding material.
+- [Command Catalog](audit/COMMAND_CATALOG.md) — source-backed command behaviours and host-adapter cautions.
+- [Extraction Register](EXTRACTION_REGISTER.md) — source-to-resource mapping and extraction status.
+
+</details>
+
+## Resource catalog
+
+| Category | Browse |
 |---|---|
-| Portable baseline instructions | [core/](../core/GLOBAL_INSTRUCTIONS.md) |
-| User-invokable command contracts | [Audit](../commands/audit.md) · [Implement](../commands/implement.md) · [Debug](../commands/debug.md) · [Review](../commands/review.md) · [Verify](../commands/verify.md) · [Delegate](../commands/delegate.md) · [Next task](../commands/next-task.md) · [Project health](../commands/project-health.md) · [Resume](../commands/resume.md) · [Progress report](../commands/progress-report.md) · [Teach implementation](../commands/teach-implementation.md) · [Close session](../commands/close-session.md) · [Settings](../commands/settings.md) · [Edit model roster](../commands/edit-model-roster.md) · [Explain model choice](../commands/explain-model-selection.md) · [Test a model](../commands/test-model.md) |
-| Task procedures | [Repository audit](../skills/repository-audit/SKILL.md) · [Implementation planning](../skills/implementation-planning/SKILL.md) · [Debugging](../skills/debugging/SKILL.md) · [Testing](../skills/testing-and-verification/SKILL.md) · [Code review](../skills/code-review/SKILL.md) · [Architecture](../skills/architecture-design/SKILL.md) · [Session recovery](../skills/session-recovery/SKILL.md) · [Documentation](../skills/documentation-maintenance/SKILL.md) |
-| Multi-step coordination | [workflows/](../workflows/multi-agent-campaign.md) |
-| Agent role definitions | [Profile catalog](../profiles/README.md) |
-| Engineering rules | [Engineering principles](../standards/engineering-principles.md) · [Agent communication](../standards/agent-communication.md) · [Context management](../standards/context-management.md) · [Security boundaries](../standards/security-boundaries.md) · [Decision-making](../standards/decision-making.md) · [Evidence](../standards/evidence-and-verification.md) · [Documentation governance](../standards/documentation-governance.md) |
-| Reusable output structures | [templates/](../templates/progress-report-template.md) |
-| Tool-specific mapping guidance | [integrations/](../integrations/README.md) |
-| Machine-readable resource catalog | [registry/resources.yaml](../registry/resources.yaml) |
+| Core instructions | [Global Instructions](../core/GLOBAL_INSTRUCTIONS.md) |
+| Commands | [Command directory](../commands/audit.md) · [Audit](../commands/audit.md) · [Implement](../commands/implement.md) · [Debug](../commands/debug.md) · [Review](../commands/review.md) · [Verify](../commands/verify.md) · [Delegate](../commands/delegate.md) · [Progress report](../commands/progress-report.md) · [Close session](../commands/close-session.md) · [Settings](../commands/settings.md) · [Model roster](../commands/edit-model-roster.md) |
+| Skills | [Repository audit](../skills/repository-audit/SKILL.md) · [Implementation planning](../skills/implementation-planning/SKILL.md) · [Debugging](../skills/debugging/SKILL.md) · [Testing and verification](../skills/testing-and-verification/SKILL.md) · [Code review](../skills/code-review/SKILL.md) · [Architecture design](../skills/architecture-design/SKILL.md) · [Session recovery](../skills/session-recovery/SKILL.md) · [Documentation maintenance](../skills/documentation-maintenance/SKILL.md) |
+| Workflows | [Multi-agent campaign](../workflows/multi-agent-campaign.md) · [Session close](../workflows/session-close.md) |
+| Agent profiles | [Profile catalog](../profiles/README.md) |
+| Engineering standards | [Engineering principles](../standards/engineering-principles.md) · [Communication](../standards/agent-communication.md) · [Context management](../standards/context-management.md) · [Security boundaries](../standards/security-boundaries.md) · [Decision-making](../standards/decision-making.md) · [Evidence and verification](../standards/evidence-and-verification.md) · [Documentation governance](../standards/documentation-governance.md) |
+| Templates | [Template directory](../templates/progress-report-template.md) · [Progress report](../templates/progress-report-template.md) · [Delegation assignment](../templates/delegation-assignment.md) · [Recovery handoff](../templates/recovery-handoff.md) · [Model roster](../templates/model-roster.yaml) · [Foundry settings](../templates/foundry-settings.yaml) |
+| Host integrations | [Integration directory](../integrations/README.md) |
+| Machine-readable catalog | [Resource registry](../registry/resources.yaml) |
 
-## Documentation maintenance rules
+## Documentation ownership and maintenance
 
-- Update the README when top-level directories, resource categories or onboarding steps change.
-- Update the extraction register when a source is inspected, extracted, excluded or validated.
-- Keep source inventory separate from extraction status. A discovered file is not automatically an extracted resource.
-- Record source repository, ref and path for every extracted resource. Do not invent immutable commit provenance.
-- Keep the resource registry aligned with actual files and their metadata.
-- Use the changelog for meaningful repository-level changes.
+- The root README explains the product, first steps, high-level capabilities and current maturity.
+- This index routes readers to detailed guides and reference material.
+- Architecture documents explain design and boundaries; they must not silently become user setup instructions.
+- The resource registry is the machine-readable catalog. Keep it aligned with real files and metadata.
+- The extraction inventory records discoveries; the extraction register records decisions and status. Do not treat discovery as completed extraction.
+- Every source-derived resource must retain verifiable repository, revision and path provenance. Never invent immutable commit references.
+- Update the README and this index when public paths, resource categories or onboarding steps change.
+- Record meaningful user-facing and repository-level changes in the [changelog](../CHANGELOG.md).
+- Keep one authoritative home for each fact. Link to it rather than maintaining competing copies.
