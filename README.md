@@ -120,6 +120,20 @@ Copy this into your coding agent:
 
 [Read the complete setup procedure](BOOTSTRAP.md) · [Read the agent's initialization specification](bootstrap/INITIALIZE_PROJECT.md) · [Read the existing-project migration design](docs/architecture/EXISTING_PROJECT_INTEGRATION.md)
 
+### Experimental CLI preview
+
+A Node.js CLI prototype is available on the development branch. It requires Node.js 20 or newer:
+
+```bash
+npm install --global git+https://github.com/LemonizDev/Agent-Foundry.git#feat/cli-installer-mvp
+agent-foundry inspect --project .
+agent-foundry init --project . --preset balanced --ref feat/cli-installer-mvp
+```
+
+The first `init` command prints a plan and makes no changes. Review it, then repeat with `--apply` to install. You can also select exact resource IDs with `--resources id-one,id-two`.
+
+This preview copies selected resources and writes `.agent-foundry/manifest.json`. It does not yet wire host-native commands or modify the root agent-instruction file. Treat it as a development preview, not a production installer.
+
 ### What the installation is intended to look like
 
 ```text
