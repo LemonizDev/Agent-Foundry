@@ -5,12 +5,13 @@ import { renderHostArtifacts } from "../src/host-adapters.js";
 test("skills are mapped to detected host-native skill directories", () => {
   const resource = { id: "review", type: "skill", path: "skills/review/SKILL.md", version: "1" };
   const content = "---\nid: review\nname: Review\ntype: skill\n---\n\n## Purpose\nReview code safely.\n";
-  const artifacts = renderHostArtifacts(resource, content, ["claude-code", "opencode", "cline"]);
+  const artifacts = renderHostArtifacts(resource, content, ["claude-code", "opencode", "cline", "kilo"]);
   const paths = artifacts.map(x => x.installed_path);
   assert.ok(paths.includes(".agents/skills/review/SKILL.md"));
   assert.ok(paths.includes(".claude/skills/review/SKILL.md"));
   assert.ok(paths.includes(".opencode/skills/review/SKILL.md"));
   assert.ok(paths.includes(".cline/skills/review/SKILL.md"));
+  assert.ok(paths.includes(".kilo/skills/review/SKILL.md"));
 });
 
 test("command aliases become host slash command names", () => {
