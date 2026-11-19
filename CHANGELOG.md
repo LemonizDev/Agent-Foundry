@@ -58,3 +58,26 @@
 - Validated all 40 registry resource paths against the repository tree and checked relative links in the README, user guide and documentation index. No missing paths or broken links were found.
 - Parsed the updated Lively metadata JSON successfully.
 - Native command adapters, CLI/installer, automatic routing, automated schema validation and full end-to-end setup remain unimplemented.
+
+
+## 2026-11-20 — CLI installer MVP (development branch)
+
+### Added
+- Node.js CLI package entrypoint and commands for initialization planning, resource listing, project inspection, manifest validation and conservative uninstall.
+- Resource selection presets and explicit resource-ID selection.
+- Project-local JSON manifest with resource hashes and source revision.
+- Initial Node.js test suite and CI workflow for Node 20 and 22.
+
+### Safety constraints
+- Initialization is plan-only unless `--apply` is supplied.
+- Existing untracked destination files cause a conflict rather than overwrite.
+- Updates compare installed content hashes before replacing a resource.
+- Uninstall preserves modified resources and unrelated files.
+- Symlink paths are rejected during resource path resolution.
+- Root agent instructions are not modified by the generic installer.
+
+### Limitations
+- This is an experimental implementation on `feat/cli-installer-mvp`, not a release.
+- Native host adapters, root instruction integration, resource dependency resolution, robust rollback, full update/migration and end-to-end project scenarios remain outstanding.
+- Package publication and repository licensing remain owner decisions.
+- CI execution has not yet been observed for this branch; do not describe tests as passing until the workflow reports success.
