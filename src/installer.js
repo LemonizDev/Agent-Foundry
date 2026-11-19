@@ -231,7 +231,7 @@ export async function validateInstallation(root = process.cwd()) {
   return { valid: issues.length === 0, resource_count: manifest.installed_resources.length, issues, manifest };
 }
 
-export async function updateInstallation({ root = process.cwd(), registry, fetchText = globalThis.fetch } = {}) {
+export async function updateInstallation({ root = process.cwd(), registry, fetchText = globalThis.fetch, apply = false } = {}) {
   const base = path.resolve(root);
   const manifestPath = path.join(base, FOUNDARY_DIR, "manifest.json");
   const manifest = JSON.parse(await fs.readFile(manifestPath, "utf8"));
@@ -252,7 +252,8 @@ export async function updateInstallation({ root = process.cwd(), registry, fetch
     }
     if (sha256(source) !== item.source_sha256 || sha256(content) !== item.installed_sha256) changed.push({ item, resource, content, source });
   }
-  if (conflicts.length) return { updated: 0, conflicts, pending: changed.map(x => x.item.id) };
+  if (conflicts.length) return { updated: 0, planned: changed.map(x => ({ id: x.item.id, path: x.item.installed_path, version: x.resource.version })), conflicts, pending: changed.map(x => x.item.id) };
+  if (!apply) return { updated: 0, planned: changed.map(x => ({ id: x.item.id, path: x.item.installed_path, version: x.resource.version })), conflicts: [], pending: [] };
   for (const change of changed) {
     await atomicWrite(path.join(base, safeRelative(change.item.installed_path)), change.content);
     change.item.version = change.resource.version;
@@ -262,7 +263,7 @@ export async function updateInstallation({ root = process.cwd(), registry, fetch
   manifest.source.ref = registry.ref;
   manifest.updated_at = new Date().toISOString();
   await atomicWrite(manifestPath, JSON.stringify(manifest, null, 2) + "\n");
-  return { updated: changed.length, conflicts: [], pending: [] };
+  return { updated: changed.length, planned: changed.map(x => ({ id: x.item.id, path: x.item.installed_path, version: x.resource.version })), conflicts: [], pending: [] };
 }
 
 export async function uninstall(root = process.cwd()) {
