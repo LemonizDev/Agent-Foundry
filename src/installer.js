@@ -95,7 +95,7 @@ export async function buildPlan({ root = process.cwd(), registry, resources, pre
   const planned = await Promise.all(selected.map(async resource => {
     const destination = path.posix.join(FOUNDARY_DIR, "resources", resource.path);
     const conflict = existing.has(destination) || await exists(path.join(root, destination));
-    return { id: resource.id, type: resource.type, source: resource.path, destination, version: resource.version, status: resource.status ?? "unknown", action: conflict ? "CONFLICT_CHECK" : "ADD" };
+    return { id: resource.id, type: resource.type, description: resource.description, source: resource.path, destination, version: resource.version, status: resource.status ?? "unknown", action: conflict ? "CONFLICT_CHECK" : "ADD" };
   }));
   const hostResources = [];
   for (const resource of selected.filter(item => ["skill", "command", "profile"].includes(item.type))) {
