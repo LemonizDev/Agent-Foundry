@@ -29,7 +29,7 @@ Agent Foundry is designed to make good engineering behaviour repeatable across r
 | Domain packs | Optional domain-specific knowledge and constraints |
 | Scripts | Validation, packaging, installation, and migration utilities |
 
-## Current state
+## Initial resource set\n\nThe first extraction pass includes skills for progress reporting, multi-agent delegation, visual QA, atomic implementation, and authoritative project-state management; a multi-agent campaign workflow; a progress-report command contract; reusable report/assignment/recovery templates; evidence and documentation standards; and lead-engineer, independent-reviewer, and visual-quality profiles. These are drafts pending scenario validation.\n\n## Current state
 
 This repository is in its initial architecture and source-extraction phase. Resources are added only after their source is inspected, generalised, and classified. See:
 
