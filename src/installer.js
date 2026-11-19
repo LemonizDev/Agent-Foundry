@@ -274,17 +274,24 @@ export async function validateInstallation(root = process.cwd()) {
     if (!await exists(file)) issues.push({ path: item.path, issue: "MISSING" });
     else if (sha256(await fs.readFile(file)) !== item.installed_sha256) warnings.push({ path: item.path, issue: "OWNER_CONFIGURED", note: "Project-owned settings differ from the original template." });
   }
-  for (const file of ["instructions.md", "manifest.json"]) if (!await exists(path.join(base, FOUNDARY_DIR, file))) issues.push({ path: FOUNDARY_DIR + "/" + file, issue: "MISSING" });
+  for (const file of ["instructions.md", "manifest.json"]) {
+    try { await assertNoSymlinkPath(base, FOUNDARY_DIR + "/" + file); } catch (error) { issues.push({ path: FOUNDARY_DIR + "/" + file, issue: "SYMLINK_BLOCKED", detail: error.message }); continue; }
+    if (!await exists(path.join(base, FOUNDARY_DIR, file))) issues.push({ path: FOUNDARY_DIR + "/" + file, issue: "MISSING" });
+  }
 
   const rosterPath = path.join(base, FOUNDARY_DIR, "settings/model-roster.yaml");
-  if (await exists(rosterPath)) {
+  let rosterSafe = true;
+  try { await assertNoSymlinkPath(base, FOUNDARY_DIR + "/settings/model-roster.yaml"); } catch (error) { rosterSafe = false; issues.push({ path: rosterPath, issue: "SYMLINK_BLOCKED", detail: error.message }); }
+  if (rosterSafe && await exists(rosterPath)) {
     try {
       const roster = yaml.load(await fs.readFile(rosterPath, "utf8"));
       for (const issue of validateModelRoster(roster)) issues.push({ path: rosterPath + ":" + issue.path, issue: issue.issue });
     } catch (error) { issues.push({ path: rosterPath, issue: "INVALID_YAML", detail: error.message }); }
   }
   const settingsPath = path.join(base, FOUNDARY_DIR, "settings/foundry-settings.yaml");
-  if (await exists(settingsPath)) {
+  let settingsSafe = true;
+  try { await assertNoSymlinkPath(base, FOUNDARY_DIR + "/settings/foundry-settings.yaml"); } catch (error) { settingsSafe = false; issues.push({ path: settingsPath, issue: "SYMLINK_BLOCKED", detail: error.message }); }
+  if (settingsSafe && await exists(settingsPath)) {
     try {
       const settings = yaml.load(await fs.readFile(settingsPath, "utf8"));
       if (!settings || settings.schema_version !== 1) issues.push({ path: settingsPath, issue: "INVALID_SCHEMA_VERSION" });
