@@ -7,14 +7,17 @@ models:
     model_id: replace-with-exact-model-id
     availability: unknown # available | unavailable | unknown
     access: owner-configured # free | paid | local | enterprise | unknown
+    size_class: unknown # small | medium | large | unknown
     capabilities:
       coding: unknown
       reasoning: unknown
       tool_calling: unknown
       structured_output: unknown
+      retrieval: unknown
+      vision: unknown
       instruction_following: unknown
       context_window_tokens: null
-      modalities: []
+      modalities: [] # text | image | video | browser
     performance:
       latency_ms_p50: null
       latency_ms_p95: null
