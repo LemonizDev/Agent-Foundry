@@ -1,19 +1,25 @@
 # Agent Profiles
 
-Profiles define responsibility boundaries and expected behaviour. They do not grant capabilities or permissions.
+An agent profile describes a role's mission, responsibilities, decision boundaries, required resources and non-goals. It does not grant the host new tools, permissions or subagent capabilities.
 
-Each canonical profile specifies:
-- Mission and scope
-- Responsibilities and decision rights
-- File ownership and non-goals
-- Required skills and standards
-- Inputs and outputs
-- Escalation and handoff rules
+Profiles are standalone Markdown files named after the role. Select only the roles that the target coding-agent platform can actually support.
+
+## Available profiles
+
+| Profile | Responsibility | Best used when |
+|---|---|---|
+| [Lead Engineer](lead-engineer.md) | Owns delivery, architecture, delegation, integration and final verification | One agent or team is accountable for the overall result |
+| [Independent Reviewer](independent-reviewer.md) | Challenges requirements, implementation, evidence and risks | A separate review pass is needed |
+| [Visual Quality Engineer](visual-quality-engineer.md) | Evaluates visual output and regression evidence | The product has a visual/rendered interface |
+| [Graphics Engineer](graphics-engineer.md) | Owns rendering architecture, materials and compositing | Graphics/rendering implementation is in scope |
+| [Creative Director](creative-director.md) | Translates visual/product intent into acceptance criteria | Design direction needs to be coordinated with engineering |
+| [Performance QA](performance-qa.md) | Measures frame-time, resource use and stability | Performance is a product requirement |
+| [Creative Lighting Director](creative-lighting-director.md) | Defines music-reactive lighting behaviour | Optional specialist for audio-reactive visual projects |
 
 ## Source-derived role families
 
-Dhan supplies patterns for architecture, code review, QA/test automation, security, database migration, Python/backend, SRE/deployment, performance, observability, documentation/context, LLM/agent quality, integration and domain specialists.
+Dhan AI Trader contributes patterns for architecture, code review, QA, security, database migration, backend engineering, SRE, performance, observability, documentation, LLM/agent quality and integrations.
 
-Lively supplies creative direction, graphics engineering, performance QA and audio-reactive lighting direction.
+Lively Wallpaper contributes creative direction, graphics engineering, visual QA and audio-reactive lighting direction.
 
-Create one canonical role definition per reusable responsibility. Kilo Markdown and FreeBuff TypeScript implementations belong in platform adapters; they should not become duplicated profiles.
+Only the profiles listed above have been extracted into the current catalogue. Other role families remain candidates until their source definitions are inspected and generalised.
