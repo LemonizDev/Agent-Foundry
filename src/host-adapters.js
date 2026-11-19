@@ -29,7 +29,7 @@ function commandDocument(description, body, host) {
   return skillDocument("agent-foundry-command", description, body);
 }
 
-function aliasesFor(metadata, id) {
+function aliasesFor(resource, metadata, id) {
   const values = Array.isArray(resource.aliases) ? resource.aliases : Array.isArray(metadata.aliases) ? metadata.aliases : [];
   const aliases = values.map(value => String(value).trim().replace(/^\//, "").split(/\s+/).join("/")).filter(Boolean);
   if (!aliases.length) aliases.push(id);
@@ -53,7 +53,7 @@ export function renderHostArtifacts(resource, content, hosts = []) {
     }
   }
   if (resource.type === "command") {
-    const aliases = aliasesFor(metadata, resource.id);
+    const aliases = aliasesFor(resource, metadata, resource.id);
     for (const alias of aliases) {
       const nested = alias.split("/").map(part => part.replace(/[^a-zA-Z0-9_-]/g, "")).filter(Boolean).join("/");
       if (!nested) continue;
