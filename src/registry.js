@@ -10,10 +10,14 @@ export async function loadRegistry({ repository = DEFAULT_REPOSITORY, ref = DEFA
   if (!response.ok) throw new Error("Could not fetch resource registry (" + response.status + "): " + url);
   const document = yaml.load(await response.text());
   if (!document || document.schema_version !== 1 || !Array.isArray(document.resources)) throw new Error("Unsupported or malformed Agent Foundry resource registry.");
-  const commitResponse = await fetchText("https://api.github.com/repos/" + repository + "/commits/" + ref);
-  if (!commitResponse.ok) throw new Error("Could not resolve immutable Foundry source revision (" + commitResponse.status + ").");
-  const commitData = await commitResponse.json();
-  if (!commitData.sha || !/^[a-f0-9]{40}$/i.test(commitData.sha)) throw new Error("GitHub did not return a valid commit SHA for the selected Foundry ref.");
+  let commitSha = ref;
+  if (!/^[a-f0-9]{40}$/i.test(ref)) {
+    const commitResponse = await fetchText("https://api.github.com/repos/" + repository + "/commits/" + ref);
+    if (!commitResponse.ok) throw new Error("Could not resolve immutable Foundry source revision (" + commitResponse.status + ").");
+    const commitData = await commitResponse.json();
+    commitSha = commitData.sha;
+  }
+  if (!commitSha || !/^[a-f0-9]{40}$/i.test(commitSha)) throw new Error("GitHub did not return a valid commit SHA for the selected Foundry ref.");
   const ids = new Set();
   for (const resource of document.resources) {
     if (!resource.id || ids.has(resource.id)) throw new Error("Missing or duplicate resource id: " + resource.id);
@@ -21,7 +25,7 @@ export async function loadRegistry({ repository = DEFAULT_REPOSITORY, ref = DEFA
     resource.path = safeRelative(resource.path);
     if (!resource.type || !resource.version) throw new Error("Incomplete registry entry: " + resource.id);
   }
-  return { ...document, repository, ref, commit_sha: commitData.sha, resolved_ref: commitData.sha };
+  return { ...document, repository, ref, commit_sha: commitSha, resolved_ref: commitSha };
 }
 
 export function resolveResources(registry, ids) {
