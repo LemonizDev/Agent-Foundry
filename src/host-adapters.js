@@ -52,6 +52,24 @@ export function renderHostArtifacts(resource, content, hosts = []) {
       add(root + "/" + slug + "/SKILL.md", "skill:" + host, slug, skillDocument(slug, description, body));
     }
   }
+  if (resource.type === "profile") {
+    const slug = resource.id;
+    const lead = slug === "lead-engineer";
+    const reviewer = slug.includes("reviewer");
+    const mode = lead ? "primary" : "subagent";
+    if (hosts.includes("opencode")) {
+      const permissions = reviewer
+        ? "\\npermissions:\\n  - action: edit\\n    resource: \"*\"\\n    effect: deny\\n  - action: shell\\n    resource: \"*\"\\n    effect: deny"
+        : "";
+      const frontmatter = "---\\ndescription: \"" + description.replaceAll('"', "'") + "\"\\nmode: " + mode + permissions + "\\n---\\n\\n";
+      add(".opencode/agents/" + slug + ".md", "profile:opencode", slug, frontmatter + body.trimStart());
+    }
+    if (hosts.includes("kilo")) {
+      const permissions = reviewer ? "\\npermission:\\n  edit: deny\\n  bash: deny" : "";
+      const frontmatter = "---\\ndescription: \"" + description.replaceAll('"', "'") + "\"\\nmode: " + mode + permissions + "\\n---\\n\\n";
+      add(".kilo/agents/" + slug + ".md", "profile:kilo", slug, frontmatter + body.trimStart());
+    }
+  }
   if (resource.type === "command") {
     const aliases = aliasesFor(resource, metadata, resource.id);
     for (const alias of aliases) {
