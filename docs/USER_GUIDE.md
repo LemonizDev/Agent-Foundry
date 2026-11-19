@@ -167,7 +167,7 @@ The router then:
 4. filters the owner-defined roster;
 5. ranks eligible models against the task;
 6. explains the selection and fallback;
-7. records actual outcomes so the owner can update the roster.
+7. reports the selection rationale and rejected candidates. Actual model benchmark results can be recorded by the owner after a bounded test; the router does not invent ratings or update the roster automatically.
 
 A fast model is useful for latency-sensitive, bounded tasks. A smaller model can be ideal for simple mechanical work. Neither should be selected solely because it is cheap or labelled “flash”. High-impact architecture, security, data migrations and complex debugging require stronger reasoning and verification.
 
