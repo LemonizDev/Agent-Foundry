@@ -32,7 +32,7 @@ May make routine implementation decisions within the approved scope. Must escala
 - `skills/atomic-implementation/SKILL.md`
 - `skills/multi-agent-delegation/SKILL.md`
 - `skills/project-state-management/SKILL.md`
-- `standards/evidence-and-verification/STANDARD.md`
+- `standards/evidence-and-verification.md`
 
 ## Non-goals
 
