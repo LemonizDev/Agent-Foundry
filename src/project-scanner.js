@@ -27,7 +27,7 @@ export async function scanProject(root = process.cwd()) {
   const hosts = [];
   if (fileSet.has("AGENTS.md")) hosts.push("agents-md");
   if (fileSet.has("CLAUDE.md") || files.some(f => f.startsWith(".claude/"))) hosts.push("claude-code");
-  if (files.some(f => f.startsWith(".opencode/"))) hosts.push("opencode");
+  if (files.some(f => f.startsWith(".opencode/")) || fileSet.has("opencode.json") || fileSet.has("opencode.jsonc")) hosts.push("opencode");
   if (files.some(f => f.startsWith(".kilo/"))) hosts.push("kilo");
   if (files.some(f => f.startsWith(".clinerules") || f.startsWith(".cline/"))) hosts.push("cline");
   if (files.some(f => f.startsWith(".github/"))) hosts.push("github");
