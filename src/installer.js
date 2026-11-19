@@ -200,7 +200,7 @@ export async function applyPlan(plan, { root = plan.project_root, registry, fetc
   const instructions = [
     "# Agent Foundry project instructions", "",
     "This project has selected Agent Foundry resources installed under .agent-foundry/resources/.",
-    "Before meaningful work, read .agent-foundry/resources/core/GLOBAL_INSTRUCTIONS.md and the relevant installed core standards.",
+    ...(staged.some(item => item.id === "global-instructions") ? ["Before meaningful work, read .agent-foundry/resources/core/GLOBAL_INSTRUCTIONS.md and the relevant installed core standards."] : ["The global instruction resource was not installed because its destination was skipped or conflicted. Follow the project\u0027s existing instructions and resolve the conflict before relying on the Foundry baseline."]),
     "Read only the selected resources relevant to the current task. Do not load every resource on every turn.",
     "The project's own architecture, instructions, owner decisions and security constraints remain authoritative.", "",
     "## Installed resources",
