@@ -26,7 +26,7 @@ If the plan identifies paths that already exist, do not overwrite them. Rerun wi
 npx --yes --package github:LemonizDev/Agent-Foundry agent-foundry init --preset auto --apply --skip-conflicts
 ```
 
-The CLI asks for explicit confirmation. Choose a preset with --preset auto|minimal|balanced|autonomous-engineer|visual-engineer|research-engineer. The auto preset starts with the autonomous-engineer baseline and adds visual QA resources when graphics/rendering signals are detected. Use a custom resource selection when you need exact control. To use a custom resource selection, pass comma-separated registry IDs:
+The CLI asks for explicit confirmation. Every preset and explicit resource list includes the universal core instructions and standards. Choose a preset with --preset auto|minimal|balanced|autonomous-engineer|visual-engineer|research-engineer. If the target project is new and has no host configuration files, specify your host explicitly with `--hosts codex,claude-code,opencode,kilo,cline` (or just the host you use). The auto preset starts with the autonomous-engineer baseline and adds visual QA resources when graphics/rendering signals are detected. Use a custom resource selection when you need exact control. To use a custom resource selection, pass comma-separated registry IDs:
 
 ```bash
 npx --yes --package github:LemonizDev/Agent-Foundry agent-foundry list
@@ -56,7 +56,22 @@ your-project/
     ├── settings/
     │   ├── foundry-settings.yaml     # Owner-editable behaviour settings
     │   └── model-roster.yaml         # User-defined model roster; no secrets
-    └── resources/                    # Selected resources only
+    └── resources/                    # Core baseline plus selected resources
+        ├── core/GLOBAL_INSTRUCTIONS.md
+        ├── standards/
+        ├── skills/
+        ├── workflows/
+        └── commands/
+
+# Host-native files are generated where detected or explicitly selected:
+.agents/skills/       # Shared by Codex, OpenCode and Kilo
+.claude/skills/       # Claude Code
+.claude/agents/       # Claude Code specialist agents
+.opencode/commands/   # OpenCode commands
+.opencode/agents/     # OpenCode specialist agents
+.kilo/commands/       # Kilo Code commands
+.kilo/agents/         # Kilo Code specialist agents
+.cline/skills/        # Cline
 ```
 
 ## Lifecycle commands
@@ -75,9 +90,12 @@ agent-foundry uninstall --apply
 The CLI can also be invoked through npx using the GitHub package spec shown above.
 
 - inspect: show detected project files, agent hosts, project-type signals and capability decisions.
-- validate: verify installed resources against the local manifest.
+- validate: verify installed resources against the local manifest, YAML settings and model roster.
+- list: show registered resources and descriptions.
+- route: classify a task and recommend a model from the owner-defined roster.
+- settings: show the project-local settings and roster paths.
 - update: preview available updates; rerun with --apply and confirm to update unchanged Foundry-owned resources. Local modifications block the update rather than being overwritten.
-- uninstall: preview removal; rerun with --apply and type uninstall. Unchanged templates and resources are removed; owner-edited settings and modified files are preserved.
+- uninstall: preview removal; rerun with --apply and type `uninstall`. Unchanged templates and resources are removed; owner-edited settings and modified files are preserved.
 
 ## Safety and limitations
 
