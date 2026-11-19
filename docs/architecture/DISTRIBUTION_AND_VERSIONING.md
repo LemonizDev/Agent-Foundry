@@ -39,7 +39,8 @@ The agent-first flow and CLI must use the same selection schema, manifest format
 
 ## Target installation contract
 
-    project/
+```text
+project/
     ├── AGENTS.md
     └── .agent-foundry/
         ├── manifest.json
@@ -61,6 +62,7 @@ The agent-first flow and CLI must use the same selection schema, manifest format
     .kilo/commands/      # Kilo Code commands
     .kilo/agents/        # Kilo Code specialist agents
     .cline/skills/       # Cline
+```
 
 The layout above describes the current v0.4 generated structure. Exact host discovery and command execution still require runtime validation in each supported host.
 
