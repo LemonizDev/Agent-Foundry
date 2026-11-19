@@ -70,3 +70,22 @@ test("updater refreshes unchanged owned files but stops on local modifications",
   assert.ok(blocked.conflicts.some(item => item.reason === "Local modifications detected"));
   assert.match(await fs.readFile(path.join(root, ".agent-foundry/resources/skills/one.md"), "utf8"), /owner change/);
 });
+
+test("uninstall preserves locally modified resources and Foundry instructions", async () => {
+  const root = await temp();
+  const resource = { id: "one", type: "skill", path: "skills/one.md", version: "1" };
+  const registry = { resources: [resource] };
+  const plan = await buildPlan({ root, registry, resources: ["one"], repository: "owner/repo", ref: "main" });
+  const fetchText = async url => ({ ok: true, text: async () => url.endsWith("model-roster.yaml") ? "models: []\n" : url.endsWith("foundry-settings.yaml") ? "version: 1\n" : "# source content\n" });
+  await applyPlan(plan, { root, registry, fetchText });
+  const resourcePath = path.join(root, ".agent-foundry/resources/skills/one.md");
+  const instructionsPath = path.join(root, ".agent-foundry/instructions.md");
+  await fs.writeFile(resourcePath, "# local resource customisation\n");
+  await fs.appendFile(instructionsPath, "\nLocal owner note.\n");
+  const preview = await uninstall(root);
+  assert.ok(preview.preserved.includes(".agent-foundry/resources/skills/one.md"));
+  assert.ok(preview.managed_files.some(x => x.path === ".agent-foundry/instructions.md" && x.action === "PRESERVE"));
+  await uninstall(root, { apply: true });
+  assert.match(await fs.readFile(resourcePath, "utf8"), /local resource customisation/);
+  assert.match(await fs.readFile(instructionsPath, "utf8"), /Local owner note/);
+});
