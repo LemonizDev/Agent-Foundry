@@ -23,7 +23,7 @@ Show and edit the project-local Agent Foundry configuration without requiring th
 
 ## Behaviour
 
-1. Read `.agent-foundry/manifest.yaml` and available settings files.
+1. Read `.agent-foundry/manifest.json` and available settings files.
 2. Show configured profile, installed resources, host integration, model roster location, autonomy boundaries and update source.
 3. Distinguish configured values from defaults, inferred values and unsupported settings.
 4. Ask one focused clarification when an edit is ambiguous.
