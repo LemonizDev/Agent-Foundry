@@ -29,7 +29,7 @@ test("install preserves existing AGENTS and validation detects owner settings ch
   assert.match(agents, /# Existing/);
   assert.match(agents, /Do not remove/);
   assert.equal((await validateInstallation(root)).valid, true);
-  await fs.writeFile(path.join(root, ".agent-foundry/settings/model-roster.yaml"), "models:\n  - alias: local\n");
+  await fs.writeFile(path.join(root, ".agent-foundry/settings/model-roster.yaml"), "schema_version: 1\nmodels:\n  - alias: local\n    provider: local\n    model_id: local/test\n    availability: available\n    access: local\n    capabilities: {}\n");
   const validation = await validateInstallation(root);
   assert.equal(validation.valid, true);
   const preview = await uninstall(root);
