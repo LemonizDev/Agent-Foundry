@@ -17,10 +17,10 @@ This is a read-only assessment and plan. It inventories existing instructions, a
 Review the plan. To apply it:
 
 ```bash
-npx --yes --package github:LemonizDev/Agent-Foundry agent-foundry init --apply
+npx --yes --package github:LemonizDev/Agent-Foundry agent-foundry init --preset auto --apply
 ```
 
-The CLI asks for explicit confirmation. To use a custom resource selection, pass comma-separated registry IDs:
+The CLI asks for explicit confirmation. Choose a preset with --preset auto|minimal|balanced|autonomous-engineer|visual-engineer|research-engineer. The auto preset starts with the autonomous-engineer baseline and adds visual QA resources when graphics/rendering signals are detected. Use a custom resource selection when you need exact control. To use a custom resource selection, pass comma-separated registry IDs:
 
 ```bash
 npx --yes --package github:LemonizDev/Agent-Foundry agent-foundry list
@@ -66,7 +66,7 @@ agent-foundry uninstall --confirm
 
 The CLI can also be invoked through npx using the GitHub package spec shown above.
 
-- inspect: show detected project files, agent hosts and capability signals.
+- inspect: show detected project files, agent hosts, project-type signals and capability decisions.
 - validate: verify installed resources against the local manifest.
 - update: update unchanged Foundry-owned resources; stop on locally modified or missing files.
 - uninstall: remove unchanged Foundry-owned resources and its marked instruction pointer. Owner-edited settings and locally modified resources are preserved.
