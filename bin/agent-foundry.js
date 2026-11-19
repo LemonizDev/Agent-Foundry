@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 import path from "node:path";
+import fs from "node:fs/promises";
+import yaml from "js-yaml";
 import readline from "node:readline/promises";
 import { stdin, stdout } from "node:process";
 import { loadRegistry } from "../src/registry.js";
@@ -16,7 +18,7 @@ const repository = option("--repository", "LemonizDev/Agent-Foundry");
 const ref = option("--ref", "main");
 
 function help() {
-  console.log("Agent Foundry v" + VERSION + "\nA project-aware engineering environment for AI coding agents.\n\nUsage:\n  agent-foundry init [--project PATH] [--ref REF] [--resources id,id] [--apply]\n  agent-foundry inspect [--project PATH]\n  agent-foundry validate [--project PATH]\n  agent-foundry update [--project PATH] [--ref REF]\n  agent-foundry uninstall [--project PATH] --confirm\n  agent-foundry list\n  agent-foundry version\n\ninit is plan-only by default. Review the plan, then repeat with --apply.\nExisting files are never silently overwritten.");
+  console.log("Agent Foundry v" + VERSION + "\nA project-aware engineering environment for AI coding agents.\n\nUsage:\n  agent-foundry init [--project PATH] [--ref REF] [--resources id,id] [--apply]\n  agent-foundry inspect [--project PATH]\n  agent-foundry validate [--project PATH]\n  agent-foundry update [--project PATH] [--ref REF]\n  agent-foundry uninstall [--project PATH] --confirm\n  agent-foundry list\n  agent-foundry route --task "describe the task"\n  agent-foundry settings\n  agent-foundry version\n\ninit is plan-only by default. Review the plan, then repeat with --apply.\nExisting files are never silently overwritten.");
 }
 
 async function ask(question) {
@@ -58,6 +60,19 @@ try {
         console.log("Run agent-foundry validate and review .agent-foundry/README.md.");
       }
     }
+  } else if (command === "route" || (command === "models" && args[1] === "explain")) {
+    const task = option("--task", "");
+    if (!task) throw new Error("Provide --task with a description of the work to classify.");
+    const rosterPath = path.join(root, ".agent-foundry/settings/model-roster.yaml");
+    const roster = yaml.load(await fs.readFile(rosterPath, "utf8"));
+    const classification = classifyTask(task);
+    const selection = selectModel(classification, roster);
+    console.log(JSON.stringify({ task, classification, selection }, null, 2));
+    if (!selection.selected) process.exitCode = 2;
+  } else if (command === "settings") {
+    console.log("Foundry settings: " + path.join(root, ".agent-foundry/settings/foundry-settings.yaml"));
+    console.log("Model roster: " + path.join(root, ".agent-foundry/settings/model-roster.yaml"));
+    console.log("Edit these project-owned files directly or ask your coding agent to update them. Never store credentials in the roster.");
   } else if (command === "validate") {
     const result = await validateInstallation(root);
     console.log(JSON.stringify({ valid: result.valid, resource_count: result.resource_count, issues: result.issues }, null, 2));
