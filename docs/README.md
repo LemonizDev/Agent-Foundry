@@ -7,6 +7,7 @@ This directory explains Agent Foundry itself: its architecture, source extractio
 - [User Guide](USER_GUIDE.md) — explains the product, setup, commands, model delegation and session learning in developer-facing language.
 - [Existing Project Integration](architecture/EXISTING_PROJECT_INTEGRATION.md) — how to add Foundry to an established repository without replacing its architecture or instructions.
 - [Task-Aware Model Delegation](architecture/MODEL_DELEGATION.md) — task classification and owner-defined model roster.
+- [Close-session command](../commands/close-session.md) and [session-close workflow](../workflows/session-close.md) — capture durable project learnings before ending a chat.
 
 ## Start with the architecture
 
@@ -28,7 +29,7 @@ These documents explain what was found in the source repositories and how it was
 | Resource category | Location |
 |---|---|
 | Portable baseline instructions | [core/](../core/GLOBAL_INSTRUCTIONS.md) |
-| User-invokable command contracts | [Progress report](../commands/progress-report.md) · [Teach implementation](../commands/teach-implementation.md) · [Close session](../commands/close-session.md) · [Settings](../commands/settings.md) · [Edit model roster](../commands/edit-model-roster.md) |
+| User-invokable command contracts | [Progress report](../commands/progress-report.md) · [Teach implementation](../commands/teach-implementation.md) · [Close session](../commands/close-session.md) · [Settings](../commands/settings.md) · [Edit model roster](../commands/edit-model-roster.md) · [Explain model choice](../commands/explain-model-selection.md) · [Test a model](../commands/test-model.md) |
 | Task procedures | [skills/](../skills/progress-reporting/SKILL.md) |
 | Multi-step coordination | [workflows/](../workflows/multi-agent-campaign.md) |
 | Agent role definitions | [Profile catalog](../profiles/README.md) |
