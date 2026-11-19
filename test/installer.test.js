@@ -57,12 +57,12 @@ test("updater refreshes unchanged owned files but stops on local modifications",
   await applyPlan(plan, { root, registry: registryV1, fetchText: fetchV1 });
   const registryV2 = { resources: [{ ...resourceV1, version: "2" }], repository: "owner/repo", ref: "v2" };
   const fetchV2 = async url => ({ ok: true, text: async () => url.endsWith("model-roster.yaml") ? "models: []\n" : url.endsWith("foundry-settings.yaml") ? "version: 1\n" : "# version two\n" });
-  const update = await (await import("../src/installer.js")).updateInstallation({ root, registry: registryV2, fetchText: fetchV2 });
+  const update = await (await import("../src/installer.js")).updateInstallation({ root, registry: registryV2, fetchText: fetchV2, apply: true });
   assert.equal(update.updated, 2);
   assert.match(await fs.readFile(path.join(root, ".agent-foundry/resources/skills/one.md"), "utf8"), /version two/);
   await fs.writeFile(path.join(root, ".agent-foundry/resources/skills/one.md"), "# owner change\n");
   const registryV3 = { resources: [{ ...resourceV1, version: "3" }], repository: "owner/repo", ref: "v3" };
-  const blocked = await (await import("../src/installer.js")).updateInstallation({ root, registry: registryV3, fetchText: fetchV2 });
+  const blocked = await (await import("../src/installer.js")).updateInstallation({ root, registry: registryV3, fetchText: fetchV2, apply: true });
   assert.equal(blocked.updated, 0);
   assert.ok(blocked.conflicts.some(item => item.reason === "Local modifications detected"));
   assert.match(await fs.readFile(path.join(root, ".agent-foundry/resources/skills/one.md"), "utf8"), /owner change/);
