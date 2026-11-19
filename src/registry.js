@@ -7,20 +7,20 @@ export const DEFAULT_REF = "main";
 export async function loadRegistry({ repository = DEFAULT_REPOSITORY, ref = DEFAULT_REF, fetchText = globalThis.fetch } = {}) {
   const repositoryParts = repository.split("/");
   if (repositoryParts.length !== 2 || repositoryParts.some(part => !/^[A-Za-z0-9_.-]+$/.test(part))) throw new Error("Repository must be specified as owner/repository.");
-  const encodedRef = encodeURIComponent(ref);
-  const url = "https://raw.githubusercontent.com/" + repository + "/" + encodedRef + "/registry/resources.yaml";
-  const response = await fetchText(url);
-  if (!response.ok) throw new Error("Could not fetch resource registry (" + response.status + "): " + url);
-  const document = yaml.load(await response.text());
-  if (!document || document.schema_version !== 1 || !Array.isArray(document.resources)) throw new Error("Unsupported or malformed Agent Foundry resource registry.");
   let commitSha = ref;
   if (!/^[a-f0-9]{40}$/i.test(ref)) {
-    const commitResponse = await fetchText("https://api.github.com/repos/" + repository + "/commits/" + encodedRef);
+    const commitResponse = await fetchText("https://api.github.com/repos/" + repository + "/commits/" + encodeURIComponent(ref));
     if (!commitResponse.ok) throw new Error("Could not resolve immutable Foundry source revision (" + commitResponse.status + ").");
     const commitData = await commitResponse.json();
     commitSha = commitData.sha;
   }
   if (!commitSha || !/^[a-f0-9]{40}$/i.test(commitSha)) throw new Error("GitHub did not return a valid commit SHA for the selected Foundry ref.");
+  // Fetch the registry only after resolving the ref, so the registry and all later resources come from the same immutable tree.
+  const url = "https://raw.githubusercontent.com/" + repository + "/" + commitSha + "/registry/resources.yaml";
+  const response = await fetchText(url);
+  if (!response.ok) throw new Error("Could not fetch resource registry (" + response.status + "): " + url);
+  const document = yaml.load(await response.text());
+  if (!document || document.schema_version !== 1 || !Array.isArray(document.resources)) throw new Error("Unsupported or malformed Agent Foundry resource registry.");
   const ids = new Set();
   for (const resource of document.resources) {
     if (!resource.id || ids.has(resource.id)) throw new Error("Missing or duplicate resource id: " + resource.id);
