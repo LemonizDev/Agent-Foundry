@@ -23,6 +23,8 @@ test("install preserves existing AGENTS and validation detects owner settings ch
   const fetchText = async url => ({ ok: true, text: async () => url.endsWith("model-roster.yaml") ? "models: []\n" : url.endsWith("foundry-settings.yaml") ? "version: 1\n" : "# Installed skill\n" });
   const result = await applyPlan(plan, { root, registry, fetchText });
   assert.equal(result.installed_count, 1);
+  assert.equal(result.host_artifact_count, 1);
+  assert.ok(await fs.readFile(path.join(root, ".agents/skills/one/SKILL.md"), "utf8").then(x => x.includes("Installed skill")));
   const agents = await fs.readFile(path.join(root, "AGENTS.md"), "utf8");
   assert.match(agents, /# Existing/);
   assert.match(agents, /Do not remove/);
