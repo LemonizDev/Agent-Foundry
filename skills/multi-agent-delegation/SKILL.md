@@ -35,8 +35,8 @@ Use when a task is substantial, specialised, parallelisable, or benefits from in
 
 ## Procedure
 
-1. **Evaluate delegation.** Consider task complexity, reasoning needs, context size, repository exploration, tool access, specialisation, parallelism, quality requirements, latency, and available capacity.
-2. **Choose task size and worker capability.** Use the smallest capable worker for routine work and a demonstrably stronger reviewer for critical work. Do not choose by parameter count alone.
+1. **Classify the task.** Apply the task dimensions and workload classes in [Task-Aware Model Delegation](../../docs/architecture/MODEL_DELEGATION.md): task type, reasoning depth, scope, context demand, tool complexity, risk, uncertainty, verification burden and latency sensitivity.
+2. **Select from the owner-defined roster.** Read `.agent-foundry/settings/model-roster.yaml` when present. Filter by hard requirements and owner constraints, then choose the smallest/fastest model that clears the task's quality floor. Do not choose by parameter count, provider marketing or a `flash` label alone. If no roster exists, ask the owner or provide a transparent recommendation without claiming automatic routing.
 3. **Partition work.** Give each worker a narrow objective, explicit allowed paths, non-goals, deliverables, dependencies, acceptance criteria, tests, and reporting expectations.
 4. **Assign file ownership.** Prefer non-overlapping write scopes. Use read-only assignments for research and independent review.
 5. **Persist the assignment.** Give it a stable ID and record status, owner, model/provider where relevant, checkpoint, and output location.
@@ -54,7 +54,8 @@ Every meaningful assignment should include:
 - Assigned role and objective
 - Explicit scope and outside-scope
 - Required expertise and complexity
-- Model/provider selection and rationale, when the host exposes these
+- Task class, intensity dimensions and risk gate
+- Model/provider selection from the owner-defined roster and rationale, when the host exposes these
 - Context and source-of-truth documents
 - Expected output format and destination
 - Acceptance criteria and required tests
@@ -85,6 +86,8 @@ Delegation never transfers responsibility. The lead agent remains accountable fo
 ## Portability and safety
 
 - Do not assume every host supports subagents, per-agent model selection, quota inspection, task resumption, or persistent checkpoints.
+- Do not assume every host can route models automatically. If model selection is unavailable, surface the recommendation to the owner.
+- Model roster entries and capability ratings must be user-defined and evidence-backed; do not hardcode a universal provider/model list.
 - State unsupported capabilities honestly.
 - A project's free-only model policy is a project-level constraint, not a universal default.
 - Do not evade quotas, rotate keys to bypass limits, or silently enable paid fallback when a project forbids it.
