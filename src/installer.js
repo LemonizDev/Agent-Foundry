@@ -383,9 +383,13 @@ export async function uninstall(root = process.cwd(), { apply = false } = {}) {
   const preview = { applied: false, removed, preserved, managed_files: managedFileActions, settings: settingsActions, entrypoints: entrypointActions };
   if (!apply) return preview;
 
-  for (const rel of removed) await fs.rm(path.join(base, safeRelative(rel)), { force: true });
+  for (const rel of removed) {
+    await assertNoSymlinkPath(base, rel);
+    await fs.rm(path.join(base, safeRelative(rel)), { force: true });
+  }
   for (const entrypoint of manifest.entrypoints ?? [{ path: "AGENTS.md", created: manifest.created_entrypoint }]) {
     const file = path.join(base, safeRelative(entrypoint.path));
+    try { await assertNoSymlinkPath(base, entrypoint.path); } catch { continue; }
     if (!await exists(file)) continue;
     const text = await fs.readFile(file, "utf8");
     const startMarker = "<!-- agent-foundry:start -->";
@@ -399,8 +403,9 @@ export async function uninstall(root = process.cwd(), { apply = false } = {}) {
       else await atomicWrite(file, next);
     }
   }
-  for (const item of managedFileActions) if (item.action === "REMOVE") await fs.rm(path.join(base, safeRelative(item.path)), { force: true });
-  for (const item of settingsActions) if (item.action === "REMOVE_TEMPLATE") await fs.rm(path.join(base, safeRelative(item.path)), { force: true });
+  for (const item of managedFileActions) if (item.action === "REMOVE") { await assertNoSymlinkPath(base, item.path); await fs.rm(path.join(base, safeRelative(item.path)), { force: true }); }
+  for (const item of settingsActions) if (item.action === "REMOVE_TEMPLATE") { await assertNoSymlinkPath(base, item.path); await fs.rm(path.join(base, safeRelative(item.path)), { force: true }); }
+  await assertNoSymlinkPath(base, FOUNDARY_DIR + "/manifest.json");
   await fs.rm(path.join(dir, "manifest.json"), { force: true });
   const leftovers = await walk(dir);
   return { ...preview, applied: true, remaining_owner_files: leftovers, note: "Locally modified resources, owner-edited settings and modified Foundry files were preserved; unchanged templates were removed." };
