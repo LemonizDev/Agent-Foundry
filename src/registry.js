@@ -26,7 +26,7 @@ export async function loadRegistry({ repository = DEFAULT_REPOSITORY, ref = DEFA
     if (!resource.id || ids.has(resource.id)) throw new Error("Missing or duplicate resource id: " + resource.id);
     ids.add(resource.id);
     resource.path = safeRelative(resource.path);
-    if (!resource.type || !resource.version) throw new Error("Incomplete registry entry: " + resource.id);
+    if (!resource.type || !resource.version || !resource.description) throw new Error("Incomplete registry entry: " + resource.id + " (type, version and description are required).");
   }
   return { ...document, repository, ref, commit_sha: commitSha, resolved_ref: commitSha };
 }
