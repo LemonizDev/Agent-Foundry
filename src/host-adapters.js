@@ -58,7 +58,10 @@ export function renderHostArtifacts(resource, content, hosts = []) {
       const nested = alias.split("/").map(part => part.replace(/[^a-zA-Z0-9_-]/g, "")).filter(Boolean).join("/");
       if (!nested) continue;
       if (hosts.includes("opencode")) add(".opencode/commands/" + nested + ".md", "command:opencode", nested, commandDocument(description, body, "opencode"));
-      if (hosts.includes("kilo")) add(".kilo/commands/" + nested + ".md", "command:kilo", nested, commandDocument(description, body, "kilo"));
+      if (hosts.includes("kilo")) {
+        const kiloName = nested.replaceAll("/", "-");
+        add(".kilo/commands/" + kiloName + ".md", "command:kilo", kiloName, commandDocument(description, body, "kilo"));
+      }
       for (const host of skillHosts.filter(name => name !== "opencode")) {
         const root = host === "codex" ? ".agents/skills" : host === "claude" ? ".claude/skills" : ".cline/skills";
         add(root + "/" + nested.replaceAll("/", "-") + "/SKILL.md", "command-skill:" + host, nested, skillDocument(nested.replaceAll("/", "-"), description, body));
