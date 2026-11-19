@@ -140,3 +140,12 @@ Test the classifier with representative tasks:
 - urgent but low-risk lookup.
 
 Measure classification agreement, eligible model selection, task success, correction rate, latency, tool failures and unsafe downgrades. Tune thresholds from observed outcomes, not intuition alone.
+
+
+## 11. Initial CLI implementation
+
+The v0.4 CLI exposes a first-pass deterministic classifier and roster selector. Run the route command with a task description from the consuming project.
+
+The classifier uses transparent keyword and risk heuristics to suggest a task class and estimate intensity. The selector then filters the owner roster by confirmed availability, task allowlists/blocklists, minimum capability declarations, modality/tool requirements and high-risk evidence gates. Eligible candidates are ranked using declared capability levels, evidence confidence and measured latency for latency-sensitive work.
+
+This is a recommendation engine, not a model execution gateway. It does not call providers, dispatch agents, measure model quality itself or guarantee that user-entered capability claims are accurate. High-risk tasks fail closed unless the roster contains a model with high reasoning, high instruction-following and high-confidence evidence.
