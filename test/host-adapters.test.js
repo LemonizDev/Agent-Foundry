@@ -9,9 +9,8 @@ test("skills are mapped to detected host-native skill directories", () => {
   const paths = artifacts.map(x => x.installed_path);
   assert.ok(paths.includes(".agents/skills/review/SKILL.md"));
   assert.ok(paths.includes(".claude/skills/review/SKILL.md"));
-  assert.ok(paths.includes(".opencode/skills/review/SKILL.md"));
   assert.ok(paths.includes(".cline/skills/review/SKILL.md"));
-  assert.ok(paths.includes(".kilo/skills/review/SKILL.md"));
+  assert.ok(!paths.some(x => x.startsWith(".opencode/skills/") || x.startsWith(".kilo/skills/")));
 });
 
 test("command aliases become host slash command names", () => {
