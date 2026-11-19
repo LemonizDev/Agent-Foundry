@@ -2,7 +2,7 @@
 
 This directory explains Agent Foundry itself: its architecture, source extraction, design decisions and authoring rules. For the reusable assets, return to the [repository README](../README.md).
 
-## Start with the architecture
+## Start here\n\n- [User Guide](USER_GUIDE.md) — explains the product, setup, commands, model delegation and session learning in developer-facing language.\n- [Existing Project Integration](architecture/EXISTING_PROJECT_INTEGRATION.md) — how to add Foundry to an established repository without replacing its architecture or instructions.\n- [Task-Aware Model Delegation](architecture/MODEL_DELEGATION.md) — task classification and owner-defined model roster.\n\n## Start with the architecture
 
 - [Resource Model](architecture/RESOURCE_MODEL.md) — definitions, category boundaries, authority, portability classes, loading strategy and lifecycle.
 - [Resource Authoring Standard](standards/RESOURCE_AUTHORING_STANDARD.md) — required metadata and structures for skills, commands, workflows and templates.
@@ -11,7 +11,7 @@ This directory explains Agent Foundry itself: its architecture, source extractio
 
 These documents explain what was found in the source repositories and how it was evaluated.
 
-- [Reusable Resource Inventory](audit/REUSABLE_RESOURCE_INVENTORY.md) — the source-first inventory of Dhan AI Trader and Lively Wallpaper, including reusable families and project-specific exclusions.
+- [Reusable Resource Inventory](audit/REUSABLE_RESOURCE_INVENTORY.md) — the source-first inventory of Dhan AI Trader and Rave Engine (the Lively Wallpaper project), including reusable families and project-specific exclusions.
 - [Source Coverage](audit/SOURCE_COVERAGE.md) — what repository areas and source families were inventoried or inspected.
 - [Extraction Decisions](audit/EXTRACTION_DECISIONS.md) — rationale for generalising, adapting, deduplicating or excluding source material.
 - [Command Catalog](audit/COMMAND_CATALOG.md) — source-backed command behaviours, candidate invocations and platform-adapter cautions.
@@ -22,7 +22,7 @@ These documents explain what was found in the source repositories and how it was
 | Resource category | Location |
 |---|---|
 | Portable baseline instructions | [core/](../core/GLOBAL_INSTRUCTIONS.md) |
-| User-invokable command contracts | [Progress report](../commands/progress-report.md) · [Teach implementation](../commands/teach-implementation.md) |
+| User-invokable command contracts | [Progress report](../commands/progress-report.md) · [Teach implementation](../commands/teach-implementation.md) · [Close session](../commands/close-session.md) · [Settings](../commands/settings.md) · [Edit model roster](../commands/edit-model-roster.md) |
 | Task procedures | [skills/](../skills/progress-reporting/SKILL.md) |
 | Multi-step coordination | [workflows/](../workflows/multi-agent-campaign.md) |
 | Agent role definitions | [Profile catalog](../profiles/README.md) |
