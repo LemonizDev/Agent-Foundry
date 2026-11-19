@@ -12,15 +12,15 @@ A project does not need to adopt the Dhan AI Trader document taxonomy, directory
 
 | Mode | Use case | Behaviour |
 |---|---|---|
-| New project | Empty or newly created repository | Install a minimal baseline and selected project context templates |
+| New project | Empty or newly created repository | Select a preset, install the chosen agent resources and create only the Foundry context/settings files required by the installer |
 | Existing project | Established codebase without Foundry | Inspect, map equivalents, recommend gaps, then install additively |
-| Existing Foundry project | Manifest already exists | Compare versions, local edits and new resources; offer a safe update |
+| Existing Foundry project | Manifest already exists | Preview resource changes, preserve local edits and apply approved updates |
 | Partial adoption | Project wants one capability only | Install selected resource(s) and dependencies without the full baseline |
 | Other agent framework | Existing host-specific instructions or skills | Preserve them and add a small bridge only when compatible |
 
 ## 3. Assessment before installation
 
-The integration agent performs a read-only assessment.
+The integration agent performs a read-only assessment. The v0.4 CLI provides a local structural scan and project signals; it does not claim to understand architecture from filenames alone. The coding agent must inspect relevant source and documentation before recommending a final resource set.
 
 Inspect:
 - root and nested agent instructions;
@@ -34,7 +34,7 @@ Inspect:
 Do not read secrets or dump environment files. Do not execute project code merely to classify it. Do not assume a similarly named file has the same meaning as a Foundry resource.
 
 Create an assessment with:
-- detected project type and confidence;
+- detected project type and confidence (the CLI signals are heuristic; deeper semantic assessment is performed by the coding agent);
 - existing capability and its source file;
 - Foundry capability that overlaps;
 - gap or conflict;
@@ -75,7 +75,7 @@ Wait for approval.
 - Preserve existing AGENTS.md, CLAUDE.md, .github instructions and other host files.
 - Never replace a project architecture or roadmap with Foundry templates.
 - Prefer a short pointer to .agent-foundry/instructions.md over copying a large instruction block.
-- Where an existing file already covers a capability, link to it from the Foundry manifest rather than copying it.
+- Where an existing file already covers a capability, choose KEEP or LINK in the assessment rather than copying it. The current manifest tracks Foundry-owned files; external project-document links are not yet a first-class manifest feature.
 - Keep local conventions authoritative unless the owner explicitly chooses otherwise.
 - Do not change source code, dependencies, CI, build scripts or runtime configuration during a documentation-only installation unless explicitly included in the approved plan.
 - Never overwrite a file with a name collision. Propose a merge or a distinct destination.
@@ -117,10 +117,10 @@ For an existing Foundry installation:
 3. Read release notes and resource dependency changes.
 4. Produce added/changed/deprecated/removed summary.
 5. Classify each local divergence as keep, merge, replace with approval, or retire.
-6. Apply changes in a staged update.
-7. Validate paths, links, dependencies and host loading.
-8. Update manifest only after successful verification.
-9. Keep a rollback copy or Git checkpoint.
+6. Run the CLI update preview and review changed paths and local-modification conflicts.
+7. Apply only after explicit approval. The updater backs up changed file contents and restores them if a write fails.
+8. Validate the resulting manifest, resource hashes, YAML settings and model roster.
+9. Exercise host discovery and command execution manually; the current CLI does not yet run end-to-end tests inside each host.
 
 ## 10. Completion criteria
 
@@ -131,3 +131,22 @@ For an existing Foundry installation:
 - Manifest records source revision and installed resources.
 - Validation results and host limitations are explicit.
 - The owner knows how to update and remove the installation.
+
+
+## 11. Current implementation boundary
+
+The v0.4 installer:
+- creates a local `.agent-foundry/` manifest, instructions, README and owner-editable settings;
+- copies selected source resources into the project;
+- generates host-specific skills, commands and specialist profile files for detected hosts;
+- adds marked pointers to AGENTS.md and, when detected, CLAUDE.md or Cline rules;
+- resolves the source ref to an immutable Git commit before downloading resource content;
+- refuses path collisions by default and can explicitly skip them;
+- previews updates/uninstall and uses ownership hashes to preserve local changes.
+
+It does not yet:
+- semantically reconcile every existing project skill or command with every Foundry resource automatically;
+- store external project-document links as first-class manifest dependencies;
+- prove command discovery or execution inside every supported host;
+- dispatch model workers or control host session lifecycle;
+- migrate arbitrary existing agent frameworks without an agent-led review.
