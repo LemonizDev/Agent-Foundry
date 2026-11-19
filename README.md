@@ -18,7 +18,7 @@ Give your coding agent a consistent way to understand a project, plan work, dele
 
 ## Why this exists
 
-AI coding agents can write code. The harder problem is getting them to work reliably across a real project, over weeks or months, with changing requirements, multiple models and multiple sessions.
+An AI coding agent is an assistant that can inspect a software repository, edit files and use development tools. It can write code. The harder problem is getting it to work reliably across a real project, over weeks or months, with changing requirements, multiple models and multiple sessions.
 
 Without a shared operating system, every project ends up rebuilding the same things:
 
