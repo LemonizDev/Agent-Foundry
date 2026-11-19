@@ -1,335 +1,141 @@
+<div align="center">
+
 # Agent Foundry
 
-**A reusable engineering library for AI coding agents.**
+### Give your AI coding agent a repeatable engineering system.
 
-Agent Foundry collects the operating instructions, specialist roles, commands, skills, workflows, templates and engineering standards that make coding-agent work repeatable across projects. Its purpose is to stop every new repository from reinventing the same agent setup.
+Reusable instructions, specialist roles, skills and workflows that can be selected and installed into a project in minutes.
 
-It is a **resource library**, not yet an installer or a fully automated agent framework. The resources are authored in a portable form first; platform-specific adapters will translate them into the formats supported by Kilo, Cline, OpenCode, Claude Code, Codex and other tools.
+**Inspect your project → choose relevant resources → initialise once → build with a consistent standard.**
 
----
+[Getting Started](#get-started) · [What It Does](#what-is-agent-foundry) · [Resource Library](#resource-library) · [Roadmap](#project-status)
 
-## Start here
-
-New to this repository? Follow this order:
-
-1. **[Global instructions](core/GLOBAL_INSTRUCTIONS.md)** — the compact baseline intended to inform agent behaviour in consuming projects.
-2. **[Resource model](docs/architecture/RESOURCE_MODEL.md)** — what each resource type means and how they fit together.
-3. **[Resource catalog and registry](#resource-catalog)** — browse the actual reusable assets available today.
-4. **[Command catalog](docs/audit/COMMAND_CATALOG.md)** — understand current command contracts and proposed future commands.
-5. **[Resource authoring standard](docs/standards/RESOURCE_AUTHORING_STANDARD.md)** — how new resources must be written and validated.
-6. **[Source extraction register](docs/EXTRACTION_REGISTER.md)** — see where resources came from and what is still incomplete.
-
-For the source audit, start with the **[Reusable Resource Inventory](docs/audit/REUSABLE_RESOURCE_INVENTORY.md)**. It explains what was discovered in Dhan AI Trader and Lively Wallpaper, how it was classified, and what should or should not be copied into the universal library.
-
-## Find something by task
-
-| I need to… | Start here |
-|---|---|
-| Give an agent baseline operating instructions | [Global instructions](core/GLOBAL_INSTRUCTIONS.md) |
-| Generate an honest project progress report | [Progress-report command](commands/project/progress-report/COMMAND.md) → [Progress-report skill](skills/progress-reporting/SKILL.md) → [Report template](templates/progress-report/PROGRESS_REPORT.md) |
-| Explain a code change to the project owner | [Teach-implementation command](commands/learning/teach-implementation/COMMAND.md) → [Explanation skill](skills/implementation-explanation/SKILL.md) |
-| Delegate work to multiple agents | [Delegation skill](skills/multi-agent-delegation/SKILL.md) → [Assignment template](templates/assignments/DELEGATION_ASSIGNMENT.md) |
-| Run or coordinate a multi-agent campaign | [Campaign workflow](workflows/multi-agent-campaign/WORKFLOW.md) |
-| Recover an interrupted agent task | [Recovery handoff template](templates/assignments/RECOVERY_HANDOFF.md) |
-| Reconcile active plans and stale documentation | [Plan-reconciliation skill](skills/plan-reconciliation/SKILL.md) |
-| Perform visual or graphics QA | [Visual-regression skill](skills/visual-regression/SKILL.md) → [Visual-probe skill](skills/visual-probe-engineering/SKILL.md) |
-| Capture evidence without leaking sensitive data | [Privacy-safe evidence skill](skills/privacy-safe-evidence/SKILL.md) |
-| Review coding-agent execution permissions | [Agent-execution security skill](skills/agent-execution-security/SKILL.md) |
-| Create a decision, blocker or test report | [Decision register](templates/governance/DECISION_REGISTER.md) · [Blocker register](templates/governance/BLOCKER_REGISTER.md) · [Test evidence report](templates/verification/TEST_EVIDENCE_REPORT.md) |
-| Create or adapt an agent role | [Profiles catalog](profiles/README.md) |
-| Adapt resources to a coding-agent platform | [Integration guide](integrations/README.md) |
+</div>
 
 ---
 
-## How the pieces fit together
+## What is Agent Foundry?
 
-Agent Foundry separates the different jobs that are often mixed into one oversized instruction file.
+Every new software project starts with the same problem: the coding agent has no idea how your team wants engineering work done.
 
-| Resource type | What it does | Example |
+You end up rebuilding the same instructions again and again:
+- How should the agent inspect a codebase before editing?
+- When should it delegate work to other agents?
+- How should it test, review and verify changes?
+- How should it report progress without making things up?
+- How should it preserve project context between sessions?
+- What should happen when an agent fails halfway through a task?
+
+**Agent Foundry is a reusable library of answers to those questions.**
+
+It provides a baseline engineering approach and optional resources for specialised work. When initialised in a project, only the resources relevant to that project should be added. The project keeps its own architecture, product decisions and domain rules.
+
+Agent Foundry does not replace your coding agent, dictate your tech stack, or magically make weak models good engineers. It gives the agent a clearer operating system for the work.
+
+## Get started
+
+### The intended experience
+
+You should not need to clone this repository, understand its folder structure or manually copy Markdown files.
+
+1. Open your project in your coding agent.
+2. Give it the Agent Foundry repository link and the initialization instruction below.
+3. Review the proposed resource selection.
+4. Approve the setup. The agent adds the selected resources to your project.
+
+Copy this into your coding agent:
+
+> Initialise this project with Agent Foundry: https://github.com/LemonizDev/Agent-Foundry  
+> Follow the instructions in BOOTSTRAP.md and bootstrap/INITIALIZE_PROJECT.md. First inspect my project and existing agent instructions. Recommend only relevant resources, explain why each is needed, and show me the files you plan to create or modify. Preserve all existing project instructions and wait for my approval before writing anything.
+
+**Current implementation status:** the agent-first initialization procedure is documented, but the automated installer and tested platform adapters are not released yet. Until then, the coding agent must follow the bootstrap procedure manually and report any unsupported steps. We will not pretend a documented design is already a working installer.
+
+[Read the initialization guide](BOOTSTRAP.md) · [Read the full agent procedure](bootstrap/INITIALIZE_PROJECT.md)
+
+## What gets added to a project?
+
+The intended installation is small, local and traceable:
+
+    your-project/
+    ├── AGENTS.md                 # Your existing instructions, preserved
+    └── .agent-foundry/
+        ├── manifest.yaml         # Foundry version and selected resources
+        ├── instructions.md       # Short entrypoint for the coding agent
+        ├── resources/            # Only the resources selected for this project
+        ├── overrides/            # Your explicit local customisations
+        └── README.md             # What was installed and how to maintain it
+
+The manifest records exactly what was installed and where it came from. Future updates must detect local edits and show a diff instead of silently overwriting them.
+
+## What is in the library?
+
+Agent Foundry separates different kinds of guidance so a project does not need one enormous instruction file.
+
+| Resource | In plain English | Example |
 |---|---|---|
-| **Core instructions** | Sets the baseline behaviour and boundaries for an agent | `core/GLOBAL_INSTRUCTIONS.md` |
-| **Profile** | Defines the responsibility and decision boundaries of a role | Lead engineer, reviewer, graphics engineer |
-| **Standard** | Defines a quality rule that applies across many tasks | Evidence and verification |
-| **Skill** | Explains how to perform one bounded capability | Multi-agent delegation |
-| **Command** | Gives the user a named way to invoke a capability | `/progress-report` |
-| **Workflow** | Coordinates multiple activities, owners, gates and handoffs | Multi-agent campaign |
-| **Template** | Provides a repeatable structure for an output | Delegation assignment |
-| **Integration** | Maps portable resources into a tool's native format | Future Kilo or OpenCode adapter |
-| **Domain pack** | Adds optional domain-specific rules without polluting the core | Future trading or graphics pack |
+| **Core instructions** | Baseline rules for how the agent should work | Inspect before editing; verify before claiming completion |
+| **Profiles** | Defines a role and its responsibilities | Lead engineer, independent reviewer |
+| **Skills** | Teaches the agent how to perform a specific task | Debugging, delegation, visual QA |
+| **Commands** | Gives the user a named way to request an action | Generate a progress report |
+| **Workflows** | Coordinates a multi-step process | Run a multi-agent engineering campaign |
+| **Standards** | Sets quality rules used across tasks | Evidence, security, documentation |
+| **Templates** | Provides a consistent structure for deliverables | Test report, handoff, decision record |
+| **Integrations** | Maps portable resources to a specific coding-agent tool | Tool-native skills or command definitions |
 
-A typical relationship looks like this:
+A command is an entry point, not the full procedure. A skill contains the procedure. A workflow coordinates several procedures. A platform integration translates the portable resource into the format a particular coding agent understands.
 
-```text
-User invokes a command
-        |
-        v
-Command selects a skill or workflow
-        |
-        +------> Skill follows relevant standards
-        |              |
-        |              v
-        |        Uses a template for output
-        |
-        v
-Workflow coordinates roles, checkpoints and gates
-        |
-        v
-Agent profile defines who owns each responsibility
-        |
-        v
-Platform adapter maps the resource to the target tool
-```
+### Browse by what you want to do
 
-Not every task needs every layer. A simple code review may only need a reviewer profile, a review skill and the evidence standard.
+| Your goal | Start with |
+|---|---|
+| Give an agent a consistent engineering baseline | [Global instructions](core/GLOBAL_INSTRUCTIONS.md) |
+| Delegate work and coordinate multiple agents | [Multi-agent delegation](skills/multi-agent-delegation/SKILL.md) |
+| Run a multi-agent campaign | [Campaign workflow](workflows/multi-agent-campaign/WORKFLOW.md) |
+| Get an evidence-based progress report | [Progress-report command](commands/project/progress-report/COMMAND.md) |
+| Explain a code change clearly | [Implementation explanation](skills/implementation-explanation/SKILL.md) |
+| Review visual output and rendering behaviour | [Visual regression](skills/visual-regression/SKILL.md) |
+| Design repeatable visual diagnostics | [Visual probe engineering](skills/visual-probe-engineering/SKILL.md) |
+| Protect evidence from leaking sensitive data | [Privacy-safe evidence](skills/privacy-safe-evidence/SKILL.md) |
+| Assess risks from autonomous agent execution | [Agent execution security](skills/agent-execution-security/SKILL.md) |
+| Keep plans and project status consistent | [Plan reconciliation](skills/plan-reconciliation/SKILL.md) |
+
+See the [full resource registry](registry/resources.yaml) for machine-readable metadata.
+
+## Why does it exist?
+
+The first resources were extracted from two real projects:
+
+- **Dhan AI Trader:** a large engineering project with multi-agent delegation, specialist roles, durable orchestration, governance, security reviews and regression testing.
+- **Lively Wallpaper:** a smaller graphics-heavy project with creative direction, rendering specialists, visual probes, performance checks and audio-reactive design work.
+
+The goal is not to copy either project's architecture into every repository. It is to extract the engineering practices that proved useful, remove project-specific assumptions, and make the reusable parts available to other developers.
+
+[See the source inventory](docs/audit/REUSABLE_RESOURCE_INVENTORY.md) · [See extraction decisions](docs/audit/EXTRACTION_DECISIONS.md)
+
+## Designed to be portable
+
+The resource library is platform-independent wherever possible. Coding-agent tools differ, though. Some support native skills, some support slash commands, some support subagents, and some expose only instruction files.
+
+Agent Foundry keeps the reusable method separate from the platform-specific implementation. An integration must name the tool and version it supports and provide evidence that the mapping works.
+
+We intend to support multiple coding-agent environments, but **a tool is not supported just because its name appears in a roadmap**.
+
+## Open source and community
+
+Agent Foundry is intended to be useful beyond its original projects. Contributions are welcome: reusable skills, better workflows, new platform adapters, validation scenarios, bug reports and documentation improvements.
+
+Before a stable public release, this repository still needs its open-source license, contribution/security policies, automated validation, installer and tested integrations. Check the project status before relying on it in production.
+
+- [Project status and roadmap](docs/architecture/DISTRIBUTION_AND_VERSIONING.md)
+- [Resource authoring standard](docs/standards/RESOURCE_AUTHORING_STANDARD.md)
+- [Documentation index](docs/README.md)
+- [Changelog](CHANGELOG.md)
 
 ---
 
-## Repository map
+<div align="center">
 
-```text
-Agent-Foundry/
-│
-├── README.md                         # This guide: start here
-├── AGENTS.md                         # Instructions for agents maintaining this repository
-├── CHANGELOG.md                      # Chronological record of Foundry changes
-│
-├── core/
-│   └── GLOBAL_INSTRUCTIONS.md        # Portable baseline for consuming projects
-│
-├── commands/                         # User-facing invocation contracts
-│   ├── project/
-│   │   └── progress-report/
-│   └── learning/
-│       └── teach-implementation/
-│
-├── skills/                           # Reusable task procedures
-│   ├── agent-execution-security/
-│   ├── atomic-implementation/
-│   ├── implementation-explanation/
-│   ├── multi-agent-delegation/
-│   ├── plan-reconciliation/
-│   ├── privacy-safe-evidence/
-│   ├── progress-reporting/
-│   ├── project-state-management/
-│   ├── visual-probe-engineering/
-│   └── visual-regression/
-│
-├── workflows/                        # Multi-step coordination
-│   └── multi-agent-campaign/
-│
-├── profiles/                         # Agent roles and their responsibilities
-│   ├── lead-engineer/
-│   ├── independent-reviewer/
-│   ├── visual-quality-engineer/
-│   ├── graphics-engineer/
-│   ├── creative-director/
-│   ├── performance-qa/
-│   └── creative-lighting-director/
-│
-├── standards/                        # Cross-cutting engineering rules
-│   ├── documentation/
-│   └── evidence-and-verification/
-│
-├── templates/                        # Reusable output structures
-│   ├── assignments/
-│   ├── governance/
-│   ├── progress-report/
-│   └── verification/
-│
-├── integrations/                     # Platform adapter design and future adapters
-│
-├── registry/
-│   └── resources.yaml                # Machine-readable catalog of registered resources
-│
-└── docs/
-    ├── README.md                     # Documentation navigation
-    ├── architecture/                 # Resource architecture and design
-    ├── audit/                        # Source inventory, coverage and decisions
-    └── standards/                    # How to author and validate resources
-```
+**Agent Foundry**  
+*Build the project. Don't rebuild your agent's operating instructions every time.*
 
-The tree above shows the current implemented structure. Empty future categories such as `domain-packs/` and `scripts/` have intentionally not been created just for symmetry.
-
----
-
-## Resource catalog
-
-The machine-readable source of truth for registered reusable assets is **[`registry/resources.yaml`](registry/resources.yaml)**. It currently lists **28 resources**. This is a catalog of drafts, not a claim that all entries are production-ready.
-
-### Core instructions
-
-| File | Purpose |
-|---|---|
-| [GLOBAL_INSTRUCTIONS.md](core/GLOBAL_INSTRUCTIONS.md) | Compact, portable behaviour and safety baseline for consuming projects |
-
-### Commands
-
-Commands are contracts, not yet native slash-command files generated for a particular coding agent.
-
-| Command | Contract | Underlying capability |
-|---|---|---|
-| `/progress-report` | [COMMAND.md](commands/project/progress-report/COMMAND.md) | Evidence-based progress reporting |
-| `/teach-implementation` | [COMMAND.md](commands/learning/teach-implementation/COMMAND.md) | Explain implementation changes to the owner |
-
-See the [Command Catalog](docs/audit/COMMAND_CATALOG.md) for the difference between confirmed source behaviours and proposed future commands.
-
-### Skills
-
-| Skill | Use it for |
-|---|---|
-| [Agent execution security](skills/agent-execution-security/SKILL.md) | Threat-modelling agent tools, process execution, filesystem access, secrets and network exposure |
-| [Atomic implementation](skills/atomic-implementation/SKILL.md) | Small, reviewable changes with immediate falsifiable checks |
-| [Implementation explanation](skills/implementation-explanation/SKILL.md) | Teaching the owner what changed and how it can fail |
-| [Multi-agent delegation](skills/multi-agent-delegation/SKILL.md) | Bounded assignments, specialist selection, accountability and recovery |
-| [Plan reconciliation](skills/plan-reconciliation/SKILL.md) | Reconcile active plans, progress records, code and historical decisions |
-| [Privacy-safe evidence](skills/privacy-safe-evidence/SKILL.md) | Sanitize and validate logs, screenshots, DOM and reports before persistence |
-| [Progress reporting](skills/progress-reporting/SKILL.md) | Produce honest, evidence-backed owner-facing status reports |
-| [Project state management](skills/project-state-management/SKILL.md) | Maintain authoritative direction, active plan, progress and handoff records |
-| [Visual probe engineering](skills/visual-probe-engineering/SKILL.md) | Design targeted probes for visual systems and rendering controls |
-| [Visual regression](skills/visual-regression/SKILL.md) | Conduct controlled visual comparisons and perceptual QA |
-
-### Workflow
-
-| Workflow | Use it for |
-|---|---|
-| [Multi-agent campaign](workflows/multi-agent-campaign/WORKFLOW.md) | Coordinate multiple assignments through persistent states, review, integration and handoff |
-
-### Agent profiles
-
-| Profile | Responsibility |
-|---|---|
-| [Lead engineer](profiles/lead-engineer/PROFILE.md) | Overall delivery, delegation, integration and final accountability |
-| [Independent reviewer](profiles/independent-reviewer/PROFILE.md) | Adversarial review of requirements, diffs, evidence and risks |
-| [Visual quality engineer](profiles/visual-quality-engineer/PROFILE.md) | Perceptual quality and reproducible visual regression |
-| [Graphics engineer](profiles/graphics-engineer/PROFILE.md) | Rendering architecture, materials, compositing and graphics implementation |
-| [Creative director](profiles/creative-director/PROFILE.md) | Translate visual intent into coherent acceptance criteria |
-| [Performance QA](profiles/performance-qa/PROFILE.md) | Performance budgets, profiling and stability verification |
-| [Creative lighting director](profiles/creative-lighting-director/PROFILE.md) | Optional specialist for audio-reactive lighting systems |
-
-### Standards
-
-| Standard | Purpose |
-|---|---|
-| [Documentation governance](standards/documentation/STANDARD.md) | Document authority, taxonomy, history and update discipline |
-| [Evidence and verification](standards/evidence-and-verification/STANDARD.md) | Prevent claims stronger than their supporting evidence |
-
-### Templates
-
-| Template | Use it for |
-|---|---|
-| [Progress report](templates/progress-report/PROGRESS_REPORT.md) | Owner-facing project/milestone status |
-| [Delegation assignment](templates/assignments/DELEGATION_ASSIGNMENT.md) | Scope a bounded specialist task |
-| [Recovery handoff](templates/assignments/RECOVERY_HANDOFF.md) | Resume interrupted work from a verified checkpoint |
-| [Decision register](templates/governance/DECISION_REGISTER.md) | Record decisions, alternatives and consequences |
-| [Blocker register](templates/governance/BLOCKER_REGISTER.md) | Track blockers, owners and resolution conditions |
-| [Test evidence report](templates/verification/TEST_EVIDENCE_REPORT.md) | Record test method, exact results and limitations |
-
----
-
-## Documentation guide
-
-The [documentation index](docs/README.md) is the map for material that explains the library itself.
-
-| Location | What belongs there |
-|---|---|
-| `docs/architecture/` | How Agent Foundry is structured and how resource types relate |
-| `docs/audit/` | What was discovered in source repositories, provenance, extraction choices and gaps |
-| `docs/standards/` | Rules for writing and validating resources |
-| `docs/EXTRACTION_REGISTER.md` | Source-to-resource tracking and extraction progress |
-
-Useful audit documents:
-
-- [Reusable Resource Inventory](docs/audit/REUSABLE_RESOURCE_INVENTORY.md) — source families from Dhan and Lively, their reuse value and limitations.
-- [Source Coverage](docs/audit/SOURCE_COVERAGE.md) — repository scope and inspected source families.
-- [Extraction Decisions](docs/audit/EXTRACTION_DECISIONS.md) — why resources are generalised, adapted, deduplicated or excluded.
-- [Command Catalog](docs/audit/COMMAND_CATALOG.md) — confirmed reusable command behaviours and future command candidates.
-
----
-
-## How to use Agent Foundry in another project
-
-There is **no automated installer yet**. For now, consume resources deliberately rather than copying the entire repository into every project.
-
-1. Read the target project's existing instructions and identify its authoritative project context.
-2. Incorporate relevant parts of [GLOBAL_INSTRUCTIONS.md](core/GLOBAL_INSTRUCTIONS.md) into the target project's agent instructions. Do not blindly replace its existing instructions.
-3. Select one or more profiles that match the responsibilities the host can actually support.
-4. Load only the skills and standards relevant to the task.
-5. Use a workflow when work spans several phases, agents or handoffs.
-6. Copy a template only when producing the corresponding deliverable.
-7. Translate command contracts into the target tool's native mechanism only after checking that tool's supported format.
-8. Record the selected resources and their versions in the consuming project.
-
-**Do not copy this repository's root `AGENTS.md` as the consumer's global instructions.** That file governs agents working on Agent Foundry itself. The portable baseline is in `core/GLOBAL_INSTRUCTIONS.md`.
-
-### Example selection
-
-For a project using a lead coding agent and a reviewer:
-
-- Core: `core/GLOBAL_INSTRUCTIONS.md`
-- Profiles: `lead-engineer`, `independent-reviewer`
-- Skills: `atomic-implementation`, `multi-agent-delegation`, `progress-reporting`
-- Standards: `evidence-and-verification`, `documentation`
-- Workflow: `multi-agent-campaign` when work spans multiple assignments
-- Templates: assignment, recovery handoff and progress report
-
-For a visual application, add `graphics-engineer`, `visual-quality-engineer`, `visual-regression` and `visual-probe-engineering`.
-
----
-
-## Resource status and maturity
-
-Every resource has a status. Do not treat presence in the repository as proof of quality.
-
-| Status | Meaning |
-|---|---|
-| `DISCOVERED` | A possible source asset or reusable pattern has been located |
-| `INSPECTED` | Relevant source content has been read |
-| `CANDIDATE` | Reuse value has been identified; not yet generalised |
-| `DRAFT` / `EXTRACTED_DRAFT` | A first portable version exists |
-| `VALIDATED` | Required structural checks and scenario tests have passed |
-| `ADAPTED` | A resource has been mapped to a named tool or environment |
-| `EXCLUDED` | It is intentionally not included, with a reason |
-| `BLOCKED` / `DEFERRED` | Work cannot or should not proceed yet |
-
-**Current maturity:** all 28 registry entries are drafts. There is no resource validator, automated scenario suite, installer, CLI, or validated tool adapter yet.
-
-The resource lifecycle and quality requirements are defined in the [Resource Model](docs/architecture/RESOURCE_MODEL.md) and [Resource Authoring Standard](docs/standards/RESOURCE_AUTHORING_STANDARD.md).
-
----
-
-## Source repositories and provenance
-
-The first source repositories are:
-
-- [Dhan AI Trader](https://github.com/LemonizDev/dhan-chatgpt-connector/tree/foundation/final-trader-architecture), branch `foundation/final-trader-architecture`
-- [Lively Wallpaper](https://github.com/LemonizDev/futuristic-lively-wallpaper/tree/main), branch `main`
-
-Dhan contributes most of the multi-agent, governance, security and regression-testing material. Lively contributes specialist creative/graphics roles and a particularly useful visual-probe and perceptual-QA practice.
-
-Extraction is selective. Project-specific trading rules, Lively design decisions, current project state, credentials, screenshots and tool-specific configuration do not belong in the portable core. See the [Extraction Decisions](docs/audit/EXTRACTION_DECISIONS.md).
-
----
-
-## Contributing or adding a resource
-
-Before adding a resource:
-
-1. Check whether the capability already exists under another name.
-2. Read the source material and record its path, repository and ref.
-3. Decide whether it is universal, adaptable, tool-specific, domain-specific or project-specific.
-4. Create the resource using the correct category structure and [authoring standard](docs/standards/RESOURCE_AUTHORING_STANDARD.md).
-5. Add dependencies and provenance.
-6. Add the resource to [`registry/resources.yaml`](registry/resources.yaml).
-7. Add or update the relevant catalog/index and extraction register.
-8. Validate metadata, links, dependencies, a successful scenario and a failure/edge scenario.
-9. Keep the status as DRAFT until validation evidence exists.
-
-Do not duplicate long procedures across commands and skills. Commands should invoke skills; workflows should coordinate them; standards should define reusable quality rules.
-
-## Project maintenance
-
-- [AGENTS.md](AGENTS.md) — operating contract for agents maintaining this repository.
-- [CHANGELOG.md](CHANGELOG.md) — changes to the Foundry itself.
-- [Resource registry](registry/resources.yaml) — catalog of reusable resources.
-
-No source project is modified during extraction. Commits, publication, platform-specific installation and other consequential actions must follow the applicable owner instructions.
+</div>
