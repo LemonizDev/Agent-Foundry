@@ -106,7 +106,7 @@ export async function buildPlan({ root = process.cwd(), registry, resources, pre
   }
   return {
     schema_version: 1,
-    foundry: { repository, ref },
+    foundry: { repository, requested_ref: ref, ref: registry.resolved_ref ?? registry.commit_sha ?? ref, commit_sha: registry.commit_sha ?? null },
     project_root: path.resolve(root),
     selected_resource_ids: selected.map(item => item.id),
     preset,
@@ -303,7 +303,7 @@ export async function updateInstallation({ root = process.cwd(), registry, fetch
     if (!await exists(file)) { conflicts.push({ id: item.id, reason: "Installed file is missing" }); continue; }
     const current = sha256(await fs.readFile(file));
     if (current !== item.installed_sha256) { conflicts.push({ id: item.id, reason: "Local modifications detected" }); continue; }
-    const source = await fetchSource(registry.repository, registry.ref, resource, fetchText);
+    const source = await fetchSource(registry.repository, registry.resolved_ref ?? registry.commit_sha ?? registry.ref, resource, fetchText);
     let content = source;
     if (item.adapter_kind) {
       const artifact = renderHostArtifacts(resource, source, manifest.detected_hosts ?? []).find(x => x.installed_path === item.installed_path && x.adapter_kind === item.adapter_kind);
@@ -320,7 +320,9 @@ export async function updateInstallation({ root = process.cwd(), registry, fetch
     change.item.source_sha256 = sha256(change.source);
     change.item.installed_sha256 = sha256(change.content);
   }
-  manifest.source.ref = registry.ref;
+  manifest.source.requested_ref = registry.ref;
+  manifest.source.ref = registry.resolved_ref ?? registry.commit_sha ?? registry.ref;
+  manifest.source.commit_sha = registry.commit_sha ?? null;
   manifest.updated_at = new Date().toISOString();
   await atomicWrite(manifestPath, JSON.stringify(manifest, null, 2) + "\n");
   return { updated: changed.length, planned: changed.map(x => ({ id: x.item.id, path: x.item.installed_path, version: x.resource.version })), conflicts: [], pending: [] };
