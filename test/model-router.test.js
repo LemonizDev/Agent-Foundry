@@ -70,3 +70,14 @@ test("model roster validator catches duplicate aliases and malformed capability 
   assert.ok(issues.some(x => x.path.endsWith(".reasoning")));
   assert.ok(issues.some(x => x.path.endsWith(".alias")));
 });
+
+test("explicit speed-sensitive tasks prefer owner-rated fast models", () => {
+  const classification = classifyTask("Give me a fast, low-latency lookup of this symbol");
+  const base = { provider: "p", availability: "available", capabilities: { reasoning: "medium", tool_calling: "medium", instruction_following: "high" } };
+  const result = selectModel(classification, { models: [
+    { ...base, alias: "balanced", model_id: "balanced", speed_tier: "balanced" },
+    { ...base, alias: "fast", model_id: "fast", speed_tier: "fast" }
+  ] });
+  assert.equal(classification.latency_sensitive, true);
+  assert.equal(result.selected.alias, "fast");
+});
