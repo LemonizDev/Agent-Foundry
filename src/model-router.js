@@ -100,3 +100,30 @@ export function selectModel(classification, roster, settings = {}) {
       : "No configured model passed the eligibility gates. Do not silently use an unlisted model or bypass owner constraints."
   };
 }
+
+export function validateModelRoster(roster) {
+  const issues = [];
+  if (!roster || roster.schema_version !== 1 || !Array.isArray(roster.models)) return [{ path: "models", issue: "Roster must have schema_version: 1 and a models array." }];
+  const aliases = new Set();
+  const levels = new Set(["low", "medium", "high", "unknown"]);
+  const accessTypes = new Set(["free", "paid", "local", "enterprise", "unknown"]);
+  const sizes = new Set(["small", "medium", "large", "unknown"]);
+  for (const [index, model] of roster.models.entries()) {
+    const prefix = "models[" + index + "]";
+    if (!model.alias || typeof model.alias !== "string") issues.push({ path: prefix + ".alias", issue: "A non-empty alias is required." });
+    else if (aliases.has(model.alias)) issues.push({ path: prefix + ".alias", issue: "Model aliases must be unique." });
+    else aliases.add(model.alias);
+    if (!model.provider || !model.model_id) issues.push({ path: prefix, issue: "Provider and exact model_id are required." });
+    if (!["available", "unavailable", "unknown"].includes(model.availability)) issues.push({ path: prefix + ".availability", issue: "Expected available, unavailable or unknown." });
+    if (model.access && !accessTypes.has(model.access)) issues.push({ path: prefix + ".access", issue: "Unsupported access type." });
+    if (model.size_class && !sizes.has(model.size_class)) issues.push({ path: prefix + ".size_class", issue: "Unsupported size class." });
+    for (const key of ["coding", "reasoning", "tool_calling", "structured_output", "retrieval", "vision", "instruction_following"]) {
+      if (model.capabilities?.[key] !== undefined && !levels.has(String(model.capabilities[key]).toLowerCase())) issues.push({ path: prefix + ".capabilities." + key, issue: "Expected low, medium, high or unknown." });
+    }
+    if (model.capabilities?.context_window_tokens != null && (!Number.isInteger(model.capabilities.context_window_tokens) || model.capabilities.context_window_tokens < 1)) issues.push({ path: prefix + ".capabilities.context_window_tokens", issue: "Expected a positive integer or null." });
+    if (model.capabilities?.modalities !== undefined && !Array.isArray(model.capabilities.modalities)) issues.push({ path: prefix + ".capabilities.modalities", issue: "Expected an array." });
+    if (model.constraints?.allowed_task_classes !== undefined && !Array.isArray(model.constraints.allowed_task_classes)) issues.push({ path: prefix + ".constraints.allowed_task_classes", issue: "Expected an array." });
+    if (model.constraints?.prohibited_task_classes !== undefined && !Array.isArray(model.constraints.prohibited_task_classes)) issues.push({ path: prefix + ".constraints.prohibited_task_classes", issue: "Expected an array." });
+  }
+  return issues;
+}
