@@ -124,3 +124,19 @@ test("explicit skip-conflicts installs remaining resources without replacing exi
   assert.match(await fs.readFile(path.join(root, ".agent-foundry/resources/skills/one.md"), "utf8"), /owner resource/);
   assert.ok(await fs.readFile(path.join(root, ".agents/skills/one/SKILL.md"), "utf8").then(x => x.includes("source skill")));
 });
+
+test("uninstall preserves owner edits inside the marked instruction block", async () => {
+  const root = await temp();
+  const resource = { id: "one", type: "skill", path: "skills/one.md", version: "1" };
+  const registry = { resources: [resource] };
+  const plan = await buildPlan({ root, registry, resources: ["one"], repository: "owner/repo", ref: "main" });
+  const fetchText = async url => ({ ok: true, text: async () => url.endsWith("model-roster.yaml") ? "models: []\n" : url.endsWith("foundry-settings.yaml") ? "version: 1\n" : "# source\n" });
+  await applyPlan(plan, { root, registry, fetchText });
+  const agentsPath = path.join(root, "AGENTS.md");
+  const original = await fs.readFile(agentsPath, "utf8");
+  await fs.writeFile(agentsPath, original.replace("Existing project instructions and owner decisions remain authoritative.", "OWNER CUSTOMIZED THIS POINTER."));
+  const preview = await uninstall(root);
+  assert.ok(preview.entrypoints.some(x => x.action === "PRESERVE_MODIFIED_MARKER"));
+  await uninstall(root, { apply: true });
+  assert.match(await fs.readFile(agentsPath, "utf8"), /OWNER CUSTOMIZED THIS POINTER/);
+});
