@@ -32,6 +32,7 @@ test("default installer selection resolves entirely from registry", async () => 
   const scan = await scanProject(root);
   for (const preset of ["minimal", "balanced", "autonomous-engineer", "visual-engineer", "research-engineer", "auto"]) {
     const resources = resourcesForPreset(preset, scan);
+    for (const core of ["global-instructions", "engineering-principles", "agent-communication", "context-management", "security-boundaries", "decision-making", "evidence-and-verification", "documentation-governance"]) assert.ok(resources.includes(core), "preset " + preset + " is missing core baseline " + core);
     const resolved = resolveResources(registry, resources);
     const resolvedIds = resolved.map(item => item.id);
     assert.ok(resources.every(id => resolvedIds.includes(id)), "preset " + preset + " contains an unknown resource");
