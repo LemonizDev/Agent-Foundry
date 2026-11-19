@@ -189,17 +189,22 @@ Each fact should have one authoritative home. Use references rather than copying
 
 ## 10. Updating an installation
 
-A future installer will compare the installed manifest with a selected Foundry release. It must detect local edits, show a diff and request approval before replacing changed files.
+The CLI compares the installed manifest with the selected Foundry registry revision. It checks hashes before changing files.
 
-Until the update engine is available, an agent must:
-1. read the installed manifest and local files;
-2. compare them with the requested Foundry revision;
-3. identify locally modified resources;
-4. present a proposed update plan;
-5. update only after approval;
-6. record the new revision and verification evidence.
+1. Run `agent-foundry update` to preview changed resources and conflicts.
+2. Review the paths and versions.
+3. Run `agent-foundry update --apply` and confirm to apply.
+4. If any local modification is detected, the update stops rather than overwriting it. Resolve the conflict manually and rerun.
 
-## 11. Troubleshooting
+## 11. Uninstalling
+
+1. Run `agent-foundry uninstall` to preview what will be removed and preserved.
+2. Run `agent-foundry uninstall --apply`.
+3. Type `uninstall` when prompted.
+
+Uninstall removes only unchanged Foundry-owned resources and marked instruction blocks. It preserves locally modified resources, owner-edited settings and modified Foundry instruction files. Unchanged settings templates are removed. Review the preview before confirming.
+
+## 12. Troubleshooting
 
 **The host does not support slash commands.** Use the command contract as a natural-language instruction or install a verified host adapter.
 
@@ -213,6 +218,6 @@ Until the update engine is available, an agent must:
 
 **A model's capability is unknown.** Mark it unknown and run a bounded evaluation before relying on it.
 
-## 12. Current implementation status
+## 13. Current implementation status
 
 The first CLI implementation now supports project inspection, a plan-first resource install, manifest/hash tracking, validation, conservative updates and safe uninstall. Unit tests and CI are included. Native host command adapters, automatic model dispatch, signed release provenance and a GUI remain unimplemented. Do not interpret the CLI as proof that every coding host exposes every Foundry command natively.
