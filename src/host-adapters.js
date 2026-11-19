@@ -44,11 +44,11 @@ export function renderHostArtifacts(resource, content, hosts = []) {
     id: resource.id, source_path: resource.path, installed_path, adapter_kind, alias,
     version: resource.version, source_sha256: null, installed_sha256: null, content: rendered
   });
-  const skillHosts = ["codex", ...(hosts.includes("kilo") ? ["kilo"] : []), ...(hosts.includes("claude-code") ? ["claude"] : []), ...(hosts.includes("opencode") ? ["opencode"] : []), ...(hosts.includes("cline") ? ["cline"] : [])];
+  const skillHosts = ["codex", ...(hosts.includes("claude-code") ? ["claude"] : []), ...(hosts.includes("cline") ? ["cline"] : [])];
   if (resource.type === "skill") {
     const slug = resource.id;
     for (const host of skillHosts) {
-      const root = host === "codex" ? ".agents/skills" : host === "kilo" ? ".kilo/skills" : host === "claude" ? ".claude/skills" : host === "opencode" ? ".opencode/skills" : ".cline/skills";
+      const root = host === "codex" ? ".agents/skills" : host === "claude" ? ".claude/skills" : ".cline/skills";
       add(root + "/" + slug + "/SKILL.md", "skill:" + host, slug, skillDocument(slug, description, body));
     }
   }
@@ -85,7 +85,7 @@ export function renderHostArtifacts(resource, content, hosts = []) {
         const kiloName = nested.replaceAll("/", "-");
         add(".kilo/commands/" + kiloName + ".md", "command:kilo", kiloName, commandDocument(description, body, "kilo"));
       }
-      for (const host of skillHosts.filter(name => name !== "opencode" && name !== "kilo")) {
+      for (const host of skillHosts) {
         const root = host === "codex" ? ".agents/skills" : host === "claude" ? ".claude/skills" : ".cline/skills";
         add(root + "/" + nested.replaceAll("/", "-") + "/SKILL.md", "command-skill:" + host, nested, skillDocument(nested.replaceAll("/", "-"), description, body));
       }
@@ -100,9 +100,9 @@ export function describeHostSupport(hosts = []) {
     adapters: {
       codex: { enabled: true, mechanism: ".agents/skills plus AGENTS.md", status: "generated; host runtime not exercised by installer" },
       claude: { enabled: hosts.includes("claude-code"), mechanism: ".claude/skills, .claude/agents and existing CLAUDE.md pointer", status: hosts.includes("claude-code") ? "generated; host runtime not exercised by installer" : "not detected" },
-      opencode: { enabled: hosts.includes("opencode"), mechanism: ".opencode/skills and .opencode/commands", status: hosts.includes("opencode") ? "generated; host runtime not exercised by installer" : "not detected" },
+      opencode: { enabled: hosts.includes("opencode"), mechanism: ".agents/skills compatibility plus .opencode/commands and .opencode/agents", status: hosts.includes("opencode") ? "generated; host runtime not exercised by installer" : "not detected" },
       cline: { enabled: hosts.includes("cline"), mechanism: ".cline/skills", status: hosts.includes("cline") ? "generated; host runtime not exercised by installer" : "not detected" },
-      kilo: { enabled: hosts.includes("kilo"), mechanism: ".kilo/skills and .kilo/commands", status: hosts.includes("kilo") ? "generated; host runtime not exercised by installer" : "not detected" }
+      kilo: { enabled: hosts.includes("kilo"), mechanism: ".agents/skills compatibility plus .kilo/commands and .kilo/agents", status: hosts.includes("kilo") ? "generated; host runtime not exercised by installer" : "not detected" }
     }
   };
 }
