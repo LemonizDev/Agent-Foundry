@@ -70,3 +70,27 @@
 - Added user commands for audit, implementation, debugging, review, verification, delegation, next-task selection, project health and recovery.
 - Added registry integrity, dependency, installer, model-router and host-artifact tests.
 - Added MIT license, security policy, contribution guidance and GitHub Actions CI.
+
+
+### v0.4.0 development increment — project-aware installation engine
+
+#### Added
+- A project-aware CLI with `inspect`, `list`, `init`, `validate`, `update`, `uninstall`, `route`, `settings` and `version` commands.
+- Installation presets: `auto`, `minimal`, `balanced`, `autonomous-engineer`, `visual-engineer` and `research-engineer`.
+- Project capability assessment decisions and explicit conflict handling, including `--skip-conflicts`.
+- Host-native Agent Skills and command/profile generation for Codex-compatible, Claude Code, OpenCode, Kilo Code and Cline projects.
+- Specialist reviewer agents with read-only tool/permission boundaries where the host format supports them.
+- Task-aware model classification, size and speed preferences, context-window gates, owner-defined model roster validation, access policies and independent-review recommendations.
+- Preview-first update/uninstall, ownership hashes, install/update rollback and symlink/path traversal protection.
+- Immutable source commit resolution so the registry and installed resources come from one Git commit.
+- Cross-platform Node 20/22 CI, tagged-release workflow and build provenance attestation.
+- Community, support, security, contribution and user documentation.
+
+#### Changed
+- Flattened command, workflow and template filenames into descriptive names. Skill packages retain the standard `skills/<id>/SKILL.md` layout.
+- Consolidated shared Agent Skills discovery into `.agents/skills` for Codex, OpenCode and Kilo, avoiding duplicate skill registration. Claude Code and Cline receive their own documented project skill directories.
+- Expanded every registry entry with a human-readable description.
+
+#### Validation boundary
+- Automated tests cover registry integrity, dependency resolution, installation/update/uninstall safety, host artifact generation, model routing and path protections.
+- Actual slash-command discovery and runtime execution inside each supported host remain to be exercised before a stable v1.0 release.
