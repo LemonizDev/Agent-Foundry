@@ -123,6 +123,7 @@ test("explicit skip-conflicts installs remaining resources without replacing exi
   assert.equal(result.skipped_conflicts, 1);
   assert.match(await fs.readFile(path.join(root, ".agent-foundry/resources/skills/one.md"), "utf8"), /owner resource/);
   assert.ok(await fs.readFile(path.join(root, ".agents/skills/one/SKILL.md"), "utf8").then(x => x.includes("source skill")));
+  assert.match(await fs.readFile(path.join(root, ".agent-foundry/instructions.md"), "utf8"), /global instruction resource was not installed/);
 });
 
 test("uninstall preserves owner edits inside the marked instruction block", async () => {
