@@ -9,10 +9,10 @@ Agent Foundry separates reusable engineering methods from the file formats and c
 | Codex | AGENTS.md | .agents/skills/<name>/SKILL.md | No custom slash-command file format generated | Generic pointer plus skills |
 | Claude Code | Existing CLAUDE.md gets an additive pointer | .claude/skills/<name>/SKILL.md | Skills are slash-invocable; command contracts become skills | Skills and /close-style aliases generated |
 | OpenCode | AGENTS.md is discovered; optional config may add instructions | .opencode/skills/<name>/SKILL.md | .opencode/commands/<name>.md | Skills and slash commands generated |
-| Kilo Code | Project instruction/rule support depends on current host version | Not generated as a separate skill type yet | .kilo/commands/<name>.md | Workflow-style slash commands generated |
+| Kilo Code | AGENTS.md | .kilo/skills/<name>/SKILL.md | .kilo/commands/<name>.md | Skills and workflow-style slash commands generated |
 | Cline | Existing project rules remain authoritative | .cline/skills/<name>/SKILL.md | Skills are slash-invocable | Skills and command-contract skills generated |
 
-Codex and OpenCode can discover the shared .agents/skills convention. The CLI also writes host-specific skill directories when it detects Claude Code, OpenCode or Cline. Kilo command aliases with spaces are converted to a hyphenated filename (for example, models edit becomes models-edit) because nested Kilo command discovery is not assumed.
+The CLI writes host-specific skill directories when it detects Claude Code, OpenCode, Kilo Code or Cline. Codex receives the standard .agents/skills directory. Kilo command aliases with spaces are converted to a hyphenated filename (for example, models edit becomes models-edit) because nested Kilo command discovery is not assumed.
 
 ## Current compatibility status
 
@@ -23,7 +23,7 @@ The generator targets documented file formats, but the installer does not launch
 | Codex | Shared AGENTS.md and .agents/skills output | Not yet exercised in Codex |
 | Claude Code | CLAUDE.md pointer and .claude/skills output | Not yet exercised in Claude Code |
 | OpenCode | .opencode/skills and .opencode/commands output | Not yet exercised in OpenCode |
-| Kilo Code | .kilo/commands output | Not yet exercised in Kilo Code |
+| Kilo Code | .kilo/skills and .kilo/commands output | Not yet exercised in Kilo Code |
 | Cline | .cline/skills output | Not yet exercised in Cline |
 
 ## Official format references
@@ -32,7 +32,7 @@ The generator targets documented file formats, but the installer does not launch
 - [Claude Code skills](https://code.claude.com/docs/en/skills)
 - [OpenCode skills](https://opencode.ai/docs/skills)
 - [OpenCode commands](https://opencode.ai/docs/commands)
-- [Kilo Code workflows](https://kilo.ai/docs/customize/workflows)
+- [Kilo Code workflows](https://kilo.ai/docs/customize/workflows) · [Kilo Code skills](https://kilo.ai/docs/customize/skills) · [Kilo Code AGENTS.md](https://kilo.ai/docs/customize/agents-md)
 - [Kilo Code custom agents and modes](https://kilo.ai/docs/customize/custom-modes)
 - [Cline skills](https://docs.cline.bot/customization/skills)
 
