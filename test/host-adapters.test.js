@@ -29,7 +29,7 @@ test("specialist profiles become host-native agents with reviewer restrictions",
   const lead = { id: "lead-engineer", type: "profile", path: "profiles/lead-engineer.md", version: "1" };
   const reviewer = { id: "independent-reviewer", type: "profile", path: "profiles/independent-reviewer.md", version: "1" };
   const leadArtifacts = renderHostArtifacts(lead, "# Lead\n\n## Mission\nOwn engineering delivery.", ["opencode", "kilo"]);
-  const reviewerArtifacts = renderHostArtifacts(reviewer, "# Reviewer\n\n## Mission\nReview changes independently.", ["opencode", "kilo"]);
+  const reviewerArtifacts = renderHostArtifacts(reviewer, "# Reviewer\n\n## Mission\nReview changes independently.", ["opencode", "kilo", "claude-code"]);
   const kiloReviewer = reviewerArtifacts.find(x => x.installed_path === ".kilo/agents/independent-reviewer.md");
   const openReviewer = reviewerArtifacts.find(x => x.installed_path === ".opencode/agents/independent-reviewer.md");
   const claudeReviewer = reviewerArtifacts.find(x => x.installed_path === ".claude/agents/independent-reviewer.md");
