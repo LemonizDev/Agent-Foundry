@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="assets/agent-foundry-banner.svg" alt="Agent Foundry: a project-aware engineering system for AI coding agents" width="100%" />
+
 # Agent Foundry
 
 ### A reusable engineering environment for AI coding agents.
@@ -10,9 +12,28 @@ Give your coding agent a consistent way to understand a project, plan work, dele
 
 [![CI](https://github.com/LemonizDev/Agent-Foundry/actions/workflows/ci.yml/badge.svg)](https://github.com/LemonizDev/Agent-Foundry/actions/workflows/ci.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE) [![Node.js](https://img.shields.io/badge/Node.js-20%2B-green.svg)](https://nodejs.org/)
 
-[Start here](#get-started) · [How it works](#how-it-works) · [Commands](#the-user-command-interface) · [Full user guide](docs/USER_GUIDE.md) · [Contributing](CONTRIBUTING.md) · [Support](SUPPORT.md)
+[Start here](#get-started) · [How it works](#how-it-works) · [Capabilities](#browse-by-the-job-you-need-done) · [Project status](#project-status) · [Documentation](docs/README.md) · [Contributing](CONTRIBUTING.md)
 
 </div>
+
+<details>
+<summary><strong>Explore the documentation</strong></summary>
+
+| I want to... | Start here |
+|---|---|
+| Understand the product and its workflows | [User Guide](docs/USER_GUIDE.md) |
+| Install Foundry into a project | [Bootstrap Guide](BOOTSTRAP.md) |
+| Understand the engine and installer | [Engine Architecture](docs/architecture/ENGINE_ARCHITECTURE.md) |
+| Understand project integration | [Existing Project Integration](docs/architecture/EXISTING_PROJECT_INTEGRATION.md) |
+| Understand model selection | [Model Delegation](docs/architecture/MODEL_DELEGATION.md) |
+| Browse reusable resources | [Resource Registry](registry/resources.yaml) |
+| Create or improve resources | [Resource Authoring Standard](docs/standards/RESOURCE_AUTHORING_STANDARD.md) |
+| Contribute code or documentation | [Contributing](CONTRIBUTING.md) |
+| Report a security issue | [Security Policy](SECURITY.md) |
+| Find help | [Support](SUPPORT.md) |
+| See what changed | [Changelog](CHANGELOG.md) |
+
+</details>
 
 ---
 
@@ -31,7 +52,7 @@ Without a shared operating system, every project ends up rebuilding the same thi
 
 The result is familiar: agents rediscover the same facts, repeat mistakes, use an oversized model for trivial tasks, use a weak model for difficult work, contradict earlier decisions, and sometimes announce completion without enough evidence.
 
-**Agent Foundry is intended to solve the process and continuity problem around AI-assisted software development.**
+**Agent Foundry addresses the process and continuity problem around AI-assisted software development.**
 
 It is an open-source resource library and project-integration CLI. It gives coding agents reusable engineering instructions, task procedures, commands, workflows, specialist role definitions and project-owned settings, then generates the host-specific files needed to expose those resources.
 
@@ -188,6 +209,7 @@ npx --yes --package github:LemonizDev/Agent-Foundry agent-foundry uninstall --ap
 Updates and uninstall are preview-first. Updates stop on local modifications; uninstall removes only unchanged Foundry-owned files and preserves owner edits. The uninstall command requires typing `uninstall` before it changes files.
 
 The CLI is an initial cross-platform implementation, not a stable release. Host file generation is tested, but native command discovery and execution still need validation inside each supported host. Model selection currently recommends from your roster; it does not dispatch provider calls or workers.
+
 ## The user command interface
 
 The portable command contracts are the user-facing layer. The CLI now implements project lifecycle commands and a first-pass roster-based model recommendation. Native slash-command registration remains host-specific.
@@ -327,11 +349,11 @@ An integration must state which tool and version it supports, what it maps, what
 
 ## Project status
 
-Agent Foundry is under active development. The resource library, first CLI installer and native artifact generators are in active development. Host runtime validation, automatic provider dispatch, signed release provenance and stable release processes remain outstanding.
+Agent Foundry is an active v0.4.0 development project. The project-aware CLI, installer lifecycle, resource generators and cross-platform automated test suite are implemented on this branch. The resource library is still being validated, and supported-host runtime acceptance testing remains a release gate. A stable v1.0 release has not been published.
 
 | Capability | Status |
 |---|---|
-| Resource library and source provenance | In progress; resources remain drafts until validated |
+| Resource library and source provenance | In progress; registry entries are marked draft and require scenario validation |
 | Agent-first bootstrap and CLI initialization | Implemented; host runtime verification pending |
 | Existing-project integration | Structural scanner, capability plan, additive installer and conflict preservation implemented |
 | Session-learning and close command | Skill, command contract and host artifact generation implemented; chat UI closure depends on host APIs |
@@ -339,7 +361,7 @@ Agent Foundry is under active development. The resource library, first CLI insta
 | Native command/skill/profile file generation | Implemented for detected hosts; runtime validation pending |
 | Project scanner, presets and plan-first CLI installer | Implemented; Node 20/22 CI passing on Linux, Windows and macOS |
 | Hash-aware preview-first update and uninstall | Implemented and covered by cross-platform tests |
-| Registry, installer, model-router, host adapter and canonical documentation-link tests | Implemented and passing in CI |
+| Automated registry, installer, model-router, host-artifact and documentation-link checks | Implemented; CI is configured for Node 20/22 on Ubuntu, Windows and macOS |
 | Stable tagged release | Not yet available |
 
 Do not treat a draft resource or documented design as a production-validated feature.
@@ -360,9 +382,9 @@ See [resource authoring standards](docs/standards/RESOURCE_AUTHORING_STANDARD.md
 
 ## Versioning and trust
 
-The intended release model uses Semantic Versioning, immutable Git tags, GitHub Releases and a manifest that records the exact source commit. Local changes must be detected before updates. The stable release process, license, contribution policy, security policy and installer are still outstanding.
+The project declares version `0.4.0` and uses an MIT license. The release workflow is configured to verify version tags, run tests, build the package and attest build provenance. No stable tagged release has been published yet. Installation manifests record the source revision and managed-file hashes; updates check local modifications before applying changes.
 
-See [Distribution and Versioning](docs/architecture/DISTRIBUTION_AND_VERSIONING.md).
+See [Distribution and Versioning](docs/architecture/DISTRIBUTION_AND_VERSIONING.md), [LICENSE](LICENSE) and [SECURITY.md](SECURITY.md).
 
 ---
 
