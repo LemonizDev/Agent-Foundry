@@ -38,7 +38,7 @@ This register records source-derived candidates. It deliberately distinguishes w
 - Lively's software-GL measurements are not evidence of performance on the user's RTX 3050 hardware.
 - Kilo command-line flags and model IDs are tool/version-specific. They do not belong in the portable core.
 
-## Next extraction targets
+## Implemented first-pass resources (Agent Foundry)\n\nThe following resources have been drafted from the inspected evidence: progress reporting, accountable delegation, visual regression/QA, atomic implementation, project-state management, multi-agent campaign workflow, progress-report command contract, progress-report/delegation/recovery templates, evidence and documentation standards, and lead-engineer/independent-reviewer/visual-quality profiles. They remain DRAFT resources and have not yet passed automated or scenario validation.\n\n## Next extraction targets
 
 1. Inspect the remainder of Dhan `AGENTS.md`, especially delegation envelope, retry/recovery, owner communication, progress reporting, teaching, and documentation sections.
 2. Locate actual command, agent, rules, and mode files in Dhan. Record exact paths; do not infer filenames from references.
