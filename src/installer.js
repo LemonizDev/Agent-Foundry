@@ -229,8 +229,12 @@ export async function applyPlan(plan, { root = plan.project_root, registry, fetc
       const file = path.join(base, rel);
       const existed = await exists(file);
       const original = existed ? await fs.readFile(file, "utf8") : "";
-      await writeOwned(rel, mergeInstruction(original), true);
-      entrypoints.push({ path: rel, created: !existed });
+      const merged = mergeInstruction(original);
+      const markerStart = merged.indexOf("<!-- agent-foundry:start -->");
+      const markerEnd = merged.indexOf("<!-- agent-foundry:end -->") + "<!-- agent-foundry:end -->".length;
+      const markerHash = sha256(merged.slice(markerStart, markerEnd));
+      await writeOwned(rel, merged, true);
+      entrypoints.push({ path: rel, created: !existed, marker_sha256: markerHash });
     }
     await writeOwned(".agent-foundry/manifest.json", JSON.stringify(manifest, null, 2) + "\n");
   } catch (error) {
@@ -328,7 +332,11 @@ export async function uninstall(root = process.cwd(), { apply = false } = {}) {
     const startMarker = "<!-- agent-foundry:start -->";
     const endMarker = "<!-- agent-foundry:end -->";
     const start = text.indexOf(startMarker), end = text.indexOf(endMarker);
-    if (start >= 0 && end > start) entrypointActions.push({ path: entrypoint.path, action: entrypoint.created && !((text.slice(0, start) + text.slice(end + endMarker.length)).trim()) ? "REMOVE_FILE" : "REMOVE_MARKED_BLOCK" });
+    if (start >= 0 && end > start) {
+      const markerHash = sha256(text.slice(start, end + endMarker.length));
+      const unchanged = !entrypoint.marker_sha256 || markerHash === entrypoint.marker_sha256;
+      entrypointActions.push({ path: entrypoint.path, action: !unchanged ? "PRESERVE_MODIFIED_MARKER" : entrypoint.created && !((text.slice(0, start) + text.slice(end + endMarker.length)).trim()) ? "REMOVE_FILE" : "REMOVE_MARKED_BLOCK" });
+    }
   }
   const preview = { applied: false, removed, preserved, managed_files: managedFileActions, settings: settingsActions, entrypoints: entrypointActions };
   if (!apply) return preview;
@@ -342,6 +350,8 @@ export async function uninstall(root = process.cwd(), { apply = false } = {}) {
     const endMarker = "<!-- agent-foundry:end -->";
     const start = text.indexOf(startMarker), end = text.indexOf(endMarker);
     if (start >= 0 && end > start) {
+      const markerHash = sha256(text.slice(start, end + endMarker.length));
+      if (entrypoint.marker_sha256 && markerHash !== entrypoint.marker_sha256) continue;
       const next = (text.slice(0, start) + text.slice(end + endMarker.length)).trim() + "\n";
       if (entrypoint.created && !next.trim()) await fs.rm(file);
       else await atomicWrite(file, next);
