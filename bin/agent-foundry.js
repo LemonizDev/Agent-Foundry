@@ -36,7 +36,7 @@ try {
     console.log(JSON.stringify(result, null, 2));
   } else if (command === "list") {
     const registry = await loadRegistry({ repository, ref });
-    for (const item of registry.resources) console.log(item.id.padEnd(32) + " " + item.type.padEnd(14) + " " + item.version + "  " + item.portability + "\\n  " + item.description);
+    for (const item of registry.resources) console.log(item.id.padEnd(32) + " " + item.type.padEnd(14) + " " + item.version + "  " + item.portability + "\n  " + item.description);
   } else if (command === "init") {
     const registry = await loadRegistry({ repository, ref });
     const scan = await scanProject(root);
