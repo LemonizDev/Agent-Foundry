@@ -296,7 +296,7 @@ Useful contributions include:
 - scenario tests and validation evidence;
 - improvements to the onboarding guide.
 
-See [resource authoring standards](standards/RESOURCE_AUTHORING_STANDARD.md) and the [documentation index](docs/README.md).
+See [resource authoring standards](docs/standards/RESOURCE_AUTHORING_STANDARD.md) and the [documentation index](docs/README.md).
 
 ## Versioning and trust
 
