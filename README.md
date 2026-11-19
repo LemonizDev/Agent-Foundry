@@ -169,10 +169,10 @@ This inspects the repository and prints a proposed resource plan. It does not ch
 After reviewing the plan, run:
 
 ```bash
-npx --yes --package github:LemonizDev/Agent-Foundry agent-foundry init --preset auto --apply
+npx --yes --package github:LemonizDev/Agent-Foundry agent-foundry init --preset auto --hosts kilo --apply
 ```
 
-The CLI asks for explicit confirmation. Every preset and explicit resource selection includes the same universal core: global instructions, engineering principles, communication, context management, security boundaries, decision-making and evidence/documentation standards. The auto preset starts with an autonomous-engineering baseline and adds visual QA resources when the project scanner detects graphics/rendering signals. You can choose minimal, balanced, autonomous-engineer, visual-engineer or research-engineer instead. The installer records ownership hashes in .agent-foundry/manifest.json and adds marked pointers without replacing existing content. If an existing project already has a resource at a target path, review the conflict and use --skip-conflicts to leave it untouched while installing the remaining resources.
+The CLI asks for explicit confirmation. If the target repository is new and has no host configuration files for the scanner to detect, specify your coding-agent host explicitly, for example `--hosts kilo,cline` or `--hosts claude-code,opencode`. Every preset and explicit resource selection includes the same universal core: global instructions, engineering principles, communication, context management, security boundaries, decision-making and evidence/documentation standards. The auto preset starts with an autonomous-engineering baseline and adds visual QA resources when the project scanner detects graphics/rendering signals. You can choose minimal, balanced, autonomous-engineer, visual-engineer or research-engineer instead. The installer records ownership hashes in .agent-foundry/manifest.json and adds marked pointers without replacing existing content. If an existing project already has a resource at a target path, review the conflict and use --skip-conflicts to leave it untouched while installing the remaining resources.
 
 Useful lifecycle commands:
 
