@@ -26,7 +26,7 @@ Ensure visual changes are perceptually effective, reproducible, and do not regre
 ## Required resources
 
 - `skills/visual-regression/SKILL.md`
-- `standards/evidence-and-verification/STANDARD.md`
+- `standards/evidence-and-verification.md`
 
 ## Non-goals
 
