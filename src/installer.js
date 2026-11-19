@@ -127,7 +127,7 @@ export async function applyPlan(plan, { root = plan.project_root, registry, fetc
   await atomicWrite(path.join(foundryDir, "manifest.json"), JSON.stringify(manifest, null, 2) + "\n");
   const readme = "# Agent Foundry in this project\n\nRead instructions.md for the project entrypoint. manifest.json records installed resources and source revision. Settings are project-owned. Existing project instructions take precedence.\n";
   await atomicWrite(path.join(foundryDir, "README.md"), readme);
-  return { manifest, installed_count: staged.length, entrypoint_created: !hadAgents };
+  return { manifest, installed_count: plan.resources.length, host_artifact_count: (plan.host_resources ?? []).length, entrypoint_created: !hadAgents };
 }
 
 export async function validateInstallation(root = process.cwd()) {
@@ -171,7 +171,7 @@ export async function updateInstallation({ root = process.cwd(), registry } = {}
       if (!artifact) { conflicts.push({ id: item.id, reason: "Unable to regenerate host adapter artifact" }); continue; }
       content = artifact.content;
     }
-    if (sha256(content) !== item.installed_sha256) changed.push({ item, resource, content, source });
+    if (sha256(source) !== item.source_sha256 || sha256(content) !== item.installed_sha256) changed.push({ item, resource, content, source });
   }
   if (conflicts.length) return { updated: 0, conflicts, pending: changed.map(x => x.item.id) };
   for (const change of changed) {
