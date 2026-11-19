@@ -20,6 +20,7 @@ test("selector filters unavailable and unsafe models before ranking", () => {
   ] };
   const result = selectModel(classification, roster);
   assert.equal(result.selected.alias, "expert");
+  assert.equal(result.independent_review_recommended, true);
   assert.ok(result.rejected.some(x => x.alias === "fast"));
   assert.ok(result.rejected.some(x => x.alias === "unknown"));
 });
