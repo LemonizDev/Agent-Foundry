@@ -12,7 +12,7 @@ export async function loadRegistry({ repository = DEFAULT_REPOSITORY, ref = DEFA
   if (!document || document.schema_version !== 1 || !Array.isArray(document.resources)) throw new Error("Unsupported or malformed Agent Foundry resource registry.");
   let commitSha = ref;
   if (!/^[a-f0-9]{40}$/i.test(ref)) {
-    const commitResponse = await fetchText("https://api.github.com/repos/" + repository + "/commits/" + ref);
+    const commitResponse = await fetchText("https://api.github.com/repos/" + repository + "/commits/" + encodedRef);
     if (!commitResponse.ok) throw new Error("Could not resolve immutable Foundry source revision (" + commitResponse.status + ").");
     const commitData = await commitResponse.json();
     commitSha = commitData.sha;
