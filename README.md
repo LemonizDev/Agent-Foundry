@@ -8,6 +8,8 @@ Give your coding agent a consistent way to understand a project, plan work, dele
 
 **One setup. A project-aware engineering system. Reusable across repositories.**
 
+[![CI](https://github.com/LemonizDev/Agent-Foundry/actions/workflows/ci.yml/badge.svg)](https://github.com/LemonizDev/Agent-Foundry/actions/workflows/ci.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE) [![Node.js](https://img.shields.io/badge/Node.js-20%2B-green.svg)](https://nodejs.org/)
+
 [Start here](#get-started) · [How it works](#how-it-works) · [Commands](#the-user-command-interface) · [Full user guide](docs/USER_GUIDE.md) · [Roadmap](#project-status)
 
 </div>
@@ -31,7 +33,7 @@ The result is familiar: agents rediscover the same facts, repeat mistakes, use a
 
 **Agent Foundry is intended to solve the process and continuity problem around AI-assisted software development.**
 
-It is an open-source library and, as it matures, an installation and configuration system. It gives coding agents reusable engineering instructions, task procedures, commands, workflows, specialist role definitions and project settings.
+It is an open-source resource library and project-integration CLI. It gives coding agents reusable engineering instructions, task procedures, commands, workflows, specialist role definitions and project-owned settings, then generates the host-specific files needed to expose those resources.
 
 It does not replace the coding model or agent host. It does not guarantee correct code. It gives the host a better-defined way to work.
 
@@ -190,8 +192,9 @@ The portable command contracts are the user-facing layer. The CLI now implements
 | `/project-health` | Assess project health across engineering dimensions |
 | `/resume` | Recover interrupted work from verified checkpoints |
 | `/models explain` | Explain why a model is or is not suitable for a task |
+| `/models test` | Run bounded capability checks on a configured model where host/provider support allows it |
 
-CLI equivalents currently available: agent-foundry settings and agent-foundry route --task "describe the work". The latter classifies a task and ranks eligible models from the project's configured roster. It recommends; it does not dispatch a worker. Native slash-command registration is not yet available.
+CLI equivalents currently available: agent-foundry settings and agent-foundry route --task "describe the work". The latter classifies a task and ranks eligible models from the project's configured roster. It recommends; it does not dispatch a worker. The installer generates native command/skill files for detected hosts, but runtime discovery and execution still need host-by-host validation.
 
 ### Closing a session without losing what matters
 
@@ -314,12 +317,12 @@ Agent Foundry is under active development. The resource library, first CLI insta
 | Resource library and source provenance | In progress; resources remain drafts until validated |
 | Agent-first bootstrap specification | Documented |
 | Existing-project integration design | Documented |
-| Session-learning and close command | Contract and skill drafted |
-| Task-aware model selection | Architecture and user-defined roster drafted |
-| Native command adapters | Not yet validated |
-| Project scanner and plan-first CLI installer | Implemented in v0.4 branch; CI pending |
-| Hash-aware conservative update and uninstall | Implemented in v0.4 branch; CI pending |
-| Registry integrity and CLI unit tests | Implemented in v0.4 branch; CI pending |
+| Session-learning and close command | Skill, command contract and host artifact generation implemented; chat UI closure depends on host APIs |
+| Task-aware model selection | Heuristic classifier and user-roster selector implemented; provider dispatch not implemented |
+| Native command/skill/profile file generation | Implemented for detected hosts; runtime validation pending |
+| Project scanner, presets and plan-first CLI installer | Implemented in v0.4 branch; cross-platform CI pending |
+| Hash-aware preview-first update and uninstall | Implemented in v0.4 branch; cross-platform CI pending |
+| Registry, installer, model-router and host adapter tests | Implemented in v0.4 branch; cross-platform CI pending |
 | Stable tagged release | Not yet available |
 
 Do not treat a draft resource or documented design as a production-validated feature.
