@@ -34,7 +34,7 @@ test("install preserves existing AGENTS and validation detects owner settings ch
   assert.equal(validation.valid, true);
   const preview = await uninstall(root);
   assert.equal(preview.applied, false);
-  assert.ok(await fs.access(path.join(root, ".agent-foundry/manifest.json")));
+  await fs.access(path.join(root, ".agent-foundry/manifest.json"));
   const removal = await uninstall(root, { apply: true });
   assert.deepEqual(removal.preserved, []);
   assert.ok(await fs.readFile(path.join(root, "AGENTS.md"), "utf8").then(x => x.includes("# Existing")));
