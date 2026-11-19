@@ -131,7 +131,7 @@ your-project/
 ├── AGENTS.md                         # Created or extended with a marked Foundry pointer
 ├── CLAUDE.md                         # Created or extended when Claude Code is detected
 ├── .clinerules/agent-foundry.md      # Added when Cline is detected
-├── .agents/skills/                   # Codex-compatible skills
+├── .agents/skills/                   # Shared Agent Skills: Codex, OpenCode and Kilo
 ├── .claude/skills/ and agents/       # Claude Code skills and specialist agents
 ├── .opencode/skills, commands, agents/
 ├── .kilo/skills, commands, agents/
