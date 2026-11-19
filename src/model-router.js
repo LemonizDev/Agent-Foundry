@@ -30,7 +30,7 @@ export function classifyTask(description) {
   return {
     task_class, risk, dimensions, intensity,
     intensity_band: intensity <= 9 ? "LOW" : intensity <= 13 ? "MODERATE" : intensity <= 16 ? "HIGH" : "VERY_HIGH",
-    latency_sensitive: ["FAST_LOOKUP", "MECHANICAL"].includes(task_class),
+    latency_sensitive: ["FAST_LOOKUP", "MECHANICAL"].includes(task_class) || /fast|quick|low.latency|speed|time.sensitive|urgent|asap/i.test(text),
     rationale: matched ? "Matched task language for " + task_class : "Defaulted to routine implementation; refine classification if the task is more specialised."
   };
 }
@@ -85,10 +85,11 @@ export function selectModel(classification, roster, settings = {}) {
     const latencyBonus = classification.latency_sensitive && Number.isFinite(latency) && latency > 0 ? Math.max(0, 3 - latency / 1000) : 0;
     const evidenceBonus = model.evidence?.confidence === "high" ? 2 : model.evidence?.confidence === "medium" ? 1 : 0;
     const sizeBonus = ["MECHANICAL", "SMALL_TASK"].includes(classification.task_class) && model.size_class === "small" ? 3 : classification.intensity_band === "VERY_HIGH" && model.size_class === "large" ? 2 : 0;
+    const speedTierBonus = classification.latency_sensitive && model.speed_tier === "fast" ? 3 : 0;
     const preferredAccess = settings.model_selection?.preferred_access ?? [];
     const accessBonus = preferredAccess.includes(model.access) ? 3 : 0;
     const budgetBonus = model.constraints?.budget_priority === "lowest-cost" && model.access === "free" ? 2 : 0;
-    candidates.push({ alias: model.alias, provider: model.provider, model_id: model.model_id, score: score + latencyBonus + evidenceBonus + sizeBonus + accessBonus + budgetBonus, latency_ms_p50: Number.isFinite(latency) ? latency : null, access: model.access ?? "unknown", size_class: model.size_class ?? "unknown" });
+    candidates.push({ alias: model.alias, provider: model.provider, model_id: model.model_id, score: score + latencyBonus + evidenceBonus + sizeBonus + speedTierBonus + accessBonus + budgetBonus, latency_ms_p50: Number.isFinite(latency) ? latency : null, access: model.access ?? "unknown", size_class: model.size_class ?? "unknown", speed_tier: model.speed_tier ?? "unknown" });
   }
   candidates.sort((a, b) => b.score - a.score);
   return {
@@ -110,6 +111,7 @@ export function validateModelRoster(roster) {
   const levels = new Set(["low", "medium", "high", "unknown"]);
   const accessTypes = new Set(["free", "paid", "local", "enterprise", "unknown"]);
   const sizes = new Set(["small", "medium", "large", "unknown"]);
+  const speeds = new Set(["fast", "balanced", "slow", "unknown"]);
   for (const [index, model] of roster.models.entries()) {
     const prefix = "models[" + index + "]";
     if (!model.alias || typeof model.alias !== "string") issues.push({ path: prefix + ".alias", issue: "A non-empty alias is required." });
@@ -119,6 +121,7 @@ export function validateModelRoster(roster) {
     if (!["available", "unavailable", "unknown"].includes(model.availability)) issues.push({ path: prefix + ".availability", issue: "Expected available, unavailable or unknown." });
     if (model.access && !accessTypes.has(model.access)) issues.push({ path: prefix + ".access", issue: "Unsupported access type." });
     if (model.size_class && !sizes.has(model.size_class)) issues.push({ path: prefix + ".size_class", issue: "Unsupported size class." });
+    if (model.speed_tier && !speeds.has(model.speed_tier)) issues.push({ path: prefix + ".speed_tier", issue: "Unsupported speed tier." });
     for (const key of ["coding", "reasoning", "tool_calling", "structured_output", "retrieval", "vision", "instruction_following"]) {
       if (model.capabilities?.[key] !== undefined && !levels.has(String(model.capabilities[key]).toLowerCase())) issues.push({ path: prefix + ".capabilities." + key, issue: "Expected low, medium, high or unknown." });
     }
