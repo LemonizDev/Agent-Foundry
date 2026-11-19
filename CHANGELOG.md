@@ -1,96 +1,36 @@
 # Changelog
 
+All notable repository changes are recorded here. This project is in active development; entries describe repository state, not a promise that every documented resource is production-ready.
+
 ## Unreleased
 
-### Added
-- Source-first audit inventory and coverage records for Dhan AI Trader and Lively Wallpaper.
-- Extraction decisions and portability/exclusion rules.
-- Implementation teaching, visual probe engineering, privacy-safe evidence, agent execution security and plan reconciliation skills.
-- Teach-implementation command, decision/test/blocker templates, and additional Lively-derived specialist profiles.
+### Documentation and repository experience
+- Refined the root README as the visitor landing page, with original project artwork and expandable documentation navigation.
+- Reorganised the documentation index around reader goals and resource categories.
+- Corrected stale release and implementation-status statements so they reflect the v0.4 development branch.
+- Preserved explicit limitations around host runtime acceptance, provider dispatch and draft resource validation.
 
-### Corrected
-- Replaced the premature initial extraction summary with a source-backed inventory.
-- Clarified that progress/teaching rule files are not confirmed native slash commands.
-- Distinguished tree-inventoried files from content-inspected and extracted resources.
-
-### Validation
-- Both recursive GitHub trees were complete (not truncated).
-- New resources remain DRAFT pending structural checks and scenario validation.
-- Source repositories remain unchanged.
-
-
-## 2026-11-19
-
-### Changed
-- Rewrote the root README as a detailed onboarding, navigation, resource catalog, usage and contribution guide.
-- Added `docs/README.md` as the central index for architecture, audits, extraction records and authoring standards.
-- Documented current maturity and explicitly called out capabilities that do not exist yet (installer, CLI, automated validator and validated platform adapters).
-
-### Validation
-- Checked README relative links against the current repository tree.
-
-
-## 2026-11-20
+## 0.4.0 — development milestone
 
 ### Added
-- Agent-first initialization entrypoint and detailed target-project bootstrap procedure.
-- Distribution, installation and Git-based versioning design.
-- First-time visitor README focused on explaining the product and intended setup experience.
+- Project-aware Node.js CLI for inspection, resource listing, plan-first initialization, validation, model recommendation, settings, update and uninstall.
+- Resource selection presets and capability assessment for existing projects.
+- Host-specific skill, command and profile artifact generation for supported coding-agent formats.
+- Project-local installation manifest with immutable source revision and managed-file hashes.
+- Preview-first updates and uninstall, conflict preservation, rollback and path/symlink protections.
+- Task-aware model classification and owner-defined model-roster validation.
+- Cross-platform CI for Node.js 20 and 22 on Ubuntu, Windows and macOS.
+- MIT license, security policy, contribution guidance, support documentation and tagged-release workflow.
+- User guide, engine architecture, existing-project integration and model-delegation documentation.
 
-### Changed
-- Clarified that root AGENTS.md governs maintenance of Agent Foundry, not initialization of consuming projects.
-- Replaced generic COMMAND.md, WORKFLOW.md, PROFILE.md and STANDARD.md file paths with descriptive standalone filenames.
-- Kept skills as named packages containing SKILL.md so each skill can later include supporting references, scripts and examples.
+### Validation boundary
+- Automated tests cover registry integrity, installer lifecycle, host artifact generation, model routing and path protections.
+- CI exercises the automated suite and repository validation across the configured operating-system and Node.js matrix.
+- Native command discovery and runtime behaviour still require acceptance testing inside each supported coding-agent host.
+- Registry resources are marked draft and require scenario-level validation before being described as production-ready.
+- The model router recommends from an owner-defined roster; it does not call model providers or dispatch workers.
+- Agent Foundry is not a sandbox and does not provide operating-system process isolation or network-policy enforcement.
 
-### Limitations
-- Agent-first bootstrap is documented but not yet a tested installer.
-- CLI, resource selection engine, safe update/uninstall, automated validation, license and platform adapters remain incomplete.
-\n\n## 2026-11-20 — Next capability increment\n\n### Added\n- Full user guide with lifecycle diagram, command explanations, session learning and model delegation guidance.\n- Existing-project integration and migration architecture with capability mapping and additive installation rules.\n- Task-aware model delegation design with intensity dimensions, workload classes, risk gates and a user-defined model roster.\n- Close-session command, durable session-learning skill and context-consolidation workflow.\n- Settings and model-roster editing command contracts and project-local configuration templates.\n\n### Changed\n- Rewrote the README around user problems and real outcomes instead of asking newcomers to understand internal resource categories first.\n- Renamed the source project's public product identity from Lively Wallpaper to Rave Engine in Foundry's source documentation. Lively remains the host platform.\n\n### Limitations\n- Command contracts are drafts; native host slash-command support is not yet implemented or verified.\n- Session close cannot close the chat UI without a host-provided API.\n- Model selection is a routing design; automatic per-task execution requires a tested host adapter and configured roster.\n- Existing-project integration remains an agent-executed procedure until the installer is implemented.\n
+## Earlier development history
 
-### Next capability increment
-
-- Reframed the README around the engineering problems solved, user journeys and visual lifecycle diagrams.
-- Added a complete user guide, existing-project integration/migration design and task-aware model delegation architecture.
-- Added the close-session command, durable session-learning skill and session-close workflow.
-- Added settings and user-defined model-roster commands with project-local YAML templates.
-- Added model explain/test command contracts and registered the new resources.
-- Renamed the source wallpaper project's public identity to **Rave Engine**, while retaining Lively Wallpaper as its host platform. Added a Rave Engine README, updated the agent mission and project context headings, and set the displayed Lively wallpaper title.
-- Validated all 40 registry resource paths against the repository tree and checked relative links in the README, user guide and documentation index. No missing paths or broken links were found.
-- Parsed the updated Lively metadata JSON successfully.
-- Native command adapters, CLI/installer, automatic routing, automated schema validation and full end-to-end setup remain unimplemented.
-
-
-### v0.4 engine and resource expansion
-
-- Added a Node.js CLI for project inspection, plan-first installation, registry listing, validation, conservative updates, safe uninstall, model routing and settings discovery.
-- Added project capability scanning and evidence-backed KEEP/LINK/EXTEND/INSTALL/ADAPT/DEFER/CREATE_TEMPLATE decisions.
-- Added Codex-compatible skills and generated native skill/command artifacts for detected Claude Code, OpenCode, Kilo Code and Cline projects. Runtime host discovery is not yet exercised by CI.
-- Added installation presets: minimal, balanced, autonomous-engineer, visual-engineer, research-engineer and auto.
-- Expanded the reusable engineering library with repository audit, architecture design, implementation planning, debugging, testing, independent review, documentation maintenance and interrupted-work recovery.
-- Added user commands for audit, implementation, debugging, review, verification, delegation, next-task selection, project health and recovery.
-- Added registry integrity, dependency, installer, model-router and host-artifact tests.
-- Added MIT license, security policy, contribution guidance and GitHub Actions CI.
-
-
-### v0.4.0 development increment — project-aware installation engine
-
-#### Added
-- A project-aware CLI with `inspect`, `list`, `init`, `validate`, `update`, `uninstall`, `route`, `settings` and `version` commands.
-- Installation presets: `auto`, `minimal`, `balanced`, `autonomous-engineer`, `visual-engineer` and `research-engineer`.
-- Project capability assessment decisions and explicit conflict handling, including `--skip-conflicts`.
-- Host-native Agent Skills and command/profile generation for Codex-compatible, Claude Code, OpenCode, Kilo Code and Cline projects.
-- Specialist reviewer agents with read-only tool/permission boundaries where the host format supports them.
-- Task-aware model classification, size and speed preferences, context-window gates, owner-defined model roster validation, access policies and independent-review recommendations.
-- Preview-first update/uninstall, ownership hashes, install/update rollback and symlink/path traversal protection.
-- Immutable source commit resolution so the registry and installed resources come from one Git commit.
-- Cross-platform Node 20/22 CI, tagged-release workflow and build provenance attestation.
-- Community, support, security, contribution and user documentation.
-
-#### Changed
-- Flattened command, workflow and template filenames into descriptive names. Skill packages retain the standard `skills/<id>/SKILL.md` layout.
-- Consolidated shared Agent Skills discovery into `.agents/skills` for Codex, OpenCode and Kilo, avoiding duplicate skill registration. Claude Code and Cline receive their own documented project skill directories.
-- Expanded every registry entry with a human-readable description.
-
-#### Validation boundary
-- Automated tests cover registry integrity, dependency resolution, installation/update/uninstall safety, host artifact generation, model routing and path protections.
-- Actual slash-command discovery and runtime execution inside each supported host remain to be exercised before a stable v1.0 release.
+The project evolved from a documentation-first resource library into a project-aware integration engine. Earlier design notes and extraction decisions remain available in the [audit documentation](docs/README.md#i-want-to-audit-the-source-material).
