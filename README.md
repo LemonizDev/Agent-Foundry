@@ -91,7 +91,7 @@ flowchart TD
 | Part | What it means in everyday language | Example |
 |---|---|---|
 | **Project context** | Facts about this particular software: what it does, how it is built, what decisions have been made and what is currently in progress | Architecture notes, roadmap, owner preferences |
-| **Core instructions** | A short set of rules every agent working in the project should follow | Inspect before editing; preserve existing work; verify claims |
+| **Core instructions** | A compact global operating contract that every project receives, backed by reusable standards | [Global instructions](core/GLOBAL_INSTRUCTIONS.md); inspect before editing, preserve existing work and verify claims |
 | **Commands** | Short requests the developer can invoke instead of explaining a recurring task each time | `/progress-report`, `/close`, `/settings` |
 | **Skills** | Detailed instructions that teach the agent how to carry out a particular job | Debugging, session learning, model-aware delegation |
 | **Workflows** | A coordinated sequence of jobs, decisions and checks | Integrate Foundry into an existing project |
