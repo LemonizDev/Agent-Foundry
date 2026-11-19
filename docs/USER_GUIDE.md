@@ -96,7 +96,22 @@ Before any write, the owner should receive:
 
 The owner approves the plan before installation.
 
-## 5. Working with commands
+## 5. Choosing an installation preset
+
+The CLI offers a few starting points. These are resource bundles, not rigid project architectures:
+
+| Preset | Intended use |
+|---|---|
+| auto | Recommended default: autonomous-engineer baseline, plus visual QA resources when graphics/rendering signals are detected |
+| minimal | Compact instructions, state management and evidence basics |
+| balanced | Common engineering skills and commands without the full multi-agent campaign layer |
+| autonomous-engineer | Delegation, model-aware assignments, campaign workflow, recovery and quality controls |
+| visual-engineer | Autonomous-engineer baseline plus graphics, visual regression and performance QA resources |
+| research-engineer | Research-oriented baseline with privacy-safe evidence and synthesis practices |
+
+The scanner uses repository structure and manifest signals. These are heuristics, not a deep semantic understanding of the product. Review the installation plan and adjust the preset or explicit resource list before applying it.
+
+## 6. Working with commands
 
 Commands are named requests. Their exact invocation syntax depends on the host adapter. The portable contracts in `commands/` describe intent and behaviour.
 
@@ -109,10 +124,19 @@ Current command concepts include:
 | `/close` | Consolidates durable session learnings into the right project context files |
 | `/settings` | Shows and edits the project's Foundry preferences |
 | `/models edit` | Opens the user-defined model delegation roster for editing |
+| `/audit` | Audits repository structure and engineering capability gaps |
+| `/implement` | Executes an approved implementation plan |
+| `/debug` | Investigates a reproducible failure and its root cause |
+| `/review` | Performs an independent findings-first review |
+| `/verify` | Checks acceptance criteria against evidence |
+| `/delegate` | Creates a bounded, model-aware assignment |
+| `/next-task` | Selects the next high-value engineering action |
+| `/project-health` | Assesses project health across multiple dimensions |
+| `/resume` | Reconciles interrupted work and resumes from verified state |
 
 A host that cannot register native slash commands can expose the same contracts as prompt shortcuts, named workflows, skills or documented natural-language triggers. Do not tell the owner a slash command is installed unless it actually is.
 
-## 6. The close-session command
+## 7. The close-session command
 
 Use `/close`, `/close session` or `/close chat` when the useful work in a conversation is finished.
 
@@ -132,7 +156,7 @@ The agent must show a concise change summary, preserve history where appropriate
 
 See [Close Session](../commands/close-session.md) and the [session-close workflow](../workflows/session-close.md).
 
-## 7. Model delegation and the model roster
+## 8. Model delegation and the model roster
 
 Foundry does not ship a fixed universal list of model names. Providers, free tiers, model IDs, quotas and capabilities change. The project owner defines the available roster.
 
@@ -149,7 +173,7 @@ A fast model is useful for latency-sensitive, bounded tasks. A smaller model can
 
 See [Model Delegation Architecture](architecture/MODEL_DELEGATION.md).
 
-## 8. Keeping project context healthy
+## 9. Keeping project context healthy
 
 Do not put everything into AGENTS.md. Keep that file short enough to be read reliably. Link to the detailed project context and specialist resources.
 
@@ -163,7 +187,7 @@ A healthy project context normally includes:
 
 Each fact should have one authoritative home. Use references rather than copying the same rule into several files.
 
-## 9. Updating an installation
+## 10. Updating an installation
 
 A future installer will compare the installed manifest with a selected Foundry release. It must detect local edits, show a diff and request approval before replacing changed files.
 
@@ -175,7 +199,7 @@ Until the update engine is available, an agent must:
 5. update only after approval;
 6. record the new revision and verification evidence.
 
-## 10. Troubleshooting
+## 11. Troubleshooting
 
 **The host does not support slash commands.** Use the command contract as a natural-language instruction or install a verified host adapter.
 
@@ -189,6 +213,6 @@ Until the update engine is available, an agent must:
 
 **A model's capability is unknown.** Mark it unknown and run a bounded evaluation before relying on it.
 
-## 11. Current implementation status
+## 12. Current implementation status
 
 The first CLI implementation now supports project inspection, a plan-first resource install, manifest/hash tracking, validation, conservative updates and safe uninstall. Unit tests and CI are included. Native host command adapters, automatic model dispatch, signed release provenance and a GUI remain unimplemented. Do not interpret the CLI as proof that every coding host exposes every Foundry command natively.
