@@ -17,3 +17,14 @@
 - Both recursive GitHub trees were complete (not truncated).
 - New resources remain DRAFT pending structural checks and scenario validation.
 - Source repositories remain unchanged.
+
+
+## 2026-11-19
+
+### Changed
+- Rewrote the root README as a detailed onboarding, navigation, resource catalog, usage and contribution guide.
+- Added `docs/README.md` as the central index for architecture, audits, extraction records and authoring standards.
+- Documented current maturity and explicitly called out capabilities that do not exist yet (installer, CLI, automated validator and validated platform adapters).
+
+### Validation
+- Checked README relative links against the current repository tree.
