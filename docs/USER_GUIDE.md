@@ -58,6 +58,20 @@ The goal is continuity without accumulating a transcript dump. The agent should 
 
 ## 4. Initialising a project
 
+### CLI installation
+
+The initial CLI requires Node.js 20 or newer. From the target project root, run:
+
+```bash
+npx --yes --package github:LemonizDev/Agent-Foundry agent-foundry init
+```
+
+This inspects the project and prints a read-only installation plan. To apply the plan after reviewing it, run the same command with `--apply`. The CLI asks for explicit confirmation. Use `agent-foundry inspect` to view detected capabilities, `agent-foundry validate` to check an installation, `agent-foundry update` to update unchanged Foundry-owned files, and `agent-foundry uninstall --confirm` to remove Foundry-owned resources while preserving locally modified resources and owner settings.
+
+The CLI is an initial implementation. It currently installs a generic AGENTS.md pointer, not native slash-command adapters for every host. See [BOOTSTRAP.md](../BOOTSTRAP.md) for the full procedure and limitations.
+
+
+
 Use the instructions in [BOOTSTRAP.md](../BOOTSTRAP.md). The agent should inspect the project before proposing any changes.
 
 The setup should work for:
@@ -177,4 +191,4 @@ Until the update engine is available, an agent must:
 
 ## 11. Current implementation status
 
-The command contracts and architecture documents define the target behaviour. Production support requires working host adapters, installer/update tooling, automated validation and scenario tests. Consult the repository README and release notes for current verified support.
+The first CLI implementation now supports project inspection, a plan-first resource install, manifest/hash tracking, validation, conservative updates and safe uninstall. Unit tests and CI are included. Native host command adapters, automatic model dispatch, signed release provenance and a GUI remain unimplemented. Do not interpret the CLI as proof that every coding host exposes every Foundry command natively.
