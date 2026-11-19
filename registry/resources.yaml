@@ -1,5 +1,12 @@
 schema_version: 1
 resources:
+  - id: global-instructions
+    description: "Compact, project-agnostic operating instructions that connect the installed standards and task resources into one agent entrypoint."
+    type: core
+    path: core/GLOBAL_INSTRUCTIONS.md
+    version: 0.1.0
+    status: draft
+    portability: universal
   - id: engineering-principles
     description: "Universal engineering baseline for understanding before changing, preserving project intent, incremental implementation and evidence-based completion."
     type: standard
