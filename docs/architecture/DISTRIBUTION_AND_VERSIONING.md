@@ -55,10 +55,10 @@ project/
     .agents/skills/       # Codex
     .claude/skills/       # Claude Code
     .claude/agents/       # Claude Code specialist agents
-    .opencode/skills/     # OpenCode
+    .agents/skills/     # OpenCode
     .opencode/commands/  # OpenCode slash commands
     .opencode/agents/    # OpenCode specialist agents
-    .kilo/skills/         # Kilo Code
+    .agents/skills/         # Kilo Code
     .kilo/commands/      # Kilo Code commands
     .kilo/agents/        # Kilo Code specialist agents
     .cline/skills/       # Cline
