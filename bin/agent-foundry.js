@@ -1,0 +1,83 @@
+#!/usr/bin/env node
+import path from "node:path";
+import readline from "node:readline/promises";
+import { stdin, stdout } from "node:process";
+import { loadRegistry } from "../src/registry.js";
+import { scanProject, classifyCapabilities } from "../src/project-scanner.js";
+import { buildPlan, applyPlan, validateInstallation, updateInstallation, uninstall } from "../src/installer.js";
+
+const VERSION = "0.4.0";
+const args = process.argv.slice(2);
+const command = args[0] ?? "help";
+const option = (name, fallback) => { const i = args.indexOf(name); return i >= 0 ? args[i + 1] : fallback; };
+const has = name => args.includes(name);
+const root = path.resolve(option("--project", process.cwd()));
+const repository = option("--repository", "LemonizDev/Agent-Foundry");
+const ref = option("--ref", "main");
+
+function help() {
+  console.log("Agent Foundry v" + VERSION + "\nA project-aware engineering environment for AI coding agents.\n\nUsage:\n  agent-foundry init [--project PATH] [--ref REF] [--resources id,id] [--apply]\n  agent-foundry inspect [--project PATH]\n  agent-foundry validate [--project PATH]\n  agent-foundry update [--project PATH] [--ref REF]\n  agent-foundry uninstall [--project PATH] --confirm\n  agent-foundry list\n  agent-foundry version\n\ninit is plan-only by default. Review the plan, then repeat with --apply.\nExisting files are never silently overwritten.");
+}
+
+async function ask(question) {
+  const rl = readline.createInterface({ input: stdin, output: stdout });
+  try { return (await rl.question(question)).trim().toLowerCase(); } finally { rl.close(); }
+}
+
+try {
+  if (["help", "--help", "-h"].includes(command)) help();
+  else if (["version", "--version"].includes(command)) console.log(VERSION);
+  else if (command === "inspect") {
+    const scan = await scanProject(root);
+    const result = { root: scan.root, fileCount: scan.fileCount, manifests: scan.manifests, hosts: scan.hosts, capabilities: classifyCapabilities(scan) };
+    console.log(JSON.stringify(result, null, 2));
+  } else if (command === "list") {
+    const registry = await loadRegistry({ repository, ref });
+    for (const item of registry.resources) console.log(item.id.padEnd(32) + " " + item.type.padEnd(14) + " " + item.version + "  " + item.portability);
+  } else if (command === "init") {
+    const registry = await loadRegistry({ repository, ref });
+    const scan = await scanProject(root);
+    const selected = option("--resources", "").split(",").map(x => x.trim()).filter(Boolean);
+    const plan = await buildPlan({ root, registry, resources: selected.length ? selected : undefined, repository, ref });
+    console.log("PROJECT ASSESSMENT");
+    console.log("Root: " + scan.root + "\nFiles inspected: " + scan.fileCount + "\nDetected hosts: " + (scan.hosts.join(", ") || "none"));
+    console.log("\nCAPABILITY MAP");
+    for (const item of classifyCapabilities(scan)) console.log("- " + item.label + ": " + item.action + (item.evidence.length ? " (" + item.evidence.join(", ") + ")" : ""));
+    console.log("\nINSTALLATION PLAN");
+    for (const item of plan.resources) console.log("- " + item.action.padEnd(14) + " " + item.id + " -> " + item.destination);
+    console.log("- ENTRYPOINT      " + plan.project_entrypoint);
+    console.log("- SETTINGS        project-local settings and owner-defined model roster");
+    console.log("\nNo files have been changed.");
+    if (!has("--apply")) console.log("Review this plan. Run the same command with --apply to install.");
+    else {
+      const approval = has("--yes") ? "yes" : await ask("Apply this plan? Type 'yes' to continue: ");
+      if (approval !== "yes") { console.log("Cancelled. No files changed."); process.exitCode = 1; }
+      else {
+        const result = await applyPlan(plan, { root, registry });
+        console.log("Installed " + result.installed_count + " resources. Entrypoint " + (result.entrypoint_created ? "created" : "updated additively") + ".");
+        console.log("Run agent-foundry validate and review .agent-foundry/README.md.");
+      }
+    }
+  } else if (command === "validate") {
+    const result = await validateInstallation(root);
+    console.log(JSON.stringify({ valid: result.valid, resource_count: result.resource_count, issues: result.issues }, null, 2));
+    if (!result.valid) process.exitCode = 1;
+  } else if (command === "update") {
+    const registry = await loadRegistry({ repository, ref });
+    const result = await updateInstallation({ root, registry });
+    console.log(JSON.stringify(result, null, 2));
+    if (result.conflicts.length) {
+      console.error("Local changes or removed resources were preserved. Resolve conflicts manually; no conflicting files were overwritten.");
+      process.exitCode = 2;
+    }
+  } else if (command === "uninstall") {
+    if (!has("--confirm")) throw new Error("Uninstall is destructive. Review the manifest and pass --confirm.");
+    console.log(JSON.stringify(await uninstall(root), null, 2));
+  } else {
+    help();
+    process.exitCode = 1;
+  }
+} catch (error) {
+  console.error("Agent Foundry: " + error.message);
+  process.exitCode = 1;
+}
