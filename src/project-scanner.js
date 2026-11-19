@@ -26,10 +26,10 @@ export async function scanProject(root = process.cwd()) {
   const manifests = ["package.json", "pyproject.toml", "Cargo.toml", "go.mod", "pom.xml", "build.gradle", "composer.json"].filter(file => fileSet.has(file));
   const hosts = [];
   if (fileSet.has("AGENTS.md")) hosts.push("agents-md");
-  if (fileSet.has("CLAUDE.md") || files.some(f => f.startsWith(".claude/"))) hosts.push("claude-code");
-  if (files.some(f => f.startsWith(".opencode/")) || fileSet.has("opencode.json") || fileSet.has("opencode.jsonc")) hosts.push("opencode");
-  if (files.some(f => f.startsWith(".kilo/"))) hosts.push("kilo");
-  if (files.some(f => f.startsWith(".clinerules") || f.startsWith(".cline/"))) hosts.push("cline");
+  if (fileSet.has("CLAUDE.md") || files.some(f => f.startsWith(".claude/")) || await exists(path.join(root, ".claude"))) hosts.push("claude-code");
+  if (files.some(f => f.startsWith(".opencode/")) || fileSet.has("opencode.json") || fileSet.has("opencode.jsonc") || await exists(path.join(root, ".opencode"))) hosts.push("opencode");
+  if (files.some(f => f.startsWith(".kilo/")) || await exists(path.join(root, ".kilo"))) hosts.push("kilo");
+  if (files.some(f => f.startsWith(".clinerules") || f.startsWith(".cline/")) || await exists(path.join(root, ".clinerules")) || await exists(path.join(root, ".cline"))) hosts.push("cline");
   if (files.some(f => f.startsWith(".github/"))) hosts.push("github");
   const projectSignals = [];
   const hasPathSegment = (segments) => files.some(file => segments.some(segment => file.split("/").includes(segment)));
