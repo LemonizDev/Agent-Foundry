@@ -5,7 +5,8 @@ export const DEFAULT_REPOSITORY = "LemonizDev/Agent-Foundry";
 export const DEFAULT_REF = "main";
 
 export async function loadRegistry({ repository = DEFAULT_REPOSITORY, ref = DEFAULT_REF, fetchText = globalThis.fetch } = {}) {
-  if (!/^[A-Za-z0-9_.-]+\\/[A-Za-z0-9_.-]+$/.test(repository)) throw new Error("Repository must be specified as owner/repository.");
+  const repositoryParts = repository.split("/");
+  if (repositoryParts.length !== 2 || repositoryParts.some(part => !/^[A-Za-z0-9_.-]+$/.test(part))) throw new Error("Repository must be specified as owner/repository.");
   const encodedRef = encodeURIComponent(ref);
   const url = "https://raw.githubusercontent.com/" + repository + "/" + encodedRef + "/registry/resources.yaml";
   const response = await fetchText(url);
