@@ -21,6 +21,8 @@ jobs:
         with:
           node-version: 22
       - run: npm install
+      - name: Verify tag matches package version
+        run: test "$GITHUB_REF_NAME" = "v$(node -p \"require('./package.json').version\")"
       - run: npm test
       - run: npm run validate:repo
       - run: npm pack
