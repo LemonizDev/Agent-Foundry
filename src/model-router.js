@@ -7,6 +7,7 @@ const PATTERNS = [
   { task_class: "DEBUGGING", re: /debug|bug|error|failure|crash|regression|root cause|intermittent|broken/i },
   { task_class: "RESEARCH", re: /research|investigate|compare|evaluate|benchmark|survey|source analysis/i },
   { task_class: "LONG_CONTEXT_SYNTHESIS", re: /entire repository|whole codebase|long context|history|synthesi[sz]e|reconcile documents/i },
+  { task_class: "SMALL_TASK", re: /small task|simple|trivial|tiny|one.line|minor change|typo|small fix/i },
   { task_class: "FAST_LOOKUP", re: /find|lookup|locate|what is|where is|quick explanation|quick lookup|symbol/i },
   { task_class: "MECHANICAL", re: /rename|format|reformat|bulk update|metadata|boilerplate|simple repetitive|mechanical/i }
 ];
@@ -68,6 +69,7 @@ export function selectModel(classification, roster, settings = {}) {
     if (requiredContext >= 100000 && !Number.isFinite(contextWindow)) reasons.push("context window is unknown for a long-context task");
     if (reasons.length) { rejected.push({ alias: model.alias ?? "unnamed", reasons }); continue; }
     const weights = {
+      SMALL_TASK: { reasoning: 1, coding: 1, tool_calling: 1, instruction_following: 2, structured_output: 1 },
       FAST_LOOKUP: { reasoning: 1, coding: 0, tool_calling: 1, instruction_following: 2, structured_output: 1 },
       MECHANICAL: { reasoning: 0, coding: 2, tool_calling: 2, instruction_following: 2, structured_output: 1 },
       ROUTINE_IMPLEMENTATION: { reasoning: 2, coding: 3, tool_calling: 2, instruction_following: 2, structured_output: 1 },
@@ -82,7 +84,7 @@ export function selectModel(classification, roster, settings = {}) {
     const latency = Number(model.performance?.latency_ms_p50);
     const latencyBonus = classification.latency_sensitive && Number.isFinite(latency) && latency > 0 ? Math.max(0, 3 - latency / 1000) : 0;
     const evidenceBonus = model.evidence?.confidence === "high" ? 2 : model.evidence?.confidence === "medium" ? 1 : 0;
-    const sizeBonus = classification.task_class === "MECHANICAL" && model.size_class === "small" ? 3 : classification.intensity_band === "VERY_HIGH" && model.size_class === "large" ? 2 : 0;
+    const sizeBonus = ["MECHANICAL", "SMALL_TASK"].includes(classification.task_class) && model.size_class === "small" ? 3 : classification.intensity_band === "VERY_HIGH" && model.size_class === "large" ? 2 : 0;
     const preferredAccess = settings.model_selection?.preferred_access ?? [];
     const accessBonus = preferredAccess.includes(model.access) ? 3 : 0;
     const budgetBonus = model.constraints?.budget_priority === "lowest-cost" && model.access === "free" ? 2 : 0;
