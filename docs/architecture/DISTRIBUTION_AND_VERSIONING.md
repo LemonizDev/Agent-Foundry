@@ -41,7 +41,7 @@ The agent-first flow and CLI must use the same selection schema, manifest format
     project/
     ├── AGENTS.md
     └── .agent-foundry/
-        ├── manifest.yaml
+        ├── manifest.json
         ├── instructions.md
         ├── README.md
         ├── resources/
