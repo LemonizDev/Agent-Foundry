@@ -7,6 +7,7 @@ import { stdin, stdout } from "node:process";
 import { loadRegistry } from "../src/registry.js";
 import { scanProject, classifyCapabilities } from "../src/project-scanner.js";
 import { buildPlan, applyPlan, validateInstallation, updateInstallation, uninstall } from "../src/installer.js";
+import { classifyTask, selectModel } from "../src/model-router.js";
 
 const VERSION = "0.4.0";
 const args = process.argv.slice(2);
