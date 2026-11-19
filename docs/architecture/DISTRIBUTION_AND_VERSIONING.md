@@ -52,17 +52,19 @@ project/
         └── resources/
 
     # Host-native files are generated separately where detected:
-    .agents/skills/       # Codex
-    .claude/skills/       # Claude Code
-    .claude/agents/       # Claude Code specialist agents
-    .agents/skills/     # OpenCode
-    .opencode/commands/  # OpenCode slash commands
-    .opencode/agents/    # OpenCode specialist agents
-    .agents/skills/         # Kilo Code
-    .kilo/commands/      # Kilo Code commands
-    .kilo/agents/        # Kilo Code specialist agents
-    .cline/skills/       # Cline
+
+```text
+.agents/skills/       # Shared Agent Skills location: Codex, OpenCode and Kilo
+.claude/skills/       # Claude Code
+.claude/agents/       # Claude Code specialist agents
+.opencode/commands/  # OpenCode slash commands
+.opencode/agents/    # OpenCode specialist agents
+.kilo/commands/      # Kilo Code commands
+.kilo/agents/        # Kilo Code specialist agents
+.cline/skills/       # Cline
 ```
+
+
 
 The layout above describes the current v0.4 generated structure. Exact host discovery and command execution still require runtime validation in each supported host.
 
