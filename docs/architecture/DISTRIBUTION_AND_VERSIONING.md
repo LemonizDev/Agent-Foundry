@@ -20,19 +20,20 @@ This is the lowest-friction path and does not require the user to know the resou
 
 The CLI is the intended deterministic path:
 
-    npx @lemonizdev/agent-foundry init
+    npx --yes --package github:LemonizDev/Agent-Foundry agent-foundry init
 
-The package name is provisional until availability and publication are verified.
+The package is currently installable from GitHub; it has not been published to the npm registry. The package name in package.json is agent-foundry.
 
-The CLI should:
-- Detect project structure without executing project code.
-- Offer a recommended resource selection and explain why.
-- Support explicit profiles and resource IDs.
-- Pin an immutable Foundry release/commit.
-- Copy only selected resources.
-- Preserve existing instructions and local modifications.
-- Generate a manifest and concise host-specific entrypoint.
-- Validate installation and support safe update/uninstall.
+The v0.4 CLI currently:
+- Detects project structure and existing agent-host signals without executing project code.
+- Offers project-aware presets and explicit resource IDs.
+- Resolves the selected ref to an immutable commit SHA and downloads resources from that exact revision.
+- Copies only selected resources and generates host-native skill, command and profile files for detected hosts.
+- Preserves existing instructions and local modifications using ownership hashes.
+- Generates a JSON manifest and concise host-specific entrypoints.
+- Validates installation, previews updates and uninstall, and requires explicit approval before mutation.
+
+Host runtime discovery and command execution are not yet validated across all hosts.
 
 The agent-first flow and CLI must use the same selection schema, manifest format, installation rules and resource source. They must not become competing installers.
 
@@ -41,13 +42,27 @@ The agent-first flow and CLI must use the same selection schema, manifest format
     project/
     ├── AGENTS.md
     └── .agent-foundry/
-        ├── manifest.yaml
+        ├── manifest.json
         ├── instructions.md
         ├── README.md
-        ├── resources/
-        └── overrides/
+        ├── settings/
+        │   ├── foundry-settings.yaml
+        │   └── model-roster.yaml
+        └── resources/
 
-The target layout is a design contract. The installer and adapters must be implemented and tested before it is advertised as available.
+    # Host-native files are generated separately where detected:
+    .agents/skills/       # Codex
+    .claude/skills/       # Claude Code
+    .claude/agents/       # Claude Code specialist agents
+    .opencode/skills/     # OpenCode
+    .opencode/commands/  # OpenCode slash commands
+    .opencode/agents/    # OpenCode specialist agents
+    .kilo/skills/         # Kilo Code
+    .kilo/commands/      # Kilo Code commands
+    .kilo/agents/        # Kilo Code specialist agents
+    .cline/skills/       # Cline
+
+The layout above describes the current v0.4 generated structure. Exact host discovery and command execution still require runtime validation in each supported host.
 
 ## Selection model
 
@@ -76,7 +91,7 @@ Use Git as the canonical history and distribution mechanism.
 - Use prerelease tags such as v0.3.0-rc.1 while validating.
 - Do not install from a moving branch for production use unless the user explicitly chooses a development channel.
 
-Initially, resource versions are tied to the Foundry release in which they are distributed. Keep an individual resource version only where independent compatibility or lifecycle decisions require it. Avoid inventing a package-management system prematurely.
+The CLI records both the requested ref and resolved commit SHA in the installation manifest. Resource downloads use the resolved SHA rather than a moving branch. Stable installs should use a tagged release or explicit commit SHA. Initially, resource versions are tied to the Foundry release in which they are distributed. Keep an individual resource version only where independent compatibility or lifecycle decisions require it. Avoid inventing a package-management system prematurely.
 
 ## Updates
 
