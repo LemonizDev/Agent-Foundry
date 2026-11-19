@@ -93,6 +93,8 @@ export function selectModel(classification, roster, settings = {}) {
     selected: candidates[0] ?? null,
     alternatives: candidates.slice(1),
     rejected,
+    independent_review_recommended: classification.risk === "HIGH" || classification.intensity_band === "VERY_HIGH",
+    escalation_required: candidates.length === 0,
     explanation: candidates.length
       ? "Selected the highest-scoring eligible roster entry. This is a recommendation, not a model dispatch."
       : "No configured model passed the eligibility gates. Do not silently use an unlisted model or bypass owner constraints."
