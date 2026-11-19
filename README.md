@@ -342,6 +342,8 @@ Do not treat a draft resource or documented design as a production-validated fea
 
 ## Contributing
 
+If Agent Foundry saves you from rebuilding the same agent workflow in every repository, consider [starring the project](https://github.com/LemonizDev/Agent-Foundry) or sharing it with another developer. Stars are useful visibility, but issues, tested adapters and concrete improvements are even more useful.
+
 Useful contributions include:
 - reusable skills with clear prerequisites and completion criteria;
 - commands that have a clear user-facing purpose;
