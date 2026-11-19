@@ -12,7 +12,7 @@ const SIGNALS = [
   { id: "model-roster", label: "Model/provider configuration", paths: [".agent-foundry/settings/model-roster.yaml", "model-roster.yaml"] }
 ];
 
-export async function scanProject(root = process.cwd()) {
+export async function scanProject(root = process.cwd(), { hosts: hostOverrides = [] } = {}) {
   const files = await walk(root);
   const fileSet = new Set(files);
   const found = [];
@@ -31,6 +31,11 @@ export async function scanProject(root = process.cwd()) {
   if (files.some(f => f.startsWith(".kilo/")) || await exists(path.join(root, ".kilo"))) hosts.push("kilo");
   if (files.some(f => f.startsWith(".clinerules") || f.startsWith(".cline/")) || await exists(path.join(root, ".clinerules")) || await exists(path.join(root, ".cline"))) hosts.push("cline");
   if (files.some(f => f.startsWith(".github/"))) hosts.push("github");
+  const supportedHosts = new Set(["codex", "claude-code", "opencode", "kilo", "cline"]);
+  for (const host of hostOverrides) {
+    if (!supportedHosts.has(host)) throw new Error("Unsupported host override: " + host + ". Supported: " + [...supportedHosts].join(", "));
+    if (!hosts.includes(host)) hosts.push(host);
+  }
   const projectSignals = [];
   const hasPathSegment = (segments) => files.some(file => segments.some(segment => file.split("/").includes(segment)));
   const hasExtension = (extensions) => files.some(file => extensions.some(extension => file.toLowerCase().endsWith(extension)));
