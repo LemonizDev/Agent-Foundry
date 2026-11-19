@@ -185,6 +185,10 @@ export async function applyPlan(plan, { root = plan.project_root, registry, fetc
     installed_at: new Date().toISOString(),
     entrypoints,
     installed_resources: staged.map(({ content, ...item }) => item),
+    managed_files: [
+      { path: ".agent-foundry/instructions.md", installed_sha256: sha256(instructions) },
+      { path: ".agent-foundry/README.md", installed_sha256: sha256(readme) }
+    ],
     settings: settings.map(item => ({ path: item.path, installed_sha256: sha256(item.content), template: true }))
   };
   try {
