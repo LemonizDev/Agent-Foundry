@@ -175,7 +175,7 @@ export async function applyPlan(plan, { root = plan.project_root, registry, fetc
     if (!existed) createdFiles.push(file);
   };
   const entrypoints = [];
-  const readme = "# Agent Foundry in this project\\n\\nRead instructions.md for the project entrypoint. manifest.json records installed resources and source revision. Settings are project-owned. Existing project instructions take precedence.\\n";
+  const readme = "# Agent Foundry in this project\n\nRead instructions.md for the project entrypoint. manifest.json records installed resources and source revision. Settings are project-owned. Existing project instructions take precedence.\n";
   const manifest = {
     manifest_version: 1,
     foundry_version: "0.4.0",
@@ -200,7 +200,7 @@ export async function applyPlan(plan, { root = plan.project_root, registry, fetc
       await writeOwned(rel, mergeInstruction(original), true);
       entrypoints.push({ path: rel, created: !existed });
     }
-    await writeOwned(".agent-foundry/manifest.json", JSON.stringify(manifest, null, 2) + "\\n");
+    await writeOwned(".agent-foundry/manifest.json", JSON.stringify(manifest, null, 2) + "\n");
   } catch (error) {
     for (const file of createdFiles.reverse()) await fs.rm(file, { force: true }).catch(() => {});
     for (const [rel, content] of backups) await atomicWrite(path.join(base, safeRelative(rel)), content).catch(() => {});
