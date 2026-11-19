@@ -1,7 +1,7 @@
 const LEVEL = { low: 1, medium: 2, high: 3 };
 
 const PATTERNS = [
-  { task_class: "SECURITY_CRITICAL", re: /security|vulnerab|auth|permission|secret|credential|threat|exploit|access control|production data|migration/i },
+  { task_class: "SECURITY_CRITICAL", re: /security|vulnerab|auth|permission|secret|credential|threat|exploit|access control|production data/i },
   { task_class: "VISUAL_OR_RUNTIME_QA", re: /visual|render|screenshot|browser|gpu|webgl|runtime|ui regression|layout|animation/i },
   { task_class: "ARCHITECTURE", re: /architect|system design|cross.module|migration|refactor|redesign|boundary|scalab|repository wide/i },
   { task_class: "DEBUGGING", re: /debug|bug|error|failure|crash|regression|root cause|intermittent|broken/i },
