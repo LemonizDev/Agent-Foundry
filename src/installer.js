@@ -178,7 +178,7 @@ export async function applyPlan(plan, { root = plan.project_root, registry, fetc
     staged.push({ ...artifact, content: artifact.content, source_sha256: sha256(source), installed_sha256: sha256(artifact.content) });
   }
   const fetchTemplate = async name => {
-    const url = "https://raw.githubusercontent.com/" + plan.foundry.repository + "/" + encodeURIComponent(plan.foundry.ref) + "/templates/settings/" + name;
+    const url = "https://raw.githubusercontent.com/" + plan.foundry.repository + "/" + encodeURIComponent(plan.foundry.ref) + "/templates/" + name;
     const response = await fetchText(url);
     if (!response.ok) throw new Error("Unable to fetch Foundry settings template: " + name);
     return response.text();
