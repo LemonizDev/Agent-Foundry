@@ -1,47 +1,44 @@
 # Agent Foundry
 
-A provider- and project-portable library of reusable AI coding-agent instructions, commands, skills, workflows, templates, standards, profiles, and tool adapters.
-
-Agent Foundry is designed to make good engineering behaviour repeatable across repositories without copying an entire project's context into every agent session.
+A project- and provider-portable library of reusable AI coding-agent instructions, commands, skills, workflows, templates, standards, profiles and tool adapters.
 
 ## Design principles
 
-- **Portable core, explicit adapters:** engineering methods are tool-agnostic; platform-specific command formats live in adapters.
-- **Small always-loaded context:** keep root instructions short and load specialised resources only when needed.
-- **Evidence over claims:** distinguish implemented, automatically verified, visually inspected, unverified, and blocked work.
-- **Accountability stays with the lead:** delegation distributes work, not responsibility.
-- **Project context stays project-specific:** domain rules, secrets, product decisions, and local assumptions do not leak into universal resources.
-- **Resources are versioned and testable:** a document is not a proven skill merely because it is well written.
-- **No destructive surprises:** installation and updates must preserve project customisations and require explicit permission for consequential actions.
+- Portable engineering methods, explicit platform adapters.
+- Small always-loaded context; specialised resources load on demand.
+- Evidence over claims; implementation and verification are separate.
+- Delegation distributes work, not accountability.
+- Project/domain context stays out of universal resources.
+- Resources are versioned, sourced and scenario-tested.
+- Installation and updates preserve project customisations.
 
 ## Resource categories
 
 | Category | Purpose |
 |---|---|
-| Core instructions | Compact global operating contract |
+| Core | Compact global operating contract |
 | Profiles | Role-specific responsibilities and boundaries |
-| Skills | Reusable procedures for a bounded capability |
-| Commands | User-invokable entry points mapped to skills/workflows |
-| Workflows | Multi-step processes with gates and handoffs |
-| Templates | Reusable document and assignment structures |
-| Standards | Cross-cutting quality requirements |
+| Skills | Reusable bounded procedures |
+| Commands | User-invokable contracts mapped to skills/workflows |
+| Workflows | Multi-step processes with states, gates and handoffs |
+| Templates | Reusable documents, reports and assignment structures |
+| Standards | Cross-cutting engineering requirements |
 | Integrations | Tool-specific adapters and generated configuration |
-| Domain packs | Optional domain-specific knowledge and constraints |
-| Scripts | Validation, packaging, installation, and migration utilities |
+| Domain packs | Optional domain-specific context and constraints |
+| Scripts | Validation, packaging, installation and migration utilities |
 
-## Initial resource set\n\nThe first extraction pass includes skills for progress reporting, multi-agent delegation, visual QA, atomic implementation, and authoritative project-state management; a multi-agent campaign workflow; a progress-report command contract; reusable report/assignment/recovery templates; evidence and documentation standards; and lead-engineer, independent-reviewer, and visual-quality profiles. These are drafts pending scenario validation.\n\n## Current state
+## Source audit
 
-This repository is in its initial architecture and source-extraction phase. Resources are added only after their source is inspected, generalised, and classified. See:
+The initial extraction is based on a recursive inventory of two complete GitHub trees:
+- [Dhan AI Trader](https://github.com/LemonizDev/dhan-chatgpt-connector/tree/foundation/final-trader-architecture)
+- [Lively Wallpaper](https://github.com/LemonizDev/futuristic-lively-wallpaper/tree/main)
 
-- [Resource model](docs/architecture/RESOURCE_MODEL.md)
-- [Extraction register](docs/EXTRACTION_REGISTER.md)
-- [Resource authoring standard](docs/standards/RESOURCE_AUTHORING_STANDARD.md)
+See [Reusable Resource Inventory](docs/audit/REUSABLE_RESOURCE_INVENTORY.md), [Source Coverage](docs/audit/SOURCE_COVERAGE.md), and [Extraction Decisions](docs/audit/EXTRACTION_DECISIONS.md).
 
-## Source repositories
+## Current state
 
-The first extraction sources are:
+The repository is in source-audit and extraction-draft phase. Some resources have been created, but none are yet validated for general use. A source file appearing in the inventory does not mean it has been fully inspected or ported.
 
-- Dhan AI Trader: `LemonizDev/dhan-chatgpt-connector`, branch `foundation/final-trader-architecture`
-- Lively Wallpaper: `LemonizDev/futuristic-lively-wallpaper`, branch `main`
+## Safety
 
-Both are treated as read-only source material during extraction. No source project files are modified by this repository's extraction process.
+Both source repositories are read-only during extraction. Domain-specific financial/trading rules, visual design decisions, credentials, active project state and tool-specific settings are not part of the universal core.
