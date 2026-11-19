@@ -53,3 +53,18 @@ export function mergeInstruction(existing) {
   if (start >= 0 && end >= start) return existing.slice(0, start) + block + existing.slice(end + MARKER_END.length);
   return existing.trimEnd() + (existing.trim() ? "\n\n" : "") + block + "\n";
 }
+
+export async function assertNoSymlinkPath(root, relative) {
+  const safe = safeRelative(relative);
+  let current = path.resolve(root);
+  for (const part of safe.split("/")) {
+    current = path.join(current, part);
+    try {
+      const stat = await fs.lstat(current);
+      if (stat.isSymbolicLink()) throw new Error("Refusing to follow symlink in project path: " + relative);
+    } catch (error) {
+      if (error.code === "ENOENT") break;
+      throw error;
+    }
+  }
+}
