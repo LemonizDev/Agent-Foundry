@@ -32,7 +32,10 @@ test("install preserves existing AGENTS and validation detects owner settings ch
   await fs.writeFile(path.join(root, ".agent-foundry/settings/model-roster.yaml"), "models:\n  - alias: local\n");
   const validation = await validateInstallation(root);
   assert.equal(validation.valid, true);
-  const removal = await uninstall(root);
+  const preview = await uninstall(root);
+  assert.equal(preview.applied, false);
+  assert.ok(await fs.access(path.join(root, ".agent-foundry/manifest.json")));
+  const removal = await uninstall(root, { apply: true });
   assert.deepEqual(removal.preserved, []);
   assert.ok(await fs.readFile(path.join(root, "AGENTS.md"), "utf8").then(x => x.includes("# Existing")));
   assert.ok(await fs.readFile(path.join(root, ".agent-foundry/settings/model-roster.yaml"), "utf8").then(x => x.includes("local")));
