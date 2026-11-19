@@ -44,19 +44,19 @@ resources:
     portability: adaptable
   - id: progress-report-template
     type: template
-    path: templates/progress-report/PROGRESS_REPORT.md
+    path: templates/progress-report-template.md
     version: 0.1.0
     status: draft
     portability: adaptable
   - id: delegation-assignment
     type: template
-    path: templates/assignments/DELEGATION_ASSIGNMENT.md
+    path: templates/delegation-assignment.md
     version: 0.1.0
     status: draft
     portability: adaptable
   - id: recovery-handoff
     type: template
-    path: templates/assignments/RECOVERY_HANDOFF.md
+    path: templates/recovery-handoff.md
     version: 0.1.0
     status: draft
     portability: adaptable
@@ -128,19 +128,19 @@ resources:
     portability: adaptable
   - id: decision-register
     type: template
-    path: templates/governance/DECISION_REGISTER.md
+    path: templates/decision-register.md
     version: 0.2.0
     status: draft
     portability: adaptable
   - id: test-evidence-report
     type: template
-    path: templates/verification/TEST_EVIDENCE_REPORT.md
+    path: templates/test-evidence-report.md
     version: 0.2.0
     status: draft
     portability: adaptable
   - id: blocker-register
     type: template
-    path: templates/governance/BLOCKER_REGISTER.md
+    path: templates/blocker-register.md
     version: 0.2.0
     status: draft
     portability: adaptable
@@ -221,13 +221,13 @@ resources:
     portability: universal
   - id: model-roster-template
     type: template
-    path: templates/settings/model-roster.yaml
+    path: templates/model-roster.yaml
     version: 0.1.0
     status: draft
     portability: adaptable
   - id: foundry-settings-template
     type: template
-    path: templates/settings/foundry-settings.yaml
+    path: templates/foundry-settings.yaml
     version: 0.1.0
     status: draft
     portability: adaptable
