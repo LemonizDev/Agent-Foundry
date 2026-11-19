@@ -1,0 +1,17 @@
+schema_version: 1
+profile: null
+host:
+  name: unknown
+  version: unknown
+delegation:
+  enabled: false
+  policy: recommend # off | recommend | automatic
+  require_owner_approval_for_high_risk: true
+  independent_review_for_high_risk: true
+  max_parallel_workers: 2
+  max_retries: 3
+session_learning:
+  enabled: true
+  auto_write: false
+  require_approval_for_architecture_changes: true
+model_roster: .agent-foundry/settings/model-roster.yaml
