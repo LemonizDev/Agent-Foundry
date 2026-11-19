@@ -23,11 +23,11 @@ export async function buildPlan({ root = process.cwd(), registry, resources = DE
   const projectFiles = await walk(root);
   const existing = new Set(projectFiles);
   const selected = resolveResources(registry, resources);
-  const planned = selected.map(resource => {
+  const planned = await Promise.all(selected.map(async resource => {
     const destination = path.posix.join(FOUNDARY_DIR, "resources", resource.path);
     const conflict = existing.has(destination) || await exists(path.join(root, destination));
     return { id: resource.id, type: resource.type, source: resource.path, destination, version: resource.version, action: conflict ? "CONFLICT_CHECK" : "ADD" };
-  });
+  }));
   return {
     schema_version: 1,
     foundry: { repository, ref },
