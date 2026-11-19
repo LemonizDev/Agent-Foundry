@@ -32,6 +32,9 @@ test("default installer selection resolves entirely from registry", async () => 
   const scan = await scanProject(root);
   for (const preset of ["minimal", "balanced", "autonomous-engineer", "visual-engineer", "research-engineer", "auto"]) {
     const resources = resourcesForPreset(preset, scan);
-    assert.equal(resolveResources(registry, resources).length, resources.length, "preset " + preset + " contains unknown or duplicate resources");
+    const resolved = resolveResources(registry, resources);
+    const resolvedIds = resolved.map(item => item.id);
+    assert.ok(resources.every(id => resolvedIds.includes(id)), "preset " + preset + " contains an unknown resource");
+    assert.equal(new Set(resolvedIds).size, resolvedIds.length, "preset " + preset + " resolves duplicate resources");
   }
 });
