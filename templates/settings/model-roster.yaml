@@ -1,0 +1,31 @@
+schema_version: 1
+# Copy to .agent-foundry/settings/model-roster.yaml in the consuming project.
+# Never put API keys, tokens, passwords or other secrets in this file.
+models:
+  - alias: fast-general
+    provider: replace-with-provider
+    model_id: replace-with-exact-model-id
+    availability: unknown # available | unavailable | unknown
+    access: owner-configured # free | paid | local | enterprise | unknown
+    capabilities:
+      coding: unknown
+      reasoning: unknown
+      tool_calling: unknown
+      structured_output: unknown
+      instruction_following: unknown
+      context_window_tokens: null
+      modalities: []
+    performance:
+      latency_ms_p50: null
+      latency_ms_p95: null
+      observed_success_rate: null
+    constraints:
+      allowed_task_classes: []
+      prohibited_task_classes: []
+      max_context_fraction: 0.8
+      budget_priority: normal # lowest-cost | normal | quality-first
+    evidence:
+      source: null
+      verified_at: null
+      confidence: unknown # low | medium | high
+    notes: []
