@@ -89,3 +89,23 @@ test("uninstall preserves locally modified resources and Foundry instructions", 
   assert.match(await fs.readFile(resourcePath, "utf8"), /local resource customisation/);
   assert.match(await fs.readFile(instructionsPath, "utf8"), /Local owner note/);
 });
+
+test("installer adds host-specific instruction pointers without replacing existing files", async () => {
+  const root = await temp();
+  await fs.writeFile(path.join(root, "CLAUDE.md"), "# Existing Claude rules\nKeep these rules.\n");
+  await fs.mkdir(path.join(root, ".clinerules"), { recursive: true });
+  const resource = { id: "one", type: "skill", path: "skills/one.md", version: "1" };
+  const registry = { resources: [resource] };
+  const plan = await buildPlan({ root, registry, resources: ["one"], repository: "owner/repo", ref: "main" });
+  assert.ok(plan.detected_hosts.includes("claude-code"));
+  assert.ok(plan.detected_hosts.includes("cline"));
+  const fetchText = async url => ({ ok: true, text: async () => url.endsWith("model-roster.yaml") ? "models: []\n" : url.endsWith("foundry-settings.yaml") ? "version: 1\n" : "# host skill\n" });
+  await applyPlan(plan, { root, registry, fetchText });
+  const claude = await fs.readFile(path.join(root, "CLAUDE.md"), "utf8");
+  assert.match(claude, /Existing Claude rules/);
+  assert.match(claude, /agent-foundry:start/);
+  assert.ok(await fs.readFile(path.join(root, ".clinerules/agent-foundry.md"), "utf8").then(x => x.includes("agent-foundry:start")));
+  await uninstall(root, { apply: true });
+  assert.match(await fs.readFile(path.join(root, "CLAUDE.md"), "utf8"), /Existing Claude rules/);
+  await assert.rejects(() => fs.access(path.join(root, ".clinerules/agent-foundry.md")));
+});
