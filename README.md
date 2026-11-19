@@ -128,7 +128,7 @@ your-project/
 ├── docs/                        # Your existing project documentation
 ├── src/                         # Your existing source code
 └── .agent-foundry/
-    ├── manifest.yaml            # Foundry version and installed resources
+    ├── manifest.json            # Foundry version and installed resources
     ├── instructions.md          # Small entrypoint for the coding agent
     ├── settings/
     │   ├── foundry-settings.yaml
