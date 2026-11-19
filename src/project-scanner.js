@@ -32,10 +32,12 @@ export async function scanProject(root = process.cwd()) {
   if (files.some(f => f.startsWith(".clinerules") || f.startsWith(".cline/"))) hosts.push("cline");
   if (files.some(f => f.startsWith(".github/"))) hosts.push("github");
   const projectSignals = [];
-  if (files.some(file => /(^|\\/)(shaders?|glsl|webgl|wallpaper)(\\/|$)/i.test(file) || /\\.(glsl|vert|frag|wgsl)$/i.test(file))) projectSignals.push("visual-graphics");
-  if (files.some(file => /(^|\\/)(frontend|client|components|pages)(\\/|$)/i.test(file))) projectSignals.push("frontend");
-  if (files.some(file => /(^|\\/)(backend|server|api)(\\/|$)/i.test(file))) projectSignals.push("backend");
-  if (files.some(file => /(^|\\/)(data|ml|notebooks)(\\/|$)/i.test(file))) projectSignals.push("data");
+  const hasPathSegment = (segments) => files.some(file => segments.some(segment => file.split("/").includes(segment)));
+  const hasExtension = (extensions) => files.some(file => extensions.some(extension => file.toLowerCase().endsWith(extension)));
+  if (hasPathSegment(["shaders", "shader", "glsl", "webgl", "wallpaper"]) || hasExtension([".glsl", ".vert", ".frag", ".wgsl"])) projectSignals.push("visual-graphics");
+  if (hasPathSegment(["frontend", "client", "components", "pages"])) projectSignals.push("frontend");
+  if (hasPathSegment(["backend", "server", "api"])) projectSignals.push("backend");
+  if (hasPathSegment(["data", "ml", "notebooks"])) projectSignals.push("data");
   if (manifests.some(file => ["pyproject.toml", "Cargo.toml", "go.mod", "pom.xml"].includes(file))) projectSignals.push("backend");
   return { root: path.resolve(root), fileCount: files.length, files, manifests, hosts, capabilities: found, projectSignals: [...new Set(projectSignals)] };
 }
