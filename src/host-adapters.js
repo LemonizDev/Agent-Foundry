@@ -12,7 +12,7 @@ function splitFrontmatter(content) {
 
 function descriptionFor(metadata, body, id) {
   if (typeof metadata.description === "string" && metadata.description.trim()) return metadata.description.trim().slice(0, 1000);
-  const purpose = body.match(/^## Purpose\s*\n+([^\n]+(?:\n(?!#)[^\n]+)*)/m);
+  const purpose = body.match(/^## (?:Purpose|Mission)\s*\n+([^\n]+(?:\n(?!#)[^\n]+)*)/m);
   if (purpose) return purpose[1].replace(/\s+/g, " ").trim().slice(0, 1000);
   return String(metadata.name ?? id).replace(/[-_]/g, " ");
 }
