@@ -80,7 +80,7 @@ export function resourcesForPreset(preset, scan) {
 }
 
 async function fetchSource(repository, ref, resource, fetchText) {
-  const url = "https://raw.githubusercontent.com/" + repository + "/" + ref + "/" + resource.path;
+  const url = "https://raw.githubusercontent.com/" + repository + "/" + encodeURIComponent(ref) + "/" + resource.path;
   const response = await fetchText(url);
   if (!response.ok) throw new Error("Failed to fetch " + resource.id + " (" + response.status + ")");
   return response.text();
@@ -172,7 +172,7 @@ export async function applyPlan(plan, { root = plan.project_root, registry, fetc
     staged.push({ ...artifact, content: artifact.content, source_sha256: sha256(source), installed_sha256: sha256(artifact.content) });
   }
   const fetchTemplate = async name => {
-    const url = "https://raw.githubusercontent.com/" + plan.foundry.repository + "/" + plan.foundry.ref + "/templates/settings/" + name;
+    const url = "https://raw.githubusercontent.com/" + plan.foundry.repository + "/" + encodeURIComponent(plan.foundry.ref) + "/templates/settings/" + name;
     const response = await fetchText(url);
     if (!response.ok) throw new Error("Unable to fetch Foundry settings template: " + name);
     return response.text();
