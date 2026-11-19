@@ -38,3 +38,12 @@ test("default installer selection resolves entirely from registry", async () => 
     assert.equal(new Set(resolvedIds).size, resolvedIds.length, "preset " + preset + " resolves duplicate resources");
   }
 });
+
+test("GitHub Actions workflow YAML is parseable and release workflow is tag-gated", async () => {
+  const yaml = (await import("js-yaml")).default;
+  const ci = yaml.load(await fs.readFile(new URL("../.github/workflows/ci.yml", import.meta.url), "utf8"));
+  const release = yaml.load(await fs.readFile(new URL("../.github/workflows/release.yml", import.meta.url), "utf8"));
+  assert.ok(ci.jobs.test.strategy.matrix.os.includes("windows-latest"));
+  assert.ok(ci.jobs.test.strategy.matrix.os.includes("macos-latest"));
+  assert.ok(release.on.push.tags.includes("v*"));
+});
