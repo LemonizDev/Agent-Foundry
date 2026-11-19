@@ -14,9 +14,11 @@
   },
   "scripts": {
     "test": "node --test",
-    "validate": "node ./bin/agent-foundry.js validate",
+    "validate": "npm run validate:repo",
     "check": "npm test && npm run validate:repo",
-    "validate:repo": "node ./scripts/validate-repository.js"
+    "validate:repo": "node ./scripts/validate-repository.js",
+    "validate:project": "node ./bin/agent-foundry.js validate",
+    "prepack": "npm run check"
   },
   "dependencies": {
     "js-yaml": "^4.1.0"
@@ -31,5 +33,25 @@
     "coding-agents",
     "agentic-engineering",
     "developer-tools"
+  ],
+  "files": [
+    "bin/",
+    "src/",
+    "registry/",
+    "templates/",
+    "skills/",
+    "commands/",
+    "profiles/",
+    "workflows/",
+    "standards/",
+    "integrations/",
+    "docs/",
+    "BOOTSTRAP.md",
+    "README.md",
+    "LICENSE",
+    "SECURITY.md",
+    "CONTRIBUTING.md",
+    "CODE_OF_CONDUCT.md",
+    "SUPPORT.md"
   ]
 }
