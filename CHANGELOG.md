@@ -58,3 +58,15 @@
 - Validated all 40 registry resource paths against the repository tree and checked relative links in the README, user guide and documentation index. No missing paths or broken links were found.
 - Parsed the updated Lively metadata JSON successfully.
 - Native command adapters, CLI/installer, automatic routing, automated schema validation and full end-to-end setup remain unimplemented.
+
+
+### v0.4 engine and resource expansion
+
+- Added a Node.js CLI for project inspection, plan-first installation, registry listing, validation, conservative updates, safe uninstall, model routing and settings discovery.
+- Added project capability scanning and evidence-backed KEEP/LINK/EXTEND/INSTALL/ADAPT/DEFER/CREATE_TEMPLATE decisions.
+- Added Codex-compatible skills and generated native skill/command artifacts for detected Claude Code, OpenCode, Kilo Code and Cline projects. Runtime host discovery is not yet exercised by CI.
+- Added installation presets: minimal, balanced, autonomous-engineer, visual-engineer, research-engineer and auto.
+- Expanded the reusable engineering library with repository audit, architecture design, implementation planning, debugging, testing, independent review, documentation maintenance and interrupted-work recovery.
+- Added user commands for audit, implementation, debugging, review, verification, delegation, next-task selection, project health and recovery.
+- Added registry integrity, dependency, installer, model-router and host-artifact tests.
+- Added MIT license, security policy, contribution guidance and GitHub Actions CI.
