@@ -1,14 +1,19 @@
 # Changelog
 
-All notable Agent Foundry changes are recorded here.
-
 ## Unreleased
 
 ### Added
-- Initial repository purpose, resource taxonomy, and operating contract.
-- Canonical resource model and authoring standard.
-- Initial extraction register for Dhan AI Trader and Lively Wallpaper source material.
+- Source-first audit inventory and coverage records for Dhan AI Trader and Lively Wallpaper.
+- Extraction decisions and portability/exclusion rules.
+- Implementation teaching, visual probe engineering, privacy-safe evidence, agent execution security and plan reconciliation skills.
+- Teach-implementation command, decision/test/blocker templates, and additional Lively-derived specialist profiles.
 
-### Notes
-- No extracted skill, command, workflow, or integration is yet marked VALIDATED.
-- No source repository was modified.
+### Corrected
+- Replaced the premature initial extraction summary with a source-backed inventory.
+- Clarified that progress/teaching rule files are not confirmed native slash commands.
+- Distinguished tree-inventoried files from content-inspected and extracted resources.
+
+### Validation
+- Both recursive GitHub trees were complete (not truncated).
+- New resources remain DRAFT pending structural checks and scenario validation.
+- Source repositories remain unchanged.
