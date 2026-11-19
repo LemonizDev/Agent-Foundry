@@ -231,7 +231,7 @@ export async function validateInstallation(root = process.cwd()) {
   return { valid: issues.length === 0, resource_count: manifest.installed_resources.length, issues, manifest };
 }
 
-export async function updateInstallation({ root = process.cwd(), registry } = {}) {
+export async function updateInstallation({ root = process.cwd(), registry, fetchText = globalThis.fetch } = {}) {
   const base = path.resolve(root);
   const manifestPath = path.join(base, FOUNDARY_DIR, "manifest.json");
   const manifest = JSON.parse(await fs.readFile(manifestPath, "utf8"));
@@ -243,7 +243,7 @@ export async function updateInstallation({ root = process.cwd(), registry } = {}
     if (!await exists(file)) { conflicts.push({ id: item.id, reason: "Installed file is missing" }); continue; }
     const current = sha256(await fs.readFile(file));
     if (current !== item.installed_sha256) { conflicts.push({ id: item.id, reason: "Local modifications detected" }); continue; }
-    const source = await fetchSource(registry.repository, registry.ref, resource, globalThis.fetch);
+    const source = await fetchSource(registry.repository, registry.ref, resource, fetchText);
     let content = source;
     if (item.adapter_kind) {
       const artifact = renderHostArtifacts(resource, source, manifest.detected_hosts ?? []).find(x => x.installed_path === item.installed_path && x.adapter_kind === item.adapter_kind);
