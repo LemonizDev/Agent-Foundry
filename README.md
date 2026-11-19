@@ -124,21 +124,31 @@ Copy this into your coding agent:
 
 ### What the installation is intended to look like
 
+The installer adds only selected resources and the host-specific files needed to expose them. Existing source code, architecture and documentation remain where they are.
+
 ```text
 your-project/
-├── AGENTS.md                    # Existing instructions, preserved
-├── docs/                        # Your existing project documentation
-├── src/                         # Your existing source code
+├── AGENTS.md                         # Existing instructions plus a marked Foundry pointer
+├── CLAUDE.md                         # Created or extended when Claude Code is detected
+├── .clinerules/agent-foundry.md      # Added when Cline is detected
+├── .agents/skills/                   # Codex-compatible skills
+├── .claude/skills/ and agents/       # Claude Code skills and specialist agents
+├── .opencode/skills, commands, agents/
+├── .kilo/skills, commands, agents/
+├── .cline/skills/
+├── docs/                              # Your existing project documentation
+├── src/                               # Your existing source code
 └── .agent-foundry/
-    ├── manifest.yaml            # Foundry version and installed resources
-    ├── instructions.md          # Small entrypoint for the coding agent
+    ├── manifest.json                 # Exact source commit and ownership hashes
+    ├── instructions.md               # Compact project entrypoint
     ├── settings/
-    │   ├── foundry-settings.yaml
-    │   └── model-roster.yaml    # Models YOU choose to make available
-    ├── resources/               # Only the selected skills/workflows/etc.
-    ├── overrides/               # Explicit project-specific customisations
-    └── README.md                # What was integrated and how to maintain it
+    │   ├── foundry-settings.yaml     # Project-owned policies
+    │   └── model-roster.yaml         # Models YOU choose to make available
+    ├── resources/                    # Selected canonical resources
+    └── README.md                     # What was integrated and how to maintain it
 ```
+
+Host-specific folders are generated only when their host is detected. The exact installed file list is recorded in the manifest.
 
 ### Install with the CLI
 
@@ -166,11 +176,14 @@ Useful lifecycle commands:
 npx --yes --package github:LemonizDev/Agent-Foundry agent-foundry inspect
 npx --yes --package github:LemonizDev/Agent-Foundry agent-foundry validate
 npx --yes --package github:LemonizDev/Agent-Foundry agent-foundry update
-npx --yes --package github:LemonizDev/Agent-Foundry agent-foundry uninstall --confirm
+npx --yes --package github:LemonizDev/Agent-Foundry agent-foundry update --apply
+npx --yes --package github:LemonizDev/Agent-Foundry agent-foundry uninstall
+npx --yes --package github:LemonizDev/Agent-Foundry agent-foundry uninstall --apply
 ```
 
-The CLI is an initial cross-platform implementation, not a stable release. Native command adapters and automatic model dispatch are separate capabilities and are not implied by installing the resource library.
+Updates and uninstall are preview-first. Updates stop on local modifications; uninstall removes only unchanged Foundry-owned files and preserves owner edits. The uninstall command requires typing `uninstall` before it changes files.
 
+The CLI is an initial cross-platform implementation, not a stable release. Host file generation is tested, but native command discovery and execution still need validation inside each supported host. Model selection currently recommends from your roster; it does not dispatch provider calls or workers.
 ## The user command interface
 
 The portable command contracts are the user-facing layer. The CLI now implements project lifecycle commands and a first-pass roster-based model recommendation. Native slash-command registration remains host-specific.
