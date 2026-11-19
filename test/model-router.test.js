@@ -58,3 +58,14 @@ test("project access policy is a hard filter", () => {
   assert.equal(result.selected.alias, "free");
   assert.ok(result.rejected.some(x => x.alias === "paid"));
 });
+
+test("model roster validator catches duplicate aliases and malformed capability levels", async () => {
+  const { validateModelRoster } = await import("../src/model-router.js");
+  const roster = { schema_version: 1, models: [
+    { alias: "same", provider: "p", model_id: "m1", availability: "available", capabilities: { reasoning: "excellent" } },
+    { alias: "same", provider: "p", model_id: "m2", availability: "available", capabilities: {} }
+  ] };
+  const issues = validateModelRoster(roster);
+  assert.ok(issues.some(x => x.path.endsWith(".reasoning")));
+  assert.ok(issues.some(x => x.path.endsWith(".alias")));
+});
