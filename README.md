@@ -10,7 +10,7 @@ Give your coding agent a consistent way to understand a project, plan work, dele
 
 [![CI](https://github.com/LemonizDev/Agent-Foundry/actions/workflows/ci.yml/badge.svg)](https://github.com/LemonizDev/Agent-Foundry/actions/workflows/ci.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE) [![Node.js](https://img.shields.io/badge/Node.js-20%2B-green.svg)](https://nodejs.org/)
 
-[Start here](#get-started) · [How it works](#how-it-works) · [Commands](#the-user-command-interface) · [Full user guide](docs/USER_GUIDE.md) · [Roadmap](#project-status)
+[Start here](#get-started) · [How it works](#how-it-works) · [Commands](#the-user-command-interface) · [Full user guide](docs/USER_GUIDE.md) · [Contributing](CONTRIBUTING.md) · [Support](SUPPORT.md)
 
 </div>
 
@@ -158,7 +158,7 @@ After reviewing the plan, run:
 npx --yes --package github:LemonizDev/Agent-Foundry agent-foundry init --preset auto --apply
 ```
 
-The CLI asks for explicit confirmation. The auto preset starts with an autonomous-engineering baseline and adds visual QA resources when the project scanner detects graphics/rendering signals. You can choose minimal, balanced, autonomous-engineer, visual-engineer or research-engineer instead. The installer records ownership hashes in .agent-foundry/manifest.json and adds marked pointers without replacing existing content.
+The CLI asks for explicit confirmation. The auto preset starts with an autonomous-engineering baseline and adds visual QA resources when the project scanner detects graphics/rendering signals. You can choose minimal, balanced, autonomous-engineer, visual-engineer or research-engineer instead. The installer records ownership hashes in .agent-foundry/manifest.json and adds marked pointers without replacing existing content. If an existing project already has a resource at a target path, review the conflict and use --skip-conflicts to leave it untouched while installing the remaining resources.
 
 Useful lifecycle commands:
 
@@ -337,7 +337,7 @@ Useful contributions include:
 - scenario tests and validation evidence;
 - improvements to the onboarding guide.
 
-See [resource authoring standards](docs/standards/RESOURCE_AUTHORING_STANDARD.md) and the [documentation index](docs/README.md).
+See [resource authoring standards](docs/standards/RESOURCE_AUTHORING_STANDARD.md), the [documentation index](docs/README.md), the [Code of Conduct](CODE_OF_CONDUCT.md) and [Support](SUPPORT.md).
 
 ## Versioning and trust
 
