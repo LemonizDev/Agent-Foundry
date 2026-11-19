@@ -23,3 +23,17 @@ Dhan AI Trader contributes patterns for architecture, code review, QA, security,
 Lively Wallpaper contributes creative direction, graphics engineering, visual QA and audio-reactive lighting direction.
 
 Only the profiles listed above have been extracted into the current catalogue. Other role families remain candidates until their source definitions are inspected and generalised.
+
+
+## Installation presets
+
+Presets are resource bundles, not specialist-agent profiles. They select a coordinated set of skills, commands, workflows, standards and templates:
+
+- `minimal` — compact project continuity and evidence baseline.
+- `balanced` — common engineering procedures and commands.
+- `autonomous-engineer` — multi-agent delegation, campaign execution, recovery and model-aware routing.
+- `visual-engineer` — autonomous engineering plus visual regression, probes, graphics and performance QA.
+- `research-engineer` — research-oriented workflow and privacy-safe evidence.
+- `auto` — autonomous baseline plus visual resources when project structure signals a graphics/rendering project.
+
+Use the CLI's `--preset` option. The project scanner is heuristic; review the proposed resource list before applying it.
