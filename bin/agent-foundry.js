@@ -48,7 +48,7 @@ try {
     console.log("\nCAPABILITY MAP");
     for (const item of classifyCapabilities(scan)) console.log("- " + item.label + ": " + item.action + (item.evidence.length ? " (" + item.evidence.join(", ") + ")" : ""));
     console.log("\nINSTALLATION PLAN");
-    for (const item of plan.resources) console.log("- " + item.action.padEnd(14) + " " + item.id + " -> " + item.destination);
+    for (const item of plan.resources) console.log("- " + item.action.padEnd(14) + " " + item.id + " [" + item.status + "] -> " + item.destination);
     console.log("\nHOST INTEGRATION (" + plan.detected_hosts.join(", ") + ")");
     for (const item of plan.host_resources ?? []) console.log("- " + item.action.padEnd(14) + " " + item.id + " -> " + item.destination);
     console.log("- ENTRYPOINT      " + plan.project_entrypoint);
