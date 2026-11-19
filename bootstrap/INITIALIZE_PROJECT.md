@@ -79,6 +79,8 @@ Wait for owner approval before changing files.
 
 ## 7. Install safely
 
+Create project-local settings only when relevant and approved. The model roster is user-defined: copy the roster template as a schema/example, but do not populate it with guessed providers or model IDs. Never copy credentials into Foundry configuration.
+
 Target layout:
 
     .agent-foundry/
