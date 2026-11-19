@@ -1,8 +1,10 @@
 import fs from "node:fs/promises";
 import path from "node:path";
+import yaml from "js-yaml";
 import { resolveResources } from "./registry.js";
 import { scanProject } from "./project-scanner.js";
 import { renderHostArtifacts } from "./host-adapters.js";
+import { validateModelRoster } from "./model-router.js";
 import { FOUNDARY_DIR, atomicWrite, exists, mergeInstruction, safeRelative, sha256, walk } from "./utils.js";
 
 const PRESETS = {
@@ -251,20 +253,42 @@ export async function validateInstallation(root = process.cwd()) {
   if (!await exists(manifestPath)) throw new Error("No Agent Foundry installation found.");
   const manifest = JSON.parse(await fs.readFile(manifestPath, "utf8"));
   if (manifest.manifest_version !== 1 || !Array.isArray(manifest.installed_resources)) throw new Error("Unsupported or malformed installation manifest.");
-  const issues = [];
+  const issues = [], warnings = [];
   for (const item of manifest.installed_resources) {
     const file = path.join(base, safeRelative(item.installed_path));
     if (!await exists(file)) { issues.push({ path: item.installed_path, issue: "MISSING" }); continue; }
     const current = sha256(await fs.readFile(file));
-    if (current !== item.installed_sha256) issues.push({ path: item.installed_path, issue: "LOCALLY_MODIFIED", current_sha256: current });
+    if (current !== item.installed_sha256) warnings.push({ path: item.installed_path, issue: "OWNER_MODIFIED", note: "Local changes are preserved and will block automatic updates." });
   }
   for (const item of manifest.settings ?? []) {
     const file = path.join(base, safeRelative(item.path));
     if (!await exists(file)) issues.push({ path: item.path, issue: "MISSING" });
-    
+    else if (sha256(await fs.readFile(file)) !== item.installed_sha256) warnings.push({ path: item.path, issue: "OWNER_CONFIGURED", note: "Project-owned settings differ from the original template." });
   }
   for (const file of ["instructions.md", "manifest.json"]) if (!await exists(path.join(base, FOUNDARY_DIR, file))) issues.push({ path: FOUNDARY_DIR + "/" + file, issue: "MISSING" });
-  return { valid: issues.length === 0, resource_count: manifest.installed_resources.length, issues, manifest };
+
+  const rosterPath = path.join(base, FOUNDARY_DIR, "settings/model-roster.yaml");
+  if (await exists(rosterPath)) {
+    try {
+      const roster = yaml.load(await fs.readFile(rosterPath, "utf8"));
+      for (const issue of validateModelRoster(roster)) issues.push({ path: rosterPath + ":" + issue.path, issue: issue.issue });
+    } catch (error) { issues.push({ path: rosterPath, issue: "INVALID_YAML", detail: error.message }); }
+  }
+  const settingsPath = path.join(base, FOUNDARY_DIR, "settings/foundry-settings.yaml");
+  if (await exists(settingsPath)) {
+    try {
+      const settings = yaml.load(await fs.readFile(settingsPath, "utf8"));
+      if (!settings || settings.schema_version !== 1) issues.push({ path: settingsPath, issue: "INVALID_SCHEMA_VERSION" });
+      const allowed = ["free", "paid", "local", "enterprise"];
+      for (const key of ["allowed_access", "preferred_access"]) {
+        const values = settings.model_selection?.[key] ?? [];
+        if (!Array.isArray(values) || values.some(value => !allowed.includes(value))) issues.push({ path: settingsPath + ":model_selection." + key, issue: "INVALID_ACCESS_POLICY" });
+      }
+      const latency = settings.model_selection?.max_latency_ms;
+      if (latency != null && (!Number.isFinite(latency) || latency <= 0)) issues.push({ path: settingsPath + ":model_selection.max_latency_ms", issue: "INVALID_LATENCY_LIMIT" });
+    } catch (error) { issues.push({ path: settingsPath, issue: "INVALID_YAML", detail: error.message }); }
+  }
+  return { valid: issues.length === 0, resource_count: manifest.installed_resources.length, issues, warnings, manifest };
 }
 
 export async function updateInstallation({ root = process.cwd(), registry, fetchText = globalThis.fetch, apply = false } = {}) {
