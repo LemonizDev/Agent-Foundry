@@ -171,7 +171,7 @@ The CLI is an initial cross-platform implementation, not a stable release. Nativ
 
 ## The user command interface
 
-The long-term goal is to make common agent-management tasks easy to invoke and consistent across supported coding tools.
+The portable command contracts are the user-facing layer. The CLI now implements project lifecycle commands and a first-pass roster-based model recommendation. Native slash-command registration remains host-specific.
 
 | Command | What it should do |
 |---|---|
@@ -182,7 +182,7 @@ The long-term goal is to make common agent-management tasks easy to invoke and c
 | `/models edit` | Edit the model roster used for task-aware delegation |
 | `/models explain` | Explain why a model is or is not suitable for a task |
 
-Command contracts are being defined independently of any one coding tool. A host adapter may expose them as native slash commands, prompt shortcuts or named workflows. A command is not considered supported until that host integration has been tested.
+CLI equivalents currently available: agent-foundry settings and agent-foundry route --task "describe the work". The latter classifies a task and ranks eligible models from the project's configured roster. It recommends; it does not dispatch a worker. Native slash-command registration is not yet available.
 
 ### Closing a session without losing what matters
 
@@ -232,7 +232,7 @@ Examples:
 - **Security-critical work:** require strong reasoning plus independent verification.
 - **Visual/runtime testing:** the model must have access to the relevant browser, renderer or device. Text intelligence alone is not enough.
 
-The roster is defined by the project owner in `.agent-foundry/settings/model-roster.yaml`. Foundry does not hardcode a changing list of model names or assume that a model labelled “flash” is always suitable.
+The roster is defined by the project owner in `.agent-foundry/settings/model-roster.yaml`. Foundry does not hardcode a changing list of model names or assume that a model labelled “flash” is always suitable. The CLI's first-pass classifier is deliberately transparent and heuristic; use it as a routing aid, not an autonomous authority.
 
 [Read the delegation architecture](docs/architecture/MODEL_DELEGATION.md) · [Edit-roster command contract](commands/edit-model-roster.md)
 
@@ -308,9 +308,9 @@ Agent Foundry is under active development. The resource library and architecture
 | Session-learning and close command | Contract and skill drafted |
 | Task-aware model selection | Architecture and user-defined roster drafted |
 | Native command adapters | Not yet validated |
-| Automatic project classifier and installer | Not implemented |
-| Safe update and uninstall | Not implemented |
-| Automated schema/link/resource tests | Not implemented |
+| Project scanner and plan-first CLI installer | Implemented in v0.4 branch; CI pending |
+| Hash-aware conservative update and uninstall | Implemented in v0.4 branch; CI pending |
+| Registry integrity and CLI unit tests | Implemented in v0.4 branch; CI pending |
 | Stable tagged release | Not yet available |
 
 Do not treat a draft resource or documented design as a production-validated feature.
