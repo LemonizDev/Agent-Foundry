@@ -30,7 +30,7 @@ function commandDocument(description, body, host) {
 }
 
 function aliasesFor(metadata, id) {
-  const values = Array.isArray(metadata.aliases) ? metadata.aliases : [];
+  const values = Array.isArray(resource.aliases) ? resource.aliases : Array.isArray(metadata.aliases) ? metadata.aliases : [];
   const aliases = values.map(value => String(value).trim().replace(/^\//, "").split(/\s+/).join("/")).filter(Boolean);
   if (!aliases.length) aliases.push(id);
   return [...new Set(aliases)];
@@ -59,8 +59,8 @@ export function renderHostArtifacts(resource, content, hosts = []) {
       if (!nested) continue;
       if (hosts.includes("opencode")) add(".opencode/commands/" + nested + ".md", "command:opencode", nested, commandDocument(description, body, "opencode"));
       if (hosts.includes("kilo")) add(".kilo/commands/" + nested + ".md", "command:kilo", nested, commandDocument(description, body, "kilo"));
-      for (const host of skillHosts) {
-        const root = host === "codex" ? ".agents/skills" : host === "claude" ? ".claude/skills" : host === "opencode" ? ".opencode/skills" : ".cline/skills";
+      for (const host of skillHosts.filter(name => name !== "opencode")) {
+        const root = host === "codex" ? ".agents/skills" : host === "claude" ? ".claude/skills" : ".cline/skills";
         add(root + "/" + nested.replaceAll("/", "-") + "/SKILL.md", "command-skill:" + host, nested, skillDocument(nested.replaceAll("/", "-"), description, body));
       }
     }
