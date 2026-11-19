@@ -270,17 +270,37 @@ export async function updateInstallation({ root = process.cwd(), registry, fetch
   return { updated: changed.length, planned: changed.map(x => ({ id: x.item.id, path: x.item.installed_path, version: x.resource.version })), conflicts: [], pending: [] };
 }
 
-export async function uninstall(root = process.cwd()) {
+export async function uninstall(root = process.cwd(), { apply = false } = {}) {
   const base = path.resolve(root);
   const dir = path.join(base, FOUNDARY_DIR);
   const manifest = JSON.parse(await fs.readFile(path.join(dir, "manifest.json"), "utf8"));
-  const removed = [], preserved = [];
+  const removed = [], preserved = [], managedFileActions = [];
   for (const item of manifest.installed_resources ?? []) {
     const file = path.join(base, safeRelative(item.installed_path));
     if (!await exists(file)) continue;
-    if (sha256(await fs.readFile(file)) === item.installed_sha256) { await fs.rm(file); removed.push(item.installed_path); }
+    if (sha256(await fs.readFile(file)) === item.installed_sha256) removed.push(item.installed_path);
     else preserved.push(item.installed_path);
   }
+  for (const item of manifest.managed_files ?? []) {
+    const file = path.join(base, safeRelative(item.path));
+    if (!await exists(file)) continue;
+    if (sha256(await fs.readFile(file)) === item.installed_sha256) managedFileActions.push({ path: item.path, action: "REMOVE" });
+    else managedFileActions.push({ path: item.path, action: "PRESERVE" });
+  }
+  const entrypointActions = [];
+  for (const entrypoint of manifest.entrypoints ?? [{ path: "AGENTS.md", created: manifest.created_entrypoint }]) {
+    const file = path.join(base, safeRelative(entrypoint.path));
+    if (!await exists(file)) continue;
+    const text = await fs.readFile(file, "utf8");
+    const startMarker = "<!-- agent-foundry:start -->";
+    const endMarker = "<!-- agent-foundry:end -->";
+    const start = text.indexOf(startMarker), end = text.indexOf(endMarker);
+    if (start >= 0 && end > start) entrypointActions.push({ path: entrypoint.path, action: entrypoint.created && !((text.slice(0, start) + text.slice(end + endMarker.length)).trim()) ? "REMOVE_FILE" : "REMOVE_MARKED_BLOCK" });
+  }
+  const preview = { applied: false, removed, preserved, managed_files: managedFileActions, entrypoints: entrypointActions, owner_settings_preserved: (manifest.settings ?? []).map(item => item.path) };
+  if (!apply) return preview;
+
+  for (const rel of removed) await fs.rm(path.join(base, safeRelative(rel)), { force: true });
   for (const entrypoint of manifest.entrypoints ?? [{ path: "AGENTS.md", created: manifest.created_entrypoint }]) {
     const file = path.join(base, safeRelative(entrypoint.path));
     if (!await exists(file)) continue;
@@ -294,11 +314,8 @@ export async function uninstall(root = process.cwd()) {
       else await atomicWrite(file, next);
     }
   }
-  for (const rel of [".agent-foundry/instructions.md", ".agent-foundry/README.md", ".agent-foundry/manifest.json"]) {
-    const file = path.join(base, rel);
-    if (await exists(file)) await fs.rm(file);
-  }
-  // Preserve settings and any owner-authored files. Empty directories are harmless.
+  for (const item of managedFileActions) if (item.action === "REMOVE") await fs.rm(path.join(base, safeRelative(item.path)), { force: true });
+  await fs.rm(path.join(dir, "manifest.json"), { force: true });
   const leftovers = await walk(dir);
-  return { removed, preserved, remaining_owner_files: leftovers, note: "Project-owned settings and modified resources are preserved." };
+  return { ...preview, applied: true, remaining_owner_files: leftovers, note: "Locally modified resources, owner settings and modified Foundry files were preserved." };
 }
