@@ -253,3 +253,124 @@ resources:
     version: 0.4.0
     status: draft
     portability: universal
+
+  - id: repository-audit
+    type: skill
+    path: skills/repository-audit/SKILL.md
+    version: 0.1.0
+    status: draft
+    portability: universal
+  - id: implementation-planning
+    type: skill
+    path: skills/implementation-planning/SKILL.md
+    version: 0.1.0
+    status: draft
+    portability: universal
+  - id: debugging
+    type: skill
+    path: skills/debugging/SKILL.md
+    version: 0.1.0
+    status: draft
+    portability: universal
+  - id: testing-and-verification
+    type: skill
+    path: skills/testing-and-verification/SKILL.md
+    version: 0.1.0
+    status: draft
+    portability: universal
+  - id: code-review
+    type: skill
+    path: skills/code-review/SKILL.md
+    version: 0.1.0
+    status: draft
+    portability: universal
+  - id: architecture-design
+    type: skill
+    path: skills/architecture-design/SKILL.md
+    version: 0.1.0
+    status: draft
+    portability: universal
+  - id: session-recovery
+    type: skill
+    path: skills/session-recovery/SKILL.md
+    version: 0.1.0
+    status: draft
+    portability: universal
+  - id: documentation-maintenance
+    type: skill
+    path: skills/documentation-maintenance/SKILL.md
+    version: 0.1.0
+    status: draft
+    portability: universal
+  - id: audit
+    type: command
+    path: commands/audit.md
+    aliases: [audit, "repo audit"]
+    dependencies: [repository-audit]
+    version: 0.1.0
+    status: draft
+    portability: adaptable
+  - id: implement
+    type: command
+    path: commands/implement.md
+    aliases: [implement]
+    dependencies: [implementation-planning, atomic-implementation, testing-and-verification]
+    version: 0.1.0
+    status: draft
+    portability: adaptable
+  - id: debug
+    type: command
+    path: commands/debug.md
+    aliases: [debug]
+    dependencies: [debugging, testing-and-verification]
+    version: 0.1.0
+    status: draft
+    portability: adaptable
+  - id: review
+    type: command
+    path: commands/review.md
+    aliases: [review, "code review"]
+    dependencies: [code-review, testing-and-verification]
+    version: 0.1.0
+    status: draft
+    portability: adaptable
+  - id: verify
+    type: command
+    path: commands/verify.md
+    aliases: [verify]
+    dependencies: [testing-and-verification]
+    version: 0.1.0
+    status: draft
+    portability: adaptable
+  - id: delegate
+    type: command
+    path: commands/delegate.md
+    aliases: [delegate]
+    dependencies: [multi-agent-delegation, model-delegation-architecture]
+    version: 0.1.0
+    status: draft
+    portability: adaptable
+  - id: next-task
+    type: command
+    path: commands/next-task.md
+    aliases: [next-task, next]
+    dependencies: [project-state-management, plan-reconciliation, implementation-planning]
+    version: 0.1.0
+    status: draft
+    portability: adaptable
+  - id: project-health
+    type: command
+    path: commands/project-health.md
+    aliases: [project-health, health]
+    dependencies: [repository-audit, progress-reporting, testing-and-verification, documentation-maintenance]
+    version: 0.1.0
+    status: draft
+    portability: adaptable
+  - id: resume
+    type: command
+    path: commands/resume.md
+    aliases: [resume, resume-work]
+    dependencies: [session-recovery, project-state-management, plan-reconciliation]
+    version: 0.1.0
+    status: draft
+    portability: adaptable
