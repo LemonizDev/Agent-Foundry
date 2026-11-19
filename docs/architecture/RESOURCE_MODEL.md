@@ -20,7 +20,7 @@ Agent Foundry separates reusable agent capability into layers. The distinction m
 ## 2. Category contracts
 
 ### Core instructions
-Short, high-priority rules loaded broadly. They should point to detailed resources rather than embed them. Avoid project-specific assumptions.
+Short, high-priority rules loaded broadly. They should point to detailed resources rather than embed them. Avoid project-specific assumptions. Every installation includes the global instruction resource and universal engineering standards, even when the owner selects a narrow preset or explicit resource list.
 
 ### Profiles
 Define mission, responsibilities, decision rights, non-goals, expected inputs/outputs, escalation rules, and required skills. A profile cannot grant tools, permissions, model access, or subagent capability that the host does not provide.
@@ -83,9 +83,9 @@ A resource can have a universal method and a separate tool-specific adapter. Do 
 
 ## 6. Distribution model
 
-The canonical source is this repository. A future installer should support selective installation and generate a manifest containing resource IDs, versions, source revision, selected profile, selected skills/workflows, and target adapters.
+The canonical source is this repository. The v0.4 CLI supports selective installation and generates a manifest containing installed resource IDs, versions, source repository and immutable commit SHA, host artifacts, ownership hashes and settings paths.
 
-Initial distribution should favour copied, version-pinned resources with a manifest. A Git submodule may be offered as an advanced option, but must not be required. Updates must not overwrite locally customised files silently.
+Distribution favours copied, version-pinned resources with a manifest. A Git submodule is not required and is not currently implemented. Updates and uninstall are preview-first and preserve locally customised files rather than silently overwriting them.
 
 ## 7. Resource lifecycle
 
