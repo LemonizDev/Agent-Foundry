@@ -20,7 +20,7 @@ test("install preserves existing AGENTS and validation detects owner settings ch
   await fs.writeFile(path.join(root, "AGENTS.md"), "# Existing\nDo not remove.\n");
   const registry = { resources: [{ id: "one", type: "skill", path: "skills/one.md", version: "1" }] };
   const plan = await buildPlan({ root, registry, resources: ["one"], repository: "owner/repo", ref: "main" });
-  const fetchText = async url => ({ ok: true, text: async () => url.endsWith("model-roster.yaml") ? "models: []\n" : url.endsWith("foundry-settings.yaml") ? "version: 1\n" : "# Installed skill\n" });
+  const fetchText = async url => ({ ok: true, text: async () => url.endsWith("model-roster.yaml") ? "schema_version: 1\nmodels: []\n" : url.endsWith("foundry-settings.yaml") ? "schema_version: 1\nmodel_selection:\n  allowed_access: []\n  preferred_access: []\n" : "# Installed skill\n" });
   const result = await applyPlan(plan, { root, registry, fetchText });
   assert.equal(result.installed_count, 1);
   assert.equal(result.host_artifact_count, 1);
