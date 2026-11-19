@@ -26,3 +26,8 @@ The installer must never replace an existing AGENTS.md, silently overwrite user-
 ## Current status
 
 The agent-first initialization contract is documented. A tested cross-platform CLI and native tool adapters are still under development. Until released, initialization is agent-executed and must be reviewed before files are changed.
+
+
+## CLI preview
+
+An experimental Node.js CLI is being developed on the `feat/cli-installer-mvp` branch. It is not yet published to npm or production-validated. It currently installs selected resource files into `.agent-foundry/` and records a JSON manifest. It does not register native host commands or automatically edit the project's root agent instructions. Do not use it as a production installer yet.
