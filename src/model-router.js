@@ -7,7 +7,7 @@ const PATTERNS = [
   { task_class: "DEBUGGING", re: /debug|bug|error|failure|crash|regression|root cause|intermittent|broken/i },
   { task_class: "RESEARCH", re: /research|investigate|compare|evaluate|benchmark|survey|source analysis/i },
   { task_class: "LONG_CONTEXT_SYNTHESIS", re: /entire repository|whole codebase|long context|history|synthesi[sz]e|reconcile documents/i },
-  { task_class: "FAST_LOOKUP", re: /find|lookup|locate|what is|where is|quick explanation|symbol/i },
+  { task_class: "FAST_LOOKUP", re: /find|lookup|locate|what is|where is|quick explanation|quick lookup|symbol/i },
   { task_class: "MECHANICAL", re: /rename|format|reformat|bulk update|metadata|boilerplate|simple repetitive|mechanical/i }
 ];
 
@@ -38,7 +38,7 @@ function capability(model, key) {
   return LEVEL[String(model.capabilities?.[key] ?? "unknown").toLowerCase()] ?? 0;
 }
 
-export function selectModel(classification, roster) {
+export function selectModel(classification, roster, settings = {}) {
   const candidates = [];
   const rejected = [];
   for (const model of roster?.models ?? []) {
@@ -49,6 +49,11 @@ export function selectModel(classification, roster) {
     const prohibited = model.constraints?.prohibited_task_classes ?? [];
     if (allowed.length && !allowed.includes(classification.task_class)) reasons.push("task class is not on the allowed list");
     if (prohibited.includes(classification.task_class)) reasons.push("task class is explicitly prohibited");
+    const allowedAccess = settings.model_selection?.allowed_access ?? [];
+    if (allowedAccess.length && !allowedAccess.includes(model.access)) reasons.push("access type is outside project policy");
+    const maxLatency = settings.model_selection?.max_latency_ms;
+    const measuredLatency = Number(model.performance?.latency_ms_p50);
+    if (Number.isFinite(maxLatency) && maxLatency > 0 && Number.isFinite(measuredLatency) && measuredLatency > maxLatency) reasons.push("measured latency exceeds project limit");
     if (classification.risk === "HIGH") {
       if (capability(model, "reasoning") < 3) reasons.push("high-risk work requires high reasoning capability");
       if (capability(model, "instruction_following") < 3) reasons.push("high-risk work requires high instruction-following capability");
@@ -57,13 +62,31 @@ export function selectModel(classification, roster) {
     if (["ROUTINE_IMPLEMENTATION", "DEBUGGING", "ARCHITECTURE"].includes(classification.task_class) && capability(model, "coding") < 2) reasons.push("coding capability is below the required floor");
     if (["VISUAL_OR_RUNTIME_QA"].includes(classification.task_class) && !(model.capabilities?.modalities ?? []).some(x => ["image", "video", "browser", "visual"].includes(String(x).toLowerCase()))) reasons.push("no visual modality or tool capability declared");
     if (classification.dimensions.tools === 3 && capability(model, "tool_calling") < 2) reasons.push("tool-calling capability is below the required floor");
+    const contextWindow = Number(model.capabilities?.context_window_tokens);
+    const requiredContext = classification.dimensions.context === 3 ? 100000 : classification.dimensions.context === 2 ? 16000 : 0;
+    if (requiredContext && Number.isFinite(contextWindow) && contextWindow < requiredContext) reasons.push("context window is below the estimated task requirement");
+    if (requiredContext >= 100000 && !Number.isFinite(contextWindow)) reasons.push("context window is unknown for a long-context task");
     if (reasons.length) { rejected.push({ alias: model.alias ?? "unnamed", reasons }); continue; }
-    const values = ["reasoning", "coding", "tool_calling", "instruction_following"];
-    const score = values.reduce((sum, key) => sum + capability(model, key), 0);
+    const weights = {
+      FAST_LOOKUP: { reasoning: 1, coding: 0, tool_calling: 1, instruction_following: 2, structured_output: 1 },
+      MECHANICAL: { reasoning: 0, coding: 2, tool_calling: 2, instruction_following: 2, structured_output: 1 },
+      ROUTINE_IMPLEMENTATION: { reasoning: 2, coding: 3, tool_calling: 2, instruction_following: 2, structured_output: 1 },
+      DEBUGGING: { reasoning: 3, coding: 3, tool_calling: 2, instruction_following: 2, structured_output: 1 },
+      ARCHITECTURE: { reasoning: 3, coding: 2, tool_calling: 1, instruction_following: 2, structured_output: 1 },
+      RESEARCH: { reasoning: 2, coding: 0, tool_calling: 2, instruction_following: 2, structured_output: 2 },
+      LONG_CONTEXT_SYNTHESIS: { reasoning: 3, coding: 0, tool_calling: 1, instruction_following: 2, structured_output: 2 },
+      VISUAL_OR_RUNTIME_QA: { reasoning: 2, coding: 1, tool_calling: 3, instruction_following: 2, structured_output: 1 },
+      SECURITY_CRITICAL: { reasoning: 3, coding: 2, tool_calling: 2, instruction_following: 3, structured_output: 2 }
+    }[classification.task_class] ?? {};
+    const score = Object.entries(weights).reduce((sum, [key, weight]) => sum + capability(model, key) * weight, 0);
     const latency = Number(model.performance?.latency_ms_p50);
     const latencyBonus = classification.latency_sensitive && Number.isFinite(latency) && latency > 0 ? Math.max(0, 3 - latency / 1000) : 0;
     const evidenceBonus = model.evidence?.confidence === "high" ? 2 : model.evidence?.confidence === "medium" ? 1 : 0;
-    candidates.push({ alias: model.alias, provider: model.provider, model_id: model.model_id, score: score + latencyBonus + evidenceBonus, latency_ms_p50: Number.isFinite(latency) ? latency : null, access: model.access ?? "unknown" });
+    const sizeBonus = classification.task_class === "MECHANICAL" && model.size_class === "small" ? 3 : classification.intensity_band === "VERY_HIGH" && model.size_class === "large" ? 2 : 0;
+    const preferredAccess = settings.model_selection?.preferred_access ?? [];
+    const accessBonus = preferredAccess.includes(model.access) ? 3 : 0;
+    const budgetBonus = model.constraints?.budget_priority === "lowest-cost" && model.access === "free" ? 2 : 0;
+    candidates.push({ alias: model.alias, provider: model.provider, model_id: model.model_id, score: score + latencyBonus + evidenceBonus + sizeBonus + accessBonus + budgetBonus, latency_ms_p50: Number.isFinite(latency) ? latency : null, access: model.access ?? "unknown", size_class: model.size_class ?? "unknown" });
   }
   candidates.sort((a, b) => b.score - a.score);
   return {
