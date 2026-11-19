@@ -19,7 +19,7 @@ const repository = option("--repository", "LemonizDev/Agent-Foundry");
 const ref = option("--ref", "main");
 
 function help() {
-  console.log("Agent Foundry v" + VERSION + "\nA project-aware engineering environment for AI coding agents.\n\nUsage:\n  agent-foundry init [--project PATH] [--preset auto|minimal|balanced|autonomous-engineer|visual-engineer|research-engineer] [--resources id,id] [--apply]\n  agent-foundry inspect [--project PATH]\n  agent-foundry validate [--project PATH]\n  agent-foundry update [--project PATH] [--ref REF]\n  agent-foundry uninstall [--project PATH] --confirm\n  agent-foundry list\n  agent-foundry route --task "describe the task"\n  agent-foundry settings\n  agent-foundry version\n\ninit is plan-only by default. Review the plan, then repeat with --apply.\nExisting files are never silently overwritten.");
+  console.log("Agent Foundry v" + VERSION + "\nA project-aware engineering environment for AI coding agents.\n\nUsage:\n  agent-foundry init [--project PATH] [--preset auto|minimal|balanced|autonomous-engineer|visual-engineer|research-engineer] [--resources id,id] [--apply]\n  agent-foundry inspect [--project PATH]\n  agent-foundry validate [--project PATH]\n  agent-foundry update [--project PATH] [--ref REF] [--apply]\n  agent-foundry uninstall [--project PATH] --confirm\n  agent-foundry list\n  agent-foundry route --task "describe the task"\n  agent-foundry settings\n  agent-foundry version\n\ninit is plan-only by default. Review the plan, then repeat with --apply.\nExisting files are never silently overwritten.");
 }
 
 async function ask(question) {
@@ -85,11 +85,23 @@ try {
     if (!result.valid) process.exitCode = 1;
   } else if (command === "update") {
     const registry = await loadRegistry({ repository, ref });
-    const result = await updateInstallation({ root, registry });
-    console.log(JSON.stringify(result, null, 2));
-    if (result.conflicts.length) {
+    const preview = await updateInstallation({ root, registry, apply: false });
+    console.log("UPDATE PREVIEW");
+    console.log(JSON.stringify(preview, null, 2));
+    if (preview.conflicts.length) {
       console.error("Local changes or removed resources were preserved. Resolve conflicts manually; no conflicting files were overwritten.");
       process.exitCode = 2;
+    } else if (!preview.planned.length) {
+      console.log("Already up to date.");
+    } else if (!has("--apply")) {
+      console.log("No files changed. Review the preview and rerun with --apply to update.");
+    } else {
+      const approval = has("--yes") ? "yes" : await ask("Apply these updates? Type 'yes' to continue: ");
+      if (approval !== "yes") { console.log("Cancelled. No files changed."); process.exitCode = 1; }
+      else {
+        const result = await updateInstallation({ root, registry, apply: true });
+        console.log("Updated " + result.updated + " Foundry-owned files.");
+      }
     }
   } else if (command === "uninstall") {
     if (!has("--confirm")) throw new Error("Uninstall is destructive. Review the manifest and pass --confirm.");
