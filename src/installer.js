@@ -68,7 +68,7 @@ const PRESETS = {
   ]
 };
 
-function resourcesForPreset(preset, scan) {
+export function resourcesForPreset(preset, scan) {
   if (preset === "auto") {
     return [...PRESETS["autonomous-engineer"], ...(scan.projectSignals.includes("visual-graphics") ? PRESETS["visual-engineer"].filter(id => ["visual-regression", "visual-probe-engineering", "visual-quality-engineer", "graphics-engineer", "creative-director", "performance-qa"].includes(id)) : [])];
   }
