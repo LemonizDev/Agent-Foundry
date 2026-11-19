@@ -9,6 +9,11 @@ This directory explains Agent Foundry itself: its architecture, source extractio
 - [Task-Aware Model Delegation](architecture/MODEL_DELEGATION.md) — task classification and owner-defined model roster.
 - [Close-session command](../commands/close-session.md) and [session-close workflow](../workflows/session-close.md) — capture durable project learnings before ending a chat.
 
+## Engine and installation
+
+- [Engine Architecture](architecture/ENGINE_ARCHITECTURE.md) — project scanner, resource resolver, plan-first installer, manifest, updates, validation and ownership boundaries.
+- [CLI bootstrap](../BOOTSTRAP.md) — install, inspect, validate, update and uninstall.
+
 ## Start with the architecture
 
 - [Resource Model](architecture/RESOURCE_MODEL.md) — definitions, category boundaries, authority, portability classes, loading strategy and lifecycle.
