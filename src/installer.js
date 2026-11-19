@@ -274,12 +274,17 @@ export async function uninstall(root = process.cwd(), { apply = false } = {}) {
   const base = path.resolve(root);
   const dir = path.join(base, FOUNDARY_DIR);
   const manifest = JSON.parse(await fs.readFile(path.join(dir, "manifest.json"), "utf8"));
-  const removed = [], preserved = [], managedFileActions = [];
+  const removed = [], preserved = [], managedFileActions = [], settingsActions = [];
   for (const item of manifest.installed_resources ?? []) {
     const file = path.join(base, safeRelative(item.installed_path));
     if (!await exists(file)) continue;
     if (sha256(await fs.readFile(file)) === item.installed_sha256) removed.push(item.installed_path);
     else preserved.push(item.installed_path);
+  }
+  for (const item of manifest.settings ?? []) {
+    const file = path.join(base, safeRelative(item.path));
+    if (!await exists(file)) continue;
+    settingsActions.push({ path: item.path, action: sha256(await fs.readFile(file)) === item.installed_sha256 ? "REMOVE_TEMPLATE" : "PRESERVE_OWNER_EDIT" });
   }
   for (const item of manifest.managed_files ?? []) {
     const file = path.join(base, safeRelative(item.path));
@@ -297,7 +302,7 @@ export async function uninstall(root = process.cwd(), { apply = false } = {}) {
     const start = text.indexOf(startMarker), end = text.indexOf(endMarker);
     if (start >= 0 && end > start) entrypointActions.push({ path: entrypoint.path, action: entrypoint.created && !((text.slice(0, start) + text.slice(end + endMarker.length)).trim()) ? "REMOVE_FILE" : "REMOVE_MARKED_BLOCK" });
   }
-  const preview = { applied: false, removed, preserved, managed_files: managedFileActions, entrypoints: entrypointActions, owner_settings_preserved: (manifest.settings ?? []).map(item => item.path) };
+  const preview = { applied: false, removed, preserved, managed_files: managedFileActions, settings: settingsActions, entrypoints: entrypointActions };
   if (!apply) return preview;
 
   for (const rel of removed) await fs.rm(path.join(base, safeRelative(rel)), { force: true });
@@ -315,7 +320,8 @@ export async function uninstall(root = process.cwd(), { apply = false } = {}) {
     }
   }
   for (const item of managedFileActions) if (item.action === "REMOVE") await fs.rm(path.join(base, safeRelative(item.path)), { force: true });
+  for (const item of settingsActions) if (item.action === "REMOVE_TEMPLATE") await fs.rm(path.join(base, safeRelative(item.path)), { force: true });
   await fs.rm(path.join(dir, "manifest.json"), { force: true });
   const leftovers = await walk(dir);
-  return { ...preview, applied: true, remaining_owner_files: leftovers, note: "Locally modified resources, owner settings and modified Foundry files were preserved." };
+  return { ...preview, applied: true, remaining_owner_files: leftovers, note: "Locally modified resources, owner-edited settings and modified Foundry files were preserved; unchanged templates were removed." };
 }
