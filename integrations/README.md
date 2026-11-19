@@ -12,7 +12,7 @@ Agent Foundry separates reusable engineering methods from the file formats and c
 | Kilo Code | AGENTS.md |  .agents/skills/<name>/SKILL.md (shared Agent Skills location) | .kilo/commands/<name>.md | Skills, workflow-style commands and .kilo/agents profiles generated |
 | Cline | Existing .clinerules file/directory gets an additive pointer; existing project rules remain authoritative | .cline/skills/<name>/SKILL.md | Skills are slash-invocable | Skills and command-contract skills generated |
 
-The CLI writes host-specific skill directories when it detects Claude Code, OpenCode, Kilo Code or Cline. Codex receives the standard .agents/skills directory. Kilo command aliases with spaces are converted to a hyphenated filename (for example, models edit becomes models-edit) because nested Kilo command discovery is not assumed.
+The CLI creates one shared .agents/skills directory for Codex, OpenCode and Kilo Code, avoiding duplicate discovery of the same skill. It creates .claude/skills for Claude Code and .cline/skills for Cline. Native command and agent files are generated only for hosts detected in the project. Kilo command aliases with spaces are converted to a hyphenated filename (for example, models edit becomes models-edit) because nested Kilo command discovery is not assumed.
 
 ## Current compatibility status
 
@@ -22,8 +22,8 @@ The generator targets documented file formats, but the installer does not launch
 |---|---|---|
 | Codex | Shared AGENTS.md and .agents/skills output | Not yet exercised in Codex |
 | Claude Code | CLAUDE.md pointer and .claude/skills output | Not yet exercised in Claude Code |
-| OpenCode | .opencode/skills and .opencode/commands output | Not yet exercised in OpenCode |
-| Kilo Code | .kilo/skills and .kilo/commands output | Not yet exercised in Kilo Code |
+| OpenCode | .agents/skills, .opencode/commands and .opencode/agents output | Not yet exercised in OpenCode |
+| Kilo Code | .agents/skills, .kilo/commands and .kilo/agents output | Not yet exercised in Kilo Code |
 | Cline | .cline/skills output | Not yet exercised in Cline |
 
 ## Official format references
@@ -50,7 +50,7 @@ Every production adapter must document:
 ## Adapter roadmap
 
 1. Exercise current generated layouts in Codex, Claude Code, OpenCode, Kilo Code and Cline.
-2. Add Kilo agent/profile generation and host-aware permission mapping.
+2. Validate generated Claude, OpenCode and Kilo specialist profiles and reviewer permission boundaries in their actual hosts.
 3. Add host-specific config merging only where a safe parser and non-destructive merge are available.
 4. Add end-to-end adapter fixtures and compatibility tests for each supported host release.
 
