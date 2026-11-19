@@ -51,7 +51,7 @@ test("registry loader resolves a moving ref to an immutable commit SHA", async (
   const fetchText = async url => {
     calls.push(url);
     if (url.includes("/commits/")) return { ok: true, json: async () => ({ sha: "a".repeat(40) }) };
-    return { ok: true, text: async () => "schema_version: 1\nresources:\n  - id: sample\n    type: skill\n    path: sample.md\n    version: 1.0.0\n" };
+    return { ok: true, text: async () => "schema_version: 1\nresources:\n  - id: sample\n    type: skill\n    path: sample.md\n    version: 1.0.0\n    description: A sample skill.\n" };
   };
   const result = await loadRegistry({ repository: "owner/repo", ref: "main", fetchText });
   assert.equal(result.commit_sha, "a".repeat(40));
