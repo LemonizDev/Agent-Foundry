@@ -13,8 +13,8 @@ test("selects only known resources",()=>{assert.deepEqual(select([{id:"a"}],"bal
 test("plan-only init does not write files; apply creates a verifiable installation",async()=>{
  const root=fs.mkdtempSync(path.join(os.tmpdir(),"foundry-test-"));
  const previousFetch=global.fetch, previousLog=console.log;
- const registry="resources:\\n  - id: demo-skill\\n    type: skill\\n    path: skills/demo/SKILL.md\\n    version: 1.0.0\\n    status: draft\\n";
- global.fetch=async url=>({ok:true,status:200,text:async()=>String(url).endsWith("/registry/resources.yaml")?registry:"# Demo\\n"});
+ const registry="resources:\n  - id: demo-skill\n    type: skill\n    path: skills/demo/SKILL.md\n    version: 1.0.0\n    status: draft\n";
+ global.fetch=async url=>({ok:true,status:200,text:async()=>String(url).endsWith("/registry/resources.yaml")?registry:"# Demo\n"});
  console.log=()=>{};
  try{
   await main(["init","--project",root,"--repository","test/repo","--ref","test","--resources","demo-skill"]);
@@ -33,7 +33,7 @@ test("plan-only init does not write files; apply creates a verifiable installati
 test("init refuses to overwrite an untracked resource file",async()=>{
  const root=fs.mkdtempSync(path.join(os.tmpdir(),"foundry-conflict-"));
  const previousFetch=global.fetch,previousLog=console.log;
- global.fetch=async url=>({ok:true,status:200,text:async()=>String(url).endsWith("/registry/resources.yaml")?"resources:\\n  - id: demo\\n    type: skill\\n    path: skills/demo.md\\n":"content"});
+ global.fetch=async url=>({ok:true,status:200,text:async()=>String(url).endsWith("/registry/resources.yaml")?"resources:\n  - id: demo\n    type: skill\n    path: skills/demo.md\n":"content"});
  console.log=()=>{};
  try{
   const dest=path.join(root,".agent-foundry","resources","skill","demo","demo.md");
