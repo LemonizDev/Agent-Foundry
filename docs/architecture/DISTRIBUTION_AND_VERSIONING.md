@@ -41,32 +41,32 @@ The agent-first flow and CLI must use the same selection schema, manifest format
 
 ```text
 project/
-    ├── AGENTS.md
-    └── .agent-foundry/
-        ├── manifest.json
-        ├── instructions.md
-        ├── README.md
-        ├── settings/
-        │   ├── foundry-settings.yaml
-        │   └── model-roster.yaml
-        └── resources/
+├── AGENTS.md
+├── CLAUDE.md                         # Created or extended for Claude Code
+├── .clinerules/agent-foundry.md      # Added for Cline
+├── docs/                             # Existing project docs remain intact
+├── src/                              # Existing source remains intact
+└── .agent-foundry/
+    ├── manifest.json
+    ├── instructions.md
+    ├── README.md
+    ├── settings/
+    │   ├── foundry-settings.yaml
+    │   └── model-roster.yaml
+    └── resources/
 
-    # Host-native files are generated separately where detected:
-
-```text
+# Host-native resources, generated as applicable:
 .agents/skills/       # Shared Agent Skills location: Codex, OpenCode and Kilo
 .claude/skills/       # Claude Code
 .claude/agents/       # Claude Code specialist agents
-.opencode/commands/  # OpenCode slash commands
-.opencode/agents/    # OpenCode specialist agents
-.kilo/commands/      # Kilo Code commands
-.kilo/agents/        # Kilo Code specialist agents
-.cline/skills/       # Cline
+.opencode/commands/   # OpenCode slash commands
+.opencode/agents/     # OpenCode specialist agents
+.kilo/commands/       # Kilo Code commands
+.kilo/agents/         # Kilo Code specialist agents
+.cline/skills/        # Cline
 ```
 
-
-
-The layout above describes the current v0.4 generated structure. Exact host discovery and command execution still require runtime validation in each supported host.
+The portable `.agents/skills` directory is created as the shared baseline. Additional host-specific files are generated only when their host is detected. The manifest records the exact installed file list and the immutable source commit.
 
 ## Selection model
 
