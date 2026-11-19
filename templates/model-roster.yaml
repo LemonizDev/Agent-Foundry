@@ -8,6 +8,7 @@ models:
     availability: unknown # available | unavailable | unknown
     access: unknown # free | paid | local | enterprise | unknown
     size_class: unknown # small | medium | large | unknown
+    speed_tier: unknown # fast | balanced | slow | unknown
     capabilities:
       coding: unknown
       reasoning: unknown
