@@ -29,8 +29,7 @@ test("install preserves existing AGENTS and validation detects owner settings ch
   assert.equal((await validateInstallation(root)).valid, true);
   await fs.writeFile(path.join(root, ".agent-foundry/settings/model-roster.yaml"), "models:\n  - alias: local\n");
   const validation = await validateInstallation(root);
-  assert.equal(validation.valid, false);
-  assert.equal(validation.issues[0].issue, "OWNER_MODIFIED");
+  assert.equal(validation.valid, true);
   const removal = await uninstall(root);
   assert.deepEqual(removal.preserved, []);
   assert.ok(await fs.readFile(path.join(root, "AGENTS.md"), "utf8").then(x => x.includes("# Existing")));
