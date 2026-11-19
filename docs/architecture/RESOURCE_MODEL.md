@@ -94,3 +94,12 @@ Initial distribution should favour copied, version-pinned resources with a manif
 Optional outcomes: `ADAPTED`, `EXCLUDED`, or `BLOCKED`.
 
 A resource may return to `DRAFTED` when defects are found. Keep validation evidence and version history.
+
+
+## 8. Canonical file layout
+
+Portable resources use descriptive filenames wherever a resource is a single document. For example, commands are stored as commands/progress-report.md and workflows as workflows/multi-agent-campaign.md. This avoids a directory containing one generically named file when there are no supporting assets.
+
+Skills intentionally use a named directory containing SKILL.md. This follows the widely used agent-skill package convention and leaves room for supporting references, scripts and examples alongside the skill definition. The platform adapter may copy or transform that package into the host's required location.
+
+Profiles and standards are standalone descriptive Markdown files. Templates use descriptive names and may be grouped by output purpose.
