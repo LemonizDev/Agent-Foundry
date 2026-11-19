@@ -2,7 +2,7 @@ name: Agent Foundry CI
 
 on:
   push:
-    branches: [main, "feat/**", "fix/**"]
+    branches: [main]
   pull_request:
   workflow_dispatch:
 
@@ -35,7 +35,7 @@ jobs:
           cat test-output.txt
           echo "exit_code=$result" >> "$GITHUB_OUTPUT"
       - name: Publish test failure details to pull request
-        if: steps.tests.outputs.exit_code != '0' && runner.os == 'Linux' && matrix.node == 20
+        if: github.event_name == 'pull_request' && steps.tests.outputs.exit_code != '0' && runner.os == 'Linux' && matrix.node == 20
         uses: actions/github-script@v7
         with:
           script: |
