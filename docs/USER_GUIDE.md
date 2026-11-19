@@ -220,4 +220,15 @@ Uninstall removes only unchanged Foundry-owned resources and marked instruction 
 
 ## 13. Current implementation status
 
-The first CLI implementation now supports project inspection, a plan-first resource install, manifest/hash tracking, validation, conservative updates and safe uninstall. Unit tests and CI are included. Native host command adapters, automatic model dispatch, signed release provenance and a GUI remain unimplemented. Do not interpret the CLI as proof that every coding host exposes every Foundry command natively.
+The v0.4 branch includes a working Node.js CLI for inspection, presets, plan-first installation, host-native resource generation, manifest/hash tracking, settings validation, model recommendation, preview-first updates and uninstall. The source registry is pinned to an immutable commit SHA, and the installer includes rollback and path/symlink protections.
+
+CI covers Node 20 and 22 on Ubuntu, Windows and macOS. Tests cover registry integrity, installer lifecycle, host artifact generation, model routing and canonical documentation links.
+
+The remaining release gates are:
+- verify native command discovery and execution inside each supported coding-agent host and document exact versions;
+- validate command/profile behaviour with real host sessions, not only generated-file tests;
+- add scenario-level tests for reusable skills and workflows;
+- decide whether/when provider dispatch should be added as a separate, permissioned runtime;
+- publish a tagged stable release only after those checks pass.
+
+The current model router recommends a model from the owner's roster; it does not call providers or launch workers. The `/close` command captures durable project learning but cannot close a chat UI unless the host exposes a supported session-control API. Agent Foundry is not a sandbox.
