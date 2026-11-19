@@ -30,7 +30,8 @@ export async function walk(root, relative = "") {
 
 export function safeRelative(file) {
   const normal = path.posix.normalize(file.replaceAll("\\", "/"));
-  if (normal.startsWith("../") || normal === ".." || path.posix.isAbsolute(normal) || /^[A-Za-z]:\\//.test(normal)) throw new Error("Unsafe repository path: " + file);
+  const driveQualified = normal.length > 1 && /^[A-Za-z]$/.test(normal[0]) && normal[1] === ":";
+  if (normal.startsWith("../") || normal === ".." || path.posix.isAbsolute(normal) || driveQualified) throw new Error("Unsafe repository path: " + file);
   return normal;
 }
 
