@@ -28,3 +28,20 @@
 
 ### Validation
 - Checked README relative links against the current repository tree.
+
+
+## 2026-11-20
+
+### Added
+- Agent-first initialization entrypoint and detailed target-project bootstrap procedure.
+- Distribution, installation and Git-based versioning design.
+- First-time visitor README focused on explaining the product and intended setup experience.
+
+### Changed
+- Clarified that root AGENTS.md governs maintenance of Agent Foundry, not initialization of consuming projects.
+- Replaced generic COMMAND.md, WORKFLOW.md, PROFILE.md and STANDARD.md file paths with descriptive standalone filenames.
+- Kept skills as named packages containing SKILL.md so each skill can later include supporting references, scripts and examples.
+
+### Limitations
+- Agent-first bootstrap is documented but not yet a tested installer.
+- CLI, resource selection engine, safe update/uninstall, automated validation, license and platform adapters remain incomplete.
