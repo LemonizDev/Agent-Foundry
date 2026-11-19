@@ -24,8 +24,8 @@ jobs:
         id: tests
         continue-on-error: true
         run: |
-          npm test > test-output.txt 2>&1
-          result=$?
+          result=0
+          npm test > test-output.txt 2>&1 || result=$?
           cat test-output.txt
           echo "exit_code=$result" >> "$GITHUB_OUTPUT"
           exit 0
