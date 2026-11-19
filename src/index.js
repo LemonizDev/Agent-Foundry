@@ -1,4 +1,4 @@
 export { scanProject, classifyCapabilities } from "./project-scanner.js";
-export { buildPlan, applyPlan, validateInstallation, updateInstallation, uninstall } from "./installer.js";
+export { buildPlan, resourcesForPreset, applyPlan, validateInstallation, updateInstallation, uninstall } from "./installer.js";
 export { loadRegistry, resolveResources } from "./registry.js";
 export { classifyTask, selectModel } from "./model-router.js";
