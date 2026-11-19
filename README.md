@@ -128,7 +128,7 @@ The installer adds only selected resources and the host-specific files needed to
 
 ```text
 your-project/
-├── AGENTS.md                         # Existing instructions plus a marked Foundry pointer
+├── AGENTS.md                         # Created or extended with a marked Foundry pointer
 ├── CLAUDE.md                         # Created or extended when Claude Code is detected
 ├── .clinerules/agent-foundry.md      # Added when Cline is detected
 ├── .agents/skills/                   # Codex-compatible skills
@@ -148,7 +148,7 @@ your-project/
     └── README.md                     # What was integrated and how to maintain it
 ```
 
-Host-specific folders are generated only when their host is detected. The exact installed file list is recorded in the manifest.
+The portable .agents/skills baseline is generated for Codex-compatible skill discovery. Additional host-specific folders are generated only when their host is detected. The exact installed file list is recorded in the manifest.
 
 ### Install with the CLI
 
