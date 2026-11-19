@@ -22,11 +22,11 @@ These documents explain what was found in the source repositories and how it was
 | Resource category | Location |
 |---|---|
 | Portable baseline instructions | [core/](../core/GLOBAL_INSTRUCTIONS.md) |
-| User-invokable command contracts | [commands/](../commands/project/progress-report/COMMAND.md) |
+| User-invokable command contracts | [commands/](../commands/progress-report.md) |
 | Task procedures | [skills/](../skills/progress-reporting/SKILL.md) |
-| Multi-step coordination | [workflows/](../workflows/multi-agent-campaign/WORKFLOW.md) |
+| Multi-step coordination | [workflows/](../workflows/multi-agent-campaign.md.md) |
 | Agent role definitions | [profiles/](../profiles/README.md) |
-| Engineering rules | [standards/](../standards/documentation/STANDARD.md) |
+| Engineering rules | [standards/](../standards/documentation-governance.md-governance.md) |
 | Reusable output structures | [templates/](../templates/progress-report/PROGRESS_REPORT.md) |
 | Tool-specific mapping guidance | [integrations/](../integrations/README.md) |
 | Machine-readable resource catalog | [registry/resources.yaml](../registry/resources.yaml) |
