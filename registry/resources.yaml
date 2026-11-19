@@ -32,13 +32,13 @@ resources:
     portability: adaptable
   - id: multi-agent-campaign
     type: workflow
-    path: workflows/multi-agent-campaign/WORKFLOW.md
+    path: workflows/multi-agent-campaign.md.md
     version: 0.1.0
     status: draft
     portability: adaptable
   - id: progress-report
     type: command
-    path: commands/project/progress-report/COMMAND.md
+    path: commands/progress-report.md
     version: 0.1.0
     status: draft
     portability: adaptable
@@ -62,31 +62,31 @@ resources:
     portability: adaptable
   - id: evidence-and-verification
     type: standard
-    path: standards/evidence-and-verification/STANDARD.md
+    path: standards/evidence-and-verification.md.md
     version: 0.1.0
     status: draft
     portability: universal
   - id: documentation-governance
     type: standard
-    path: standards/documentation/STANDARD.md
+    path: standards/documentation-governance.md-governance.md
     version: 0.1.0
     status: draft
     portability: adaptable
   - id: lead-engineer
     type: profile
-    path: profiles/lead-engineer/PROFILE.md
+    path: profiles/lead-engineer.md.md
     version: 0.1.0
     status: draft
     portability: universal
   - id: independent-reviewer
     type: profile
-    path: profiles/independent-reviewer/PROFILE.md
+    path: profiles/independent-reviewer.md.md
     version: 0.1.0
     status: draft
     portability: universal
   - id: visual-quality-engineer
     type: profile
-    path: profiles/visual-quality-engineer/PROFILE.md
+    path: profiles/visual-quality-engineer.md.md
     version: 0.1.0
     status: draft
     portability: adaptable
@@ -122,7 +122,7 @@ resources:
     portability: adaptable
   - id: teach-implementation
     type: command
-    path: commands/learning/teach-implementation/COMMAND.md
+    path: commands/teach-implementation.md
     version: 0.2.0
     status: draft
     portability: adaptable
@@ -146,25 +146,25 @@ resources:
     portability: adaptable
   - id: graphics-engineer
     type: profile
-    path: profiles/graphics-engineer/PROFILE.md
+    path: profiles/graphics-engineer.md.md
     version: 0.2.0
     status: draft
     portability: adaptable
   - id: creative-director
     type: profile
-    path: profiles/creative-director/PROFILE.md
+    path: profiles/creative-director.md.md
     version: 0.2.0
     status: draft
     portability: adaptable
   - id: performance-qa
     type: profile
-    path: profiles/performance-qa/PROFILE.md
+    path: profiles/performance-qa.md.md
     version: 0.2.0
     status: draft
     portability: adaptable
   - id: creative-lighting-director
     type: profile
-    path: profiles/creative-lighting-director/PROFILE.md
+    path: profiles/creative-lighting-director.md.md
     version: 0.2.0
     status: draft
     portability: domain-specific
