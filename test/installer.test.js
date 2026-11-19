@@ -47,3 +47,23 @@ test("install refuses to overwrite a pre-existing resource path", async () => {
   const fetchText = async () => ({ ok: true, text: async () => "# source" });
   await assert.rejects(() => applyPlan(plan, { root, registry, fetchText }), /Refusing to overwrite/);
 });
+
+test("updater refreshes unchanged owned files but stops on local modifications", async () => {
+  const root = await temp();
+  const resourceV1 = { id: "one", type: "skill", path: "skills/one.md", version: "1" };
+  const registryV1 = { resources: [resourceV1], repository: "owner/repo", ref: "v1" };
+  const plan = await buildPlan({ root, registry: registryV1, resources: ["one"], repository: "owner/repo", ref: "v1" });
+  const fetchV1 = async url => ({ ok: true, text: async () => url.endsWith("model-roster.yaml") ? "models: []\n" : url.endsWith("foundry-settings.yaml") ? "version: 1\n" : "# version one\n" });
+  await applyPlan(plan, { root, registry: registryV1, fetchText: fetchV1 });
+  const registryV2 = { resources: [{ ...resourceV1, version: "2" }], repository: "owner/repo", ref: "v2" };
+  const fetchV2 = async url => ({ ok: true, text: async () => url.endsWith("model-roster.yaml") ? "models: []\n" : url.endsWith("foundry-settings.yaml") ? "version: 1\n" : "# version two\n" });
+  const update = await (await import("../src/installer.js")).updateInstallation({ root, registry: registryV2, fetchText: fetchV2 });
+  assert.equal(update.updated, 2);
+  assert.match(await fs.readFile(path.join(root, ".agent-foundry/resources/skills/one.md"), "utf8"), /version two/);
+  await fs.writeFile(path.join(root, ".agent-foundry/resources/skills/one.md"), "# owner change\n");
+  const registryV3 = { resources: [{ ...resourceV1, version: "3" }], repository: "owner/repo", ref: "v3" };
+  const blocked = await (await import("../src/installer.js")).updateInstallation({ root, registry: registryV3, fetchText: fetchV2 });
+  assert.equal(blocked.updated, 0);
+  assert.ok(blocked.conflicts.some(item => item.reason === "Local modifications detected"));
+  assert.match(await fs.readFile(path.join(root, ".agent-foundry/resources/skills/one.md"), "utf8"), /owner change/);
+});
