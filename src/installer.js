@@ -76,12 +76,17 @@ const PRESETS = {
 };
 
 export function resourcesForPreset(preset, scan) {
+  let requested;
   if (preset === "auto") {
-    return [...PRESETS["autonomous-engineer"], ...(scan.projectSignals.includes("visual-graphics") ? PRESETS["visual-engineer"].filter(id => ["visual-regression", "visual-probe-engineering", "visual-quality-engineer", "graphics-engineer", "creative-director", "performance-qa"].includes(id)) : [])];
+    requested = [
+      ...PRESETS["autonomous-engineer"],
+      ...(scan.projectSignals.includes("visual-graphics") ? PRESETS["visual-engineer"].filter(id => ["visual-regression", "visual-probe-engineering", "visual-quality-engineer", "graphics-engineer", "creative-director", "performance-qa"].includes(id)) : [])
+    ];
+  } else {
+    requested = PRESETS[preset];
+    if (!requested) throw new Error("Unknown preset: " + preset + ". Available presets: " + Object.keys(PRESETS).join(", ") + ", auto");
   }
-  const selected = PRESETS[preset];
-  if (!selected) throw new Error("Unknown preset: " + preset + ". Available presets: " + Object.keys(PRESETS).join(", ") + ", auto");
-  return selected;
+  return [...new Set([...CORE_BASELINE, ...requested])];
 }
 
 async function fetchSource(repository, ref, resource, fetchText) {
