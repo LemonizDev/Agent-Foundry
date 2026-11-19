@@ -17,9 +17,10 @@ const has = name => args.includes(name);
 const root = path.resolve(option("--project", process.cwd()));
 const repository = option("--repository", "LemonizDev/Agent-Foundry");
 const ref = option("--ref", "main");
+const hostOverrides = (option("--hosts", "") || "").split(",").map(x => x.trim()).filter(Boolean);
 
 function help() {
-  console.log("Agent Foundry v" + VERSION + "\nA project-aware engineering environment for AI coding agents.\n\nUsage:\n  agent-foundry init [--project PATH] [--preset auto|minimal|balanced|autonomous-engineer|visual-engineer|research-engineer] [--resources id,id] [--apply] [--skip-conflicts]\n  agent-foundry inspect [--project PATH]\n  agent-foundry validate [--project PATH]\n  agent-foundry update [--project PATH] [--ref REF] [--apply]\n  agent-foundry uninstall [--project PATH] [--apply]\n  agent-foundry list\n  agent-foundry route --task TASK_DESCRIPTION\n  agent-foundry settings\n  agent-foundry version\n\ninit is plan-only by default. Review the plan, then repeat with --apply.\nExisting files are never silently overwritten.");
+  console.log("Agent Foundry v" + VERSION + "\nA project-aware engineering environment for AI coding agents.\n\nUsage:\n  agent-foundry init [--project PATH] [--preset auto|minimal|balanced|autonomous-engineer|visual-engineer|research-engineer] [--resources id,id] [--hosts host,host] [--apply] [--skip-conflicts]\n  agent-foundry inspect [--project PATH]\n  agent-foundry validate [--project PATH]\n  agent-foundry update [--project PATH] [--ref REF] [--apply]\n  agent-foundry uninstall [--project PATH] [--apply]\n  agent-foundry list\n  agent-foundry route --task TASK_DESCRIPTION\n  agent-foundry settings\n  agent-foundry version\n\ninit is plan-only by default. Review the plan, then repeat with --apply.\nExisting files are never silently overwritten.");
 }
 
 async function ask(question) {
@@ -31,7 +32,7 @@ try {
   if (["help", "--help", "-h"].includes(command)) help();
   else if (["version", "--version"].includes(command)) console.log(VERSION);
   else if (command === "inspect") {
-    const scan = await scanProject(root);
+    const scan = await scanProject(root, { hosts: hostOverrides });
     const result = { root: scan.root, fileCount: scan.fileCount, manifests: scan.manifests, hosts: scan.hosts, projectSignals: scan.projectSignals, capabilities: classifyCapabilities(scan) };
     console.log(JSON.stringify(result, null, 2));
   } else if (command === "list") {
