@@ -328,14 +328,14 @@ Agent Foundry is under active development. The resource library, first CLI insta
 | Capability | Status |
 |---|---|
 | Resource library and source provenance | In progress; resources remain drafts until validated |
-| Agent-first bootstrap specification | Documented |
-| Existing-project integration design | Documented |
+| Agent-first bootstrap and CLI initialization | Implemented; host runtime verification pending |
+| Existing-project integration | Structural scanner, capability plan, additive installer and conflict preservation implemented |
 | Session-learning and close command | Skill, command contract and host artifact generation implemented; chat UI closure depends on host APIs |
 | Task-aware model selection | Heuristic classifier and user-roster selector implemented; provider dispatch not implemented |
 | Native command/skill/profile file generation | Implemented for detected hosts; runtime validation pending |
-| Project scanner, presets and plan-first CLI installer | Implemented in v0.4 branch; cross-platform CI pending |
-| Hash-aware preview-first update and uninstall | Implemented in v0.4 branch; cross-platform CI pending |
-| Registry, installer, model-router and host adapter tests | Implemented in v0.4 branch; cross-platform CI pending |
+| Project scanner, presets and plan-first CLI installer | Implemented; Node 20/22 CI passing on Linux, Windows and macOS |
+| Hash-aware preview-first update and uninstall | Implemented and covered by cross-platform tests |
+| Registry, installer, model-router, host adapter and canonical documentation-link tests | Implemented and passing in CI |
 | Stable tagged release | Not yet available |
 
 Do not treat a draft resource or documented design as a production-validated feature.
