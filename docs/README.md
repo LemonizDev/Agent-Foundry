@@ -39,7 +39,7 @@ These documents explain what was found in the source repositories and how it was
 | Multi-step coordination | [workflows/](../workflows/multi-agent-campaign.md) |
 | Agent role definitions | [Profile catalog](../profiles/README.md) |
 | Engineering rules | [standards/](../standards/documentation-governance.md) |
-| Reusable output structures | [templates/](../templates/progress-report/PROGRESS_REPORT.md) |
+| Reusable output structures | [templates/](../templates/progress-report-template.md) |
 | Tool-specific mapping guidance | [integrations/](../integrations/README.md) |
 | Machine-readable resource catalog | [registry/resources.yaml](../registry/resources.yaml) |
 
