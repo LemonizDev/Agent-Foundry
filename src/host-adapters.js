@@ -59,14 +59,14 @@ export function renderHostArtifacts(resource, content, hosts = []) {
     const mode = lead ? "primary" : "subagent";
     if (hosts.includes("opencode")) {
       const permissions = reviewer
-        ? "\\npermissions:\\n  - action: edit\\n    resource: \"*\"\\n    effect: deny\\n  - action: shell\\n    resource: \"*\"\\n    effect: deny"
+        ? "\npermissions:\n  - action: edit\n    resource: \"*\"\n    effect: deny\n  - action: shell\n    resource: \"*\"\n    effect: deny"
         : "";
-      const frontmatter = "---\\ndescription: \"" + description.replaceAll('"', "'") + "\"\\nmode: " + mode + permissions + "\\n---\\n\\n";
+      const frontmatter = "---\ndescription: \"" + description.replaceAll('"', "'") + "\"\nmode: " + mode + permissions + "\n---\n\n";
       add(".opencode/agents/" + slug + ".md", "profile:opencode", slug, frontmatter + body.trimStart());
     }
     if (hosts.includes("kilo")) {
-      const permissions = reviewer ? "\\npermission:\\n  edit: deny\\n  bash: deny" : "";
-      const frontmatter = "---\\ndescription: \"" + description.replaceAll('"', "'") + "\"\\nmode: " + mode + permissions + "\\n---\\n\\n";
+      const permissions = reviewer ? "\npermission:\n  edit: deny\n  bash: deny" : "";
+      const frontmatter = "---\ndescription: \"" + description.replaceAll('"', "'") + "\"\nmode: " + mode + permissions + "\n---\n\n";
       add(".kilo/agents/" + slug + ".md", "profile:kilo", slug, frontmatter + body.trimStart());
     }
   }
