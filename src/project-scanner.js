@@ -41,10 +41,20 @@ export async function scanProject(root = process.cwd()) {
 }
 
 export function classifyCapabilities(scan) {
+  const actions = {
+    "agent-instructions": capability => capability.present ? "EXTEND" : "INSTALL",
+    "architecture-context": capability => capability.present ? "LINK" : "DEFER",
+    "project-state": capability => capability.present ? "LINK" : "DEFER",
+    testing: capability => capability.present ? "KEEP" : "ASSESS_GAP",
+    automation: capability => capability.present ? "KEEP" : "DEFER",
+    security: capability => capability.present ? "KEEP" : "INSTALL",
+    commands: capability => capability.present ? "ADAPT" : "INSTALL",
+    "model-roster": capability => capability.present ? "KEEP" : "CREATE_TEMPLATE"
+  };
   return scan.capabilities.map(capability => ({
     capability: capability.id,
     label: capability.label,
-    action: capability.present ? "KEEP_OR_LINK" : "ASSESS_GAP",
+    action: (actions[capability.id] ?? (item => item.present ? "KEEP" : "ASSESS_GAP"))(capability),
     evidence: capability.matches
   }));
 }
