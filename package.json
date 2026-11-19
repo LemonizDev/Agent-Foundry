@@ -1,0 +1,17 @@
+{
+  "name": "@lemonizdev/agent-foundry",
+  "version": "0.1.0",
+  "description": "Project-aware reusable engineering resources for AI coding agents",
+  "license": "MIT",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=20"
+  },
+  "bin": {
+    "agent-foundry": "./bin/agent-foundry.js"
+  },
+  "scripts": {
+    "test": "node --test",
+    "check": "node --check bin/agent-foundry.js && node --test"
+  }
+}
