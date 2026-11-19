@@ -41,7 +41,14 @@ This register links source evidence to canonical Agent Foundry resources. The de
 | Agent execution security | `skills/agent-execution-security/SKILL.md` | DRAFT |
 | Multi-agent campaign | `workflows/multi-agent-campaign.md` | DRAFT |
 | Progress report | `commands/progress-report.md` | DRAFT |
-| Teach implementation | `commands/teach-implementation.md` | DRAFT |\n| Durable session learning | `skills/session-learning/SKILL.md` | DRAFT |\n| Close session | `commands/close-session.md` | DRAFT |\n| Foundry settings | `commands/settings.md` | DRAFT |\n| Edit model roster | `commands/edit-model-roster.md` | DRAFT |\n| Task-aware model delegation | `docs/architecture/MODEL_DELEGATION.md` | DRAFT |\n| Existing-project integration | `docs/architecture/EXISTING_PROJECT_INTEGRATION.md` | DRAFT |\n| User guide | `docs/USER_GUIDE.md` | DRAFT |
+| Teach implementation | `commands/teach-implementation.md` | DRAFT |
+| Durable session learning | `skills/session-learning/SKILL.md` | DRAFT |
+| Close session | `commands/close-session.md` | DRAFT |
+| Foundry settings | `commands/settings.md` | DRAFT |
+| Edit model roster | `commands/edit-model-roster.md` | DRAFT |
+| Task-aware model delegation | `docs/architecture/MODEL_DELEGATION.md` | DRAFT |
+| Existing-project integration | `docs/architecture/EXISTING_PROJECT_INTEGRATION.md` | DRAFT |
+| User guide | `docs/USER_GUIDE.md` | DRAFT |
 | Templates | `templates/` | DRAFT |
 | Profiles | `profiles/` | DRAFT |
 
