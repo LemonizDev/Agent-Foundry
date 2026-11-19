@@ -2,7 +2,6 @@
   "name": "@lemonizdev/agent-foundry",
   "version": "0.1.0",
   "description": "Project-aware reusable engineering resources for AI coding agents",
-  "license": "MIT",
   "type": "commonjs",
   "engines": {
     "node": ">=20"
