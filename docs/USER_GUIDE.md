@@ -2,7 +2,7 @@
 
 This guide is for developers using Agent Foundry in a real project. It explains the intended operating model, the commands, how context is maintained, how model delegation works, and how to adopt Foundry without rebuilding an existing codebase.
 
-> **Capability note:** Agent Foundry is currently a resource library and documented operating system. Native command adapters, automatic model routing, the installer, and chat-closing APIs are not yet implemented across supported hosts. A command contract describes intended behaviour; it is not proof that every host can execute it natively.
+> **Capability note:** Agent Foundry v0.4 includes a project-aware CLI, additive installer, manifest-based updates/uninstall, host-specific skill/command/profile file generation and a task-aware model recommendation engine. Host files are generated and unit-tested, but native command discovery and execution still require validation inside each supported host. The model router recommends from the owner roster; it does not dispatch providers or subagents. `/close` captures durable context but cannot close the chat UI unless the host exposes a supported API.
 
 ## 1. What problem does Agent Foundry solve?
 
@@ -66,9 +66,25 @@ The initial CLI requires Node.js 20 or newer. From the target project root, run:
 npx --yes --package github:LemonizDev/Agent-Foundry agent-foundry init
 ```
 
-This inspects the project and prints a read-only installation plan. To apply the plan after reviewing it, run the same command with `--apply`. The CLI asks for explicit confirmation. Use `agent-foundry inspect` to view detected capabilities, `agent-foundry validate` to check an installation, `agent-foundry update` to update unchanged Foundry-owned files, and `agent-foundry uninstall --confirm` to remove Foundry-owned resources while preserving locally modified resources and owner settings.
+This inspects the project and prints a read-only installation plan. To apply the plan after reviewing it, run:
 
-The CLI is an initial implementation. It currently installs a generic AGENTS.md pointer, not native slash-command adapters for every host. See [BOOTSTRAP.md](../BOOTSTRAP.md) for the full procedure and limitations.
+```bash
+npx --yes --package github:LemonizDev/Agent-Foundry agent-foundry init --preset auto --apply
+```
+
+The CLI asks for explicit confirmation. Every preset and explicit resource selection includes the universal core baseline. Use `--skip-conflicts` to leave existing paths untouched and install the remaining resources. If the project is new and has no host configuration files to detect, pass the host explicitly, for example `--hosts kilo,cline` or `--hosts claude-code,opencode`.
+
+Useful commands:
+
+- `agent-foundry inspect` — inspect project structure, host signals and capability gaps.
+- `agent-foundry list` — list available resources with descriptions.
+- `agent-foundry validate` — validate installed files, settings and the model roster.
+- `agent-foundry route --task TASK_DESCRIPTION` — classify a task and recommend a model from the project roster.
+- `agent-foundry settings` — show project settings and model roster paths.
+- `agent-foundry update` — preview updates; use `--apply` after reviewing.
+- `agent-foundry uninstall` — preview removal; use `--apply` and type `uninstall` to confirm.
+
+Updates and uninstall preserve owner-modified files. The installer records an immutable source commit and refuses path traversal or symlinked destinations. See [BOOTSTRAP.md](../BOOTSTRAP.md) for the complete procedure and limitations.
 
 
 
