@@ -2,140 +2,313 @@
 
 # Agent Foundry
 
-### Give your AI coding agent a repeatable engineering system.
+### A reusable engineering environment for AI coding agents.
 
-Reusable instructions, specialist roles, skills and workflows that can be selected and installed into a project in minutes.
+Give your coding agent a consistent way to understand a project, plan work, delegate tasks, choose suitable models, verify changes and retain useful knowledge between sessions.
 
-**Inspect your project → choose relevant resources → initialise once → build with a consistent standard.**
+**One setup. A project-aware engineering system. Reusable across repositories.**
 
-[Getting Started](#get-started) · [What It Does](#what-is-agent-foundry) · [Resource Library](#what-is-in-the-library) · [Project Status](#open-source-and-community)
+[Start here](#get-started) · [How it works](#how-it-works) · [Commands](#the-user-command-interface) · [Full user guide](docs/USER_GUIDE.md) · [Roadmap](#project-status)
 
 </div>
 
 ---
 
-## What is Agent Foundry?
+## Why this exists
 
-Every new software project starts with the same problem: the coding agent has no idea how your team wants engineering work done.
+AI coding agents can write code. The harder problem is getting them to work reliably across a real project, over weeks or months, with changing requirements, multiple models and multiple sessions.
 
-You end up rebuilding the same instructions again and again:
-- How should the agent inspect a codebase before editing?
-- When should it delegate work to other agents?
-- How should it test, review and verify changes?
-- How should it report progress without making things up?
-- How should it preserve project context between sessions?
-- What should happen when an agent fails halfway through a task?
+Without a shared operating system, every project ends up rebuilding the same things:
 
-**Agent Foundry is a reusable library of answers to those questions.**
+- Instructions explaining how the agent should inspect and modify a repository.
+- A clear source of truth for architecture, decisions, roadmap and current progress.
+- A way to split work between agents without losing accountability.
+- A sensible method for choosing a model for each job.
+- Repeatable testing, review, debugging and documentation practices.
+- A way to preserve useful discoveries when a chat ends, without dumping the entire conversation into a handoff file.
 
-It provides a baseline engineering approach and optional resources for specialised work. When initialised in a project, only the resources relevant to that project should be added. The project keeps its own architecture, product decisions and domain rules.
+The result is familiar: agents rediscover the same facts, repeat mistakes, use an oversized model for trivial tasks, use a weak model for difficult work, contradict earlier decisions, and sometimes announce completion without enough evidence.
 
-Agent Foundry does not replace your coding agent, dictate your tech stack, or magically make weak models good engineers. It gives the agent a clearer operating system for the work.
+**Agent Foundry is intended to solve the process and continuity problem around AI-assisted software development.**
+
+It is an open-source library and, as it matures, an installation and configuration system. It gives coding agents reusable engineering instructions, task procedures, commands, workflows, specialist role definitions and project settings.
+
+It does not replace the coding model or agent host. It does not guarantee correct code. It gives the host a better-defined way to work.
+
+## What changes when a project uses it?
+
+<details>
+<summary><strong>Without a shared engineering system</strong></summary>
+
+- Each new chat rediscovers project structure and conventions.
+- Different agents follow different instructions.
+- Delegation is ad hoc; assignments and checkpoints disappear.
+- Model choice is often a fixed default rather than task-aware.
+- Progress is reported from memory instead of verified evidence.
+- Useful lessons remain buried in old conversations.
+- Existing project instructions and new agent prompts gradually conflict.
+
+</details>
+
+<details>
+<summary><strong>With Agent Foundry</strong></summary>
+
+- The project has a compact entrypoint and clear authoritative context.
+- Reusable procedures define how common engineering tasks are performed.
+- Commands provide a predictable interface for recurring actions.
+- Delegation considers task type, intensity, risk and the owner's model roster.
+- Verification and reporting are evidence-based.
+- Session close captures durable learnings in the correct context files.
+- Installation is additive: existing architecture and instructions are preserved.
+
+</details>
+
+## How it works
+
+Agent Foundry is organised around a project lifecycle, not around a pile of prompt files.
+
+```mermaid
+flowchart TD
+    A["Your existing or new project"] --> B["Inspect its code, docs and agent instructions"]
+    B --> C["Map capabilities already present"]
+    C --> D["Find useful gaps"]
+    D --> E["Recommend relevant Foundry resources"]
+    E --> F{"You approve the plan"}
+    F -- "No" --> G["Revise or stop without changes"]
+    F -- "Yes" --> H["Add selected resources without replacing project rules"]
+    H --> I["Work through commands, skills and workflows"]
+    I --> J["Classify tasks and select from your model roster"]
+    J --> K["Implement, test and independently review"]
+    K --> L["Close session and capture durable learnings"]
+    L --> M["Update the right project context files"]
+    M --> I
+```
+
+### The system has distinct parts
+
+| Part | What it means in everyday language | Example |
+|---|---|---|
+| **Project context** | Facts about this particular software: what it does, how it is built, what decisions have been made and what is currently in progress | Architecture notes, roadmap, owner preferences |
+| **Core instructions** | A short set of rules every agent working in the project should follow | Inspect before editing; preserve existing work; verify claims |
+| **Commands** | Short requests the developer can invoke instead of explaining a recurring task each time | `/progress-report`, `/close`, `/settings` |
+| **Skills** | Detailed instructions that teach the agent how to carry out a particular job | Debugging, session learning, model-aware delegation |
+| **Workflows** | A coordinated sequence of jobs, decisions and checks | Integrate Foundry into an existing project |
+| **Profiles** | Responsibility definitions for specialist agents | Lead engineer, independent reviewer, graphics engineer |
+| **Standards and templates** | Shared quality rules and consistent formats for reports or records | Evidence requirements, test report template |
+| **Settings and integrations** | Project-specific preferences and translations into the coding tool's supported format | User-defined model roster, host adapter |
+
+The important distinction: **a command is the request, a skill is how to do the work, and a workflow is how several pieces of work fit together.** A model roster is configuration owned by the consuming project, not a universal list hardcoded into Agent Foundry.
 
 ## Get started
 
-### The intended experience
+### The intended one-step experience
 
-You should not need to clone this repository, understand its folder structure or manually copy Markdown files.
+You should not need to clone this repository, download a ZIP or manually browse its folders.
 
-1. Open your project in your coding agent.
-2. Give it the Agent Foundry repository link and the initialization instruction below.
-3. Review the proposed resource selection.
-4. Approve the setup. The agent adds the selected resources to your project.
+1. Open the project you want to configure in your coding agent.
+2. Give the agent the Agent Foundry link and the instruction below.
+3. The agent inspects your project and identifies what you already have.
+4. It recommends only relevant resources and shows you exactly what it plans to change.
+5. You approve the plan; the agent integrates the resources.
 
 Copy this into your coding agent:
 
 > Initialise this project with Agent Foundry: https://github.com/LemonizDev/Agent-Foundry  
-> Follow the instructions in BOOTSTRAP.md and bootstrap/INITIALIZE_PROJECT.md. First inspect my project and existing agent instructions. Recommend only relevant resources, explain why each is needed, and show me the files you plan to create or modify. Preserve all existing project instructions and wait for my approval before writing anything.
+> Read BOOTSTRAP.md and bootstrap/INITIALIZE_PROJECT.md. Inspect my existing project, its architecture, documentation and agent instructions before making changes. Identify which capabilities I already have and which are missing. Recommend only relevant Agent Foundry resources, explain why each is useful, and show me the exact files you plan to create or modify. Preserve my existing architecture, instructions and local conventions. Do not overwrite anything. Wait for my approval before writing.
 
-**Current implementation status:** the agent-first initialization procedure is documented, but the automated installer and tested platform adapters are not released yet. Until then, the coding agent must follow the bootstrap procedure manually and report any unsupported steps. We will not pretend a documented design is already a working installer.
+**Existing projects are first-class targets.** Foundry is supposed to integrate into an established codebase, not force the codebase to become a copy of one of its source projects.
 
-[Read the initialization guide](BOOTSTRAP.md) · [Read the full agent procedure](bootstrap/INITIALIZE_PROJECT.md)
+[Read the complete setup procedure](BOOTSTRAP.md) · [Read the agent's initialization specification](bootstrap/INITIALIZE_PROJECT.md) · [Read the existing-project migration design](docs/architecture/EXISTING_PROJECT_INTEGRATION.md)
 
-## What gets added to a project?
+### What the installation is intended to look like
 
-The intended installation is small, local and traceable:
+```text
+your-project/
+├── AGENTS.md                    # Existing instructions, preserved
+├── docs/                        # Your existing project documentation
+├── src/                         # Your existing source code
+└── .agent-foundry/
+    ├── manifest.yaml            # Foundry version and installed resources
+    ├── instructions.md          # Small entrypoint for the coding agent
+    ├── settings/
+    │   ├── foundry-settings.yaml
+    │   └── model-roster.yaml    # Models YOU choose to make available
+    ├── resources/               # Only the selected skills/workflows/etc.
+    ├── overrides/               # Explicit project-specific customisations
+    └── README.md                # What was integrated and how to maintain it
+```
 
-    your-project/
-    ├── AGENTS.md                 # Your existing instructions, preserved
-    └── .agent-foundry/
-        ├── manifest.yaml         # Foundry version and selected resources
-        ├── instructions.md       # Short entrypoint for the coding agent
-        ├── resources/            # Only the resources selected for this project
-        ├── overrides/            # Your explicit local customisations
-        └── README.md             # What was installed and how to maintain it
+The installer and automatic host adapters are not yet released. Until they are, the bootstrap procedure is an agent-executed setup contract, not a claim that a tested one-click installer already exists.
 
-The manifest records exactly what was installed and where it came from. Future updates must detect local edits and show a diff instead of silently overwriting them.
+## The user command interface
 
-## What is in the library?
+The long-term goal is to make common agent-management tasks easy to invoke and consistent across supported coding tools.
 
-Agent Foundry separates different kinds of guidance so a project does not need one enormous instruction file.
-
-| Resource | In plain English | Example |
-|---|---|---|
-| **Core instructions** | Baseline rules for how the agent should work | Inspect before editing; verify before claiming completion |
-| **Profiles** | Defines a role and its responsibilities | Lead engineer, independent reviewer |
-| **Skills** | Teaches the agent how to perform a specific task | Debugging, delegation, visual QA |
-| **Commands** | Gives the user a named way to request an action | Generate a progress report |
-| **Workflows** | Coordinates a multi-step process | Run a multi-agent engineering campaign |
-| **Standards** | Sets quality rules used across tasks | Evidence, security, documentation |
-| **Templates** | Provides a consistent structure for deliverables | Test report, handoff, decision record |
-| **Integrations** | Maps portable resources to a specific coding-agent tool | Tool-native skills or command definitions |
-
-A command is an entry point, not the full procedure. A skill contains the procedure. A workflow coordinates several procedures. A platform integration translates the portable resource into the format a particular coding agent understands.
-
-### Browse by what you want to do
-
-| Your goal | Start with |
+| Command | What it should do |
 |---|---|
-| Give an agent a consistent engineering baseline | [Global instructions](core/GLOBAL_INSTRUCTIONS.md) |
-| Delegate work and coordinate multiple agents | [Multi-agent delegation](skills/multi-agent-delegation/SKILL.md) |
-| Run a multi-agent campaign | [Campaign workflow](workflows/multi-agent-campaign.md) |
-| Get an evidence-based progress report | [Progress-report command](commands/progress-report.md) |
-| Explain a code change clearly | [Implementation explanation](skills/implementation-explanation/SKILL.md) |
-| Review visual output and rendering behaviour | [Visual regression](skills/visual-regression/SKILL.md) |
-| Design repeatable visual diagnostics | [Visual probe engineering](skills/visual-probe-engineering/SKILL.md) |
-| Protect evidence from leaking sensitive data | [Privacy-safe evidence](skills/privacy-safe-evidence/SKILL.md) |
-| Assess risks from autonomous agent execution | [Agent execution security](skills/agent-execution-security/SKILL.md) |
-| Keep plans and project status consistent | [Plan reconciliation](skills/plan-reconciliation/SKILL.md) |
+| `/progress-report` | Show verified project or milestone progress, evidence and the next action |
+| `/teach-implementation` | Explain what changed, how it works and what to remember |
+| `/close` | Capture useful project learnings from the current session into the correct context files |
+| `/settings` | Show and edit project-level Agent Foundry settings |
+| `/models edit` | Edit the model roster used for task-aware delegation |
+| `/models explain` | Explain why a model is or is not suitable for a task |
 
-See the [full resource registry](registry/resources.yaml) for machine-readable metadata.
+Command contracts are being defined independently of any one coding tool. A host adapter may expose them as native slash commands, prompt shortcuts or named workflows. A command is not considered supported until that host integration has been tested.
 
-## Why does it exist?
+### Closing a session without losing what matters
 
-The first resources were extracted from two real projects:
+The `/close` command is deliberately different from a conventional handoff generator.
 
-- **Dhan AI Trader:** a large engineering project with multi-agent delegation, specialist roles, durable orchestration, governance, security reviews and regression testing.
-- **Lively Wallpaper:** a smaller graphics-heavy project with creative direction, rendering specialists, visual probes, performance checks and audio-reactive design work.
+It reviews the session for genuinely useful, durable information:
+- new or clarified project requirements;
+- stable coding and collaboration preferences;
+- architectural decisions and their rationale;
+- conventions discovered in the codebase;
+- verified bugs, failure modes and their fixes;
+- model or tool limitations supported by evidence.
 
-The goal is not to copy either project's architecture into every repository. It is to extract the engineering practices that proved useful, remove project-specific assumptions, and make the reusable parts available to other developers.
+It then updates the appropriate existing files: architecture docs, owner context, engineering instructions, troubleshooting guides, progress records or the model roster.
 
-[See the source inventory](docs/audit/REUSABLE_RESOURCE_INVENTORY.md) · [See extraction decisions](docs/audit/EXTRACTION_DECISIONS.md)
+It does **not** save emotional content, conversational filler, speculative claims or a raw transcript. It does not create another generic `HANDOFF.md` by default.
 
-## Designed to be portable
+The command prepares the project for the end of the session. Actually closing the chat window depends on whether the coding host exposes a supported chat-control API.
 
-The resource library is platform-independent wherever possible. Coding-agent tools differ, though. Some support native skills, some support slash commands, some support subagents, and some expose only instruction files.
+[Read the close-session design](commands/close-session.md)
 
-Agent Foundry keeps the reusable method separate from the platform-specific implementation. An integration must name the tool and version it supports and provide evidence that the mapping works.
+## Task-aware model delegation
 
-We intend to support multiple coding-agent environments, but **a tool is not supported just because its name appears in a roadmap**.
+One model should not be used for every job.
 
-## Open source and community
+A quick symbol lookup, a repetitive metadata edit, a complex root-cause investigation and a security review have different requirements. The delegation system classifies work before selecting a model.
 
-Agent Foundry is intended to be useful beyond its original projects. Contributions are welcome: reusable skills, better workflows, new platform adapters, validation scenarios, bug reports and documentation improvements.
+```mermaid
+flowchart TD
+    A["New task"] --> B["Classify task type"]
+    B --> C["Estimate intensity: reasoning, scope, context, tools, uncertainty, verification"]
+    C --> D["Apply risk and permission gates"]
+    D --> E["Read the project's model roster"]
+    E --> F["Filter unavailable or unsuitable models"]
+    F --> G["Rank by capability, reliability, speed and cost preference"]
+    G --> H{"Any model clears the quality floor?"}
+    H -- "Yes" --> I["Assign task with rationale and acceptance criteria"]
+    H -- "No" --> J["Ask owner or report no safe match"]
+    I --> K["Verify result and record outcome"]
+```
 
-Before a stable public release, this repository still needs its open-source license, contribution/security policies, automated validation, installer and tested integrations. Check the project status before relying on it in production.
+Examples:
+- **Fast lookup:** prefer a low-latency model that can reliably search and answer.
+- **Mechanical edit:** prefer a smaller, faster model when the task is bounded and easy to verify.
+- **Routine implementation:** require competent coding and tool use.
+- **Complex debugging or architecture:** require stronger reasoning and sufficient context.
+- **Security-critical work:** require strong reasoning plus independent verification.
+- **Visual/runtime testing:** the model must have access to the relevant browser, renderer or device. Text intelligence alone is not enough.
 
-- [Project status and roadmap](docs/architecture/DISTRIBUTION_AND_VERSIONING.md)
-- [Resource authoring standard](docs/standards/RESOURCE_AUTHORING_STANDARD.md)
-- [Documentation index](docs/README.md)
-- [Changelog](CHANGELOG.md)
+The roster is defined by the project owner in `.agent-foundry/settings/model-roster.yaml`. Foundry does not hardcode a changing list of model names or assume that a model labelled “flash” is always suitable.
+
+[Read the delegation architecture](docs/architecture/MODEL_DELEGATION.md) · [Edit-roster command contract](commands/edit-model-roster.md)
+
+## Browse by the job you need done
+
+You do not need to understand Foundry's internal categories to use it. Start with the task you're trying to accomplish:
+
+| If you need to... | What Foundry provides |
+|---|---|
+| Make an agent understand how your project works | A project-context structure and compact global instructions that point to your actual architecture and decisions |
+| Add AI agents to a project that already exists | A read-only assessment, capability map and approval-based additive integration plan |
+| Split a large task between multiple agents | A delegation method with bounded assignments, file ownership, checkpoints, recovery and lead accountability |
+| Choose a suitable model for each delegated task | A task classifier and a model roster that you control |
+| See what is actually finished | Evidence-backed progress reporting that distinguishes implemented, tested, reviewed and still-unverified work |
+| End a chat without losing useful discoveries | Session learning that updates the correct project context files instead of dumping a transcript |
+| Keep project instructions from becoming contradictory | Source-of-truth and documentation governance rules |
+| Review visual or graphics-heavy work | Visual regression, screenshot comparison, rendering probes and performance QA methods |
+| Make agent execution safer | Permission boundaries, threat modelling, secret handling and verification gates |
+
+Specific resources are available in the [resource registry](registry/resources.yaml). For a guided explanation, read the [User Guide](docs/USER_GUIDE.md).
+
+## Where the practices came from
+
+The first extraction sources are two real software projects:
+
+### Dhan AI Trader
+A long-running, multi-agent trading software project. Its reusable engineering practices include:
+- specialist-agent responsibilities and bounded delegation;
+- model-aware worker selection, assignment contracts and recovery;
+- durable orchestration state, blockers and checkpoints;
+- project governance, architecture decisions and source-of-truth documentation;
+- security reviews, permission boundaries and independent verification;
+- regression testing and evidence-backed progress reporting.
+
+Trading strategy, broker rules, financial risk policy and other product-specific assumptions do not belong in Foundry's universal baseline.
+
+### Rave Engine
+A graphics-heavy, audio-reactive desktop wallpaper project built for the Lively Wallpaper platform. Its reusable practices include:
+- creative direction translated into engineering acceptance criteria;
+- specialist graphics, lighting and performance roles;
+- visual probes, pinned-state captures and before/after comparison;
+- testing that a visible setting actually reaches its runtime consumer;
+- performance and soak testing with honest hardware/environment caveats;
+- separating implementation, automated verification and actual visual inspection.
+
+WebGL shaders, rave choreography, Lively-specific metadata, Windows utilities and hardware-specific thresholds remain project-specific.
+
+The point is not to copy either codebase. It is to extract the engineering practices that can help other projects, then adapt them to each project's real needs.
+
+[Source inventory](docs/audit/REUSABLE_RESOURCE_INVENTORY.md) · [Extraction decisions](docs/audit/EXTRACTION_DECISIONS.md) · [Extraction register](docs/EXTRACTION_REGISTER.md)
+
+## Designed to work with different coding agents
+
+The reusable method is kept separate from the tool-specific format. Different hosts expose different support for:
+- root instruction files;
+- skills and reference files;
+- native commands or prompt shortcuts;
+- subagents and per-agent model selection;
+- persistent state and session control;
+- shell, browser and filesystem permissions.
+
+An integration must state which tool and version it supports, what it maps, what it cannot map, and how it was tested. A tool is not supported merely because it appears in a list of intended integrations.
+
+## Project status
+
+Agent Foundry is under active development. The resource library and architecture are being expanded; production installation and host compatibility still need implementation and validation.
+
+| Capability | Status |
+|---|---|
+| Resource library and source provenance | In progress; resources remain drafts until validated |
+| Agent-first bootstrap specification | Documented |
+| Existing-project integration design | Documented |
+| Session-learning and close command | Contract and skill drafted |
+| Task-aware model selection | Architecture and user-defined roster drafted |
+| Native command adapters | Not yet validated |
+| Automatic project classifier and installer | Not implemented |
+| Safe update and uninstall | Not implemented |
+| Automated schema/link/resource tests | Not implemented |
+| Stable tagged release | Not yet available |
+
+Do not treat a draft resource or documented design as a production-validated feature.
+
+## Contributing
+
+Useful contributions include:
+- reusable skills with clear prerequisites and completion criteria;
+- commands that have a clear user-facing purpose;
+- workflows with explicit gates, ownership and recovery paths;
+- tested coding-agent adapters;
+- scenario tests and validation evidence;
+- improvements to the onboarding guide.
+
+See [resource authoring standards](standards/RESOURCE_AUTHORING_STANDARD.md) and the [documentation index](docs/README.md).
+
+## Versioning and trust
+
+The intended release model uses Semantic Versioning, immutable Git tags, GitHub Releases and a manifest that records the exact source commit. Local changes must be detected before updates. The stable release process, license, contribution policy, security policy and installer are still outstanding.
+
+See [Distribution and Versioning](docs/architecture/DISTRIBUTION_AND_VERSIONING.md).
 
 ---
 
 <div align="center">
 
 **Agent Foundry**  
-*Build the project. Don't rebuild your agent's operating instructions every time.*
+*Make your agent better at working on your project, not just better at generating code.*
 
 </div>
