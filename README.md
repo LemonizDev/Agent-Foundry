@@ -138,7 +138,7 @@ your-project/
     └── README.md                # What was integrated and how to maintain it
 ```
 
-The installer and automatic host adapters are not yet released. Until they are, the bootstrap procedure is an agent-executed setup contract, not a claim that a tested one-click installer already exists.
+An experimental Node.js CLI is being developed on `feat/cli-installer-mvp`. It is not yet published to npm, tagged, or production-validated. It does not register native host commands or modify root agent instructions. The agent-first bootstrap remains the recommended path until the CLI and host adapters pass end-to-end tests.
 
 ## The user command interface
 
@@ -279,8 +279,8 @@ Agent Foundry is under active development. The resource library and architecture
 | Session-learning and close command | Contract and skill drafted |
 | Task-aware model selection | Architecture and user-defined roster drafted |
 | Native command adapters | Not yet validated |
-| Automatic project classifier and installer | Not implemented |
-| Safe update and uninstall | Not implemented |
+| CLI installer | Experimental MVP on `feat/cli-installer-mvp`; not yet released or production-validated |
+| Safe update and uninstall | Basic manifest/hash-protected uninstall exists; update workflow is not implemented |
 | Automated schema/link/resource tests | Not implemented |
 | Stable tagged release | Not yet available |
 
