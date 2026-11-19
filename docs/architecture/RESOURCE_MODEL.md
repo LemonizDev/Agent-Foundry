@@ -103,3 +103,17 @@ Portable resources use descriptive filenames wherever a resource is a single doc
 Skills intentionally use a named directory containing SKILL.md. This follows the widely used agent-skill package convention and leaves room for supporting references, scripts and examples alongside the skill definition. The platform adapter may copy or transform that package into the host's required location.
 
 Profiles and standards are standalone descriptive Markdown files. Templates use descriptive names and may be grouped by output purpose.
+
+
+## File and directory naming conventions
+
+The repository deliberately avoids the old pattern of a descriptive folder containing a generic `COMMAND.md` or `WORKFLOW.md` file.
+
+- Commands use flat, descriptive filenames: `commands/close-session.md`, `commands/progress-report.md`.
+- Workflows use flat, descriptive filenames: `workflows/session-close.md`, `workflows/multi-agent-campaign.md`.
+- Templates use flat, descriptive filenames: `templates/delegation-assignment.md`, `templates/model-roster.yaml`.
+- Profiles use flat role filenames: `profiles/independent-reviewer.md`.
+- Standards use flat descriptive filenames: `standards/evidence-and-verification.md`.
+- Skills retain the `skills/<skill-id>/SKILL.md` directory convention because native Agent Skills integrations expect a named skill directory containing `SKILL.md`. Supporting references or scripts can live beside that file when needed.
+
+The distinction is intentional: the filename identifies commands, workflows, templates, profiles and standards; the standard `SKILL.md` filename identifies the entrypoint inside a portable skill package.
