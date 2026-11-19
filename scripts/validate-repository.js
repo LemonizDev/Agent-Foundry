@@ -2,6 +2,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import yaml from "js-yaml";
 import { resolveResources } from "../src/registry.js";
+import { safeRelative } from "../src/utils.js";
 
 const root = process.cwd();
 const registry = yaml.load(await fs.readFile(path.join(root, "registry/resources.yaml"), "utf8"));
@@ -10,8 +11,7 @@ const ids = new Set();
 for (const resource of registry.resources) {
   if (!resource.id || ids.has(resource.id)) throw new Error("Missing or duplicate resource id: " + resource.id);
   ids.add(resource.id);
-  const normal = path.posix.normalize(resource.path);
-  if (!resource.path || normal.startsWith("../") || path.posix.isAbsolute(normal)) throw new Error("Unsafe resource path: " + resource.path);
+  const normal = safeRelative(resource.path);
   await fs.access(path.join(root, normal));
 }
 for (const resource of registry.resources) {
