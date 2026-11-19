@@ -3,12 +3,33 @@
   "version": "0.4.0",
   "description": "A project-aware engineering environment for AI coding agents.",
   "type": "module",
-  "engines": { "node": ">=20" },
-  "bin": { "agent-foundry": "./bin/agent-foundry.js" },
-  "exports": { ".": "./src/index.js" },
-  "scripts": { "test": "node --test", "validate": "node ./bin/agent-foundry.js validate", "check": "npm test && npm run validate" },
-  "dependencies": { "js-yaml": "^4.1.0" },
+  "engines": {
+    "node": ">=20"
+  },
+  "bin": {
+    "agent-foundry": "./bin/agent-foundry.js"
+  },
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "scripts": {
+    "test": "node --test",
+    "validate": "node ./bin/agent-foundry.js validate",
+    "check": "npm test && npm run validate:repo",
+    "validate:repo": "node ./scripts/validate-repository.js"
+  },
+  "dependencies": {
+    "js-yaml": "^4.1.0"
+  },
   "license": "MIT",
-  "repository": { "type": "git", "url": "https://github.com/LemonizDev/Agent-Foundry.git" },
-  "keywords": ["ai-agents", "coding-agents", "agentic-engineering", "developer-tools"]
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LemonizDev/Agent-Foundry.git"
+  },
+  "keywords": [
+    "ai-agents",
+    "coding-agents",
+    "agentic-engineering",
+    "developer-tools"
+  ]
 }
