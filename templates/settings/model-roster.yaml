@@ -6,7 +6,7 @@ models:
     provider: replace-with-provider
     model_id: replace-with-exact-model-id
     availability: unknown # available | unavailable | unknown
-    access: owner-configured # free | paid | local | enterprise | unknown
+    access: unknown # free | paid | local | enterprise | unknown
     size_class: unknown # small | medium | large | unknown
     capabilities:
       coding: unknown
