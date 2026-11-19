@@ -2,7 +2,13 @@
 
 This directory explains Agent Foundry itself: its architecture, source extraction, design decisions and authoring rules. For the reusable assets, return to the [repository README](../README.md).
 
-## Start here\n\n- [User Guide](USER_GUIDE.md) — explains the product, setup, commands, model delegation and session learning in developer-facing language.\n- [Existing Project Integration](architecture/EXISTING_PROJECT_INTEGRATION.md) — how to add Foundry to an established repository without replacing its architecture or instructions.\n- [Task-Aware Model Delegation](architecture/MODEL_DELEGATION.md) — task classification and owner-defined model roster.\n\n## Start with the architecture
+## Start here
+
+- [User Guide](USER_GUIDE.md) — explains the product, setup, commands, model delegation and session learning in developer-facing language.
+- [Existing Project Integration](architecture/EXISTING_PROJECT_INTEGRATION.md) — how to add Foundry to an established repository without replacing its architecture or instructions.
+- [Task-Aware Model Delegation](architecture/MODEL_DELEGATION.md) — task classification and owner-defined model roster.
+
+## Start with the architecture
 
 - [Resource Model](architecture/RESOURCE_MODEL.md) — definitions, category boundaries, authority, portability classes, loading strategy and lifecycle.
 - [Resource Authoring Standard](standards/RESOURCE_AUTHORING_STANDARD.md) — required metadata and structures for skills, commands, workflows and templates.
