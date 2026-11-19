@@ -32,8 +32,10 @@ test("specialist profiles become host-native agents with reviewer restrictions",
   const reviewerArtifacts = renderHostArtifacts(reviewer, "# Reviewer\n\n## Mission\nReview changes independently.", ["opencode", "kilo"]);
   const kiloReviewer = reviewerArtifacts.find(x => x.installed_path === ".kilo/agents/independent-reviewer.md");
   const openReviewer = reviewerArtifacts.find(x => x.installed_path === ".opencode/agents/independent-reviewer.md");
+  const claudeReviewer = reviewerArtifacts.find(x => x.installed_path === ".claude/agents/independent-reviewer.md");
   assert.match(leadArtifacts.find(x => x.installed_path === ".kilo/agents/lead-engineer.md").content, /mode: primary/);
   assert.match(kiloReviewer.content, /mode: subagent/);
   assert.match(kiloReviewer.content, /edit: deny/);
   assert.match(openReviewer.content, /effect: deny/);
+  assert.match(claudeReviewer.content, /tools: Read, Grep, Glob/);
 });
