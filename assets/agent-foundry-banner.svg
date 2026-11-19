@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="360" viewBox="0 0 1200 360" role="img" aria-labelledby="title desc">
+<title id="title">Agent Foundry</title>
+<desc id="desc">A geometric forge mark surrounded by connected nodes, representing a reusable engineering system for AI coding agents.</desc>
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#101827"/><stop offset="1" stop-color="#182d3d"/></linearGradient>
+  <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#62e6c5"/><stop offset="1" stop-color="#70a8ff"/></linearGradient>
+  <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0V32" fill="none" stroke="#b7d2e8" stroke-opacity=".08" stroke-width="1"/></pattern>
+  <filter id="glow"><feGaussianBlur stdDeviation="9" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<rect width="1200" height="360" rx="28" fill="url(#bg)"/><rect width="1200" height="360" rx="28" fill="url(#grid)"/>
+<circle cx="930" cy="180" r="142" fill="#5ee5c0" opacity=".06"/><circle cx="930" cy="180" r="104" fill="none" stroke="#70a8ff" stroke-opacity=".2" stroke-width="1.5"/>
+<g stroke="url(#accent)" stroke-width="2" fill="none" opacity=".75"><path d="M790 94L866 137L930 82L1002 130L1070 90"/><path d="M790 266L866 223L930 278L1002 230L1070 270"/><path d="M866 137L866 223M1002 130L1002 230"/></g>
+<g fill="#71e6c7" filter="url(#glow)"><circle cx="790" cy="94" r="5"/><circle cx="790" cy="266" r="5"/><circle cx="1070" cy="90" r="5"/><circle cx="1070" cy="270" r="5"/></g>
+<g transform="translate(930 180)" filter="url(#glow)"><path d="M0-68L59-34V34L0 68L-59 34V-34Z" fill="#12283a" stroke="url(#accent)" stroke-width="4"/><path d="M-28 23L-8-34H8L28 23H11L6 8H-8L-13 23Z" fill="url(#accent)"/><path d="M-4-8H4" stroke="#12283a" stroke-width="5"/></g>
+<g fill="#f1f6fb"><text x="86" y="145" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="54" font-weight="750" letter-spacing="-1.5">AGENT FOUNDRY</text><text x="89" y="190" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="23" fill="#b8ccdc">A project-aware engineering system for AI coding agents.</text><text x="89" y="245" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="15" font-weight="650" letter-spacing="2.8" fill="#6ee4c4">INSPECT  ·  PLAN  ·  BUILD  ·  VERIFY  ·  LEARN</text></g>
+<path d="M88 278H590" stroke="url(#accent)" stroke-opacity=".55" stroke-width="2"/>
+</svg>
