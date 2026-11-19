@@ -50,4 +50,4 @@ Updates must not overwrite local modifications. Uninstall removes only unchanged
 
 ## Current implementation limits
 
-The first CLI supports local inspection, plan generation, approved installation, validation, conservative updates and uninstall. It does not yet implement native adapters for every coding host, autonomous multi-agent runtime, model API dispatch, remote project scanning or GUI configuration. Those capabilities require separate adapters and security reviews.
+The v0.4 CLI supports local inspection, project-aware presets, plan generation, approved installation, immutable commit pinning, host-specific skill/command/profile file generation, validation, preview-first updates and preview-first uninstall. The model router classifies tasks heuristically and recommends a model from the owner roster; it does not call providers or dispatch workers. Host file generation is covered by unit tests, but command discovery and execution have not yet been exercised inside each host. Remote project scanning, autonomous provider dispatch, GUI configuration, signed registry manifests and full sandbox enforcement remain future work.
