@@ -7,10 +7,10 @@ Agent Foundry separates reusable engineering methods from the file formats and c
 | Host | Persistent instructions | Skills | Commands | Current generator behaviour |
 |---|---|---|---|---|
 | Codex | AGENTS.md | .agents/skills/<name>/SKILL.md | No custom slash-command file format generated | Generic pointer plus skills |
-| Claude Code | Existing CLAUDE.md gets an additive pointer | .claude/skills/<name>/SKILL.md | Skills are slash-invocable; command contracts become skills | Skills, /close-style aliases and .claude/agents profiles generated |
+| Claude Code | CLAUDE.md is created or existing file gets an additive pointer | .claude/skills/<name>/SKILL.md | Skills are slash-invocable; command contracts become skills | Skills, /close-style aliases and .claude/agents profiles generated |
 | OpenCode | AGENTS.md is discovered; optional config may add instructions | .opencode/skills/<name>/SKILL.md | .opencode/commands/<name>.md | Skills, slash commands and .opencode/agents profiles generated |
 | Kilo Code | AGENTS.md | .kilo/skills/<name>/SKILL.md | .kilo/commands/<name>.md | Skills, workflow-style commands and .kilo/agents profiles generated |
-| Cline | Existing project rules remain authoritative | .cline/skills/<name>/SKILL.md | Skills are slash-invocable | Skills and command-contract skills generated |
+| Cline | Existing .clinerules file/directory gets an additive pointer; existing project rules remain authoritative | .cline/skills/<name>/SKILL.md | Skills are slash-invocable | Skills and command-contract skills generated |
 
 The CLI writes host-specific skill directories when it detects Claude Code, OpenCode, Kilo Code or Cline. Codex receives the standard .agents/skills directory. Kilo command aliases with spaces are converted to a hyphenated filename (for example, models edit becomes models-edit) because nested Kilo command discovery is not assumed.
 
