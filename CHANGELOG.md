@@ -4,6 +4,17 @@ Unreleased entries describe development work, not release readiness.
 
 ## Unreleased — v0.5 development
 
+### Engine and installer
+- Added package-bundled registry/resource loading as the default source, removing the second GitHub network dependency during installation.
+- Kept remote source mode available through explicit `--ref` or `--repository`, with immutable commit resolution.
+- Hardened CLI source selection, model-roster error handling and explicit host overrides during plan generation.
+- Made uninstall prune only directories that become empty after removing Foundry-owned files.
+
+### Quality gates and tests
+- Added repository linting for JavaScript syntax, YAML parsing, Markdown escaping corruption and broken relative links.
+- Added CLI lifecycle, bundled-source traversal, host override, uninstall-pruning, command metadata and npm package completeness tests.
+- Added package checks for required runtime/resource folders, bootstrap specification and README artwork.
+
 ### Documentation and command system
 - Rebuilt the README as a product and onboarding guide with CLI reference, presets, safety model, compatibility evidence levels and maturity disclosures.
 - Added a command catalog defining permissions, shared behaviour, evidence requirements and failure handling.
@@ -15,7 +26,7 @@ Unreleased entries describe development work, not release readiness.
 - Added the previously omitted core instruction directory to the npm package allowlist.
 
 ### Validation boundary
-- This branch has not yet passed CI in this environment.
+- The current development head passes the configured six-job Node.js 20/22 Linux, Windows and macOS CI matrix: 48 tests, repository validation for 64 resources, lint across 121 files and npm pack dry-run (98 files).
 - Host runtime acceptance, provider dispatch and production resource validation remain separate release gates.
 - No stable npm release is created by this branch.
 
