@@ -3,7 +3,7 @@
 This index is the map for the repository. The root README explains the product and first steps; this page routes readers to the authoritative source for each subject. Avoid creating duplicate documents when an existing canonical source can be extended.
 
 ## Start here
-- [Root README](../README.md) — product overview, feature catalog, compatibility, token impact and contribution demo.
+- [Root README](../README.md) — project overview, architecture, project-first navigation, feature explorer, installation and usage.
 - [User Guide](USER_GUIDE.md) — installation, conversational management, settings and safety.
 - [Bootstrap Guide](../BOOTSTRAP.md) — first installation through an existing coding agent.
 - [Existing Project Integration](architecture/EXISTING_PROJECT_INTEGRATION.md) — assessment, selection and preservation.
@@ -35,11 +35,11 @@ A command describes an invocation contract; it does not prove that a host expose
 - [Management Instructions](../foundry/MANAGEMENT.md) — discovery, settings, installation, updates, removal, diagnostics and contribution discovery.
 - [Settings Specification](../foundry/SETTINGS_SPEC.md) — authoritative supported settings.
 - [Response Templates](../foundry/RESPONSE_TEMPLATES.md) — context-aware conversational response structures.
-- [Resource Registry](../registry/resources.yaml) — discoverable resource catalog.
+- [Resource Registry](../registry/resources.yaml) — discoverable resource catalog.\n- [README Maker](../skills/readme-maker/SKILL.md) — project-first Markdown/README structure and visual design.\n- [Feature Menu Architect](../skills/feature-menu-architect/SKILL.md) — project inspection, feature classification and hierarchical menu planning.\n- [README Template](../templates/README_TEMPLATE.md) — adaptable README page structure.
 
 ## Author and contribute
 - [Contribution Discovery Skill](../skills/contribution-discovery/SKILL.md) — safely identify reusable user-created material.
-- [Contribute Command](../commands/contribute.md) — user-facing contribution trigger.
+- [Contribute Command](../commands/contribute.md) — user-facing contribution trigger.\n- [Done Command](../commands/done.md) — strict session resource curation and persistence.\n- [Session Resource Curation](../skills/session-resource-curation/SKILL.md) — classify, quality-check and route reusable session artefacts.
 - [Resource Authoring Standard](standards/RESOURCE_AUTHORING_STANDARD.md).
 - [Contributing Guide](../CONTRIBUTING.md).
 - [Code of Conduct](../CODE_OF_CONDUCT.md).
