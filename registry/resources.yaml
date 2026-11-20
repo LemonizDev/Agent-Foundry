@@ -48,213 +48,209 @@ resources:
     path: skills/progress-reporting/SKILL.md
     version: 0.1.0
     status: draft
-    portability: universal
+    portability: adaptable
   - id: multi-agent-delegation
-    description: "Defines accountable delegation: assignment records, permission gates, verification duty and lead responsibility."
+    description: "Defines accountable task decomposition, worker selection, assignment contracts, checkpoints, recovery and independent review."
     type: skill
     path: skills/multi-agent-delegation/SKILL.md
     version: 0.1.0
     status: draft
     portability: adaptable
   - id: visual-regression
-    description: "Provides a procedure for visual change detection using reference captures and tolerance-based comparison."
+    description: "Compares rendered output across controlled states and identifies meaningful visual regressions."
     type: skill
     path: skills/visual-regression/SKILL.md
     version: 0.1.0
     status: draft
     portability: adaptable
   - id: atomic-implementation
-    description: "Implements one verifiable change at a time with reviewable diffs and explicit verification after each step."
+    description: "Guides small, bounded implementation steps with clear acceptance criteria and verification."
     type: skill
     path: skills/atomic-implementation/SKILL.md
     version: 0.1.0
     status: draft
     portability: universal
   - id: project-state-management
-    description: "Maintains authoritative project context so a new session can resume without re-deriving decisions."
+    description: "Maintains canonical project context, current state, blockers and next actions without duplicating sources of truth."
     type: skill
     path: skills/project-state-management/SKILL.md
     version: 0.1.0
     status: draft
-    portability: universal
+    portability: adaptable
   - id: multi-agent-campaign
-    description: "Coordinates a multi-step, multi-agent campaign with checkpoints, gates and recovery."
+    description: "Coordinates a multi-stage, multi-agent engineering campaign with ownership, checkpoints and quality gates."
     type: workflow
     path: workflows/multi-agent-campaign.md
     version: 0.1.0
     status: draft
     portability: adaptable
   - id: progress-report
-    description: "Generates an evidence-grounded progress report for the owner."
-    aliases: [progress-report, status]
+    description: "Invokes evidence-backed progress reporting for a project, milestone or workstream."
     type: command
     path: commands/progress-report.md
-    dependencies: [progress-reporting]
     version: 0.2.0
     status: draft
     portability: adaptable
   - id: progress-report-template
-    description: "Structure for progress reports: verified changes, evidence, risks, blockers and next steps."
+    description: "Provides a consistent structure for evidence-based project progress reports."
     type: template
     path: templates/progress-report-template.md
     version: 0.1.0
     status: draft
-    portability: universal
+    portability: adaptable
   - id: delegation-assignment
-    description: "Template for recording a delegated assignment: scope, permissions, acceptance criteria and verification duty."
+    description: "Defines the objective, scope, owner, model rationale, outputs and acceptance criteria for delegated work."
     type: template
     path: templates/delegation-assignment.md
     version: 0.1.0
     status: draft
-    portability: universal
+    portability: adaptable
   - id: recovery-handoff
-    description: "Template for recovering interrupted work: durable state, verified facts and safe resume points."
+    description: "Preserves verified checkpoints and context when a delegated worker or session is interrupted."
     type: template
     path: templates/recovery-handoff.md
     version: 0.1.0
     status: draft
-    portability: universal
+    portability: adaptable
   - id: evidence-and-verification
-    description: "Defines evidence levels and verification duties so completion claims match actual proof."
+    description: "Sets rules for evidence quality, verification claims and explicit unverified or blocked states."
     type: standard
     path: standards/evidence-and-verification.md
     version: 0.1.0
     status: draft
     portability: universal
   - id: documentation-governance
-    description: "Keeps documentation authoritative, current and proportionate; prevents stale or duplicated records."
+    description: "Defines documentation ownership, source-of-truth hierarchy, lifecycle and navigation rules."
     type: standard
     path: standards/documentation-governance.md
     version: 0.1.0
     status: draft
-    portability: universal
+    portability: adaptable
   - id: lead-engineer
-    description: "Profile for the accountable lead: owns outcome, delegates deliberately and verifies integrated results."
+    description: "Defines the accountable lead role for architecture, integration, delegation and delivery."
     type: profile
     path: profiles/lead-engineer.md
     version: 0.1.0
     status: draft
-    portability: adaptable
+    portability: universal
   - id: independent-reviewer
-    description: "Profile for an adversarial reviewer with read-only responsibility and no implementation duty."
+    description: "Defines a sceptical, findings-first reviewer role that challenges implementation and evidence."
     type: profile
     path: profiles/independent-reviewer.md
     version: 0.1.0
     status: draft
-    portability: adaptable
+    portability: universal
   - id: visual-quality-engineer
-    description: "Profile for visual quality: probes rendered output, compares references and reports defects with evidence."
+    description: "Reviews visual output, rendering behaviour, consistency and visual acceptance criteria."
     type: profile
     path: profiles/visual-quality-engineer.md
     version: 0.1.0
     status: draft
     portability: adaptable
   - id: plan-reconciliation
-    description: "Reconciles implementation plans with actual repository state before and during execution."
+    description: "Reconciles roadmap, implementation plans and actual repository evidence to identify the next safe task."
     type: skill
     path: skills/plan-reconciliation/SKILL.md
-    version: 0.1.0
+    version: 0.2.0
     status: draft
-    portability: universal
+    portability: adaptable
   - id: implementation-explanation
-    description: "Explains a completed change: intent, approach, evidence and how to verify it."
+    description: "Explains code changes, their runtime behaviour, tradeoffs and verification evidence."
     type: skill
     path: skills/implementation-explanation/SKILL.md
-    version: 0.1.0
+    version: 0.2.0
     status: draft
-    portability: universal
+    portability: adaptable
   - id: visual-probe-engineering
-    description: "Builds probes that capture rendered or runtime state for verification."
+    description: "Designs repeatable visual probes, pinned states and diagnostics for graphics-heavy applications."
     type: skill
     path: skills/visual-probe-engineering/SKILL.md
-    version: 0.1.0
+    version: 0.2.0
     status: draft
     portability: adaptable
   - id: privacy-safe-evidence
-    description: "Captures diagnostic evidence without exposing secrets, personal data or private paths."
+    description: "Collects and reports useful evidence while minimising secrets, personal data and sensitive project details."
     type: skill
     path: skills/privacy-safe-evidence/SKILL.md
-    version: 0.1.0
+    version: 0.2.0
     status: draft
-    portability: universal
+    portability: adaptable
   - id: agent-execution-security
-    description: "Applies least-privilege, approval gates and safe defaults when agents execute tools or commands."
+    description: "Assesses permissions, isolation, secrets exposure and risks from autonomous agent execution."
     type: skill
     path: skills/agent-execution-security/SKILL.md
-    version: 0.1.0
+    version: 0.2.0
     status: draft
-    portability: universal
+    portability: adaptable
   - id: teach-implementation
-    description: "Teaches the owner how a change works after it is verified."
-    aliases: [teach-implementation, teach]
+    description: "Explains a completed implementation in a structured, project-relevant way."
     type: command
     path: commands/teach-implementation.md
-    dependencies: [implementation-explanation]
     version: 0.2.0
     status: draft
     portability: adaptable
   - id: decision-register
-    description: "Template for recording decisions: context, options, choice, rationale and consequences."
+    description: "Records architectural and product decisions, alternatives, rationale and consequences."
     type: template
     path: templates/decision-register.md
-    version: 0.1.0
+    version: 0.2.0
     status: draft
-    portability: universal
+    portability: adaptable
   - id: test-evidence-report
-    description: "Template for reporting verification evidence: method, results, coverage and residual risk."
+    description: "Records verification commands, environments, outcomes, coverage and unresolved checks."
     type: template
     path: templates/test-evidence-report.md
-    version: 0.1.0
+    version: 0.2.0
     status: draft
-    portability: universal
+    portability: adaptable
   - id: blocker-register
-    description: "Template for tracking blockers: impact, owner, unblocking action and status."
+    description: "Tracks blockers, ownership, impact, dependencies and resolution conditions."
     type: template
     path: templates/blocker-register.md
-    version: 0.1.0
+    version: 0.2.0
     status: draft
-    portability: universal
+    portability: adaptable
   - id: graphics-engineer
-    description: "Profile for graphics/rendering implementation within the project's toolchain."
+    description: "Defines a specialist role for graphics pipelines, shaders, rendering quality and performance."
     type: profile
     path: profiles/graphics-engineer.md
-    version: 0.1.0
+    version: 0.2.0
     status: draft
     portability: adaptable
   - id: creative-director
-    description: "Profile for translating visual/product intent into acceptance criteria and art-direction guidance."
+    description: "Translates visual direction into coherent design intent, constraints and acceptance criteria."
     type: profile
     path: profiles/creative-director.md
-    version: 0.1.0
+    version: 0.2.0
     status: draft
     portability: adaptable
   - id: performance-qa
-    description: "Profile for measuring and guarding frame-time, resource use and stability."
+    description: "Defines repeatable performance, stability and resource-usage verification."
     type: profile
     path: profiles/performance-qa.md
-    version: 0.1.0
+    version: 0.2.0
     status: draft
     portability: adaptable
   - id: creative-lighting-director
-    description: "Profile for defining music-reactive or scene lighting behaviour."
+    description: "Defines specialist direction for audio-reactive lighting, lasers and visual choreography."
     type: profile
     path: profiles/creative-lighting-director.md
-    version: 0.1.0
+    version: 0.2.0
     status: draft
-    portability: adaptable
+    portability: domain-specific
+
   - id: session-learning
-    description: "Captures durable session learning into the right context files without transcript dumps."
+    description: "Extracts durable, actionable project knowledge from a session and updates its proper context source."
     type: skill
     path: skills/session-learning/SKILL.md
     version: 0.1.0
     status: draft
     portability: universal
   - id: close-session
-    description: "Closes a session by capturing durable learning and reporting session evidence."
-    aliases: [close, close-session]
+    description: "Captures useful project learnings before a chat ends without generating a transcript dump."
+    aliases: [close, "close session", "close chat"]
     type: command
     path: commands/close-session.md
-    dependencies: [session-learning, progress-reporting]
     version: 0.2.0
     status: draft
     portability: adaptable
@@ -268,35 +264,34 @@ resources:
     status: draft
     portability: adaptable
   - id: edit-model-roster
-    description: "Safely edits the owner-controlled model roster without inventing providers or capabilities."
-    aliases: [models edit, edit-model-roster]
+    description: "Edits the owner-defined model roster used by task-aware delegation."
+    aliases: ["models edit", model-roster]
     type: command
     path: commands/edit-model-roster.md
-    dependencies: [model-roster-template]
-    version: 0.2.0
+    version: 0.1.0
     status: draft
     portability: adaptable
   - id: session-close
-    description: "Workflow for closing a session: capture learning, update context and verify continuity files."
+    description: "Coordinates the review, consolidation and verification of durable session learnings."
     type: workflow
     path: workflows/session-close.md
     version: 0.1.0
     status: draft
     portability: universal
   - id: existing-project-integration
-    description: "Workflow for integrating Foundry into an established project without overwriting existing practices."
+    description: "Assesses an established repository and adds only relevant Foundry resources without replacing its architecture."
     type: workflow
-    path: bootstrap/INITIALIZE_PROJECT.md
+    path: docs/architecture/EXISTING_PROJECT_INTEGRATION.md
     version: 0.1.0
     status: draft
-    portability: adaptable
+    portability: universal
   - id: model-delegation-architecture
-    description: "Standard for task-aware model selection: classification, roster eligibility, evidence and review gates."
+    description: "Defines task-aware model classification, roster constraints, scoring and independent-review gates."
     type: standard
     path: docs/architecture/MODEL_DELEGATION.md
     version: 0.1.0
     status: draft
-    portability: universal
+    portability: adaptable
   - id: user-guide
     description: "Explains Agent Foundry setup, chat-native management, commands, resource types, presets, delegation and maintenance."
     type: documentation
@@ -310,32 +305,32 @@ resources:
     path: templates/model-roster.yaml
     version: 0.1.0
     status: draft
-    portability: universal
+    portability: adaptable
   - id: foundry-settings-template
-    description: "Provides the project-owned Agent Foundry settings schema with supported keys and defaults."
+    description: "Provides project-level policies for delegation, model selection and session behaviour."
     type: template
     path: templates/foundry-settings.yaml
     version: 0.1.0
     status: draft
-    portability: universal
+    portability: adaptable
+
   - id: explain-model-selection
-    description: "Explains model eligibility and selection for a task using the owner roster and documented method."
-    aliases: [models explain, explain-model-selection]
+    description: "Explains task classification, eligibility filters and model-selection rationale."
+    aliases: ["models explain"]
     type: command
     path: commands/explain-model-selection.md
-    dependencies: [model-delegation-architecture]
-    version: 0.2.0
+    version: 0.1.0
     status: draft
     portability: adaptable
   - id: test-model
-    description: "Runs a bounded model evaluation where the host supports it, with explicit cost and execution approval."
-    aliases: [models test, test-model]
+    description: "Runs bounded, owner-approved capability checks on a configured model."
+    aliases: ["models test"]
     type: command
     path: commands/test-model.md
-    dependencies: [model-delegation-architecture]
-    version: 0.2.0
+    version: 0.1.0
     status: draft
     portability: adaptable
+
   - id: context-architecture
     description: "Documents the context-first architecture: context-file hierarchy, progressive disclosure, conversational management and current limitations."
     type: documentation
@@ -343,121 +338,122 @@ resources:
     version: 0.5.0
     status: draft
     portability: universal
+
   - id: repository-audit
-    description: "Audits a repository for structure, conventions, risks and capability gaps."
+    description: "Maps repository structure, runtime flows, authoritative context, quality controls and evidence-backed gaps."
     type: skill
     path: skills/repository-audit/SKILL.md
     version: 0.1.0
     status: draft
     portability: universal
   - id: implementation-planning
-    description: "Plans implementation as verifiable, reviewable steps grounded in repository evidence."
+    description: "Turns desired outcomes into bounded tasks with dependencies, acceptance criteria and verification."
     type: skill
     path: skills/implementation-planning/SKILL.md
     version: 0.1.0
     status: draft
     portability: universal
   - id: debugging
-    description: "Systematically isolates defects from observed behaviour to verified cause."
+    description: "Diagnoses failures through reproducible experiments and root-cause analysis."
     type: skill
     path: skills/debugging/SKILL.md
     version: 0.1.0
     status: draft
     portability: universal
   - id: testing-and-verification
-    description: "Verifies work with proportionate automated and manual evidence before claiming completion."
+    description: "Selects risk-based tests and reports exactly what was and was not verified."
     type: skill
     path: skills/testing-and-verification/SKILL.md
     version: 0.1.0
     status: draft
     portability: universal
   - id: code-review
-    description: "Reviews changes for defects, evidence quality and claim accuracy; challenges unsupported assertions."
+    description: "Performs independent, findings-first review of code changes, risks and test quality."
     type: skill
     path: skills/code-review/SKILL.md
     version: 0.1.0
     status: draft
     portability: universal
   - id: architecture-design
-    description: "Produces architecture options and decisions grounded in project constraints and evidence."
+    description: "Designs maintainable system boundaries and decisions grounded in requirements and tradeoffs."
     type: skill
     path: skills/architecture-design/SKILL.md
     version: 0.1.0
     status: draft
     portability: universal
   - id: session-recovery
-    description: "Recovers an interrupted session from durable state and verified repository facts."
+    description: "Reconciles interrupted work against repository state and resumes from verified checkpoints."
     type: skill
     path: skills/session-recovery/SKILL.md
     version: 0.1.0
     status: draft
     portability: universal
   - id: documentation-maintenance
-    description: "Keeps project documentation accurate as code changes; prevents stale authoritative docs."
+    description: "Keeps project documentation accurate, navigable and free of competing sources of truth."
     type: skill
     path: skills/documentation-maintenance/SKILL.md
     version: 0.1.0
     status: draft
     portability: universal
   - id: audit
-    description: "Maps repository structure, conventions, risks and gaps for the owner."
-    aliases: [audit]
+    description: "Runs a read-only, evidence-based repository audit."
     type: command
     path: commands/audit.md
+    aliases: [audit, "repo audit"]
     dependencies: [repository-audit]
     version: 0.2.0
     status: draft
     portability: adaptable
   - id: implement
-    description: "Delivers a bounded change and verifies it against acceptance criteria."
-    aliases: [implement]
+    description: "Executes an approved implementation plan with incremental verification."
     type: command
     path: commands/implement.md
+    aliases: [implement]
     dependencies: [implementation-planning, atomic-implementation, testing-and-verification]
     version: 0.2.0
     status: draft
     portability: adaptable
   - id: debug
-    description: "Reproduces and isolates a failure to verified cause before fixing."
-    aliases: [debug]
+    description: "Investigates a reproducible failure and isolates its root cause."
     type: command
     path: commands/debug.md
+    aliases: [debug]
     dependencies: [debugging, testing-and-verification]
     version: 0.2.0
     status: draft
     portability: adaptable
   - id: review
-    description: "Finds defects and unsupported claims in proposed or completed changes."
-    aliases: [review]
+    description: "Runs an independent, read-only engineering review."
     type: command
     path: commands/review.md
+    aliases: [review, "code review"]
     dependencies: [code-review, testing-and-verification]
     version: 0.2.0
     status: draft
     portability: adaptable
   - id: verify
-    description: "Tests acceptance criteria and reports verification evidence."
-    aliases: [verify]
+    description: "Checks acceptance criteria against explicit test and runtime evidence."
     type: command
     path: commands/verify.md
+    aliases: [verify]
     dependencies: [testing-and-verification]
     version: 0.2.0
     status: draft
     portability: adaptable
   - id: delegate
-    description: "Produces accountable delegation assignments with permission gates and verification duty."
-    aliases: [delegate]
+    description: "Creates a bounded task assignment and recommends a suitable model from the project roster."
     type: command
     path: commands/delegate.md
+    aliases: [delegate]
     dependencies: [multi-agent-delegation, model-delegation-architecture]
     version: 0.2.0
     status: draft
     portability: adaptable
   - id: next-task
-    description: "Recommends the highest-value next action from project state and goals."
-    aliases: [next-task]
+    description: "Recommends the highest-value next engineering action from current evidence and dependencies."
     type: command
     path: commands/next-task.md
+    aliases: [next-task, next]
     dependencies: [project-state-management, plan-reconciliation, implementation-planning]
     version: 0.2.0
     status: draft

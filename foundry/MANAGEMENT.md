@@ -42,7 +42,7 @@ Follow the `/settings` contract in the installed `commands/settings.md`, backed 
 
 1. Recognise settings requests: "Foundry settings", "show my Foundry configuration", "make reviews stricter", "turn delegation off", and similar.
 2. Read the settings definitions before presenting or changing anything.
-3. Present the settings response template using actual values; distinguish explicit values from defaults and inferred values.
+3. Present the settings response template populated from the actual project files. Distinguish explicit values from defaults and inferred values. Show only settings relevant to the request.
 4. Interpret natural-language changes, map them to exactly one setting key each, and validate the requested value against the accepted values in the spec.
 5. Compute the smallest necessary change. Preserve unrelated keys, comments, ordering and user-added keys not in the spec.
 6. Preview material changes before applying them.

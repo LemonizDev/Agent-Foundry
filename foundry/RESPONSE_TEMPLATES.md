@@ -39,7 +39,7 @@ Structure:
 - Current values grouped by area (Reviews, Delegation, Session learning, Documentation), each annotated `(default)` or `(set)` or `(custom key)`.
 - One-line meaning for any setting the user is likely to act on.
 - Suggested changes only when the user's request implies one; otherwise stop and wait.
-- After a change: confirmation with old to new value, everything preserved, and verification result.
+- After a change: confirmation with old → new value, everything preserved, and verification result.
 
 ## 3. Resource discovery
 
@@ -71,7 +71,7 @@ Use before applying an update.
 
 Structure:
 
-- Installed revision to target revision.
+- Installed revision → target revision.
 - Added / changed / deprecated / removed resources.
 - Locally modified files (hash drift) and the proposed resolution for each: keep, merge with approval, or retire with approval.
 - What will be preserved unconditionally.

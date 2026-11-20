@@ -64,14 +64,14 @@ Each setting defines: stable identifier, human-readable name, meaning and effect
 - **Scope:** delegation and campaign workflows.
 - **Hosts:** hosts with subagent support; otherwise treated as `off` with the limitation recorded.
 - **Location:** `.agent-foundry/settings/foundry-settings.yaml`, key `delegation.policy`.
-- **Dependencies/conflicts:** `automatic` requires `delegation.max_parallel_workers` to be set sensibly (1-4).
+- **Dependencies/conflicts:** `automatic` requires `delegation.max_parallel_workers` to be set sensibly (1–4).
 - **Safe modification:** raising autonomy requires explicit approval; lowering it does not.
 
 ### `delegation.max_parallel_workers`
 
 - **Name:** Maximum parallel workers
 - **Meaning:** Upper bound on simultaneously dispatched subagents for delegated work.
-- **Accepted values:** integer 1-4
+- **Accepted values:** integer 1–4
 - **Default:** `2`
 - **Scope:** multi-agent workflows.
 - **Hosts:** hosts with subagent support.
