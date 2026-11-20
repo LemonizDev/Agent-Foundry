@@ -31,8 +31,8 @@ Commands should remain thin. Put reusable procedures in skills, orchestration in
 | `/next-task` | Read-only | Recommend one high-value next action | [next-task](../commands/next-task.md) |
 | `/project-health` | Read-only | Assess health dimensions and material risks | [project-health](../commands/project-health.md) |
 | `/resume` | Read-only reconciliation first | Recover work from actual state | [resume](../commands/resume.md) |
-| `/close` | Proposed context edits | Preserve durable project context | [close-session](../commands/close-session.md) |
-| `/done` | Additive resource curation | Classify and save worthwhile session artefacts, or reject empty sessions | [done](../commands/done.md) |
+| `/done` | Approved project-local context/resource updates | End a session, preserve durable learnings and classify worthwhile reusable artefacts | [done](../commands/done.md) |
+
 | `/campaign-status` | Read-only | Reconcile campaign state against evidence | [campaign-status](../commands/campaign-status.md) |
 | `contribute` | Read-only discovery, then selected drafts | Find reusable project resources; publication requires separate approval | [contribute](../commands/contribute.md) |
 | `/settings` | Approved configuration edits | Inspect and change Foundry settings | [settings](../commands/settings.md) |
@@ -44,12 +44,12 @@ Commands should remain thin. Put reusable procedures in skills, orchestration in
 ## Recommended operating sequence
 
 ```text
-/audit -> /next-task -> /implement -> /verify -> /review -> /progress-report -> /close
+/audit -> /next-task -> /implement -> /verify -> /review -> /progress-report -> /done
 ```
 
 This is a default, not ceremony. Small changes may combine implementation and verification. High-risk changes should retain independent review and explicit approval gates.
 
-Use `/close` when you want durable project context retained. Use `/done` only when the session contains a potentially reusable project artefact; it classifies and saves qualified material and rejects empty or low-value sessions without writing a transcript.
+Use `/done` to finish a work session. It preserves durable context and classifies worthwhile reusable artefacts in one pass. `/close` and its longer forms are legacy aliases. If no reusable artefact qualifies, `/done` rejects resource extraction without creating a summary or placeholder.
 
 ## Shared behaviour rules
 
