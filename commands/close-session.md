@@ -1,8 +1,8 @@
 ---
 id: close-session
-name: Close Session
+name: Done (legacy Close Session alias)
 type: command
-version: 0.3.0
+version: 0.4.0
 portability: adaptable
 status: draft
 aliases:
@@ -20,7 +20,7 @@ dependencies:
 `/close`, `/close session` or `/close chat`
 
 ## Purpose
-Prepare the project for the next session by preserving durable, verified project context in its canonical source of truth. This is not transcript export or creation of new reusable resource types; use `/done` for resource curation.
+Legacy entrypoint for the unified `/done` end-of-session procedure. Preserve durable project context and classify/save worthwhile reusable resources through [Durable Session Learning](../skills/session-learning/SKILL.md). Do not maintain separate `/close` and `/done` session-ending behaviours.
 
 ## Execution
 1. Review the session for requirements, decisions, conventions, verified fixes and stable preferences.
@@ -38,9 +38,9 @@ Requirements -> product context; architecture decisions -> architecture/decision
 ## Safety
 Do not persist emotional content, filler, raw transcripts or speculation as facts. Do not silently overwrite conflicting decisions. Do not create `HANDOFF.md` unless the project uses it or the owner asks. Do not claim to close the chat UI unless the host exposes tested session control.
 
-## Distinction from /done
+## Compatibility
 
-Use `/close` for context continuity: requirements, decisions, stable preferences, verified lessons and current state. Use `/done` when the user believes the chat contains a reusable project artefact that should be classified and stored as a command, skill, workflow, standard, profile, template or other resource. `/done` applies a strict acceptance threshold and rejects the operation when nothing worthwhile qualifies.
+`/close`, `/close session` and `/close chat` remain accepted as legacy aliases. They run the same unified end-of-session procedure as `/done`.
 
 ## Output
 Learnings captured, files changed, verification, items excluded, unresolved conflicts and whether the chat must be closed manually.
