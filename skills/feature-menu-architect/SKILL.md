@@ -2,7 +2,7 @@
 id: feature-menu-architect
 name: Project-Aware Feature Menu Architect
 type: skill
-version: 0.1.0
+version: 0.2.0
 portability: universal
 status: draft
 dependencies:
