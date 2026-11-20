@@ -1,10 +1,10 @@
 schema_version: 1
 resources:
   - id: global-instructions
-    description: "Compact, project-agnostic operating instructions that connect the installed standards and task resources into one agent entrypoint."
+    description: "Compact, project-agnostic operating instructions that connect installed standards, task resources and Foundry management triggers into one agent entrypoint."
     type: core
     path: core/GLOBAL_INSTRUCTIONS.md
-    version: 0.1.0
+    version: 0.2.0
     status: draft
     portability: universal
   - id: engineering-principles
@@ -477,11 +477,11 @@ resources:
     status: draft
     portability: adaptable
   - id: foundry-management
-    description: "Conversational management instructions: discovery, settings, installation, update, removal, diagnostics and the Foundry safety contract."
+    description: "Conversational management instructions: discovery, contribution, settings, installation, update, removal, diagnostics and the Foundry safety contract."
     type: management
     path: foundry/MANAGEMENT.md
-    dependencies: [foundry-settings-spec, foundry-response-templates]
-    version: 0.1.0
+    dependencies: [foundry-settings-spec, foundry-response-templates, contribution-discovery]
+    version: 0.2.0
     status: draft
     portability: universal
   - id: foundry-settings-spec
@@ -492,10 +492,10 @@ resources:
     status: draft
     portability: universal
   - id: foundry-response-templates
-    description: "Reusable composition guidance for Foundry management chat responses: overview, settings, previews, diagnostics and change summary."
+    description: "Reusable composition guidance for Foundry management chat responses: overview, settings, previews, diagnostics, contribution discovery and change summary."
     type: management
     path: foundry/RESPONSE_TEMPLATES.md
-    version: 0.1.0
+    version: 0.2.0
     status: draft
     portability: universal
   - id: contribution-discovery
