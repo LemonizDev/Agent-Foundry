@@ -2,7 +2,7 @@
 id: readme-maker
 name: README Design and Information Architecture
 type: skill
-version: 0.2.0
+version: 0.3.0
 portability: universal
 status: draft
 ---
