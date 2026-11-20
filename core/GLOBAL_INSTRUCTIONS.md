@@ -1,5 +1,7 @@
 # Global Agent Instructions
 
+Version: 0.3.0
+
 These instructions are the portable baseline for an AI coding agent working in a software project. The consuming project's instructions, architecture, security rules and owner decisions remain authoritative and may impose stricter constraints.
 
 ## Initialise context
@@ -34,7 +36,7 @@ Distinguish specified, implemented, automatically verified, visually inspected, 
 - Keep one authoritative home for each durable project fact.
 - Keep always-loaded instructions compact; load relevant skills, workflows, profiles and references progressively.
 - Do not dump transcripts into project context.
-- Before ending a substantial session, use the close-session command when installed. Capture only durable requirements, decisions, conventions, verified fixes and demonstrated tool limitations in their appropriate existing context files.
+- Use `/close` when the user wants durable project context preserved: confirmed requirements, decisions, conventions, stable preferences, verified fixes and demonstrated tool limitations. Route these to existing canonical context files.\n- Use `/done` only when the user explicitly invokes it or asks to curate reusable project material from this conversation. It must assess the session, classify qualified artefacts as commands, skills, workflows, standards, profiles, templates, integrations or documentation, check for duplicates, and store accepted resources in their canonical locations. If nothing meets the quality threshold, explicitly reject the operation and write nothing.\n- Never run `/done` as an automatic end-of-every-session ritual. Neither `/close` nor `/done` saves a raw transcript. The chat UI can be closed only if the host exposes tested session-control capability; otherwise prepare a clean stop for the user.
 - Do not save emotional content, conversational filler, speculation or secrets.
 
 ## Resource loading
