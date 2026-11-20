@@ -73,7 +73,14 @@ Adapt and omit sections that do not apply. A small library may need only a short
 - Keep visual language consistent across banner, diagrams and screenshots.
 - Never invent screenshots, product behaviour, status metrics, contributor counts or benchmark claims.
 
-## Navigation hierarchy and dropdown rendering\n\n- GitHub `<details>` is a disclosure widget, not a complete tree visualization. Nested accordions may look like a flat list because the rendered indentation is weak. Always pair deep navigation with a Mermaid hierarchy map when the menu is complex.\n- Keep depth intentional: goal category → subcategory/resource family → resource item → usage details. Avoid an accordion forest with five levels just because Markdown permits it.\n- Use a short description next to each category. Resource leaves need a distinct title and one-sentence purpose; command leaves also need invocation and example.\n- For resource detail, prioritize direct links and actionable detail over repetitive boilerplate that restates the registry description twice.\n\n## GitHub Markdown and visual conventions
+## Navigation hierarchy and dropdown rendering
+
+- GitHub `<details>` is a disclosure widget, not a complete tree visualization. Nested accordions may look like a flat list because the rendered indentation is weak. Always pair deep navigation with a Mermaid hierarchy map when the menu is complex.
+- Keep depth intentional: goal category → subcategory/resource family → resource item → usage details. Avoid an accordion forest with five levels just because Markdown permits it.
+- Use a short description next to each category. Resource leaves need a distinct title and one-sentence purpose; command leaves also need invocation and example.
+- For resource detail, prioritize direct links and actionable detail over repetitive boilerplate that restates the registry description twice.
+
+## GitHub Markdown and visual conventions
 - Prefer GitHub Flavored Markdown; use native HTML only when it materially improves navigation/layout.
 - Keep details summaries short and descriptive.
 - Use GitHub Alerts (NOTE, TIP, IMPORTANT, WARNING, CAUTION) only for semantically important callouts. One high-value warning beats colour-coding every dialogue step.
@@ -91,7 +98,8 @@ Adapt and omit sections that do not apply. A small library may need only a short
 - Quick start explains where to run it, what to paste/run, what the agent inspects, when approval is needed and what happens afterwards.
 - Onboarding covers new, healthy existing and context-needs-repair project paths.
 - Multi-host setup identifies the active host, asks which other apps the user uses, supports multiple selections and free-text additions, and distinguishes project-local setup from global app configuration.
-- The feature tree covers every registry resource, validated by matching registry paths rather than relying on labels or filenames, and links to canonical detail. Use a visible Mermaid overview map and grouped accordions by user goal, then resource kind, then individual item. Never rely on nested details alone to communicate hierarchy: GitHub may render nested summaries with nearly identical indentation.\n- Avoid excessive nested levels. The main feature groups should remain scannable, with resource-kind groups and only useful individual detail panels. For each command panel include what it does, when to use it, exact invocation, example, expected result and full contract link.
+- The feature tree covers every registry resource, validated by matching registry paths rather than relying on labels or filenames, and links to canonical detail. Use a visible Mermaid overview map and grouped accordions by user goal, then resource kind, then individual item. Never rely on nested details alone to communicate hierarchy: GitHub may render nested summaries with nearly identical indentation.
+- Avoid excessive nested levels. The main feature groups should remain scannable, with resource-kind groups and only useful individual detail panels. For each command panel include what it does, when to use it, exact invocation, example, expected result and full contract link.
 - Every section has a purpose; repeated claims and filler are removed.
 - Examples are realistic, brief and conclude with an outcome/next action.
 - Alerts are not decorative quote boxes.
@@ -137,5 +145,16 @@ The skill was refined against GitHub's README documentation, GitHub's advanced M
 - Every link or highlighted item needs an explicit destination and purpose. Avoid orphaned links and unexplained transitions.
 - Compatibility belongs in installation: discover the active host, ask for other hosts, allow multiple choices and free-text additions, then propose each adapter.
 - Users may use several coding-agent apps against one repository. Do not silently create/modify multiple root instruction files. Explain project-local pointers versus global app configuration and get approval.
-- A quickstart demo must be inferred from inspected evidence, be safe, and end with an observable result and next action.\n- Do not open with Quick Start before explaining the project. A newcomer needs the project purpose, user/problem fit, major capabilities and architecture before installation.\n- Every long README needs a manual table of contents after the hero; the GitHub Outline icon is supplementary navigation, not the whole navigation plan.\n- For a large repository, plan the information architecture from the project inventory before writing. Use a Mermaid hierarchy map plus grouped accordions; a long flat list of expandable items is not a feature tree.\n- Resource menus should be goal → resource family/type → named item → relevant detail panels (what it is, when to use, how to invoke/use, example, dependencies, canonical link).\n- Resource detail panels must differ by resource type. Commands need invocation/examples; standards need scope/precedence; profiles need responsibility/boundaries; templates need field guidance.\n- Use actual visual evidence: screenshots/GIFs for real product behaviour, Mermaid for architecture/lifecycle/navigation and small copyable examples. No invented demos or metrics.\n- Keep the root README an index and product introduction, with sub-guides/docs for deeper detail; add section-level README files when a package has its own audience.
+- A quickstart demo must be inferred from inspected evidence, be safe, and end with an observable result and next action.
+- A command resource deserves topic-level disclosure panels: what it does, when to use it, exact invocation, example, expected result and full command contract. Do not repeat this full panel structure for every non-command resource.
+- Skills, workflows, standards, profiles, templates and documentation usually need a compact purpose, relevant use condition and one canonical link. Add deeper panels only when users have distinct questions.
+- A feature menu should expose the full inventory but avoid an accordion forest. Group by user goal, subdivide by resource kind, and reserve nested topic panels for commands or unusually complex resources.
+- The visual hierarchy must be legible in the rendered GitHub page. Use a Mermaid map for the main structure and a small example drill-down diagram for an important leaf path; nested details alone are not a hierarchy diagram.
+- Do not open with Quick Start before explaining the project. A newcomer needs the project purpose, user/problem fit, major capabilities and architecture before installation.
+- Every long README needs a manual table of contents after the hero; the GitHub Outline icon is supplementary navigation, not the whole navigation plan.
+- For a large repository, plan the information architecture from the project inventory before writing. Use a Mermaid hierarchy map plus grouped accordions; a long flat list of expandable items is not a feature tree.
+- Resource menus should be goal → resource family/type → named item → relevant detail panels (what it is, when to use, how to invoke/use, example, dependencies, canonical link).
+- Resource detail panels must differ by resource type. Commands need invocation/examples; standards need scope/precedence; profiles need responsibility/boundaries; templates need field guidance.
+- Use actual visual evidence: screenshots/GIFs for real product behaviour, Mermaid for architecture/lifecycle/navigation and small copyable examples. No invented demos or metrics.
+- Keep the root README an index and product introduction, with sub-guides/docs for deeper detail; add section-level README files when a package has its own audience.
 - Avoid fabricated project-specific claims in examples unless clearly labelled illustrative.
