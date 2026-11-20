@@ -342,6 +342,75 @@ These are adaptation references, not universal guarantees. Each host is reported
 
 [Full host integration guide](integrations/README.md) · [Multi-host onboarding skill](skills/host-roster-onboarding/SKILL.md)
 
+<details>
+<summary><strong>Per-app setup: Codex, Claude Code, OpenCode, Kilo, Cline, Cursor, Windsurf and Copilot</strong></summary>
+
+These are project-level starting points. The installer checks your actual app/version and existing files before choosing paths. It does not silently change global settings.
+
+<details>
+<summary>OpenAI Codex</summary>
+
+Open the repository as the active Codex workspace. Inspect the AGENTS.md hierarchy and use the shared Agent Skills location where supported. Add only a short pointer to the shared Foundry instructions. Verify that Codex discovers and can load one selected skill.
+
+[Official project-instructions guide](https://learn.chatgpt.com/docs/agent-configuration/agents-md)
+</details>
+
+<details>
+<summary>Claude Code</summary>
+
+Start Claude Code in the repository. Inspect CLAUDE.md imports and existing .claude configuration. Use .claude/skills/<name>/SKILL.md for Claude-specific skills when needed. Keep CLAUDE.md concise; create specialist agent definitions only when selected and supported.
+
+[Claude Code customization guide](https://claude.com/resources/articles/steering-claude-code-skills-hooks-rules-subagents-and-more)
+</details>
+
+<details>
+<summary>OpenCode</summary>
+
+Open the project root. Inspect AGENTS.md, opencode.json/jsonc, permissions and existing .opencode directories. Prefer .opencode/skills/<name>/SKILL.md for OpenCode-specific skill discovery; compatibility locations such as .agents/skills are also documented. Check skill permissions and ID collisions.
+
+[Instructions](https://opencode.ai/docs/instructions/) · [Skills](https://opencode.ai/docs/skills)
+</details>
+
+<details>
+<summary>Kilo Code / Kilo CLI</summary>
+
+Identify the editor or CLI surface and version. Inspect .kilo/skills and .agents/skills before installing. Review project-skill trust boundaries, especially embedded shell commands, and reload the host as required.
+
+[Official Kilo skills guide](https://kilo.ai/docs/customize/skills)
+</details>
+
+<details>
+<summary>Cline</summary>
+
+Open the repository as the active workspace. Inspect .clinerules/ and .cline/rules/ before editing. Cline documents both rule directories and recognition of AGENTS.md and other tool rule formats. Verify skill discovery separately; rule support does not prove skills are loaded.
+
+[Official Cline rules guide](https://github.com/cline/cline/blob/main/docs/customization/cline-rules.mdx)
+</details>
+
+<details>
+<summary>Cursor</summary>
+
+Open the project in Cursor. Inspect .cursor/rules/*.mdc, AGENTS.md and .agents/skills. Project rules need valid MDC frontmatter; use .agents/skills or .cursor/skills for Agent Skills rather than placing SKILL.md files in the rules directory.
+
+[Rules](https://cursor.com/docs/rules) · [Skills](https://cursor.com/docs/skills)
+</details>
+
+<details>
+<summary>Windsurf</summary>
+
+Confirm which Windsurf/Cascade or newer product surface and version you mean. Inspect AGENTS.md, .windsurf/rules, .windsurf/skills and legacy .windsurfrules as appropriate. Product documentation is in transition, so the installer must verify current official conventions before writing an adapter.
+
+[Windsurf documentation](https://docs.windsurf.com/)
+</details>
+
+<details>
+<summary>GitHub Copilot</summary>
+
+First identify the surface: VS Code, Visual Studio, GitHub.com, Copilot CLI or Copilot app. For IDE repository instructions, inspect .github/copilot-instructions.md and .github/instructions/*.instructions.md. Skills and AGENTS.md support vary by product surface; verify the actual app.
+
+[Repository instructions](https://docs.github.com/en/copilot/how-tos/copilot-in-your-ide/customize-copilot/configure-custom-instructions/add-repository-instructions-in-your-ide) · [Agent skills](https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/customize-cloud-agent/add-skills)
+</details>
+
 </details>
 
 ## Community contributions
