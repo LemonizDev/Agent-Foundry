@@ -8,7 +8,7 @@ Open the coding agent in the target project and ask:
 
 > Install Agent Foundry in this project from https://github.com/LemonizDev/Agent-Foundry. Read BOOTSTRAP.md and bootstrap/INITIALIZE_PROJECT.md. Inspect this project first, including existing instructions, architecture, tests and host conventions. Recommend only relevant resources, identify conflicts, show the exact files you plan to create or modify, and wait for my approval before writing.
 
-The agent should confirm the project root and host, inspect existing practices, read the Foundry registry and relevant resources, select only what is needed, resolve an immutable source revision where possible, distinguish managed from user-owned files, preview changes, wait for approval, apply and verify.
+The agent should first classify the repository as (1) new/empty, (2) established with healthy context, or (3) established but with context that needs repair. It must support the appropriate path rather than applying one preset to every project. Assess context quality using evidence: instruction precedence, architecture coverage, canonical sources, documentation freshness, duplication/conflicts, verification guidance and session continuity. For context-heavy projects, consider a read-only repository audit and documentation-maintenance pass before adding more instructions. Then read the registry and only relevant resources, select the smallest useful set, resolve an immutable source revision where possible, distinguish managed from user-owned files, preview exact changes, wait for approval, apply and verify. After installation, run a small, safe first-use demonstration selected from the actual project context and explain why that resource is relevant.
 
 Do not install the entire registry by default. Do not overwrite existing AGENTS.md, CLAUDE.md, project documentation or local rules. Prefer a small additive pointer when the host supports it safely.
 
@@ -16,7 +16,7 @@ Do not install the entire registry by default. Do not overwrite existing AGENTS.
 
 The host must provide repository access and permission to read and write project files. Some hosts may not fetch remote repositories, discover context files automatically or support every resource type. If a capability is unavailable, explain the limitation and use the smallest host-native fallback. Never claim success merely because a plan was printed.
 
-## Installed project state
+## Three onboarding paths\n\n- **New project:** establish a lightweight baseline and essential project context. Avoid generating documentation that the project does not need yet.\n- **Healthy existing project:** preserve authoritative instructions and workflows, link to existing sources and fill only real gaps.\n- **Existing project with messy context:** diagnose stale, scattered, contradictory or duplicated context first. Recommend a read-only repository audit and, where useful, the documentation-maintenance skill. Propose staged repairs separately; never rewrite the project during installation.\n\nThe paths are not rigid presets. Assess project capabilities individually and show the evidence behind recommendations.\n\n## Installed project state
 
 A minimal installation may contain:
 
