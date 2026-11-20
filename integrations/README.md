@@ -1,57 +1,29 @@
 # Coding-Agent Host Integrations
 
-Agent Foundry separates reusable engineering methods from the file formats and capabilities exposed by each coding-agent host. The CLI detects project-level host signals and generates native skill/command files where the host's documented layout is known.
+Agent Foundry is context, not an application. The user's existing coding agent is the interface and executor. Foundry provides portable instructions and resource definitions; each host determines how files are discovered and which repository, filesystem and shell capabilities are available.
 
-## Portable-to-native mapping
+## Host conventions
 
-| Host | Persistent instructions | Skills | Commands | Current generator behaviour |
-|---|---|---|---|---|
-| Codex | AGENTS.md | .agents/skills/<name>/SKILL.md | No custom slash-command file format generated | Generic pointer plus skills |
-| Claude Code | CLAUDE.md is created or existing file gets an additive pointer | .claude/skills/<name>/SKILL.md | Skills are slash-invocable; command contracts become skills | Skills, /close-style aliases and .claude/agents profiles generated |
-| OpenCode | AGENTS.md is discovered; optional config may add instructions |  .agents/skills/<name>/SKILL.md (shared Agent Skills location) | .opencode/commands/<name>.md | Skills, slash commands and .opencode/agents profiles generated |
-| Kilo Code | AGENTS.md |  .agents/skills/<name>/SKILL.md (shared Agent Skills location) | .kilo/commands/<name>.md | Skills, workflow-style commands and .kilo/agents profiles generated |
-| Cline | Existing .clinerules file/directory gets an additive pointer; existing project rules remain authoritative | .cline/skills/<name>/SKILL.md | Skills are slash-invocable | Skills and command-contract skills generated |
+| Host | Persistent project context | Skills / specialist resources | Important limitation |
+|---|---|---|---|
+| Codex | AGENTS.md | .agents/skills/<name>/SKILL.md | Do not assume remote installation; the host needs source and file access. |
+| Claude Code | CLAUDE.md | .claude/skills/ and .claude/agents/ where supported | Verify the installed version's discovery and permission behaviour. |
+| OpenCode | AGENTS.md and supported project config | .agents/skills/ and .opencode/commands/ where selected | Native command discovery and config precedence are version-specific. |
+| Kilo | AGENTS.md and supported project rules | .agents/skills/ and .kilo/commands/ where supported | Validate workflows and command semantics in the actual host. |
+| Cline | .clinerules | .cline/skills/ where supported | Verify current skills and rule-loading conventions. |
 
-The CLI creates one shared .agents/skills directory for Codex, OpenCode and Kilo Code, avoiding duplicate discovery of the same skill. It creates .claude/skills for Claude Code and .cline/skills for Cline. Native command and agent files are generated only for hosts detected in the project. Kilo command aliases with spaces are converted to a hyphenated filename (for example, models edit becomes models-edit) because nested Kilo command discovery is not assumed.
+These are adaptation references, not claims that every listed path is automatically loaded by every release. Consult official host documentation and test the exact host version before relying on a behaviour.
 
-## Current compatibility status
+## Consistent management intent
 
-The generator targets documented file formats, but the installer does not launch each host to verify discovery, command execution, argument interpolation, model routing or session-control behaviour. Therefore generated artifacts are marked **generated, runtime not exercised**, not fully validated host support.
+Across hosts, the agent should recognise requests such as "Foundry settings", "Update Foundry" and "Check my Foundry setup" when the relevant management instructions are in its context. Where a host cannot guarantee natural-language trigger discovery, provide a small native pointer or explain how to explicitly invoke management instructions. Do not invent a universal trigger mechanism.
 
-| Host | File generation | Runtime validation |
-|---|---|---|
-| Codex | Shared AGENTS.md and .agents/skills output | Not yet exercised in Codex |
-| Claude Code | CLAUDE.md pointer and .claude/skills output | Not yet exercised in Claude Code |
-| OpenCode | .agents/skills, .opencode/commands and .opencode/agents output | Not yet exercised in OpenCode |
-| Kilo Code | .agents/skills, .kilo/commands and .kilo/agents output | Not yet exercised in Kilo Code |
-| Cline | .cline/skills output | Not yet exercised in Cline |
+## Capability boundary
 
-## Official format references
+The host supplies model access, repository and network access, filesystem and shell tools, subagent or workflow support, and approval controls. Foundry does not supply these capabilities and cannot elevate them. If a host lacks a capability, report the limitation rather than simulating success.
 
-- [Codex project guidance and skills](https://developers.openai.com/codex/customization)
-- [Claude Code skills](https://code.claude.com/docs/en/skills) · [Claude Code subagents](https://code.claude.com/docs/en/sub-agents)
-- [OpenCode skills](https://opencode.ai/docs/skills) · [OpenCode agents](https://opencode.ai/docs/agents)
-- [OpenCode commands](https://opencode.ai/docs/commands)
-- [Kilo Code workflows](https://kilo.ai/docs/customize/workflows) · [Kilo Code skills](https://kilo.ai/docs/customize/skills) · [Kilo Code AGENTS.md](https://kilo.ai/docs/customize/agents-md) · [Kilo Code agents](https://kilo.ai/docs/customize/custom-modes)
-- [Kilo Code custom agents and modes](https://kilo.ai/docs/customize/custom-modes)
-- [Cline skills](https://docs.cline.bot/customization/skills)
+## Acceptance testing
 
-## Adapter requirements
+For each host, record the product and exact version tested, context discovery, skill discovery, management invocation or fallback, file read/write and approval behaviour, update/removal preservation, test date and reproducible evidence.
 
-Every production adapter must document:
-- supported tool and tested version;
-- native file locations and formats;
-- mapping from each Foundry resource type;
-- unsupported concepts and limitations;
-- installation, update and uninstall behaviour;
-- permission and trust boundaries;
-- validation performed, date and evidence.
-
-## Adapter roadmap
-
-1. Exercise current generated layouts in Codex, Claude Code, OpenCode, Kilo Code and Cline.
-2. Validate generated Claude, OpenCode and Kilo specialist profiles and reviewer permission boundaries in their actual hosts.
-3. Add host-specific config merging only where a safe parser and non-destructive merge are available.
-4. Add end-to-end adapter fixtures and compatibility tests for each supported host release.
-
-A partial adapter is better than claiming universal support and silently dropping important semantics.
+Until those checks are performed, status is documented convention, runtime not verified.
