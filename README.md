@@ -48,21 +48,95 @@ The host must be able to access the Foundry source and the target project. If it
 
 </details>
 
-## 30-second demo
+## What installation actually looks like
 
-**You:** "Set up Foundry here. I already have AGENTS.md, some skills and a review workflow."
+Foundry should not install the same bundle into every project. It first works out what kind of project it has walked into.
 
-**Agent:** "I found your instructions, four skills and an existing review workflow. I'll preserve those, link to the workflow instead of duplicating it, and propose only the missing recovery and evidence resources."
+| Your project | What Foundry should do |
+|---|---|
+| 🌱 **New project** | Establish a lightweight baseline, identify the stack and purpose, and create only essential project context. Recommend a useful first skill. |
+| 🏗️ **Healthy, established project** | Map what already works. Preserve authoritative rules, link instead of duplicate, and install only genuine missing capabilities. |
+| 🧭 **Large project with messy context** | Diagnose before adding more. Recommend a repository audit and documentation-maintenance pass, identify canonical files, surface conflicts and propose a staged context repair. |
 
-**You:** "What will you change?"
+> [!NOTE]
+> These are onboarding paths, not rigid labels. A project can have excellent tests and terrible documentation, or strong docs but no session continuity. Assess capabilities individually.
 
-**Agent:** "A small Foundry pointer, two selected resources and an ownership manifest. Here are the exact files and conflicts. Nothing has been written yet."
+### The installation journey
 
-**You:** "Keep my review rule."
+```text
+       INSPECT PROJECT + HOST
+                 |
+                 v
+        CLASSIFY PROJECT STATE
+                 |
+                 v
+       CHECK CONTEXT HEALTH
+                 |
+        +--------+--------+
+        |        |        |
+       NEW    HEALTHY   MESSY
+        |        |        |
+     BASELINE PRESERVE  AUDIT +
+      CONTEXT + FILL   REPAIR PLAN
+        |      GAPS      |
+        +--------+--------+
+                 |
+          SELECT RESOURCES
+                 |
+          PREVIEW EXACT DIFFS
+                 |
+            YOUR APPROVAL
+                 |
+           INSTALL + VERIFY
+                 |
+        PROJECT-SPECIFIC DEMO
+```
 
-**Agent:** "Your rule remains authoritative. Here's the final plan for approval."
+### A first interaction that feels like a real assistant
 
-*That's the intended experience: inspect first, fit into the project, explain trade-offs, ask before changing things.*
+> [!NOTE]
+> **01 · Inspect**
+>
+> **You:** "Set up Foundry here."
+>
+> **Agent:** "This is an established TypeScript service. I found an AGENTS instruction file, architecture notes, a test strategy and three existing skills. Your review workflow already covers independent review."
+
+> [!TIP]
+> **02 · Recommend**
+>
+> **Agent:** "I'll preserve the review workflow and link to your architecture docs. Your onboarding guide is stale and decisions are scattered, though. I recommend a read-only repository audit, followed by the documentation-maintenance skill. Multi-agent orchestration can wait because this host's subagent support isn't verified."
+
+> [!WARNING]
+> **03 · Preview**
+>
+> **You:** "What will you change?"
+>
+> **Agent:** "One small Foundry pointer, two selected resources and an ownership manifest. I'll propose an additive update to the onboarding index. Here are the exact diffs and conflicts. Nothing has been written."
+
+> [!IMPORTANT]
+> **04 · Approve, install, try**
+>
+> **You:** "Keep my review rule. Approve the rest."
+>
+> **Agent:** "Your review rule stays authoritative. The selected files passed integrity checks. Your API has no documented error taxonomy, so let's use the debugging resource on one existing error path as your first Foundry quickstart."
+
+**Installation should end with a useful first experience, not a directory full of files.** The quickstart demo should be selected from the project context Foundry actually inspected, and should be safe, small and relevant.
+
+## Why Agent Foundry
+
+| Advantage | Day-to-day difference |
+|---|---|
+| 🧠 **Project-aware, not one-size-fits-all** | Resources fit the actual stack, maturity, risks and conventions. |
+| 🧹 **Less context chaos** | Stale, duplicate and conflicting context is surfaced instead of buried under more Markdown. |
+| 🎯 **Right resource, right moment** | Load and use relevant skills and workflows instead of blindly installing everything. |
+| 🔁 **Session continuity** | Decisions, verified progress, blockers and next actions have durable homes. |
+| 🧪 **Evidence over confidence** | Acceptance criteria, review and verification distinguish claimed completion from checked work. |
+| 🤝 **Accountable delegation** | Bounded assignments, ownership, checkpoints and recovery improve multi-agent work where the host supports it. |
+| 🛡️ **You stay in control** | Exact changes are previewed; existing work is preserved; approval gates and ownership tracking guide updates and removal. |
+| 🧰 **Keep your preferred agent** | Use Codex, Claude Code, OpenCode, Kilo, Cline or another compatible host. No replacement runtime to learn. |
+
+> [!TIP]
+> **The compounding advantage:** a good review, recovery or documentation practice is useful once. A reusable resource that your agent can discover and apply across projects is useful repeatedly.
 
 ## Feature menu
 
