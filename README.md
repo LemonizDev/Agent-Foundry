@@ -297,10 +297,14 @@ Project-owned model rosters, task-aware selection and conversational lifecycle m
 <details>
 <summary>Settings and lifecycle</summary>
 
+- [**Foundry Settings Command**](commands/settings.md) · Inspects and edits project-local Foundry configuration conversationally.
 - [**Foundry Management**](foundry/MANAGEMENT.md) · Conversational management instructions: discovery, contribution, settings, installation, update, removal, diagnostics and the Foundry safety contract.
 - [**Foundry Settings Spec**](foundry/SETTINGS_SPEC.md) · The single authoritative definition of supported Agent Foundry settings, their values, defaults, scope and safe modification guidance.
 - [**Foundry Response Templates**](foundry/RESPONSE_TEMPLATES.md) · Reusable composition guidance for Foundry management chat responses: overview, settings, previews, diagnostics, contribution discovery and change summary.
-- [**Foundry Settings Template**](templates/foundry-settings.yaml) · Provides project-level policies for delegation, model selection and session behaviour. · Template
+- [**Foundry Settings Template**](templates/foundry-settings.yaml) · Provides project-level policies for delegation, model selection and session behaviour.
+- [**Explain Model Selection**](commands/explain-model-selection.md) · Explains task classification, eligibility filters and selection rationale.
+- [**Test Model**](commands/test-model.md) · Runs bounded, owner-approved capability checks on a configured model.
+- [**Edit Model Roster**](commands/edit-model-roster.md) · Edits the owner-defined model roster used by task-aware delegation. · Template
 - [**Contribution Discovery**](skills/contribution-discovery/SKILL.md) · Scans accessible user-created instructions, skills, workflows, commands, settings and templates for safe, reusable contribution candidates. · Skill
 - [**Contribute**](commands/contribute.md) · Invokes explicit, approval-gated discovery of reusable user-created agent resources for Agent Foundry. · Command
 
