@@ -72,9 +72,17 @@ try {
     const task = option("--task", "");
     if (!task) throw new Error("Provide --task with a description of the work to classify.");
     const rosterPath = path.join(root, ".agent-foundry/settings/model-roster.yaml");
-    let rosterText;\n    try { rosterText = await fs.readFile(rosterPath, "utf8"); }\n    catch (error) {\n      if (error.code === "ENOENT") throw new Error("No model roster found at " + rosterPath + ". Initialise Agent Foundry first or create the project-owned roster from templates/model-roster.yaml.");\n      throw error;\n    }\n    const roster = yaml.load(rosterText);
+    let rosterText;
+    try { rosterText = await fs.readFile(rosterPath, "utf8"); }
+    catch (error) {
+      if (error.code === "ENOENT") throw new Error("No model roster found at " + rosterPath + ". Initialise Agent Foundry first or create the project-owned roster from templates/model-roster.yaml.");
+      throw error;
+    }
+    const roster = yaml.load(rosterText);
     const settingsPath = path.join(root, ".agent-foundry/settings/foundry-settings.yaml");
-    let settings = {};\n    try { settings = yaml.load(await fs.readFile(settingsPath, "utf8")) ?? {}; }\n    catch (error) { if (error.code !== "ENOENT") throw error; }
+    let settings = {};
+    try { settings = yaml.load(await fs.readFile(settingsPath, "utf8")) ?? {}; }
+    catch (error) { if (error.code !== "ENOENT") throw error; }
     const classification = classifyTask(task);
     const rosterIssues = validateModelRoster(roster);
     if (rosterIssues.length) throw new Error("Model roster is invalid: " + JSON.stringify(rosterIssues));
