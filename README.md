@@ -6,391 +6,246 @@
 
 ### A reusable engineering environment for AI coding agents.
 
-Give your coding agent a consistent way to understand a project, plan work, delegate tasks, choose suitable models, verify changes and retain useful knowledge between sessions.
+**One project. Consistent engineering habits. Better continuity across agents and sessions.**
 
-**One setup. A project-aware engineering system. Reusable across repositories.**
+[![CI](https://github.com/LemonizDev/Agent-Foundry/actions/workflows/ci.yml/badge.svg)](https://github.com/LemonizDev/Agent-Foundry/actions/workflows/ci.yml)
+[![MIT License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Node.js 20+](https://img.shields.io/badge/Node.js-20%2B-green.svg)](https://nodejs.org/)
 
-[![CI](https://github.com/LemonizDev/Agent-Foundry/actions/workflows/ci.yml/badge.svg)](https://github.com/LemonizDev/Agent-Foundry/actions/workflows/ci.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE) [![Node.js](https://img.shields.io/badge/Node.js-20%2B-green.svg)](https://nodejs.org/)
-
-[Start here](#get-started) · [How it works](#how-it-works) · [Capabilities](#browse-by-the-job-you-need-done) · [Project status](#project-status) · [Documentation](docs/README.md) · [Contributing](CONTRIBUTING.md)
+[Quick start](#quick-start) · [How it works](#how-it-works) · [CLI reference](#cli-reference) · [Commands](docs/COMMAND_CATALOG.md) · [Documentation](docs/README.md) · [Contributing](CONTRIBUTING.md)
 
 </div>
 
-<details>
-<summary><strong>Explore the documentation</strong></summary>
-
-| I want to... | Start here |
-|---|---|
-| Understand the product and its workflows | [User Guide](docs/USER_GUIDE.md) |
-| Install Foundry into a project | [Bootstrap Guide](BOOTSTRAP.md) |
-| Understand the engine and installer | [Engine Architecture](docs/architecture/ENGINE_ARCHITECTURE.md) |
-| Understand project integration | [Existing Project Integration](docs/architecture/EXISTING_PROJECT_INTEGRATION.md) |
-| Understand model selection | [Model Delegation](docs/architecture/MODEL_DELEGATION.md) |
-| Browse reusable resources | [Resource Registry](registry/resources.yaml) |
-| Create or improve resources | [Resource Authoring Standard](docs/standards/RESOURCE_AUTHORING_STANDARD.md) |
-| Contribute code or documentation | [Contributing](CONTRIBUTING.md) |
-| Report a security issue | [Security Policy](SECURITY.md) |
-| Find help | [Support](SUPPORT.md) |
-| See what changed | [Changelog](CHANGELOG.md) |
-
-</details>
-
 ---
 
-## Why this exists
+## What Agent Foundry does
 
-An AI coding agent is an assistant that can inspect a software repository, edit files and use development tools. It can write code. The harder problem is getting it to work reliably across a real project, over weeks or months, with changing requirements, multiple models and multiple sessions.
+AI coding agents can generate code. Reliable engineering across a real repository is harder: agents need project context, consistent procedures, explicit permissions, accountable delegation, repeatable verification and a way to preserve important discoveries between sessions.
 
-Without a shared operating system, every project ends up rebuilding the same things:
+Agent Foundry is a **resource library and project-integration CLI**. It helps a project adopt a reusable engineering system without replacing its existing architecture or instructions.
 
-- Instructions explaining how the agent should inspect and modify a repository.
-- A clear source of truth for architecture, decisions, roadmap and current progress.
-- A way to split work between agents without losing accountability.
-- A sensible method for choosing a model for each job.
-- Repeatable testing, review, debugging and documentation practices.
-- A way to preserve useful discoveries when a chat ends, without dumping the entire conversation into a handoff file.
+- **Project-aware onboarding:** inspect a repository, identify existing capabilities and propose relevant additions.
+- **Shared operating baseline:** compact instructions backed by standards for safety, communication, context and evidence.
+- **Reusable engineering commands:** audit, implement, debug, review, verify, delegate, report progress and recover interrupted work.
+- **Skills and workflows:** detailed procedures behind commands and coordinated multi-step work.
+- **Model-aware recommendations:** classify tasks and recommend from a model roster controlled by the project owner.
+- **Managed lifecycle:** plan-first installation, manifest-based ownership, validation, update previews and cautious uninstall.
+- **Host adapters:** generate host-shaped instruction, skill, command and profile files where adapters provide mappings.
 
-The result is familiar: agents rediscover the same facts, repeat mistakes, use an oversized model for trivial tasks, use a weak model for difficult work, contradict earlier decisions, and sometimes announce completion without enough evidence.
+Foundry does not provide the model, IDE, agent runtime, process sandbox or provider dispatch. The host controls model access, tools, permissions and execution. A generated file is not proof that a host loads or executes it correctly.
 
-**Agent Foundry addresses the process and continuity problem around AI-assisted software development.**
+## Quick start
 
-It is an open-source resource library and project-integration CLI. It gives coding agents reusable engineering instructions, task procedures, commands, workflows, specialist role definitions and project-owned settings, then generates the host-specific files needed to expose those resources.
+**Requirements:** Node.js 20 or newer. Run from the root of the project you want to configure.
 
-It does not replace the coding model or agent host. It does not guarantee correct code. It gives the host a better-defined way to work.
-
-## What changes when a project uses it?
-
-<details>
-<summary><strong>Without a shared engineering system</strong></summary>
-
-- Each new chat rediscovers project structure and conventions.
-- Different agents follow different instructions.
-- Delegation is ad hoc; assignments and checkpoints disappear.
-- Model choice is often a fixed default rather than task-aware.
-- Progress is reported from memory instead of verified evidence.
-- Useful lessons remain buried in old conversations.
-- Existing project instructions and new agent prompts gradually conflict.
-
-</details>
-
-<details>
-<summary><strong>With Agent Foundry</strong></summary>
-
-- The project has a compact entrypoint and clear authoritative context.
-- Reusable procedures define how common engineering tasks are performed.
-- Commands provide a predictable interface for recurring actions.
-- Delegation considers task type, intensity, risk and the owner's model roster.
-- Verification and reporting are evidence-based.
-- Session close captures durable learnings in the correct context files.
-- Installation is additive: existing architecture and instructions are preserved.
-
-</details>
-
-## How it works
-
-Agent Foundry is organised around a project lifecycle, not around a pile of prompt files.
-
-```mermaid
-flowchart TD
-    A["Your existing or new project"] --> B["Inspect its code, docs and agent instructions"]
-    B --> C["Map capabilities already present"]
-    C --> D["Find useful gaps"]
-    D --> E["Recommend relevant Foundry resources"]
-    E --> F{"You approve the plan"}
-    F -- "No" --> G["Revise or stop without changes"]
-    F -- "Yes" --> H["Add selected resources without replacing project rules"]
-    H --> I["Work through commands, skills and workflows"]
-    I --> J["Classify tasks and select from your model roster"]
-    J --> K["Implement, test and independently review"]
-    K --> L["Close session and capture durable learnings"]
-    L --> M["Update the right project context files"]
-    M --> I
-```
-
-### The system has distinct parts
-
-| Part | What it means in everyday language | Example |
-|---|---|---|
-| **Project context** | Facts about this particular software: what it does, how it is built, what decisions have been made and what is currently in progress | Architecture notes, roadmap, owner preferences |
-| **Core instructions** | A compact global operating contract that every project receives, backed by reusable standards | [Global instructions](core/GLOBAL_INSTRUCTIONS.md); inspect before editing, preserve existing work and verify claims |
-| **Commands** | Short requests the developer can invoke instead of explaining a recurring task each time | `/progress-report`, `/close`, `/settings` |
-| **Skills** | Detailed instructions that teach the agent how to carry out a particular job | Debugging, session learning, model-aware delegation |
-| **Workflows** | A coordinated sequence of jobs, decisions and checks | Integrate Foundry into an existing project |
-| **Profiles** | Responsibility definitions for specialist agents | Lead engineer, independent reviewer, graphics engineer |
-| **Standards and templates** | Shared quality rules and consistent formats for reports or records | Evidence requirements, test report template |
-| **Settings and integrations** | Project-specific preferences and translations into the coding tool's supported format | User-defined model roster, host adapter |
-
-The important distinction: **a command is the request, a skill is how to do the work, and a workflow is how several pieces of work fit together.** A model roster is configuration owned by the consuming project, not a universal list hardcoded into Agent Foundry.
-
-## Get started
-
-### The intended one-step experience
-
-You should not need to clone this repository, download a ZIP or manually browse its folders.
-
-1. Open the project you want to configure in your coding agent.
-2. Give the agent the Agent Foundry link and the instruction below.
-3. The agent inspects your project and identifies what you already have.
-4. It recommends only relevant resources and shows you exactly what it plans to change.
-5. You approve the plan; the agent integrates the resources.
-
-Copy this into your coding agent:
-
-> Initialise this project with Agent Foundry: https://github.com/LemonizDev/Agent-Foundry  
-> Read BOOTSTRAP.md and bootstrap/INITIALIZE_PROJECT.md. Inspect my existing project, its architecture, documentation and agent instructions before making changes. Identify which capabilities I already have and which are missing. Recommend only relevant Agent Foundry resources, explain why each is useful, and show me the exact files you plan to create or modify. Preserve my existing architecture, instructions and local conventions. Do not overwrite anything. Wait for my approval before writing.
-
-**Existing projects are first-class targets.** Foundry is supposed to integrate into an established codebase, not force the codebase to become a copy of one of its source projects.
-
-[Read the complete setup procedure](BOOTSTRAP.md) · [Read the agent's initialization specification](bootstrap/INITIALIZE_PROJECT.md) · [Read the existing-project migration design](docs/architecture/EXISTING_PROJECT_INTEGRATION.md)
-
-### What the installation is intended to look like
-
-The installer adds only selected resources and the host-specific files needed to expose them. Existing source code, architecture and documentation remain where they are.
-
-```text
-your-project/
-├── AGENTS.md                         # Created or extended with a marked Foundry pointer
-├── CLAUDE.md                         # Created or extended when Claude Code is detected
-├── .clinerules/agent-foundry.md      # Added when Cline is detected
-├── .agents/skills/                   # Shared Agent Skills: Codex, OpenCode and Kilo
-├── .claude/skills/ and agents/       # Claude Code skills and specialist agents
-├── .opencode/skills, commands, agents/
-├── .kilo/skills, commands, agents/
-├── .cline/skills/
-├── docs/                              # Your existing project documentation
-├── src/                               # Your existing source code
-└── .agent-foundry/
-    ├── manifest.json                 # Exact source commit and ownership hashes
-    ├── instructions.md               # Compact project entrypoint
-    ├── settings/
-    │   ├── foundry-settings.yaml     # Project-owned policies
-    │   └── model-roster.yaml         # Models YOU choose to make available
-    ├── resources/                    # Selected canonical resources
-    │   ├── core/GLOBAL_INSTRUCTIONS.md
-    │   ├── standards/                 # Universal engineering baseline
-    │   ├── skills/                    # Task procedures
-    │   └── workflows/                 # Multi-step coordination
-    └── README.md                     # What was integrated and how to maintain it
-```
-
-The portable .agents/skills baseline is generated for Codex-compatible skill discovery. Additional host-specific folders are generated only when their host is detected. The exact installed file list is recorded in the manifest.
-
-### Install with the CLI
-
-Requirements: Node.js 20 or newer.
-
-From the root of the target project, run:
+### 1. Inspect and preview
 
 ```bash
 npx --yes --package github:LemonizDev/Agent-Foundry agent-foundry init
 ```
 
-This inspects the repository and prints a proposed resource plan. It does not change files.
+This is plan-only by default. It inspects the project and prints proposed resources, host artifacts, conflicts and entrypoint changes. It does not write files.
 
-After reviewing the plan, run:
+### 2. Review, then apply
 
 ```bash
-npx --yes --package github:LemonizDev/Agent-Foundry agent-foundry init --preset auto --hosts kilo --apply
+npx --yes --package github:LemonizDev/Agent-Foundry agent-foundry init --preset auto --apply
 ```
 
-The CLI asks for explicit confirmation. If the target repository is new and has no host configuration files for the scanner to detect, specify your coding-agent host explicitly, for example `--hosts kilo,cline` or `--hosts claude-code,opencode`. Every preset and explicit resource selection includes the same universal core: global instructions, engineering principles, communication, context management, security boundaries, decision-making and evidence/documentation standards. The auto preset starts with an autonomous-engineering baseline and adds visual QA resources when the project scanner detects graphics/rendering signals. You can choose minimal, balanced, autonomous-engineer, visual-engineer or research-engineer instead. The installer records ownership hashes in .agent-foundry/manifest.json and adds marked pointers without replacing existing content. If an existing project already has a resource at a target path, review the conflict and use --skip-conflicts to leave it untouched while installing the remaining resources.
+The CLI asks for explicit confirmation. Use `--yes` only when the surrounding automation has already obtained approval.
 
-Useful lifecycle commands:
+### 3. Validate
 
 ```bash
-npx --yes --package github:LemonizDev/Agent-Foundry agent-foundry inspect
 npx --yes --package github:LemonizDev/Agent-Foundry agent-foundry validate
-npx --yes --package github:LemonizDev/Agent-Foundry agent-foundry update
-npx --yes --package github:LemonizDev/Agent-Foundry agent-foundry update --apply
-npx --yes --package github:LemonizDev/Agent-Foundry agent-foundry uninstall
-npx --yes --package github:LemonizDev/Agent-Foundry agent-foundry uninstall --apply
 ```
 
-Updates and uninstall are preview-first. Updates stop on local modifications; uninstall removes only unchanged Foundry-owned files and preserves owner edits. The uninstall command requires typing `uninstall` before it changes files.
+Review `.agent-foundry/README.md`, the generated entrypoint and manifest. The project owner remains responsible for deciding which host capabilities are enabled.
 
-The CLI is an initial cross-platform implementation, not a stable release. Host file generation is tested, but native command discovery and execution still need validation inside each supported host. Model selection currently recommends from your roster; it does not dispatch provider calls or workers.
+> **Development build:** v0.5 is under development, not a stable release. Until a tagged release exists, the GitHub package invocation targets the repository's default branch. For reproducible use, pin a reviewed commit with the source-ref options and record that revision.
 
-## The user command interface
+### Existing projects are first-class
 
-The portable command contracts are the user-facing layer. The CLI now implements project lifecycle commands and a first-pass roster-based model recommendation. Native slash-command registration remains host-specific.
+Foundry should inspect existing instructions, architecture and tools, then recommend gaps. It must not replace an existing `AGENTS.md`, `CLAUDE.md`, architecture document or local convention merely because a preset includes a similar resource. If a plan shows a conflict, stop and inspect it. `--skip-conflicts` leaves an existing path untouched; it is not an automatic merge.
 
-| Command | What it should do |
-|---|---|
-| `/progress-report` | Show verified project or milestone progress, evidence and the next action |
-| `/teach-implementation` | Explain what changed, how it works and what to remember |
-| `/close` | Capture useful project learnings from the current session into the correct context files |
-| `/settings` | Show and edit project-level Agent Foundry settings |
-| `/models edit` | Edit the model roster used for task-aware delegation |
-| `/audit` | Map a repository and identify evidence-backed gaps |
-| `/implement` | Execute a bounded, approved implementation plan |
-| `/debug` | Reproduce and isolate a root cause |
-| `/review` | Run an independent, findings-first code review |
-| `/verify` | Verify acceptance criteria with explicit evidence |
-| `/delegate` | Create a bounded model-aware worker assignment |
-| `/next-task` | Recommend the highest-value next action |
-| `/project-health` | Assess project health across engineering dimensions |
-| `/resume` | Recover interrupted work from verified checkpoints |
-| `/models explain` | Explain why a model is or is not suitable for a task |
-| `/models test` | Run bounded capability checks on a configured model where host/provider support allows it |
-
-CLI equivalents currently available: agent-foundry settings and agent-foundry route --task "describe the work". The latter classifies a task and ranks eligible models from the project's configured roster. It recommends; it does not dispatch a worker. The installer generates native command/skill files for detected hosts, but runtime discovery and execution still need host-by-host validation.
-
-### Closing a session without losing what matters
-
-The `/close` command is deliberately different from a conventional handoff generator.
-
-It reviews the session for genuinely useful, durable information:
-- new or clarified project requirements;
-- stable coding and collaboration preferences;
-- architectural decisions and their rationale;
-- conventions discovered in the codebase;
-- verified bugs, failure modes and their fixes;
-- model or tool limitations supported by evidence.
-
-It then updates the appropriate existing files: architecture docs, owner context, engineering instructions, troubleshooting guides, progress records or the model roster.
-
-It does **not** save emotional content, conversational filler, speculative claims or a raw transcript. It does not create another generic `HANDOFF.md` by default.
-
-The command prepares the project for the end of the session. Actually closing the chat window depends on whether the coding host exposes a supported chat-control API.
-
-[Read the close-session design](commands/close-session.md)
-
-## Task-aware model delegation
-
-One model should not be used for every job.
-
-A quick symbol lookup, a repetitive metadata edit, a complex root-cause investigation and a security review have different requirements. The delegation system classifies work before selecting a model.
+## How it works
 
 ```mermaid
 flowchart TD
-    A["New task"] --> B["Classify task type"]
-    B --> C["Estimate intensity: reasoning, scope, context, tools, uncertainty, verification"]
-    C --> D["Apply risk and permission gates"]
-    D --> E["Read the project's model roster"]
-    E --> F["Filter unavailable or unsuitable models"]
-    F --> G["Rank by capability, reliability, speed and cost preference"]
-    G --> H{"Any model clears the quality floor?"}
-    H -- "Yes" --> I["Assign task with rationale and acceptance criteria"]
-    H -- "No" --> J["Ask owner or report no safe match"]
-    I --> K["Verify result and record outcome"]
+ A[Existing or new project] --> B[Inspect files, instructions and host signals]
+ B --> C[Map capabilities and gaps]
+ C --> D[Resolve resources and dependencies]
+ D --> E[Print reviewable installation plan]
+ E --> F{Owner approves?}
+ F -- No --> G[Stop without writes]
+ F -- Yes --> H[Apply additive changes]
+ H --> I[Validate manifest, files and settings]
+ I --> J[Use commands, skills and workflows]
+ J --> K[Verify outcomes and capture durable learning]
+ K --> J
 ```
 
-Examples:
-- **Fast lookup:** prefer a low-latency model that can reliably search and answer.
-- **Mechanical edit:** prefer a smaller, faster model when the task is bounded and easy to verify.
-- **Routine implementation:** require competent coding and tool use.
-- **Complex debugging or architecture:** require stronger reasoning and sufficient context.
-- **Security-critical work:** require strong reasoning plus independent verification.
-- **Visual/runtime testing:** the model must have access to the relevant browser, renderer or device. Text intelligence alone is not enough.
+### The resource model
 
-The roster is defined by the project owner in `.agent-foundry/settings/model-roster.yaml`. Foundry does not hardcode a changing list of model names or assume that a model labelled “flash” is always suitable. The CLI's first-pass classifier is deliberately transparent and heuristic; use it as a routing aid, not an autonomous authority.
+| Resource | Purpose | Example |
+|---|---|---|
+| Core instructions | Small always-read operating contract | Inspect before editing; preserve work; verify claims |
+| Standards | Rules that apply across tasks | Security, evidence quality, context management |
+| Commands | User-facing entrypoints | `/implement`, `/debug`, `/review`, `/close` |
+| Skills | Detailed task procedures | Debugging, repository audit, session learning |
+| Workflows | Multi-step coordination | Multi-agent campaign, session close |
+| Profiles | Specialist responsibilities | Lead engineer, independent reviewer |
+| Templates | Consistent records and outputs | Delegation assignment, decision register |
+| Integrations | Host-specific file generation | Skills, commands and agent profiles |
 
-[Read the delegation architecture](docs/architecture/MODEL_DELEGATION.md) · [Edit-roster command contract](commands/edit-model-roster.md)
+**A command is the request. A skill is the procedure. A workflow coordinates several procedures.** Keeping these layers separate prevents every command becoming a giant duplicated prompt.
 
-## Browse by the job you need done
+## Using Foundry day to day
 
-You do not need to understand Foundry's internal categories to use it. Start with the task you're trying to accomplish:
+The portable command contracts live in `commands/`. A host may expose them as native slash commands, prompt shortcuts, workflows or named skills. A Markdown contract alone does not prove a native slash command exists.
 
-| If you need to... | What Foundry provides |
+| Request | Command | Expected result |
+|---|---|---|
+| Understand the repository and its gaps | `/audit` | Read-only findings with scope and evidence |
+| Implement an approved change | `/implement` | Bounded implementation with incremental verification |
+| Investigate a failure | `/debug` | Reproduction, tested hypotheses and root cause |
+| Challenge a change before merging | `/review` | Findings first, severity and evidence |
+| Prove acceptance criteria | `/verify` | Verification matrix with exact outcomes |
+| Split work safely | `/delegate` | Bounded assignment, ownership and checkpoints |
+| See real progress | `/progress-report` | Evidence-backed status, not activity estimates |
+| Choose the next useful action | `/next-task` | One prioritised action tied to risk and dependencies |
+| Recover interrupted work | `/resume` | Reconciled repository state and last verified checkpoint |
+| Close a session responsibly | `/close` | Durable learning routed to canonical project files |
+
+See the [full command catalog](docs/COMMAND_CATALOG.md) for inputs, permissions, execution rules, output contracts and failure behaviour.
+
+## Model recommendations
+
+The project owner defines available models in `.agent-foundry/settings/model-roster.yaml`. Foundry classifies a task, checks required capabilities and constraints, then recommends an eligible model with a rationale.
+
+It does **not** call model providers, launch subagents or guarantee that a host can switch models automatically. If the host cannot perform the recommended action, the result is guidance for the owner, not a claim of dispatch.
+
+## Presets
+
+Presets are starting bundles, not mandatory architectures. Review the actual plan before applying one.
+
+| Preset | Intended fit |
 |---|---|
-| Make an agent understand how your project works | A project-context structure and compact global instructions that point to your actual architecture and decisions |
-| Add AI agents to a project that already exists | A read-only assessment, capability map and approval-based additive integration plan |
-| Split a large task between multiple agents | A delegation method with bounded assignments, file ownership, checkpoints, recovery and lead accountability |
-| Choose a suitable model for each delegated task | A task classifier and a model roster that you control |
-| See what is actually finished | Evidence-backed progress reporting that distinguishes implemented, tested, reviewed and still-unverified work |
-| End a chat without losing useful discoveries | Session learning that updates the correct project context files instead of dumping a transcript |
-| Keep project instructions from becoming contradictory | Source-of-truth and documentation governance rules |
-| Review visual or graphics-heavy work | Visual regression, screenshot comparison, rendering probes and performance QA methods |
-| Make agent execution safer | Permission boundaries, threat modelling, secret handling and verification gates |
+| `minimal` | Compact baseline for essential operating practices |
+| `balanced` | Common engineering procedures, commands and verification |
+| `autonomous-engineer` | Delegation, recovery, planning and stronger quality gates |
+| `visual-engineer` | Engineering baseline plus graphics, rendering and visual QA |
+| `research-engineer` | Research-oriented workflows and privacy-aware evidence |
+| `auto` | Autonomous-engineer baseline plus visual resources when project signals indicate graphics work |
 
-Specific resources are available in the [resource registry](registry/resources.yaml). For a guided explanation, read the [User Guide](docs/USER_GUIDE.md).
+The scanner uses repository signals and heuristics. It is not a semantic guarantee that it understands the product. Review the capability assessment and resource list.
 
-## Where the practices came from
+## CLI reference
 
-The first extraction sources are two real software projects:
+All project commands accept `--project PATH`.
 
-### Dhan AI Trader
-A long-running, multi-agent trading software project. Its reusable engineering practices include:
-- specialist-agent responsibilities and bounded delegation;
-- model-aware worker selection, assignment contracts and recovery;
-- durable orchestration state, blockers and checkpoints;
-- project governance, architecture decisions and source-of-truth documentation;
-- security reviews, permission boundaries and independent verification;
-- regression testing and evidence-backed progress reporting.
-
-Trading strategy, broker rules, financial risk policy and other product-specific assumptions do not belong in Foundry's universal baseline.
-
-### Rave Engine
-A graphics-heavy, audio-reactive desktop wallpaper project built for the Lively Wallpaper platform. Its reusable practices include:
-- creative direction translated into engineering acceptance criteria;
-- specialist graphics, lighting and performance roles;
-- visual probes, pinned-state captures and before/after comparison;
-- testing that a visible setting actually reaches its runtime consumer;
-- performance and soak testing with honest hardware/environment caveats;
-- separating implementation, automated verification and actual visual inspection.
-
-WebGL shaders, rave choreography, Lively-specific metadata, Windows utilities and hardware-specific thresholds remain project-specific.
-
-The point is not to copy either codebase. It is to extract the engineering practices that can help other projects, then adapt them to each project's real needs.
-
-[Source inventory](docs/audit/REUSABLE_RESOURCE_INVENTORY.md) · [Extraction decisions](docs/audit/EXTRACTION_DECISIONS.md) · [Extraction register](docs/EXTRACTION_REGISTER.md)
-
-## Designed to work with different coding agents
-
-The reusable method is kept separate from the tool-specific format. Different hosts expose different support for:
-- root instruction files;
-- skills and reference files;
-- native commands or prompt shortcuts;
-- subagents and per-agent model selection;
-- persistent state and session control;
-- shell, browser and filesystem permissions.
-
-An integration must state which tool and version it supports, what it maps, what it cannot map, and how it was tested. A tool is not supported merely because it appears in a list of intended integrations.
-
-## Project status
-
-Agent Foundry is an active v0.4.0 development project. The project-aware CLI, installer lifecycle, resource generators and cross-platform automated test suite are implemented on this branch. The resource library is still being validated, and supported-host runtime acceptance testing remains a release gate. A stable v1.0 release has not been published.
-
-| Capability | Status |
+| Command | Purpose |
 |---|---|
-| Resource library and source provenance | In progress; registry entries are marked draft and require scenario validation |
-| Agent-first bootstrap and CLI initialization | Implemented; host runtime verification pending |
-| Existing-project integration | Structural scanner, capability plan, additive installer and conflict preservation implemented |
-| Session-learning and close command | Skill, command contract and host artifact generation implemented; chat UI closure depends on host APIs |
-| Task-aware model selection | Heuristic classifier and user-roster selector implemented; provider dispatch not implemented |
-| Native command/skill/profile file generation | Implemented for detected hosts; runtime validation pending |
-| Project scanner, presets and plan-first CLI installer | Implemented; Node 20/22 CI passing on Linux, Windows and macOS |
-| Hash-aware preview-first update and uninstall | Implemented and covered by cross-platform tests |
-| Automated registry, installer, model-router, host-artifact and documentation-link checks | Implemented; CI is configured for Node 20/22 on Ubuntu, Windows and macOS |
-| Stable tagged release | Not yet available |
+| `init` | Inspect and create a plan; use `--apply` to install |
+| `inspect` | Print project signals, detected hosts and capability assessment |
+| `list` | List resources in the selected registry |
+| `validate` | Validate an installed Foundry project |
+| `update` | Preview updates; use `--apply` after reviewing |
+| `uninstall` | Preview removal; use `--apply` and confirm |
+| `route --task "…"` | Recommend a model from the project's roster |
+| `settings` | Show configuration file locations |
+| `version` | Print CLI version |
+| `help` | Show usage |
 
-Do not treat a draft resource or documented design as a production-validated feature.
+Common options: `--preset NAME`, `--resources id,id`, `--hosts host,host`, `--repository OWNER/NAME`, `--ref REF`, `--apply`, `--yes`, `--skip-conflicts`. Check the installed CLI's `help` output for the exact supported combination.
+
+## Installation layout
+
+The exact files depend on selected resources and detected hosts. A typical project includes:
+
+```text
+your-project/
+├── AGENTS.md                         # Created or extended additively
+├── CLAUDE.md                         # Only when Claude Code is detected
+└── .agent-foundry/
+    ├── manifest.json                 # Source revision and managed hashes
+    ├── instructions.md               # Compact project entrypoint
+    ├── settings/
+    │   ├── foundry-settings.yaml     # Project-owned policies
+    │   └── model-roster.yaml         # Models selected by the owner
+    ├── resources/                    # Selected canonical resources
+    ├── overrides/                    # Project-specific customisations
+    └── README.md                     # Installation and maintenance notes
+```
+
+Foundry's source repository layout differs from the installed project layout. See [Engine Architecture](architecture/ENGINE_ARCHITECTURE.md).
+
+## Safety and ownership
+
+- Plan before write. `init` is read-only unless `--apply` is supplied.
+- Existing files are not silently overwritten.
+- Managed files are tracked in a project-local manifest with hashes.
+- Updates compare local content before proposing changes.
+- Uninstall removes only unchanged Foundry-owned content and preserves owner modifications.
+- Paths are checked for traversal and symlink hazards.
+- Secrets do not belong in model roster files or generated documentation.
+
+These protections reduce accidental damage; they do not make Foundry a security sandbox. Review filesystem permissions, host tool permissions and autonomous execution policy separately. Read the [security policy](SECURITY.md).
+
+## Host compatibility: generation is not acceptance
+
+| Evidence level | What it proves |
+|---|---|
+| Format generated | Adapter emitted a file in the expected shape |
+| Structure validated | Required metadata and paths pass automated checks |
+| Discovery tested | A named host version actually discovers the file |
+| Invocation tested | The host can invoke the command or skill |
+| Behaviour accepted | A real task completed with expected behaviour and documented limits |
+
+Do not describe a host as fully supported until discovery and invocation have been tested against a stated host version. Unit tests for generated text do not prove runtime compatibility.
+
+## Project maturity
+
+v0.5 is a development milestone, not a stable production-certified agent runtime.
+
+| Area | Current position |
+|---|---|
+| Node.js CLI and resource registry | Implemented; automated validation exists |
+| Plan-first installer and managed lifecycle | Implemented; edge cases remain a release gate |
+| Host artifact generation | Implemented; native runtime acceptance remains incomplete |
+| Model classification and recommendation | Implemented; no provider dispatch |
+| Resource library | Expanding; resources remain draft until scenario-validated |
+| Cross-platform CI | Configured; release candidates must pass the actual matrix |
+| Stable npm release | Not published by this development branch |
+
+A capability moves from draft to validated only when acceptance evidence is recorded. Documentation is not implementation, generated artifacts are not host acceptance, and passing unit tests are not production readiness.
 
 ## Contributing
 
-If Agent Foundry saves you from rebuilding the same agent workflow in every repository, consider [starring the project](https://github.com/LemonizDev/Agent-Foundry) or sharing it with another developer. Stars are useful visibility, but issues, tested adapters and concrete improvements are even more useful.
+1. Read [CONTRIBUTING.md](CONTRIBUTING.md) and the [resource authoring standard](standards/RESOURCE_AUTHORING_STANDARD.md).
+2. Keep changes scoped and preserve unrelated work.
+3. Run `npm ci`, `npm test` and `npm run validate:repo`.
+4. Explain the behaviour changed and provide evidence for each claim.
+5. Update the changelog and relevant docs when user-facing behaviour changes.
 
-Useful contributions include:
-- reusable skills with clear prerequisites and completion criteria;
-- commands that have a clear user-facing purpose;
-- workflows with explicit gates, ownership and recovery paths;
-- tested coding-agent adapters;
-- scenario tests and validation evidence;
-- improvements to the onboarding guide.
+## Documentation map
 
-See [resource authoring standards](docs/standards/RESOURCE_AUTHORING_STANDARD.md), the [documentation index](docs/README.md), the [Code of Conduct](CODE_OF_CONDUCT.md) and [Support](SUPPORT.md).
-
-## Versioning and trust
-
-The project declares version `0.4.0` and uses an MIT license. The release workflow is configured to verify version tags, run tests, build the package and attest build provenance. No stable tagged release has been published yet. Installation manifests record the source revision and managed-file hashes; updates check local modifications before applying changes.
-
-See [Distribution and Versioning](docs/architecture/DISTRIBUTION_AND_VERSIONING.md), [LICENSE](LICENSE) and [SECURITY.md](SECURITY.md).
+- [User Guide](docs/USER_GUIDE.md): concepts, setup, presets and lifecycle.
+- [Command Catalog](docs/COMMAND_CATALOG.md): command inputs, permissions and outputs.
+- [Engine Architecture](docs/architecture/ENGINE_ARCHITECTURE.md): implementation boundaries.
+- [Existing Project Integration](docs/architecture/EXISTING_PROJECT_INTEGRATION.md): additive migration design.
+- [Model Delegation](docs/architecture/MODEL_DELEGATION.md): task classification and roster logic.
+- [Distribution and Versioning](docs/architecture/DISTRIBUTION_AND_VERSIONING.md): package and release model.
+- [Release Readiness](docs/RELEASE_CHECKLIST.md): evidence required before tagging.
+- [Resource Registry](registry/resources.yaml): machine-readable resource catalog.
+- [Documentation Index](docs/README.md): complete navigation.
+- [Changelog](CHANGELOG.md): repository history.
 
 ---
 
 <div align="center">
 
-**Agent Foundry**  
+**Agent Foundry**
 *Make your agent better at working on your project, not just better at generating code.*
 
 </div>

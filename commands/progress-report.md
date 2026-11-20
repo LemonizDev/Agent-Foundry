@@ -2,7 +2,7 @@
 id: progress-report
 name: Progress Report
 type: command
-version: 0.1.0
+version: 0.2.0
 portability: adaptable
 status: draft
 dependencies:
@@ -13,32 +13,31 @@ dependencies:
 # Progress Report
 
 ## Invocation
-
 `/progress-report [project|milestone|workstream]`
 
-This is the canonical command contract. A host adapter may expose it as a slash command, prompt shortcut, workflow action, or named skill invocation. The existence of this file does not mean every coding agent supports slash commands.
+This is a portable contract. A host may expose it as a slash command, prompt shortcut, workflow action or named skill. This file alone does not prove native command support.
 
-## Arguments
-
-- `scope` (optional): project, milestone, or workstream. Defaults to the whole project.
-
-## Behaviour
-
-1. Resolve the project's canonical vision, roadmap, and current-state source.
-2. Inspect available evidence for the requested scope.
-3. Apply `skills/progress-reporting/SKILL.md`.
-4. Render using `templates/progress-report/PROGRESS_REPORT.md`.
-5. Clearly label historical figures and unverified claims.
-6. End with one next step.
+## Inputs
+Optional scope (project, milestone or workstream) and optional baseline report/plan.
 
 ## Permissions
+Read-only by default. Do not edit project files unless the owner separately asks to save the report or update canonical status.
 
-Read-only by default. Do not modify project files unless the owner separately requests that the report be saved or current project status be updated.
+## Behaviour
+1. Resolve canonical vision, roadmap and current-state source.
+2. Identify measurable acceptance criteria for the scope.
+3. Inspect implementation, test, review and release evidence.
+4. Apply `skills/progress-reporting/SKILL.md`.
+5. Use the canonical report template when present.
+6. Distinguish completed, in progress, blocked, deferred and unverified work.
+7. Explain scope changes and variance from baseline.
+8. End with one next action.
 
-## Output contract
+## Evidence rules
+A task is not complete because work started or files changed. Tests count only when command, environment and result are known. Do not infer percentages without a defensible denominator. Historical metrics retain date and source.
 
-Return a concise, owner-readable report with evidence, caveats, progress method, and next action.
+## Output
+Status summary, completed outcomes with evidence, in-progress work, blockers, risks, scope variance, confidence and next action.
 
 ## Error behaviour
-
-If the roadmap or evidence is missing, state what is unavailable and produce only the supported portion. Do not fabricate a percentage or infer completion from activity volume.
+If roadmap or evidence is missing, report the gap and produce only the supported portion. Never fabricate a completion percentage.

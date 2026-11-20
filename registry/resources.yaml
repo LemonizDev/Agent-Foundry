@@ -88,7 +88,7 @@ resources:
     description: "Invokes evidence-backed progress reporting for a project, milestone or workstream."
     type: command
     path: commands/progress-report.md
-    version: 0.1.0
+    version: 0.2.0
     status: draft
     portability: adaptable
   - id: progress-report-template
@@ -251,14 +251,14 @@ resources:
     aliases: [close, "close session", "close chat"]
     type: command
     path: commands/close-session.md
-    version: 0.1.0
+    version: 0.2.0
     status: draft
     portability: adaptable
   - id: foundry-settings
     description: "Inspects and edits project-local Agent Foundry configuration."
     type: command
     path: commands/settings.md
-    version: 0.1.0
+    version: 0.2.0
     status: draft
     portability: adaptable
   - id: edit-model-roster
@@ -399,7 +399,7 @@ resources:
     path: commands/audit.md
     aliases: [audit, "repo audit"]
     dependencies: [repository-audit]
-    version: 0.1.0
+    version: 0.2.0
     status: draft
     portability: adaptable
   - id: implement
@@ -408,7 +408,7 @@ resources:
     path: commands/implement.md
     aliases: [implement]
     dependencies: [implementation-planning, atomic-implementation, testing-and-verification]
-    version: 0.1.0
+    version: 0.2.0
     status: draft
     portability: adaptable
   - id: debug
@@ -417,7 +417,7 @@ resources:
     path: commands/debug.md
     aliases: [debug]
     dependencies: [debugging, testing-and-verification]
-    version: 0.1.0
+    version: 0.2.0
     status: draft
     portability: adaptable
   - id: review
@@ -426,7 +426,7 @@ resources:
     path: commands/review.md
     aliases: [review, "code review"]
     dependencies: [code-review, testing-and-verification]
-    version: 0.1.0
+    version: 0.2.0
     status: draft
     portability: adaptable
   - id: verify
@@ -435,7 +435,7 @@ resources:
     path: commands/verify.md
     aliases: [verify]
     dependencies: [testing-and-verification]
-    version: 0.1.0
+    version: 0.2.0
     status: draft
     portability: adaptable
   - id: delegate
@@ -444,7 +444,7 @@ resources:
     path: commands/delegate.md
     aliases: [delegate]
     dependencies: [multi-agent-delegation, model-delegation-architecture]
-    version: 0.1.0
+    version: 0.2.0
     status: draft
     portability: adaptable
   - id: next-task
@@ -453,7 +453,7 @@ resources:
     path: commands/next-task.md
     aliases: [next-task, next]
     dependencies: [project-state-management, plan-reconciliation, implementation-planning]
-    version: 0.1.0
+    version: 0.2.0
     status: draft
     portability: adaptable
   - id: project-health
@@ -462,7 +462,7 @@ resources:
     path: commands/project-health.md
     aliases: [project-health, health]
     dependencies: [repository-audit, progress-reporting, testing-and-verification, documentation-maintenance]
-    version: 0.1.0
+    version: 0.2.0
     status: draft
     portability: adaptable
   - id: resume
@@ -471,6 +471,6 @@ resources:
     path: commands/resume.md
     aliases: [resume, resume-work]
     dependencies: [session-recovery, project-state-management, plan-reconciliation]
-    version: 0.1.0
+    version: 0.2.0
     status: draft
     portability: adaptable

@@ -2,7 +2,7 @@
 id: implement
 name: Implement
 type: command
-version: 0.1.0
+version: 0.2.0
 portability: adaptable
 status: draft
 aliases: [implement]
@@ -12,18 +12,35 @@ dependencies: [implementation-planning, atomic-implementation, testing-and-verif
 # Implement
 
 ## Invocation
+`/implement [feature, bug or approved plan]`
 
-/implement [feature, bug or approved plan]
+## Purpose
+Deliver a bounded change that satisfies agreed acceptance criteria while preserving existing behaviour and unrelated work.
 
-## Behaviour
+## Inputs
+Requested outcome, scope, non-goals, constraints, acceptance criteria and compatibility targets.
 
-1. Read project instructions and current state.
-2. Confirm scope, non-goals and acceptance criteria.
-3. Use the implementation-planning skill if the work is not already planned.
-4. Inspect relevant code and working-tree changes.
-5. Implement the smallest complete change in reviewable steps.
-6. Run relevant verification after each meaningful step.
-7. Update canonical documentation and progress records.
-8. Report evidence, limitations and the next action.
+## Preconditions
+Read project instructions and canonical state; inspect relevant source, tests and working tree; resolve material ambiguity. High-impact or ambiguous changes require an approved plan.
 
-Do not begin a high-impact or ambiguous change without resolving material owner decisions.
+## Execution
+1. Translate the request into observable acceptance criteria.
+2. Identify the smallest complete implementation slice.
+3. State likely files/components and preserve unrelated changes.
+4. Implement incrementally; avoid broad rewrites without demonstrated need.
+5. Add tests for changed behaviour and meaningful edge cases.
+6. Run targeted checks after each meaningful step.
+7. Update canonical docs and changelog when interfaces or behaviour change.
+8. Review the final diff for regressions, scope creep and sensitive data.
+
+## Safety
+Do not overwrite user changes, introduce dependencies without rationale, or make destructive/external/production changes without approval. Do not call work complete when required checks are blocked.
+
+## Verification
+Run targeted tests, then required repository checks. Record exact commands, exit status and environment. Separate implemented, tested, reviewed and released.
+
+## Output
+Behaviour delivered; design decisions and files changed; test evidence; limitations/deferred work; remaining risks and next action.
+
+## Stop conditions
+Pause when criteria conflict, a destructive action lacks approval, a critical dependency is unavailable or a material product decision emerges.

@@ -2,7 +2,7 @@
 id: foundry-settings
 name: Agent Foundry Settings
 type: command
-version: 0.1.0
+version: 0.2.0
 portability: adaptable
 status: draft
 aliases:
@@ -14,26 +14,29 @@ dependencies:
 # Agent Foundry Settings
 
 ## Invocation
-
 `/settings`
 
 ## Purpose
+Explain and safely manage project-local Foundry configuration. Configuration belongs to the consuming project and must remain understandable to its owner.
 
-Show and edit the project-local Agent Foundry configuration without requiring the user to navigate configuration files manually.
+## Sources
+- `.agent-foundry/manifest.json` — installation source, managed resources and hashes.
+- `.agent-foundry/settings/foundry-settings.yaml` — project policy and preferences.
+- `.agent-foundry/settings/model-roster.yaml` — owner-selected model inventory.
+
+Read files that actually exist; do not silently substitute a similarly named file.
 
 ## Behaviour
-
-1. Read `.agent-foundry/manifest.yaml` and available settings files.
-2. Show configured profile, installed resources, host integration, model roster location, autonomy boundaries and update source.
-3. Distinguish configured values from defaults, inferred values and unsupported settings.
-4. Ask one focused clarification when an edit is ambiguous.
-5. Preview changes and their effects.
-6. Apply the approved edit and validate the resulting configuration.
+1. Summarise installed version, source revision, selected resources and detected adapters.
+2. Show autonomy, approval, delegation and model-selection policies.
+3. Distinguish explicit values from defaults, inferred values and unsupported features.
+4. For edits, identify exact key, current value and proposed value.
+5. Explain effects and compatibility implications.
+6. Obtain approval for permission, autonomy, provider or external-action changes.
+7. Apply the approved edit and validate the result.
 
 ## Safety
-
-Never display secrets or API keys. Never invent a provider, model ID, capability score or host feature. Do not change permission/autonomy settings silently.
+Never display secrets or tokens. Never invent provider names, model IDs, capability scores or host support. Do not silently change autonomy settings. Preserve unknown keys and comments where possible.
 
 ## Output
-
-A concise settings summary, configuration file locations, and any changes made.
+Configuration summary, source paths, missing/unsupported settings, proposed/applied changes and validation results.

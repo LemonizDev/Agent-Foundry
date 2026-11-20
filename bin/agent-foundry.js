@@ -9,7 +9,7 @@ import { scanProject, classifyCapabilities } from "../src/project-scanner.js";
 import { buildPlan, applyPlan, validateInstallation, updateInstallation, uninstall } from "../src/installer.js";
 import { classifyTask, selectModel, validateModelRoster } from "../src/model-router.js";
 
-const VERSION = "0.4.0";
+const VERSION = "0.5.0-dev.1";
 const args = process.argv.slice(2);
 const command = args[0] ?? "help";
 const option = (name, fallback) => { const i = args.indexOf(name); return i >= 0 ? args[i + 1] : fallback; };
@@ -20,7 +20,7 @@ const ref = option("--ref", "main");
 const hostOverrides = (option("--hosts", "") || "").split(",").map(x => x.trim()).filter(Boolean);
 
 function help() {
-  console.log("Agent Foundry v" + VERSION + "\nA project-aware engineering environment for AI coding agents.\n\nUsage:\n  agent-foundry init [--project PATH] [--preset auto|minimal|balanced|autonomous-engineer|visual-engineer|research-engineer] [--resources id,id] [--hosts host,host] [--apply] [--skip-conflicts]\n  agent-foundry inspect [--project PATH]\n  agent-foundry validate [--project PATH]\n  agent-foundry update [--project PATH] [--ref REF] [--apply]\n  agent-foundry uninstall [--project PATH] [--apply]\n  agent-foundry list\n  agent-foundry route --task TASK_DESCRIPTION\n  agent-foundry settings\n  agent-foundry version\n\ninit is plan-only by default. Review the plan, then repeat with --apply.\nExisting files are never silently overwritten.");
+  console.log("Agent Foundry v" + VERSION + "\nA project-aware engineering environment for AI coding agents.\n\nUsage:\n  agent-foundry init [--project PATH] [--preset NAME] [--resources id,id] [--hosts host,host] [--apply] [--yes] [--skip-conflicts]\n  agent-foundry inspect [--project PATH] [--hosts host,host]\n  agent-foundry list [--repository OWNER/NAME] [--ref REF]\n  agent-foundry validate [--project PATH]\n  agent-foundry update [--project PATH] [--repository OWNER/NAME] [--ref REF] [--apply] [--yes]\n  agent-foundry uninstall [--project PATH] [--apply] [--yes]\n  agent-foundry route --task TASK_DESCRIPTION\n  agent-foundry models explain --task TASK_DESCRIPTION\n  agent-foundry settings [--project PATH]\n  agent-foundry version\n  agent-foundry help\n\nSafety:\n  init, update and uninstall are preview-first. Writes require --apply and explicit confirmation.\n  --yes skips the interactive prompt; use it only when approval was obtained elsewhere.\n  Existing and locally modified files are preserved rather than silently overwritten.\n\nUse --project PATH to target a project other than the current directory.");
 }
 
 async function ask(question) {
@@ -69,7 +69,7 @@ try {
     const task = option("--task", "");
     if (!task) throw new Error("Provide --task with a description of the work to classify.");
     const rosterPath = path.join(root, ".agent-foundry/settings/model-roster.yaml");
-    const roster = yaml.load(await fs.readFile(rosterPath, "utf8"));
+    let rosterText;\n    try { rosterText = await fs.readFile(rosterPath, "utf8"); }\n    catch (error) {\n      if (error.code === "ENOENT") throw new Error("No model roster found at " + rosterPath + ". Initialise Agent Foundry first or create the project-owned roster from templates/model-roster.yaml.");\n      throw error;\n    }\n    const roster = yaml.load(rosterText);
     const settingsPath = path.join(root, ".agent-foundry/settings/foundry-settings.yaml");
     const settings = yaml.load(await fs.readFile(settingsPath, "utf8")) ?? {};
     const classification = classifyTask(task);

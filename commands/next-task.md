@@ -2,7 +2,7 @@
 id: next-task
 name: Recommend Next Task
 type: command
-version: 0.1.0
+version: 0.2.0
 portability: adaptable
 status: draft
 aliases: [next-task, next]
@@ -12,9 +12,22 @@ dependencies: [project-state-management, plan-reconciliation, implementation-pla
 # Recommend Next Task
 
 ## Invocation
+`/next-task [milestone or workstream]`
 
-/next-task [milestone or workstream]
+## Purpose
+Recommend the single next action that most improves delivery confidence, reduces material risk or unblocks dependent work.
 
-## Behaviour
+## Execution
+1. Read canonical roadmap, current state and active plans.
+2. Inspect repository evidence for incomplete work.
+3. Reconcile claimed progress against implementation, tests and review state.
+4. Identify dependencies, blockers, owner decisions and external constraints.
+5. Compare candidates by impact, urgency, risk reduction, dependency leverage and effort.
+6. Select one recommendation and explain why alternatives rank lower.
+7. Define scope, owner, acceptance criteria and verification.
 
-Reconcile the current plan with source and verification evidence. Identify dependency blockers, unfinished acceptance criteria and highest-value risk-reducing action. Recommend one next task with rationale, exact scope, acceptance criteria and verification. Do not choose a task solely because it is easy or makes the progress bar move.
+## Safety
+Read-only. Do not create tasks, edit plans or start implementation unless separately requested. Do not optimise for easy visible activity or arbitrary progress percentages.
+
+## Output
+One recommended task, rationale, prerequisites, exact scope, acceptance criteria, verification plan and owner decision if needed.
