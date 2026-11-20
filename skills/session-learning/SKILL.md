@@ -18,7 +18,7 @@ Extract useful, durable project knowledge from a completed conversation and writ
 
 ## Trigger
 
-Run when the user invokes `/close`, `/close session`, `/close chat`, asks to wrap up, or explicitly requests session learning capture.
+Run when the user invokes `/close`, `/close session`, `/close chat`, asks to wrap up, or explicitly requests durable session-context capture. For reusable artefacts that should become a project resource, use the separate `/done` command and `skills/session-resource-curation/SKILL.md`.
 
 ## What qualifies as a learning
 
@@ -70,7 +70,7 @@ Do not capture:
 - Agent inference: label as hypothesis and do not promote to authoritative context.
 - Conflicting evidence: do not resolve by guessing; record the conflict and ask for owner direction.
 
-## Chat closure limitation
+## Distinction from /done\n\n`/close` preserves durable project context (requirements, decisions, progress, stable preferences and verified lessons). `/done` is stricter resource curation: it looks for a reusable command, skill, workflow, standard, profile, template or integration created in the conversation. `/done` must reject the operation when no resource meets the quality bar. Do not use session learning to turn every conversation into a new resource.\n\n## Chat closure limitation
 
 The skill prepares the project for a clean session end. It cannot close the chat UI unless the host provides a supported chat-control API. Never claim the conversation was closed by the agent when it was not.
 
