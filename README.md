@@ -242,6 +242,7 @@ Coordinate workers where the host supports them; otherwise use the same contract
 - [**Session Recovery**](skills/session-recovery/SKILL.md) · Reconciles interrupted work against repository state and resumes from verified checkpoints. · Skill
 - [**Campaign Status**](commands/campaign-status.md) · Reconciles multi-agent campaign status against assignments, diffs, checkpoints and verification evidence. · Command
 - [**Resume**](commands/resume.md) · Recovers interrupted work from durable checkpoints and verified repository state. · Command
+- [**Close Session**](commands/close-session.md) · Captures useful project learnings before a chat ends without a transcript dump.
 - [**Delegate**](commands/delegate.md) · Creates a bounded task assignment and recommends a suitable model from the project roster. · Command
 - [**Progress Report**](commands/progress-report.md) · Invokes evidence-backed progress reporting for a project, milestone or workstream. · Command
 
