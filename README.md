@@ -219,6 +219,23 @@ Foundry is designed for coding agents that can read project files and, when inst
 
 [Read host integration details](integrations/README.md) · [Read orchestration portability](docs/architecture/ORCHESTRATION_PORTABILITY.md)
 
+<details>
+<summary><strong>How to start in each app</strong></summary>
+
+The interaction is deliberately the same: open the target repository in the coding agent, paste the [Get started prompt](#get-started), review its plan and approve the files it proposes to change. The generated context pointers differ by host.
+
+- **Codex:** open the repository as the active workspace, then ask Codex to initialise Foundry. Review the project instructions and shared skills it proposes to add.
+- **Claude Code:** start Claude Code from the target project, then paste the setup prompt. Review the proposed CLAUDE.md pointer, skills and optional agent definitions.
+- **OpenCode:** open the project root in OpenCode and paste the prompt in the active session. Review AGENTS.md, skill and command mappings against your OpenCode configuration.
+- **Kilo:** open the target project in Kilo and ask it to initialise Foundry. Confirm which agent definitions, skills and command formats the installed Kilo version actually supports.
+- **Cline:** open the target repository as your VS Code workspace and use the Cline chat. Review any .clinerules pointer and supported skill resources before approval.
+- **Another CLI agent:** use its normal project/workspace mode. If it can read the repository but cannot write files, ask it for a plan and apply the approved changes through a host that has file access.
+
+Do not paste the same setup prompt into a chat that is not connected to the target project. The host needs to know which repository it is inspecting.
+
+</details>
+
+
 ## Feature library
 
 Every feature is expandable. Start with the title that matches the problem; you do not need to understand the internal resource taxonomy first.
