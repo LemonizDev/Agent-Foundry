@@ -8,7 +8,7 @@ status: draft
 dependencies:
   - skills/session-learning/SKILL.md
   - standards/documentation-governance
-  - standards/RESOURCE_AUTHORING_STANDARD.md
+  - docs/standards/RESOURCE_AUTHORING_STANDARD.md
 ---
 
 # Session Resource Curation
