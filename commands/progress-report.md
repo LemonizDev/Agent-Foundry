@@ -7,7 +7,7 @@ portability: adaptable
 status: draft
 dependencies:
   - skills/progress-reporting
-  - templates/progress-report/PROGRESS_REPORT.md
+  - templates/progress-report-template.md
 ---
 
 # Progress Report

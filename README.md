@@ -178,7 +178,7 @@ your-project/
     └── README.md                     # Installation and maintenance notes
 ```
 
-Foundry's source repository layout differs from the installed project layout. See [Engine Architecture](architecture/ENGINE_ARCHITECTURE.md).
+Foundry's source repository layout differs from the installed project layout. See [Engine Architecture](docs/architecture/ENGINE_ARCHITECTURE.md).
 
 ## Safety and ownership
 
@@ -222,7 +222,7 @@ A capability moves from draft to validated only when acceptance evidence is reco
 
 ## Contributing
 
-1. Read [CONTRIBUTING.md](CONTRIBUTING.md) and the [resource authoring standard](standards/RESOURCE_AUTHORING_STANDARD.md).
+1. Read [CONTRIBUTING.md](CONTRIBUTING.md) and the [resource authoring standard](docs/standards/RESOURCE_AUTHORING_STANDARD.md).
 2. Keep changes scoped and preserve unrelated work.
 3. Run `npm ci`, `npm test` and `npm run validate:repo`.
 4. Explain the behaviour changed and provide evidence for each claim.
