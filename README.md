@@ -52,7 +52,7 @@ This is plan-only by default. It inspects the project and prints proposed resour
 npx --yes --package github:LemonizDev/Agent-Foundry agent-foundry init --preset auto --apply
 ```
 
-The CLI asks for explicit confirmation. Use `--yes` only when the surrounding automation has already obtained approval.
+The CLI asks for explicit confirmation. Use `--yes` only when the surrounding automation has already obtained approval. By default, the CLI reads the registry and resources bundled with its own package, so installation does not require GitHub API access. Supplying `--ref` or `--repository` explicitly opts into a remote, commit-pinned source.
 
 ### 3. Validate
 

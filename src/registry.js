@@ -4,17 +4,17 @@ import { safeRelative } from "./utils.js";
 export const DEFAULT_REPOSITORY = "LemonizDev/Agent-Foundry";
 export const DEFAULT_REF = "main";
 
-export async function loadRegistry({ repository = DEFAULT_REPOSITORY, ref = DEFAULT_REF, fetchText = globalThis.fetch } = {}) {
+export async function loadRegistry({ repository = DEFAULT_REPOSITORY, ref = DEFAULT_REF, fetchText = globalThis.fetch, bundled = false } = {}) {
   const repositoryParts = repository.split("/");
   if (repositoryParts.length !== 2 || repositoryParts.some(part => !/^[A-Za-z0-9_.-]+$/.test(part))) throw new Error("Repository must be specified as owner/repository.");
   let commitSha = ref;
-  if (!/^[a-f0-9]{40}$/i.test(ref)) {
+  if (!bundled && !/^[a-f0-9]{40}$/i.test(ref)) {
     const commitResponse = await fetchText("https://api.github.com/repos/" + repository + "/commits/" + encodeURIComponent(ref));
     if (!commitResponse.ok) throw new Error("Could not resolve immutable Foundry source revision (" + commitResponse.status + ").");
     const commitData = await commitResponse.json();
     commitSha = commitData.sha;
   }
-  if (!commitSha || !/^[a-f0-9]{40}$/i.test(commitSha)) throw new Error("GitHub did not return a valid commit SHA for the selected Foundry ref.");
+  if (!bundled && (!commitSha || !/^[a-f0-9]{40}$/i.test(commitSha))) throw new Error("GitHub did not return a valid commit SHA for the selected Foundry ref.");
   // Fetch the registry only after resolving the ref, so the registry and all later resources come from the same immutable tree.
   const url = "https://raw.githubusercontent.com/" + repository + "/" + commitSha + "/registry/resources.yaml";
   const response = await fetchText(url);
@@ -28,7 +28,7 @@ export async function loadRegistry({ repository = DEFAULT_REPOSITORY, ref = DEFA
     resource.path = safeRelative(resource.path);
     if (!resource.type || !resource.version || !resource.description) throw new Error("Incomplete registry entry: " + resource.id + " (type, version and description are required).");
   }
-  return { ...document, repository, ref, commit_sha: commitSha, resolved_ref: commitSha };
+  return { ...document, repository, ref, commit_sha: bundled ? null : commitSha, resolved_ref: commitSha, foundry_version: bundled && ref.startsWith("bundled-") ? ref.slice("bundled-".length) : null };
 }
 
 export function resolveResources(registry, ids) {

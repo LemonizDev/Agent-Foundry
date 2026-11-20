@@ -96,10 +96,10 @@ async function fetchSource(repository, ref, resource, fetchText) {
   return response.text();
 }
 
-export async function buildPlan({ root = process.cwd(), registry, resources, preset = "auto", repository, ref } = {}) {
+export async function buildPlan({ root = process.cwd(), registry, resources, preset = "auto", repository, ref, hosts = [] } = {}) {
   const projectFiles = await walk(root);
   const existing = new Set(projectFiles);
-  const scan = await scanProject(root);
+  const scan = await scanProject(root, { hosts });
   const requestedResources = resources ?? resourcesForPreset(preset, scan);
   const selected = resolveResources(registry, requestedResources);
   const planned = await Promise.all(selected.map(async resource => {
@@ -226,7 +226,7 @@ export async function applyPlan(plan, { root = plan.project_root, registry, fetc
   const readme = "# Agent Foundry in this project\n\nRead instructions.md for the project entrypoint. manifest.json records installed resources and source revision. Settings are project-owned. Existing project instructions take precedence.\n";
   const manifest = {
     manifest_version: 1,
-    foundry_version: "0.4.0",
+    foundry_version: registry.foundry_version ?? "0.5.0-dev.1",
     preset: plan.preset,
     source: plan.foundry,
     detected_hosts: plan.detected_hosts,
@@ -358,6 +358,7 @@ export async function updateInstallation({ root = process.cwd(), registry, fetch
     manifest.source.requested_ref = registry.ref;
     manifest.source.ref = registry.resolved_ref ?? registry.commit_sha ?? registry.ref;
     manifest.source.commit_sha = registry.commit_sha ?? null;
+    manifest.foundry_version = registry.foundry_version ?? manifest.foundry_version;
     manifest.updated_at = new Date().toISOString();
     await atomicWrite(manifestPath, JSON.stringify(manifest, null, 2) + "\n");
   } catch (error) {
@@ -366,6 +367,17 @@ export async function updateInstallation({ root = process.cwd(), registry, fetch
     throw new Error("Update failed and modified files were rolled back: " + error.message);
   }
   return { updated: changed.length, planned: changed.map(x => ({ id: x.item.id, path: x.item.installed_path, version: x.resource.version })), conflicts: [], pending: [] };
+}
+
+// Remove only directories that became empty because Foundry removed its own files.
+async function pruneEmptyParents(base, relativePaths) {
+  for (const relative of relativePaths) {
+    let current = path.dirname(path.join(base, safeRelative(relative)));
+    while (current.startsWith(base + path.sep)) {
+      try { await fs.rmdir(current); } catch { break; }
+      current = path.dirname(current);
+    }
+  }
 }
 
 export async function uninstall(root = process.cwd(), { apply = false } = {}) {
@@ -436,6 +448,13 @@ export async function uninstall(root = process.cwd(), { apply = false } = {}) {
   for (const item of settingsActions) if (item.action === "REMOVE_TEMPLATE") { await assertNoSymlinkPath(base, item.path); await fs.rm(path.join(base, safeRelative(item.path)), { force: true }); }
   await assertNoSymlinkPath(base, FOUNDARY_DIR + "/manifest.json");
   await fs.rm(path.join(dir, "manifest.json"), { force: true });
+  const removedPaths = [
+    ...removed,
+    ...managedFileActions.filter(item => item.action === "REMOVE").map(item => item.path),
+    ...settingsActions.filter(item => item.action === "REMOVE_TEMPLATE").map(item => item.path),
+    FOUNDARY_DIR + "/manifest.json"
+  ];
+  await pruneEmptyParents(base, removedPaths);
   const leftovers = await walk(dir);
   return { ...preview, applied: true, remaining_owner_files: leftovers, note: "Locally modified resources, owner-edited settings and modified Foundry files were preserved; unchanged templates were removed." };
 }

@@ -154,3 +154,14 @@ test("installer fetches all resources before writing any project files", async (
   await assert.rejects(() => fs.access(path.join(root, "AGENTS.md")));
   await assert.rejects(() => fs.access(path.join(root, ".agent-foundry/manifest.json")));
 });
+
+\ntest("uninstall prunes only directories made empty by Foundry removal", async () => {
+  const root = await temp();
+  const resource = { id: "one", type: "skill", path: "skills/one.md", version: "1" };
+  const registry = { resources: [resource] };
+  const plan = await buildPlan({ root, registry, resources: ["one"], repository: "owner/repo", ref: "main" });
+  const fetchText = async url => ({ ok: true, text: async () => url.endsWith("model-roster.yaml") ? "models: []\n" : url.endsWith("foundry-settings.yaml") ? "version: 1\n" : "# source\n" });
+  await applyPlan(plan, { root, registry, fetchText });
+  await uninstall(root, { apply: true });
+  assert.deepEqual(await fs.readdir(root), []);
+});

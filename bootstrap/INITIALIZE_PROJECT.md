@@ -84,7 +84,7 @@ Create project-local settings only when relevant and approved. The model roster 
 Target layout:
 
     .agent-foundry/
-    ├── manifest.yaml
+    ├── manifest.json
     ├── instructions.md
     ├── README.md
     ├── resources/

@@ -5,6 +5,7 @@ import yaml from "js-yaml";
 import readline from "node:readline/promises";
 import { stdin, stdout } from "node:process";
 import { loadRegistry } from "../src/registry.js";
+import { bundledFetch } from "../src/source.js";
 import { scanProject, classifyCapabilities } from "../src/project-scanner.js";
 import { buildPlan, applyPlan, validateInstallation, updateInstallation, uninstall } from "../src/installer.js";
 import { classifyTask, selectModel, validateModelRoster } from "../src/model-router.js";
@@ -16,7 +17,9 @@ const option = (name, fallback) => { const i = args.indexOf(name); return i >= 0
 const has = name => args.includes(name);
 const root = path.resolve(option("--project", process.cwd()));
 const repository = option("--repository", "LemonizDev/Agent-Foundry");
-const ref = option("--ref", "main");
+const remote = has("--ref") || has("--repository");
+const ref = option("--ref", remote ? "main" : "bundled-" + VERSION);
+const fetchText = remote ? globalThis.fetch : bundledFetch;
 const hostOverrides = (option("--hosts", "") || "").split(",").map(x => x.trim()).filter(Boolean);
 
 function help() {
@@ -36,14 +39,14 @@ try {
     const result = { root: scan.root, fileCount: scan.fileCount, manifests: scan.manifests, hosts: scan.hosts, projectSignals: scan.projectSignals, capabilities: classifyCapabilities(scan) };
     console.log(JSON.stringify(result, null, 2));
   } else if (command === "list") {
-    const registry = await loadRegistry({ repository, ref });
+    const registry = await loadRegistry({ repository, ref, fetchText, bundled: !remote });
     for (const item of registry.resources) console.log(item.id.padEnd(32) + " " + item.type.padEnd(14) + " " + item.version + "  " + item.portability + "\n  " + item.description);
   } else if (command === "init") {
-    const registry = await loadRegistry({ repository, ref });
-    const scan = await scanProject(root);
+    const registry = await loadRegistry({ repository, ref, fetchText, bundled: !remote });
+    const scan = await scanProject(root, { hosts: hostOverrides });
     const selected = option("--resources", "").split(",").map(x => x.trim()).filter(Boolean);
     const preset = option("--preset", "auto");
-    const plan = await buildPlan({ root, registry, resources: selected.length ? selected : undefined, preset, repository, ref });
+    const plan = await buildPlan({ root, registry, resources: selected.length ? selected : undefined, preset, repository, ref, hosts: hostOverrides });
     console.log("PROJECT ASSESSMENT");
     console.log("Root: " + scan.root + "\nFiles inspected: " + scan.fileCount + "\nDetected hosts: " + (scan.hosts.join(", ") || "none") + "\nProject signals: " + (scan.projectSignals.join(", ") || "general") + "\nPreset: " + plan.preset);
     console.log("\nCAPABILITY MAP");
@@ -54,13 +57,13 @@ try {
     for (const item of plan.host_resources ?? []) console.log("- " + item.action.padEnd(14) + " " + item.id + " -> " + item.destination);
     console.log("- ENTRYPOINT      " + plan.project_entrypoint);
     console.log("- SETTINGS        project-local settings and owner-defined model roster");
-    console.log("\nNo files have been changed.");
+    if (!has("--apply")) console.log("\nNo files have been changed.");
     if (!has("--apply")) console.log("Review this plan. Run the same command with --apply to install.");
     else {
       const approval = has("--yes") ? "yes" : await ask("Apply this plan? Type 'yes' to continue: ");
       if (approval !== "yes") { console.log("Cancelled. No files changed."); process.exitCode = 1; }
       else {
-        const result = await applyPlan(plan, { root, registry, skipConflicts: has("--skip-conflicts") });
+        const result = await applyPlan(plan, { root, registry, fetchText, skipConflicts: has("--skip-conflicts") });
         console.log("Installed " + result.installed_count + " source resources and " + result.host_artifact_count + " host artifacts; skipped " + result.skipped_conflicts + " pre-existing paths. Entrypoint " + (result.entrypoint_created ? "created" : "updated additively") + ".");
         console.log("Run agent-foundry validate and review .agent-foundry/README.md.");
       }
@@ -71,7 +74,7 @@ try {
     const rosterPath = path.join(root, ".agent-foundry/settings/model-roster.yaml");
     let rosterText;\n    try { rosterText = await fs.readFile(rosterPath, "utf8"); }\n    catch (error) {\n      if (error.code === "ENOENT") throw new Error("No model roster found at " + rosterPath + ". Initialise Agent Foundry first or create the project-owned roster from templates/model-roster.yaml.");\n      throw error;\n    }\n    const roster = yaml.load(rosterText);
     const settingsPath = path.join(root, ".agent-foundry/settings/foundry-settings.yaml");
-    const settings = yaml.load(await fs.readFile(settingsPath, "utf8")) ?? {};
+    let settings = {};\n    try { settings = yaml.load(await fs.readFile(settingsPath, "utf8")) ?? {}; }\n    catch (error) { if (error.code !== "ENOENT") throw error; }
     const classification = classifyTask(task);
     const rosterIssues = validateModelRoster(roster);
     if (rosterIssues.length) throw new Error("Model roster is invalid: " + JSON.stringify(rosterIssues));
@@ -87,8 +90,8 @@ try {
     console.log(JSON.stringify({ valid: result.valid, resource_count: result.resource_count, issues: result.issues, warnings: result.warnings }, null, 2));
     if (!result.valid) process.exitCode = 1;
   } else if (command === "update") {
-    const registry = await loadRegistry({ repository, ref });
-    const preview = await updateInstallation({ root, registry, apply: false });
+    const registry = await loadRegistry({ repository, ref, fetchText, bundled: !remote });
+    const preview = await updateInstallation({ root, registry, fetchText, apply: false });
     console.log("UPDATE PREVIEW");
     console.log(JSON.stringify(preview, null, 2));
     if (preview.conflicts.length) {
@@ -102,7 +105,7 @@ try {
       const approval = has("--yes") ? "yes" : await ask("Apply these updates? Type 'yes' to continue: ");
       if (approval !== "yes") { console.log("Cancelled. No files changed."); process.exitCode = 1; }
       else {
-        const result = await updateInstallation({ root, registry, apply: true });
+        const result = await updateInstallation({ root, registry, fetchText, apply: true });
         console.log("Updated " + result.updated + " Foundry-owned files.");
       }
     }

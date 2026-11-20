@@ -256,6 +256,7 @@ resources:
     portability: adaptable
   - id: foundry-settings
     description: "Inspects and edits project-local Agent Foundry configuration."
+    aliases: [settings]
     type: command
     path: commands/settings.md
     version: 0.2.0
