@@ -78,10 +78,10 @@ resources:
     status: draft
     portability: adaptable
   - id: multi-agent-campaign
-    description: "Coordinates a multi-stage, multi-agent engineering campaign with ownership, checkpoints and quality gates."
+    description: "Coordinates a durable multi-agent campaign with persistent assignments, checkpoints, recovery, independent review and integrated verification."
     type: workflow
     path: workflows/multi-agent-campaign.md
-    version: 0.1.0
+    version: 0.2.0
     status: draft
     portability: adaptable
   - id: progress-report
@@ -127,10 +127,10 @@ resources:
     status: draft
     portability: adaptable
   - id: lead-engineer
-    description: "Defines the accountable lead role for architecture, integration, delegation and delivery."
+    description: "Defines the accountable lead/orchestrator role for architecture, task decomposition, delegation, integration and delivery."
     type: profile
     path: profiles/lead-engineer.md
-    version: 0.1.0
+    version: 0.2.0
     status: draft
     portability: universal
   - id: independent-reviewer
@@ -495,6 +495,45 @@ resources:
     description: "Reusable composition guidance for Foundry management chat responses: overview, settings, previews, diagnostics and change summary."
     type: management
     path: foundry/RESPONSE_TEMPLATES.md
+    version: 0.1.0
+    status: draft
+    portability: universal
+  - id: contribution-discovery
+    description: "Scans accessible user-created instructions, skills, workflows, commands, settings and templates for safe, reusable contribution candidates."
+    type: skill
+    path: skills/contribution-discovery/SKILL.md
+    version: 0.1.0
+    status: draft
+    portability: universal
+  - id: contribute
+    description: "Invokes explicit, approval-gated discovery of reusable user-created agent resources for Agent Foundry."
+    type: command
+    path: commands/contribute.md
+    dependencies: [contribution-discovery]
+    aliases: [contribute, "I'd like to contribute"]
+    version: 0.1.0
+    status: draft
+    portability: adaptable
+  - id: campaign-state
+    description: "Defines a durable campaign record for workstreams, assignment states, owner decisions, blockers and verification evidence."
+    type: template
+    path: templates/campaign-state.md
+    version: 0.1.0
+    status: draft
+    portability: adaptable
+  - id: campaign-status
+    description: "Reconciles multi-agent campaign status against assignments, diffs, checkpoints and verification evidence."
+    type: command
+    path: commands/campaign-status.md
+    dependencies: [multi-agent-campaign, campaign-state]
+    aliases: [campaign-status, "campaign status"]
+    version: 0.1.0
+    status: draft
+    portability: adaptable
+  - id: orchestration-portability
+    description: "Maps portable orchestration contracts to host-specific capabilities and limitations across common coding agents."
+    type: documentation
+    path: docs/architecture/ORCHESTRATION_PORTABILITY.md
     version: 0.1.0
     status: draft
     portability: universal
