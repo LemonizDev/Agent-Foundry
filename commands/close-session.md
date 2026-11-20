@@ -38,5 +38,9 @@ Requirements -> product context; architecture decisions -> architecture/decision
 ## Safety
 Do not persist emotional content, filler, raw transcripts or speculation as facts. Do not silently overwrite conflicting decisions. Do not create `HANDOFF.md` unless the project uses it or the owner asks. Do not claim to close the chat UI unless the host exposes tested session control.
 
-## Distinction from /done\n\nUse `/close` for context continuity: requirements, decisions, stable preferences, verified lessons and current state. Use `/done` when the user believes the chat contains a reusable project artefact that should be classified and stored as a command, skill, workflow, standard, profile, template or other resource. `/done` applies a strict acceptance threshold and rejects the operation when nothing worthwhile qualifies.\n\n## Output
+## Distinction from /done
+
+Use `/close` for context continuity: requirements, decisions, stable preferences, verified lessons and current state. Use `/done` when the user believes the chat contains a reusable project artefact that should be classified and stored as a command, skill, workflow, standard, profile, template or other resource. `/done` applies a strict acceptance threshold and rejects the operation when nothing worthwhile qualifies.
+
+## Output
 Learnings captured, files changed, verification, items excluded, unresolved conflicts and whether the chat must be closed manually.
