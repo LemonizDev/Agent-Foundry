@@ -33,7 +33,8 @@ Commands should remain thin. Put reusable procedures in skills, orchestration in
 | `/resume` | Read-only reconciliation first | Recover work from actual state | [resume](../commands/resume.md) |
 | `/close` | Proposed context edits | Preserve durable project context | [close-session](../commands/close-session.md) |
 | `/done` | Additive resource curation | Classify and save worthwhile session artefacts, or reject empty sessions | [done](../commands/done.md) |
-| `/done` | Additive project-resource writes | Classify and persist reusable session artefacts; reject empty sessions | [done](../commands/done.md) |
+| `/campaign-status` | Read-only | Reconcile campaign state against evidence | [campaign-status](../commands/campaign-status.md) |
+| `contribute` | Read-only discovery, then selected drafts | Find reusable project resources; publication requires separate approval | [contribute](../commands/contribute.md) |
 | `/settings` | Approved configuration edits | Inspect and change Foundry settings | [settings](../commands/settings.md) |
 | `/teach-implementation` | Read-only | Explain a completed change and evidence | [teach-implementation](../commands/teach-implementation.md) |
 | `/models edit` | Proposed configuration edit | Maintain the owner-controlled roster | [edit-model-roster](../commands/edit-model-roster.md) |
