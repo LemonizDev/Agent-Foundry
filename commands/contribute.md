@@ -5,7 +5,7 @@ type: command
 version: 0.1.0
 portability: adaptable
 status: draft
-aliases: [contribute, "I'd like to contribute", "help me contribute"]
+aliases: [contribute, "I'd like to contribute"]
 dependencies:
   - contribution-discovery
 ---
