@@ -108,3 +108,22 @@ Structure:
 - What was preserved: unrelated files, owner edits, custom keys and comments.
 - Verification performed and its result; anything not verified labelled as such.
 - Current state in one line.
+
+
+## 10. Contribution discovery shortlist
+
+Use after an explicit contribution trigger and a bounded scan. The discovery skill defines what may be inspected and excluded.
+
+Start with:
+- Sources inspected and sources unavailable.
+- Number of candidate contributions.
+- Confirmation that no content was published or transmitted.
+
+Then show a numbered table:
+
+| # | Candidate | Type | Portability | Maturity / evidence | Why it may help | Recommendation |
+|---|---|---|---|---|---|---|
+
+Group duplicates with the existing Foundry resource they could extend. Exclude sensitive, private, project-state or license-unclear content without reproducing it. Do not reveal the contents of excluded material.
+
+Ask one candidate-specific question about the strongest opportunity. Accept concise selections such as "1", "1 and 3", "all recommended" or "none". Do not draft every candidate before the user chooses.
