@@ -251,7 +251,7 @@ resources:
     aliases: [close, "close session", "close chat"]
     type: command
     path: commands/close-session.md
-    version: 0.3.0
+    version: 0.4.0
     status: draft
     portability: adaptable
   - id: foundry-settings
