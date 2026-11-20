@@ -25,13 +25,14 @@ End the work session cleanly. Preserve durable project learnings and identify re
 ## Behaviour
 
 1. Apply [Durable Session Learning](../skills/session-learning/SKILL.md). This existing resource owns the unified end-of-session procedure.
-2. Inspect the current conversation for resource-quality artefacts, not every fact or discussion point.
-3. Reject the request when nothing meets the acceptance threshold. Do not create a session summary or empty placeholder.
-4. For each accepted artefact, classify it as a command, skill, workflow, standard, profile, template, integration, documentation item or context update.
-5. Check for an existing canonical resource and dependencies before creating anything.
-6. Improve the material so it stands alone outside the chat.
-7. Write it to the correct project location and update registry/navigation where appropriate, subject to the command's safety boundaries.
-8. Verify every changed file and report the result.
+2. Inspect the current conversation for durable project learnings and resource-quality artefacts, not every fact or discussion point.
+3. Preserve independently justified project learnings. Apply the resource acceptance threshold separately to reusable artefacts.
+4. If no reusable artefact qualifies, explicitly reject resource extraction and explain why. Do not create a session summary or empty placeholder.
+5. For each accepted artefact, classify it as a command, skill, workflow, standard, profile, template, integration, documentation item or context update.
+6. Check for an existing canonical resource and dependencies before creating anything; extend it where appropriate.
+7. Improve accepted material so it stands alone outside the chat.
+8. Write it to the correct project location and update registry/navigation where appropriate, subject to the command's safety boundaries.
+9. Verify every changed file and report the result.
 
 ## Acceptance threshold
 
