@@ -247,7 +247,7 @@ resources:
     status: draft
     portability: universal
   - id: close-session
-    description: "Preserves durable project context at session end without creating transcript dumps or new reusable resource types."
+    description: "Deprecated compatibility aliases for the unified Done session-ending command."
     aliases: [close, "close session", "close chat"]
     type: command
     path: commands/close-session.md
