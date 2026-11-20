@@ -50,6 +50,65 @@ Identify:
 
 Do not infer sensitive or business-critical requirements from filenames alone.
 
+## 4A. Choose an onboarding path
+
+Classify the repository using observed evidence, not a guess based on its size or a single filename. The three primary paths are:
+
+| Path | Signals | Installation behaviour |
+|---|---|---|
+| NEW / EMPTY | Little implementation, few conventions, no established project context | Identify the intended product, stack and risk profile. Propose a compact baseline and only the context files needed to make future work coherent. Do not generate a large documentation suite for an empty scaffold. |
+| ESTABLISHED / HEALTHY | Existing instructions, architecture, useful docs, tests, skills or workflows that broadly agree | Map existing capabilities. KEEP or LINK equivalent resources. Install only meaningful gaps and make additive changes. |
+| ESTABLISHED / CONTEXT NEEDS REPAIR | Large or mature codebase with stale, scattered, contradictory, duplicated or missing project context | Do not add a new layer of instructions immediately. First propose a read-only repository audit. Map canonical sources, contradictions, missing context and stale documents. Then propose a staged documentation/context repair. |
+
+These paths are starting points, not mutually exclusive diagnoses. Assess context dimensions separately; a project can have healthy engineering practices and weak documentation.
+
+### Context health assessment
+
+Before selecting resources, report evidence and confidence for:
+
+- Agent instruction quality, scope and precedence.
+- Product purpose, requirements and non-goals.
+- Architecture and critical runtime/data-flow coverage.
+- Source-of-truth clarity for decisions, plans, progress and operations.
+- Documentation freshness, navigation, duplication and contradictions.
+- Test strategy, acceptance criteria and verification commands.
+- Session continuity, recovery and durable decisions.
+- Existing skills, commands, workflows, specialist roles and automation.
+- Host capabilities relevant to loading and executing selected resources.
+
+Do not treat document count, repository size or Markdown volume as quality measures. Do not infer that a document is stale solely because its timestamp is old; compare claims with current code and project activity.
+
+### Context repair recommendations
+
+For a project with context problems, consider these existing Foundry resources where their scope fits:
+
+- `repository-audit` for a read-only evidence-based map of architecture, context sources, quality controls and risks.
+- `documentation-maintenance` for canonical-source selection, navigation, duplication cleanup and keeping docs aligned with verified implementation.
+- `context-management` for durable context boundaries and progressive disclosure.
+- `session-learning` and `close-session` for preserving useful decisions without transcript dumps.
+
+These are candidate resources, not an automatic bundle. The documentation-maintenance skill is a procedure, not a dedicated autonomous specialist agent. The host may assign it to a suitable agent/profile only if that capability exists.
+
+Never perform a broad documentation rewrite during installation. Separate diagnosis from repair, show a proposed file-by-file change plan, preserve historical decisions, and obtain approval for each material scope of work.
+
+## 4B. Make the first run project-specific
+
+A successful installation should include a small first-use demonstration, not merely a list of copied files.
+
+1. Revisit the project classification and context assessment.
+2. Select one installed resource that addresses a real, low-risk need revealed by inspection.
+3. Explain the evidence connecting that resource to the project.
+4. Run it on a bounded task that does not modify source code or sensitive state, or use a clearly labelled read-only demonstration if a safe task is unavailable.
+5. Show the output, verification status and one logical next action.
+6. Do not invent a project weakness just to make the demo look impressive. If no meaningful gap exists, demonstrate an existing strength or explain why no change is recommended.
+
+Examples:
+- New project: use the project-context or implementation-planning resource to draft a first bounded milestone from the actual README and manifests.
+- Healthy project: use an installed testing, review or debugging resource on a small existing change or a read-only sample.
+- Context-needs-repair project: run the repository-audit resource and show a short evidence-backed context map. Do not start rewriting documentation unless separately approved.
+
+The demonstration is not proof that every host integration works. Report which parts were actually executed and which remain unverified.
+
 ## 5. Select resources
 
 Use registry/resources.yaml as the catalog. For each candidate, inspect its full content, status, portability, dependencies and source notes.
