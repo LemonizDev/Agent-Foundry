@@ -34,6 +34,12 @@ Updates compare source revisions and local content hashes. The agent previews co
 
 See integrations/README.md. Documented file conventions are not proof of runtime discovery. Verify the exact host version and report unsupported behaviour honestly.
 
+## 6A. Multi-host onboarding
+
+During installation, identify the active coding-agent host and version when evidence is available, then ask which additional coding-agent apps the owner uses with the same repository. Allow multiple selections and free-text additions. Treat user-reported apps as unverified until checked.
+
+Plan one shared project-local Foundry resource set with host-specific pointers/adapters for selected hosts. Distinguish project-local configuration from global app settings. Do not modify global settings or multiple root instruction files without explicit approval. Report each host's integration and verification status separately. See skills/host-roster-onboarding/SKILL.md.
+
 ## 7. Contribution discovery
 
 If you have built useful instructions, skills, commands, workflows, profiles, settings or templates, say "I'd like to contribute" or simply "contribute" in the installed coding-agent conversation.
