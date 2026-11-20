@@ -1,129 +1,33 @@
 # Distribution and Versioning
 
-## Product goal
+## Distribution model
 
-Agent Foundry is a reusable, open-source library of AI-agent engineering resources. Its setup should be simple enough that a developer can initialise a new repository from their coding agent without downloading a ZIP or manually selecting dozens of files.
+Agent Foundry is distributed as a Git repository containing context files and a resource registry. It is not an executable package. There is no CLI, TUI, MCP server, daemon, API, dashboard or separate runtime.
 
-The distribution mechanism must remain transparent: users should know what was selected, what was installed, which version they received, and how to update or remove it.
+The user's existing coding agent reads the source repository, adapts selected resources to the current project and writes approved files using its native capabilities.
 
-## Two entry paths
+## First installation
 
-### 1. Agent-first initialization
+The user asks the coding agent to read BOOTSTRAP.md and bootstrap/INITIALIZE_PROJECT.md. The agent inspects the project, selects a minimal resource set, presents exact file changes and waits for approval.
 
-The user opens a coding agent in the target repository and asks it to initialise the project from the official Agent Foundry GitHub repository.
+This path requires repository/network access and project filesystem write access. If unavailable, the user must make the source available through the host's supported repository workflow. Do not claim universal remote fetching.
 
-The agent follows bootstrap/INITIALIZE_PROJECT.md, inspects the target project, selects relevant resources, presents a plan, and installs the approved selection.
+## Reproducible source identity
 
-This is the lowest-friction path and does not require the user to know the resource taxonomy. It depends on the coding agent having repository/network and filesystem access.
+A consuming project's .agent-foundry/manifest.json should record the canonical source repository, resolved release tag or immutable commit SHA, selected resource IDs and versions, installed paths and content hashes, ownership information, host adaptations and known limitations.
 
-### 2. CLI initialization
+A branch name is mutable and must not be represented as an immutable version. If a SHA cannot be resolved, record the source as unpinned or unknown.
 
-The CLI is the intended deterministic path:
+## Updating and removal
 
-    npx --yes --package github:LemonizDev/Agent-Foundry agent-foundry init
+The coding agent compares source revisions and content hashes, previews changes and conflicts, and preserves local modifications. Removal is based on verified manifest ownership, not directory names alone. The agent previews affected files, preserves user-owned content, obtains approval and verifies the result.
 
-The package is currently installable from GitHub; it has not been published to the npm registry. The package name in package.json is agent-foundry.
+## Repository maintenance
 
-The v0.5 CLI currently:
-- Detects project structure and existing agent-host signals without executing project code.
-- Offers project-aware presets and explicit resource IDs.
-- Uses the registry and resources bundled in the installed package by default, keeping the CLI and its resource set version-aligned without a second network dependency.
-- When `--ref` or `--repository` is explicitly supplied, resolves the remote ref to an immutable commit SHA and downloads resources from that exact revision.
-- Copies only selected resources and generates host-native skill, command and profile files for detected hosts.
-- Preserves existing instructions and local modifications using ownership hashes.
-- Generates a JSON manifest and concise host-specific entrypoints.
-- Validates installation, previews updates and uninstall, and requires explicit approval before mutation.
+Node.js and js-yaml are development-time tooling for repository validation and tests only. They are not required by projects that consume Foundry. CI validates registry integrity, Markdown links, YAML and JavaScript syntax, and regression guards prevent the removed CLI surface from returning.
 
-Host runtime discovery and command execution are not yet validated across all hosts.
+## Versioning policy
 
-The agent-first flow and CLI must use the same selection schema, manifest format, installation rules and resource source. They must not become competing installers.
+Use Git tags for reviewed repository snapshots. A stable release requires passing repository checks, documentation and registry consistency, host acceptance evidence for advertised capabilities, and a reviewed migration note for breaking changes.
 
-## Target installation contract
-
-```text
-project/
-├── AGENTS.md
-├── CLAUDE.md                         # Created or extended for Claude Code
-├── .clinerules/agent-foundry.md      # Added for Cline
-├── docs/                             # Existing project docs remain intact
-├── src/                              # Existing source remains intact
-└── .agent-foundry/
-    ├── manifest.json
-    ├── instructions.md
-    ├── README.md
-    ├── settings/
-    │   ├── foundry-settings.yaml
-    │   └── model-roster.yaml
-    └── resources/
-
-# Host-native resources, generated as applicable:
-.agents/skills/       # Shared Agent Skills location: Codex, OpenCode and Kilo
-.claude/skills/       # Claude Code
-.claude/agents/       # Claude Code specialist agents
-.opencode/commands/   # OpenCode slash commands
-.opencode/agents/     # OpenCode specialist agents
-.kilo/commands/       # Kilo Code commands
-.kilo/agents/         # Kilo Code specialist agents
-.cline/skills/        # Cline
-```
-
-The portable `.agents/skills` directory is created as the shared baseline. Additional host-specific files are generated only when their host is detected. The manifest records the exact installed file list, Foundry version and source identity. Bundled installs record a `bundled-<version>` ref with no Git commit SHA; remote installs record the resolved immutable commit SHA.
-
-## Selection model
-
-A project profile is a named bundle of relevant resources, not a hardcoded assumption that every project needs the same setup.
-
-Selection should consider:
-- Project type, language and framework.
-- Application/domain and risk profile.
-- Team size and development workflow.
-- Available coding-agent host and version.
-- Whether subagents, persistent state and tool-specific commands are supported.
-- Existing project instructions and equivalent practices.
-- Owner-selected preferences and constraints.
-
-Provide a conservative baseline plus optional packs. Do not install every specialist or every template by default.
-
-## Versioning strategy
-
-Use Git as the canonical history and distribution mechanism.
-
-- Maintain a human-readable CHANGELOG.md using Keep a Changelog conventions.
-- Use Semantic Versioning for stable Foundry releases: MAJOR.MINOR.PATCH.
-- Publish immutable Git tags such as v1.2.0.
-- Use GitHub Releases for release notes and source archives generated by GitHub.
-- Pin installations to a release tag and record the resolved commit SHA.
-- Use prerelease tags such as v0.3.0-rc.1 while validating.
-- Do not install from a moving branch for production use unless the user explicitly chooses a development channel.
-
-The CLI records the Foundry version and selected source identity in the installation manifest. Bundled installs use the exact resources shipped with that package. Remote installs resolve the requested ref and use the immutable SHA for all resource downloads. Stable installs should use a tagged release or explicit commit SHA. Initially, resource versions are tied to the Foundry release in which they are distributed. Keep an individual resource version only where independent compatibility or lifecycle decisions require it. Avoid inventing a package-management system prematurely.
-
-## Updates
-
-An update:
-1. Identifies added, changed, removed and deprecated resources.
-2. Compares installed content hashes to detect local edits.
-3. Presents a preview.
-4. Applies only approved changes.
-5. Preserves local overrides.
-6. Updates the manifest only after successful verification.
-
-## GitHub contribution model
-
-GitHub remains the public source of truth. Users can star the repository, fork it, open issues, submit pull requests, and follow tagged releases.
-
-Agent-first installation does not replace GitHub discovery or contribution. The bootstrap points to the public repository; users can still visit, star, fork, report issues and contribute. Stars are voluntary and cannot be guaranteed by the installation flow. Do not add manipulative prompts or make setup conditional on starring.
-
-## Release gates
-
-A public stable release should not be cut until:
-- License and contribution policy are present.
-- Registry schema and all resource metadata validate.
-- All registry paths and dependencies resolve.
-- Links and examples validate.
-- Resource scenario tests cover positive and failure cases.
-- Installer preserves existing user files and local modifications.
-- Update and uninstall are tested.
-- Supported host adapters have compatibility tests.
-- Security review covers installer input, path traversal, symlinks and untrusted project files.
-- README and release notes accurately describe supported capabilities.
+Do not publish a stable release or move a stable tag without explicit maintainer approval.
