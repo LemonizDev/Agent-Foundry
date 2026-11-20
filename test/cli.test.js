@@ -65,7 +65,7 @@ test("default auto preset installs from the bundled package", async () => {
   assert.ok([0, 2].includes(route.status), route.stderr);
 });
 
-\ntest("explicit host overrides are reflected in the installation plan", async () => {
+test("explicit host overrides are reflected in the installation plan", async () => {
   const dir = await temp();
   const plan = run(["init", "--project", dir, "--preset", "minimal", "--hosts", "codex"]);
   assert.equal(plan.status, 0, plan.stderr);

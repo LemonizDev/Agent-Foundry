@@ -155,7 +155,7 @@ test("installer fetches all resources before writing any project files", async (
   await assert.rejects(() => fs.access(path.join(root, ".agent-foundry/manifest.json")));
 });
 
-\ntest("uninstall prunes only directories made empty by Foundry removal", async () => {
+test("uninstall prunes only directories made empty by Foundry removal", async () => {
   const root = await temp();
   const resource = { id: "one", type: "skill", path: "skills/one.md", version: "1" };
   const registry = { resources: [resource] };
