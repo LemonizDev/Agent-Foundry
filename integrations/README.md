@@ -2,6 +2,14 @@
 
 Agent Foundry is context, not an application. The user's existing coding agent is the interface and executor. Foundry provides portable instructions and resource definitions; each host determines how files are discovered and which repository, filesystem, shell, browser, model and subagent capabilities are available.
 
+## Multi-host onboarding
+
+Use the host-roster-onboarding skill during installation. Detect the active host when reliable evidence exists, then ask which other coding-agent apps the owner uses with the same project. Support multiple selections and free-text additions, including hosts not listed in the current matrix.
+
+Prefer one shared project-local Foundry resource store with thin host-specific pointers. Do not copy the full resource set into every host configuration. Distinguish project-local files from global user/app settings; do not change global settings unless explicitly requested. For every selected host, record user-reported versus verified availability, exact version where known, proposed adapter paths, conflicts and runtime evidence. Obtain approval before creating or modifying host instruction files.
+
+The selected host roster is a setup input, not a claim of compatibility. A host can be user-reported but unavailable for direct verification.
+
 ## Host conventions
 
 | Host | Persistent project context | Skills / specialist resources | Important limitation |
