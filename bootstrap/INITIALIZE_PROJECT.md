@@ -109,6 +109,12 @@ Examples:
 
 The demonstration is not proof that every host integration works. Report which parts were actually executed and which remain unverified.
 
+## 4C. Discover the user's coding-agent host roster
+
+Use the host-roster-onboarding skill. Identify the active host and version from available evidence, then ask which additional coding-agent apps the owner uses with this repository. Allow multiple choices and free-text additions. Do not assume user-reported apps are installed, authenticated or accessible.
+
+Plan one shared project-local Foundry resource set and host-specific pointers/adapters for the selected hosts. Distinguish project-local configuration from global app settings. Never edit global configuration or create multiple root instruction files silently. Show the exact per-host plan and obtain approval before writing. Verify each selected host separately and report unavailable hosts as pending.
+
 ## 5. Select resources
 
 Use registry/resources.yaml as the catalog. For each candidate, inspect its full content, status, portability, dependencies and source notes.
