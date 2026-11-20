@@ -2,7 +2,7 @@
 id: readme-maker
 name: README Design and Information Architecture
 type: skill
-version: 0.1.0
+version: 0.2.0
 portability: universal
 status: draft
 ---
@@ -31,29 +31,47 @@ This skill is iterative. Every README review should update this skill with newly
 14. **Avoid scroll traps.** Collapse deep details. Do not make readers pass a long staged conversation, huge compatibility table or contribution essay before feature navigation.
 15. **Maintain alignment.** Keep the README feature inventory aligned with the resource registry and canonical docs.
 
-## Recommended structure
-Adapt to the repository; do not force every section:
-1. Hero: banner/logo, project name, value proposition, audience and useful badges.
-2. Quick orientation: what it is, what it is not, who should use it.
-3. Quick start: prerequisites, where to run, copyable prompt/command, approval gate and full guide.
-4. Project-specific demo: brief, safe, observable outcome and next step.
-5. Why it matters: practical advantages and tradeoffs.
-6. Feature explorer: nested dropdown tree covering all capabilities and individual resources.
-7. Compatibility: host roster and verified boundaries; collapse per-host detail.
-8. Contribute: current contribution status, exact trigger, guide and approval/privacy boundaries.
-9. Token/cost/performance implications where material.
-10. Documentation/repository map, collapsed if long.
-11. Safety boundary and support links.
+## Recommended README structure
 
-## Feature-tree rules
-- Use one clear top-level category per user goal or capability family.
-- Nest subcategories using their own details blocks.
-- At the deepest useful level, give each concrete skill, command, workflow, profile, standard, template, integration and canonical document its own nested dropdown with a plain-language title, one-line purpose, resource type/status where useful and direct relative link.
-- Include relevant limitations and dependencies.
-- Cover all registry resources, including additions. Mark draft/experimental status honestly.
-- Explain internal jargon in plain language.
-- Make category names parallel and distinguishable.
-- Validate nested HTML tags and GitHub rendering.
+**Do not put installation first by default.** A visitor needs to understand what the project is before deciding to install it. Use this project-first sequence unless the repository's purpose makes another order clearly better:
+
+1. **Hero:** identity, name, one-sentence value, audience and truthful status badges.
+2. **Manual table of contents:** a compact navigator near the top. Link to major sections and useful subpages.
+3. **About the project:** what it is, the problem/domain, intended users, what it does and what it does not do.
+4. **Why it exists / motivation:** problem, trade-offs and differentiator.
+5. **Capabilities at a glance:** small summary of outcomes, not the full technical catalog.
+6. **How it works / architecture:** diagram or screenshot with a short explanation of important components/flows.
+7. **Feature explorer:** project-aware menu designed by Feature Menu Architect.
+8. **Project status and limitations:** maturity, supported environments, known gaps and roadmap.
+9. **Requirements and compatibility:** runtime, platform, dependencies, host/version evidence.
+10. **Installation / getting started:** prerequisites, installation paths, approval/safety notes and verification.
+11. **Usage / examples:** runnable first example, expected output and common workflows.
+12. **Configuration / reference:** key options, environment variables and API/command reference links.
+13. **Documentation / FAQ / troubleshooting:** navigation to canonical guides.
+14. **Contributing / community:** current contribution state and exact next action.
+15. **Security, support, acknowledgements and license.**
+
+Adapt and omit sections that do not apply. A small library may need only a short page; a large platform may need a rich landing page plus dedicated docs. Do not turn this order into a content checklist full of empty sections.
+
+## README navigation
+
+- Always include a manual, human-readable table of contents near the top when the README is long enough that readers need navigation.
+- GitHub provides an auto-generated Outline for Markdown headings, but it is supplementary; it is not a replacement for an intentional README navigator.
+- Include the destinations users actually need: overview, features, architecture, install, usage, configuration, docs, contribution and support as applicable.
+- Keep heading labels stable and anchor links valid. Use relative links for repository files.
+- Large repositories should have a docs index and category guides; the root README should be the front door, not the entire manual.
+- Add subdirectory README files only when a directory/package has its own users or meaningful interface. Keep them consistent with the root docs map.
+
+## Visual storytelling
+
+- Use a project logo/banner to establish identity, not fill space.
+- Prefer one real product screenshot/GIF near the overview if the product has a visible interface.
+- Use focused screenshots/GIFs to demonstrate distinct capabilities; add captions explaining what the reader is seeing and why it matters.
+- Use Mermaid for architecture, lifecycle and navigation diagrams where a visual model helps.
+- Use tables only for comparisons and genuinely tabular facts.
+- Use small code examples with real inputs and expected output.
+- Keep visual language consistent across banner, diagrams and screenshots.
+- Never invent screenshots, product behaviour, status metrics, contributor counts or benchmark claims.
 
 ## GitHub Markdown and visual conventions
 - Prefer GitHub Flavored Markdown; use native HTML only when it materially improves navigation/layout.
@@ -94,6 +112,21 @@ Adapt to the repository; do not force every section:
 9. Update this skill with newly discovered standards and add regression checks where possible.
 10. Report changes, validation and anything needing a real GitHub render review.
 
+## Research-backed Markdown and README lessons (2026-11-20)
+
+The skill was refined against GitHub's README documentation, GitHub's advanced Markdown guides, CommonMark/GFM parsing rules, Google's README style guide, and examples curated in [awesome-readme](https://github.com/matiassingers/awesome-readme).
+
+- GitHub describes a README as a first-visit explanation of what a project does, why it is useful, how to get started, where to get help and who maintains/contributes. Lead with the project story, not installation.
+- GitHub automatically creates an Outline from headings; long READMEs still benefit from a deliberate manual TOC near the top.
+- GitHub supports relative file/image paths and section anchors. Prefer relative paths for clone-friendly links, keep link text on one line and validate all paths.
+- GitHub supports collapsible `<details>` sections with `<summary>`; nested details alone do not guarantee a clear visual tree. Pair detailed menus with a Mermaid information-architecture diagram and deliberately indented group structure.
+- GitHub renders Mermaid in Markdown. Use supported syntax (for example `flowchart TD`) and keep diagrams readable at mobile widths.
+- GitHub Alerts are semantic callouts, not coloured quote cards. Use only one or two meaningful alerts per article, avoid consecutive alerts and never use an alert for each line of a synthetic dialogue.
+- Markdown parsing inside raw HTML has constraints. Keep HTML simple, use blank-line separation intentionally and validate actual GitHub rendering rather than assuming browser HTML behaviour.
+- Curated examples repeatedly pair concise project identity with real screenshots/GIFs, feature summaries, navigation, architecture visuals, installation variants, runnable examples and links to deeper docs. Borrow patterns, not another project's content or visual gimmicks.
+- Google describes READMEs as summaries and stresses what a package contains, what it is used for, how to use it and where to find relevant documentation. Root README must stay navigable and point to the detailed docs.
+- For a large project, the README is the product front door and navigator. It is not an archive of all technical detail. Use nested resource guides and docs indexes for depth.
+
 ## Standards learned from Agent Foundry README reviews
 - A README should feel like an explorable interface, not a ChatGPT answer pasted into Markdown.
 - Do not stack NOTE/TIP/WARNING/IMPORTANT blocks to stage a fictional conversation. This creates noisy colour bars and makes dialogue harder to follow.
@@ -104,5 +137,5 @@ Adapt to the repository; do not force every section:
 - Every link or highlighted item needs an explicit destination and purpose. Avoid orphaned links and unexplained transitions.
 - Compatibility belongs in installation: discover the active host, ask for other hosts, allow multiple choices and free-text additions, then propose each adapter.
 - Users may use several coding-agent apps against one repository. Do not silently create/modify multiple root instruction files. Explain project-local pointers versus global app configuration and get approval.
-- A quickstart demo must be inferred from inspected evidence, be safe, and end with an observable result and next action.
+- A quickstart demo must be inferred from inspected evidence, be safe, and end with an observable result and next action.\n- Do not open with Quick Start before explaining the project. A newcomer needs the project purpose, user/problem fit, major capabilities and architecture before installation.\n- Every long README needs a manual table of contents after the hero; the GitHub Outline icon is supplementary navigation, not the whole navigation plan.\n- For a large repository, plan the information architecture from the project inventory before writing. Use a Mermaid hierarchy map plus grouped accordions; a long flat list of expandable items is not a feature tree.\n- Resource menus should be goal → resource family/type → named item → relevant detail panels (what it is, when to use, how to invoke/use, example, dependencies, canonical link).\n- Resource detail panels must differ by resource type. Commands need invocation/examples; standards need scope/precedence; profiles need responsibility/boundaries; templates need field guidance.\n- Use actual visual evidence: screenshots/GIFs for real product behaviour, Mermaid for architecture/lifecycle/navigation and small copyable examples. No invented demos or metrics.\n- Keep the root README an index and product introduction, with sub-guides/docs for deeper detail; add section-level README files when a package has its own audience.
 - Avoid fabricated project-specific claims in examples unless clearly labelled illustrative.
