@@ -15,12 +15,16 @@ This file records user-visible changes by release.
 - Replaced the validator's dependency on deleted engine modules with direct registry validation, including safe paths and dependency-cycle detection.
 - Removed CLI-specific CI steps and package dry-run checks.
 - Added regression tests preventing the executable and obsolete CLI documentation from returning.
-- Rewrote the README, bootstrap guide, user guide, host integration guide, architecture references, contribution and security guidance for the context-first model.
+- Rebuilt the README with feature navigation, a usage demo, compatible-host matrix, token-efficiency trade-offs and a codebase map.
+- Added an explicit contribution-discovery command and skill with privacy boundaries, candidate ranking, user selection and publication approval.
+- Expanded the lead/orchestrator profile and durable campaign workflow; added campaign-state and campaign-status resources plus a host orchestration capability guide.
+- Updated host integration and contribution guidance for Codex, Claude Code, OpenCode, Kilo, Cline and other file-capable agents.
 
 ### Validation boundary
 - Automated repository checks must pass on the new branch before review.
 - Actual installation, natural-language discovery and lifecycle acceptance still require testing inside each supported coding-agent host.
-- No merge or stable release is implied by this development branch.
+- The context-first baseline is merged to main as version 0.6.0. A formal GitHub tag/release has not yet been published.
+- Actual installation, natural-language discovery, contribution discovery and lifecycle acceptance still require testing inside each supported coding-agent host.
 
 ## Historical — v0.5 development
 ### Engine and installer
