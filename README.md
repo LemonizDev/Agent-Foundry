@@ -30,7 +30,7 @@ Claude-maxxing, GPT-maxxing, OpenCode, Kilo or another CLI setup: keep your pref
 <details>
 <summary><strong>Copy the installation prompt</strong></summary>
 
-\`\`\`text
+```text
 Install Agent Foundry in this project from https://github.com/LemonizDev/Agent-Foundry.
 Read BOOTSTRAP.md and bootstrap/INITIALIZE_PROJECT.md first.
 Inspect my existing instructions, architecture, skills, workflows, tests,
@@ -40,7 +40,7 @@ useful set of Foundry resources. Show the exact files you would create or
 modify, explain conflicts, preserve my existing instructions and custom work,
 and wait for my approval before writing anything. Do not copy the entire
 registry.
-\`\`\`
+```
 
 The host must be able to access the Foundry source and the target project. If it cannot fetch repositories or write files, it must explain the limitation rather than pretend installation succeeded.
 
@@ -89,7 +89,7 @@ The goal is a minimal, additive installation. Existing project instructions and 
 
 **Setup lifecycle**
 
-\`\`\`text
+```text
   INSPECT PROJECT
         |
         v
@@ -102,14 +102,14 @@ The goal is a minimal, additive installation. Existing project instructions and 
   PROPOSE MINIMAL RESOURCES
         |
     OWNER APPROVES?
-      /       \\
+      /       \
     NO         YES
     |           |
    STOP      INSTALL
                 |
                 v
           VERIFY + RECORD
-\`\`\`
+```
 
 </details>
 
@@ -147,26 +147,26 @@ Foundry provides portable orchestration practices informed by the Dhan AI Trader
 - Independent review and integrated verification.
 - A campaign-status command that reconciles claims against evidence.
 
-\`\`\`text
+```text
                 OWNER
                   |
                   v
           LEAD / ORCHESTRATOR
-           /       |       \\
+           /       |       \
           v        v        v
        WORKER A WORKER B  REVIEWER
-          \\        |        /
-           \\       |       /
+          \        |        /
+           \       |       /
             v      v      v
            LEAD INTEGRATION
                   |
              VERIFY RESULT
-              /       \\
+              /       \
             PASS      FAIL
              |          |
              v          v
           COMPLETE   RECOVER
-\`\`\`
+```
 
 **Host boundary:** Foundry does not spawn agents, route providers, switch models or inspect live quotas. Codex, Claude Code, OpenCode, Kilo or another host must expose those capabilities. Without native delegation, Foundry can prepare assignments for manual execution; it must never claim a worker was dispatched when it wasn't.
 
@@ -256,21 +256,23 @@ Foundry is not a sandbox. Host permissions and autonomous execution policies sti
 
 ## Compatible apps
 
+<details>
+<summary><strong>Compatibility matrix and per-app setup notes</strong></summary>
+
 Foundry targets coding agents that can read project context. Installation and maintenance additionally need appropriate file access.
 
 | Host | Documented conventions | What to verify in your installed version |
 |---|---|---|
-| **OpenAI Codex** (CLI / app) | \`AGENTS.md\`, \`.agents/skills/\` | Skill discovery, app/CLI parity and delegation |
-| **Claude Code** (CLI) | \`CLAUDE.md\`, \`.claude/skills/\`, \`.claude/agents/\` | Skill metadata, permissions, subagents and model overrides |
-| **OpenCode** (CLI) | \`AGENTS.md\`, \`.agents/skills/\`, \`.opencode/commands/\` | Command discovery, agent definitions and model configuration |
-| **Kilo Code / Kilo CLI** | \`AGENTS.md\`, supported shared skills and Kilo-specific configuration | Named agents, model catalog, session continuation and permissions |
-| **Cline** | \`.clinerules\` and supported skill resources | Current rules, skills and workflow capabilities |
+| **OpenAI Codex** (CLI / app) | `AGENTS.md`, `.agents/skills/` | Skill discovery, app/CLI parity and delegation |
+| **Claude Code** (CLI) | `CLAUDE.md`, `.claude/skills/`, `.claude/agents/` | Skill metadata, permissions, subagents and model overrides |
+| **OpenCode** (CLI) | `AGENTS.md`, `.agents/skills/`, `.opencode/commands/` | Command discovery, agent definitions and model configuration |
+| **Kilo Code / Kilo CLI** | `AGENTS.md`, supported shared skills and Kilo-specific configuration | Named agents, model catalog, session continuation and permissions |
+| **Cline** | `.clinerules` and supported skill resources | Current rules, skills and workflow capabilities |
 | **Other CLI agents** | Their documented project instruction and resource formats | Actual file discovery, tool access and delegation support |
 
 These are adaptation conventions, not a claim that every host/version has passed end-to-end acceptance. A generated file is not proof that the host loads it.
 
-<details>
-<summary><strong>How do I use Foundry in each app?</strong></summary>
+### Per-app setup
 
 The interaction is the same: open the target repository in the app, paste the [setup prompt](#quick-start), review the plan and approve the proposed changes.
 
@@ -285,9 +287,13 @@ Do not paste the setup prompt into a chat that is not connected to the target re
 
 [Full host integration guide](integrations/README.md)
 
+
 </details>
 
 ## Token impact
+
+<details>
+<summary><strong>How Foundry affects input tokens, task efficiency and cost</strong></summary>
 
 Foundry has a token cost. Every instruction or skill a host includes in a model request consumes input tokens. A file stored in the repository costs nothing until the host loads it.
 
@@ -301,7 +307,7 @@ Foundry has a token cost. Every instruction or skill a host includes in a model 
 
 **The target is not minimum prompt size. It is minimum total tokens and cost per accepted task.**
 
-\`\`\`text
+```text
 NET TOKEN SAVINGS (conceptual, not a benchmark)
 
   Repeated explanations avoided
@@ -310,7 +316,7 @@ NET TOKEN SAVINGS (conceptual, not a benchmark)
 - Foundry instructions loaded
 - Extra coordination and verification
 = Net task-level impact
-\`\`\`
+```
 
 Foundry's intended design is progressive disclosure:
 
@@ -323,14 +329,16 @@ Actual loading depends on the host. Some hosts inject files automatically; other
 
 Measure **Foundry context overhead**, **correction/rework tokens**, **total tokens per accepted task**, and **actual provider cost** (including input/output rates and cached tokens). There is no published cross-model benchmark or fixed percentage saving yet. A fair benchmark must use the same tasks, host, model, acceptance criteria and cache conditions, and count failed attempts as well as successful ones.
 
+</details>
+
 ## Contribute
+
+<details>
+<summary><strong>How to discover and contribute reusable skills, instructions and workflows</strong></summary>
 
 Have you built a useful set of instructions, a Claude skill, a Codex workflow, OpenCode commands, Kilo agent profiles, review checklists, settings or templates? Those may be useful to other people.
 
 Say **"I'd like to contribute"** or simply **"contribute"** in a project where Foundry is installed.
-
-<details>
-<summary><strong>What happens when I say “contribute”?</strong></summary>
 
 The agent scans only accessible project context, compares candidate resources with the Foundry registry, excludes secrets/private data/project-specific state, and shows a numbered shortlist with type, portability, maturity, value and suggested destination.
 
@@ -344,6 +352,7 @@ The scan cannot access other chats, global account settings or external services
 
 [Contribution discovery skill](skills/contribution-discovery/SKILL.md) · [Contribute command](commands/contribute.md) · [Contribution guide](CONTRIBUTING.md)
 
+
 </details>
 
 ## Find your way around the codebase
@@ -351,7 +360,7 @@ The scan cannot access other chats, global account settings or external services
 <details>
 <summary><strong>Repository map and documentation index</strong></summary>
 
-\`\`\`text
+```text
 Agent-Foundry/
 ├── core/             Compact baseline instructions
 ├── standards/        Engineering, safety and evidence rules
@@ -368,7 +377,7 @@ Agent-Foundry/
     ├── architecture/ Design boundaries and architecture
     ├── audit/        Source inventory and provenance
     └── standards/    Resource authoring guidance
-\`\`\`
+```
 
 | Looking for... | Open... |
 |---|---|
