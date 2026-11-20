@@ -2,7 +2,7 @@
 id: close-session
 name: Close Session
 type: command
-version: 0.2.0
+version: 0.3.0
 portability: adaptable
 status: draft
 aliases:
@@ -20,7 +20,7 @@ dependencies:
 `/close`, `/close session` or `/close chat`
 
 ## Purpose
-Prepare the project for the next session by preserving durable, verified knowledge in the correct existing source of truth. This is not a transcript export.
+Prepare the project for the next session by preserving durable, verified project context in its canonical source of truth. This is not transcript export or creation of new reusable resource types; use `/done` for resource curation.
 
 ## Execution
 1. Review the session for requirements, decisions, conventions, verified fixes and stable preferences.
@@ -38,5 +38,5 @@ Requirements -> product context; architecture decisions -> architecture/decision
 ## Safety
 Do not persist emotional content, filler, raw transcripts or speculation as facts. Do not silently overwrite conflicting decisions. Do not create `HANDOFF.md` unless the project uses it or the owner asks. Do not claim to close the chat UI unless the host exposes tested session control.
 
-## Output
+## Distinction from /done\n\nUse `/close` for context continuity: requirements, decisions, stable preferences, verified lessons and current state. Use `/done` when the user believes the chat contains a reusable project artefact that should be classified and stored as a command, skill, workflow, standard, profile, template or other resource. `/done` applies a strict acceptance threshold and rejects the operation when nothing worthwhile qualifies.\n\n## Output
 Learnings captured, files changed, verification, items excluded, unresolved conflicts and whether the chat must be closed manually.
