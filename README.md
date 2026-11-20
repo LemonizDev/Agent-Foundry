@@ -4,482 +4,394 @@
 
 # Agent Foundry
 
-### Make the coding agent you already use work more consistently.
+### A reusable operating playbook for the coding agent you already use.
 
-**A context-first resource library for Codex, Claude Code, OpenCode, Kilo, Cline and other file-capable coding agents.**
+**Project-aware instructions, skills, workflows and specialist resources for Codex, Claude Code, OpenCode, Kilo, Cline and other file-capable coding agents.**
 
 [![CI](https://github.com/LemonizDev/Agent-Foundry/actions/workflows/ci.yml/badge.svg)](https://github.com/LemonizDev/Agent-Foundry/actions/workflows/ci.yml)
 [![Version](https://img.shields.io/badge/version-0.6.0-6478ff.svg)](CHANGELOG.md)
 [![License](https://img.shields.io/badge/license-MIT-2ea44f.svg)](LICENSE)
 
-[Quick start](#quick-start) · [See a demo](#30-second-demo) · [Browse features](#feature-menu) · [Compatible apps](#compatible-apps) · [Token impact](#token-impact) · [Contribute](#contribute)
+[Quick start](#quick-start) · [How setup works](#project-aware-installation) · [Why Foundry](#why-agent-foundry) · [Explore every feature](#feature-explorer) · [Host compatibility](#coding-agent-apps) · [Contribute](#community-contributions)
 
 </div>
 
-> **In one sentence:** Agent Foundry gives your existing AI coding agent reusable instructions, skills, workflows, specialist roles and project-management habits, without replacing its model, tools or runtime.
-
-Claude-maxxing, GPT-maxxing, OpenCode, Kilo or another CLI setup: keep your preferred agent. Give it a better operating playbook.
+> **In one sentence:** Foundry helps your existing coding agent work with better project context, repeatable procedures and accountable workflows. It does not replace the agent, model or runtime.
 
 ## Quick start
 
-1. Open the target repository in your coding agent.
-2. Paste the prompt below.
-3. Review the proposed resources and exact file changes.
-4. Approve only what you want installed.
+1. Open your project in the coding-agent app you want to use.
+2. Paste the setup prompt below.
+3. Foundry inspects the project and host, then asks which other coding-agent apps you use.
+4. Review the proposed shared resources and host-specific changes. Approve before anything is written.
 
 <details>
-<summary><strong>Copy the installation prompt</strong></summary>
+<summary><strong>Copy the interactive setup prompt</strong></summary>
 
 ```text
-Install Agent Foundry in this project from https://github.com/LemonizDev/Agent-Foundry.
-Read BOOTSTRAP.md and bootstrap/INITIALIZE_PROJECT.md first.
-Inspect my existing instructions, architecture, skills, workflows, tests,
-documentation and this host's actual capabilities. Identify what I already
-have, what is missing and what must remain untouched. Recommend the smallest
-useful set of Foundry resources. Show the exact files you would create or
-modify, explain conflicts, preserve my existing instructions and custom work,
-and wait for my approval before writing anything. Do not copy the entire
-registry.
+Install Agent Foundry in this repository from https://github.com/LemonizDev/Agent-Foundry.
+
+1. Read BOOTSTRAP.md and bootstrap/INITIALIZE_PROJECT.md.
+2. Inspect this project and classify it as new, established with healthy context,
+   or established with context that needs repair. Show evidence.
+3. Identify the active coding-agent host and version where possible.
+4. Ask which other coding-agent apps I use with this project. Allow multiple
+   selections and free-text additions. Include Codex, Claude Code, OpenCode,
+   Kilo, Cline, Cursor, Windsurf, GitHub Copilot and Other.
+5. Assess each selected host and propose one shared project-local Foundry
+   resource set plus only the required host-specific pointers. Distinguish
+   project-local files from global app settings.
+6. Recommend the smallest useful resource set. For messy context, audit first.
+7. Show exact files, conflicts, host evidence and verification plan. Wait for
+   my approval before writing anything.
+8. After installation, run one safe, project-specific quickstart using a
+   selected resource. Show the result and one useful next action.
+
+Do not copy the entire registry, overwrite existing instructions, or change
+global app settings without explicit approval.
 ```
 
-The host must be able to access the Foundry source and the target project. If it cannot fetch repositories or write files, it must explain the limitation rather than pretend installation succeeded.
+**What happens next:** the agent classifies the project, checks existing context, discovers your host roster, recommends a minimal integration, previews exact changes and waits for approval. After installation it demonstrates one relevant resource on a safe project-specific task.
 
 [Full bootstrap guide](BOOTSTRAP.md) · [Initialization procedure](bootstrap/INITIALIZE_PROJECT.md)
 
 </details>
 
-## What installation actually looks like
+## Project-aware installation
 
-Foundry should not install the same bundle into every project. It first works out what kind of project it has walked into.
+Foundry does not dump the same bundle into every repository. It adapts to the project it finds.
 
-| Your project | What Foundry should do |
+| Project type | What Foundry does |
 |---|---|
-| 🌱 **New project** | Establish a lightweight baseline, identify the stack and purpose, and create only essential project context. Recommend a useful first skill. |
-| 🏗️ **Healthy, established project** | Map what already works. Preserve authoritative rules, link instead of duplicate, and install only genuine missing capabilities. |
-| 🧭 **Large project with messy context** | Diagnose before adding more. Recommend a repository audit and documentation-maintenance pass, identify canonical files, surface conflicts and propose a staged context repair. |
+| 🌱 **New / empty** | Establish a compact baseline, identify the stack and purpose, and create only essential project context. |
+| 🏗️ **Established / healthy** | Preserve working instructions and workflows, link to existing sources and fill only proven gaps. |
+| 🧭 **Established / context needs repair** | Audit first. Identify stale, scattered, duplicated or conflicting context; propose canonical sources and staged repairs before adding more rules. |
 
-> [!NOTE]
-> These are onboarding paths, not rigid labels. A project can have excellent tests and terrible documentation, or strong docs but no session continuity. Assess capabilities individually.
-
-### The installation journey
+### The setup path
 
 ```text
-       INSPECT PROJECT + HOST
-                 |
-                 v
-        CLASSIFY PROJECT STATE
-                 |
-                 v
-       CHECK CONTEXT HEALTH
-                 |
-        +--------+--------+
-        |        |        |
-       NEW    HEALTHY   MESSY
-        |        |        |
-     BASELINE PRESERVE  AUDIT +
-      CONTEXT + FILL   REPAIR PLAN
-        |      GAPS      |
-        +--------+--------+
-                 |
-          SELECT RESOURCES
-                 |
-          PREVIEW EXACT DIFFS
-                 |
-            YOUR APPROVAL
-                 |
-           INSTALL + VERIFY
-                 |
-        PROJECT-SPECIFIC DEMO
+ INSPECT PROJECT + ACTIVE HOST
+              |
+       CLASSIFY PROJECT
+              |
+       ASSESS CONTEXT HEALTH
+              |
+       ASK YOUR HOST ROSTER
+       (multiple + free text)
+              |
+       MAP EACH SELECTED HOST
+              |
+       SELECT SHARED RESOURCES
+        + HOST-SPECIFIC ADAPTERS
+              |
+       PREVIEW EXACT FILE CHANGES
+              |
+          YOUR APPROVAL
+              |
+       INSTALL + VERIFY EACH HOST
+              |
+       PROJECT-SPECIFIC QUICKSTART
 ```
 
-### A first interaction that feels like a real assistant
+**One project, several coding agents:** Foundry aims to keep one shared project-local resource set and use small host-specific pointers where supported. It does not silently edit global app settings or create competing root instruction files.
 
-> [!NOTE]
-> **01 · Inspect**
->
-> **You:** "Set up Foundry here."
->
-> **Agent:** "This is an established TypeScript service. I found an AGENTS instruction file, architecture notes, a test strategy and three existing skills. Your review workflow already covers independent review."
+<details>
+<summary><strong>See the three onboarding paths in more detail</strong></summary>
 
-> [!TIP]
-> **02 · Recommend**
->
-> **Agent:** "I'll preserve the review workflow and link to your architecture docs. Your onboarding guide is stale and decisions are scattered, though. I recommend a read-only repository audit, followed by the documentation-maintenance skill. Multi-agent orchestration can wait because this host's subagent support isn't verified."
+- **New project:** detect the actual stack and intended product from available context. Propose a minimal instruction baseline, source-of-truth structure and first milestone. Avoid generating a documentation bureaucracy before there is a project to document.
+- **Healthy existing project:** map existing instructions, architecture, skills, workflows, tests and verification practices. Mark capabilities KEEP, LINK, EXTEND, INSTALL, ADAPT, DEFER or EXCLUDE. Preserve existing rules unless the owner approves a change.
+- **Context needs repair:** assess instruction precedence, architecture coverage, canonical sources, freshness, duplication, contradictions, test guidance and session continuity. Recommend a read-only repository audit and documentation-maintenance pass where useful. Diagnosis and repair are separate approval steps.
 
-> [!WARNING]
-> **03 · Preview**
->
-> **You:** "What will you change?"
->
-> **Agent:** "One small Foundry pointer, two selected resources and an ownership manifest. I'll propose an additive update to the onboarding index. Here are the exact diffs and conflicts. Nothing has been written."
+The paths are not mutually exclusive diagnoses. A repository can have excellent tests and poor documentation, or strong architecture notes and no session recovery.
 
-> [!IMPORTANT]
-> **04 · Approve, install, try**
->
-> **You:** "Keep my review rule. Approve the rest."
->
-> **Agent:** "Your review rule stays authoritative. The selected files passed integrity checks. Your API has no documented error taxonomy, so let's use the debugging resource on one existing error path as your first Foundry quickstart."
+**The first-use demo is selected from evidence.** A new project might use implementation planning; a healthy project might use review or testing; a context-heavy project might get a read-only audit summary. The demo must show its output, what was actually verified and one sensible next step. No invented project weaknesses just to make the demo look impressive.
 
-**Installation should end with a useful first experience, not a directory full of files.** The quickstart demo should be selected from the project context Foundry actually inspected, and should be safe, small and relevant.
+</details>
 
 ## Why Agent Foundry
 
-| Advantage | Day-to-day difference |
+| Advantage | Practical difference |
 |---|---|
-| 🧠 **Project-aware, not one-size-fits-all** | Resources fit the actual stack, maturity, risks and conventions. |
-| 🧹 **Less context chaos** | Stale, duplicate and conflicting context is surfaced instead of buried under more Markdown. |
-| 🎯 **Right resource, right moment** | Load and use relevant skills and workflows instead of blindly installing everything. |
-| 🔁 **Session continuity** | Decisions, verified progress, blockers and next actions have durable homes. |
-| 🧪 **Evidence over confidence** | Acceptance criteria, review and verification distinguish claimed completion from checked work. |
-| 🤝 **Accountable delegation** | Bounded assignments, ownership, checkpoints and recovery improve multi-agent work where the host supports it. |
-| 🛡️ **You stay in control** | Exact changes are previewed; existing work is preserved; approval gates and ownership tracking guide updates and removal. |
-| 🧰 **Keep your preferred agent** | Use Codex, Claude Code, OpenCode, Kilo, Cline or another compatible host. No replacement runtime to learn. |
+| 🧠 **Fits the project you have** | Onboarding adapts to project maturity, conventions, stack and existing context. |
+| 🧹 **Reduces context mess** | Finds duplication, stale guidance and competing sources instead of piling on more instructions. |
+| 🎯 **Relevant resources, not a giant bundle** | Selects procedures for the task and project rather than loading everything all the time. |
+| 🔁 **Continuity between sessions** | Keeps decisions, progress, blockers and recovery information in durable project context. |
+| 🧪 **Evidence-based completion** | Separates implemented, tested, reviewed, runtime-verified and unverified work. |
+| 🤝 **More accountable delegation** | Uses bounded assignments, ownership, checkpoints and independent review where the host supports it. |
+| 🧰 **Keep your preferred apps** | One shared project resource set can serve multiple selected coding-agent hosts. |
+| 🛡️ **Owner remains in control** | Exact changes and conflicts are previewed; approval gates protect existing work. |
 
-> [!TIP]
-> **The compounding advantage:** a good review, recovery or documentation practice is useful once. A reusable resource that your agent can discover and apply across projects is useful repeatedly.
+## Feature explorer
 
-## Feature menu
-
-Pick a title to expand it. The README stays short until you need the detail.
+Explore by what you want to do. Each section opens into smaller categories and direct links to the individual resources. The registry is the canonical inventory.
 
 <details>
-<summary><strong>01 · Project-aware setup and onboarding</strong></summary>
+<summary><strong>01 · Start here: installation and project fit</strong></summary>
 
-Foundry assesses the repository before recommending an installation. It inspects existing instructions, architecture, conventions, skills, tests, CI, documentation and host capabilities.
+Choose the right onboarding path, inspect an existing project and install Foundry without replacing what already works.
 
-Every discovered capability gets a clear disposition:
+<details>
+<summary>Project onboarding</summary>
 
-| Decision | Meaning |
-|---|---|
-| **KEEP** | Already solves the problem. Leave it alone. |
-| **LINK** | Keep the existing source of truth and point to it. |
-| **EXTEND** | Add only the missing behaviour. |
-| **INSTALL** | Fill a genuine gap with a Foundry resource. |
-| **ADAPT** | Translate a portable resource to the host's format. |
-| **DEFER** | Evidence or host capability is missing. |
-| **EXCLUDE** | Irrelevant, unsafe, duplicative or project-specific. |
-
-The goal is a minimal, additive installation. Existing project instructions and owner decisions remain authoritative.
-
-**Setup lifecycle**
-
-```text
-  INSPECT PROJECT
-        |
-        v
-  MAP EXISTING CAPABILITIES
-        |
-        v
-  FIND GAPS / CONFLICTS
-        |
-        v
-  PROPOSE MINIMAL RESOURCES
-        |
-    OWNER APPROVES?
-      /       \
-    NO         YES
-    |           |
-   STOP      INSTALL
-                |
-                v
-          VERIFY + RECORD
-```
+- [**existing-project-integration**](docs/architecture/EXISTING_PROJECT_INTEGRATION.md) · Assesses an established repository and adds only relevant Foundry resources without replacing its architecture. · Workflow
+- [**repository-audit**](skills/repository-audit/SKILL.md) · Maps repository structure, runtime flows, authoritative context, quality controls and evidence-backed gaps. · Skill
+- [**host-roster-onboarding**](skills/host-roster-onboarding/SKILL.md) · Discovers the user's active and additional coding-agent hosts, then plans safe multi-host project integration with per-host verification. · Skill
+- [**global-instructions**](core/GLOBAL_INSTRUCTIONS.md) · Compact, project-agnostic operating instructions that connect installed standards, task resources and Foundry management triggers into one agent entrypoint.
+- [**context-architecture**](docs/architecture/CONTEXT_ARCHITECTURE.md) · Documents the context-first architecture: context-file hierarchy, progressive disclosure, conversational management and current limitations.
 
 </details>
 
 <details>
-<summary><strong>02 · Instructions, skills, workflows and reusable resources</strong></summary>
+<summary>First steps and implementation</summary>
 
-Foundry separates the short operating baseline from specialised procedures.
+- [**implementation-planning**](skills/implementation-planning/SKILL.md) · Turns desired outcomes into bounded tasks with dependencies, acceptance criteria and verification. · Skill
+- [**atomic-implementation**](skills/atomic-implementation/SKILL.md) · Guides small, bounded implementation steps with clear acceptance criteria and verification. · Skill
+- [**engineering-principles**](standards/engineering-principles.md) · Universal engineering baseline for understanding before changing, preserving project intent, incremental implementation and evidence-based completion. · Standard
+- [**decision-making**](standards/decision-making.md) · Provides an evidence-based procedure for comparing options, recording tradeoffs and escalating owner decisions. · Standard
 
-| Resource | Purpose |
-|---|---|
-| **Core instructions** | Compact operating contract and pointers to relevant resources |
-| **Standards** | Reusable rules for security, evidence, communication and context |
-| **Skills** | Detailed procedures for engineering, research, debugging, review and testing |
-| **Commands** | User-facing request contracts; native slash-command support depends on the host |
-| **Workflows** | Multi-step processes, gates, dependencies and handoffs |
-| **Profiles** | Specialist responsibilities and boundaries, not fictional permissions |
-| **Templates** | Assignments, decisions, progress, campaign state and recovery |
-| **Integrations** | Host-specific conventions and limitations |
-
-A command describes *what was requested*. A skill describes *how to do it*. A workflow coordinates *multiple steps*. A profile defines *who owns which responsibility*. A template standardises *the record or output*.
-
-Browse the [resource registry](registry/resources.yaml). It is a catalog for selective discovery, not a bundle to copy wholesale into every project.
+</details>
 
 </details>
 
 <details>
-<summary><strong>03 · Multi-agent delegation and orchestration</strong></summary>
+<summary><strong>02 · Project context and documentation</strong></summary>
 
-Foundry provides portable orchestration practices informed by the Dhan AI Trader and Rave Engine projects:
+Keep instructions coherent, establish canonical sources and maintain useful project memory.
 
-- Lead/orchestrator responsibilities and decision boundaries.
-- Bounded worker assignments with explicit write scopes and acceptance criteria.
-- Task-aware model selection guidance.
-- Durable campaign state, checkpoints and recovery handoffs.
-- Independent review and integrated verification.
-- A campaign-status command that reconciles claims against evidence.
+<details>
+<summary>Context standards</summary>
 
-```text
-                OWNER
-                  |
-                  v
-          LEAD / ORCHESTRATOR
-           /       |       \
-          v        v        v
-       WORKER A WORKER B  REVIEWER
-          \        |        /
-           \       |       /
-            v      v      v
-           LEAD INTEGRATION
-                  |
-             VERIFY RESULT
-              /       \
-            PASS      FAIL
-             |          |
-             v          v
-          COMPLETE   RECOVER
-```
-
-**Host boundary:** Foundry does not spawn agents, route providers, switch models or inspect live quotas. Codex, Claude Code, OpenCode, Kilo or another host must expose those capabilities. Without native delegation, Foundry can prepare assignments for manual execution; it must never claim a worker was dispatched when it wasn't.
-
-[Orchestration portability guide](docs/architecture/ORCHESTRATION_PORTABILITY.md)
+- [**context-management**](standards/context-management.md) · Defines canonical project context, progressive disclosure and durable session learning without transcript dumps. · Standard
+- [**documentation-governance**](standards/documentation-governance.md) · Defines documentation ownership, source-of-truth hierarchy, lifecycle and navigation rules. · Standard
+- [**agent-communication**](standards/agent-communication.md) · Defines clear owner communication, progress reporting, uncertainty labels and approval gates. · Standard
+- [**security-boundaries**](standards/security-boundaries.md) · Sets least-privilege, secret-handling, untrusted-input and approval boundaries for AI-assisted engineering. · Standard
+- [**evidence-and-verification**](standards/evidence-and-verification.md) · Sets rules for evidence quality, verification claims and explicit unverified or blocked states. · Standard
 
 </details>
 
 <details>
-<summary><strong>04 · Persistent context, session continuity and verification</strong></summary>
+<summary>Documentation and learning</summary>
 
-Foundry encourages one authoritative home for durable project facts: requirements, architecture, decisions, active plans, engineering conventions, known failure modes and operations.
+- [**documentation-maintenance**](skills/documentation-maintenance/SKILL.md) · Keeps project documentation accurate, navigable and free of competing sources of truth. · Skill
+- [**session-learning**](skills/session-learning/SKILL.md) · Extracts durable, actionable project knowledge from a session and updates its proper context source. · Skill
+- [**session-close**](workflows/session-close.md) · Coordinates the review, consolidation and verification of durable session learnings. · Workflow
+- [**readme-maker**](skills/readme-maker/SKILL.md) · Creates and maintains concise, navigable GitHub READMEs with nested feature trees, accessible visual hierarchy and validated resource links. · Skill
+- [**user-guide**](docs/USER_GUIDE.md) · Explains Agent Foundry setup, chat-native management, commands, resource types, presets, delegation and maintenance.
 
-At the end of substantial work, the agent should preserve verified decisions and discoveries in the right existing files, not dump an entire transcript into the repository.
-
-It also distinguishes evidence states:
-
-- Specified
-- Implemented
-- Automatically tested
-- Independently reviewed
-- Visually inspected
-- Runtime verified
-- Owner approved
-- Unverified or blocked
-
-A green unit test does not prove the UI works. A worker's confident message does not prove the task is complete. Progress is measured against acceptance criteria and evidence, not activity or elapsed time.
+</details>
 
 </details>
 
 <details>
-<summary><strong>05 · Conversational settings and Foundry lifecycle</strong></summary>
+<summary><strong>03 · Build, debug, test and review</strong></summary>
 
-Manage Foundry through the same coding-agent conversation. There is no separate dashboard or configuration application.
+Engineering procedures for bounded implementation and evidence-backed quality.
 
-Try requests like:
+<details>
+<summary>Engineering skills</summary>
 
-- "Show my Foundry settings."
-- "Make reviews stricter."
-- "Show available Foundry resources."
-- "Update Foundry."
-- "Check my Foundry setup."
-- "Remove Foundry from this project."
-
-The agent reads the manifest and settings specification, distinguishes defaults from explicit values, previews consequential edits, preserves unknown keys and user-owned files, and verifies changes.
-
-[Settings specification](foundry/SETTINGS_SPEC.md) · [Management instructions](foundry/MANAGEMENT.md)
+- [**debugging**](skills/debugging/SKILL.md) · Diagnoses failures through reproducible experiments and root-cause analysis. · Skill
+- [**testing-and-verification**](skills/testing-and-verification/SKILL.md) · Selects risk-based tests and reports exactly what was and was not verified. · Skill
+- [**code-review**](skills/code-review/SKILL.md) · Performs independent, findings-first review of code changes, risks and test quality. · Skill
+- [**architecture-design**](skills/architecture-design/SKILL.md) · Designs maintainable system boundaries and decisions grounded in requirements and tradeoffs. · Skill
+- [**implementation-explanation**](skills/implementation-explanation/SKILL.md) · Explains code changes, their runtime behaviour, tradeoffs and verification evidence. · Skill
+- [**privacy-safe-evidence**](skills/privacy-safe-evidence/SKILL.md) · Collects and reports useful evidence while minimising secrets, personal data and sensitive project details. · Skill
+- [**agent-execution-security**](skills/agent-execution-security/SKILL.md) · Assesses permissions, isolation, secrets exposure and risks from autonomous agent execution. · Skill
 
 </details>
 
 <details>
-<summary><strong>06 · Model-aware task recommendations</strong></summary>
+<summary>Commands</summary>
 
-A mechanical edit, complex debugging investigation and security review do not need identical models.
+- [**implement**](commands/implement.md) · Executes an approved implementation plan with incremental verification. · Command
+- [**debug**](commands/debug.md) · Investigates a reproducible failure and isolates its root cause. · Command
+- [**review**](commands/review.md) · Runs an independent, read-only engineering review. · Command
+- [**verify**](commands/verify.md) · Checks acceptance criteria against explicit test and runtime evidence. · Command
+- [**audit**](commands/audit.md) · Runs a read-only, evidence-based repository audit. · Command
+- [**teach-implementation**](commands/teach-implementation.md) · Explains a completed implementation in a structured, project-relevant way. · Command
+- [**project-health**](commands/project-health.md) · Assesses project health across architecture, quality, security, operations and continuity. · Command
+- [**next-task**](commands/next-task.md) · Recommends the highest-value next engineering action from current evidence and dependencies. · Command
 
-Foundry's guidance evaluates task type, reasoning and coding needs, context, tools, risk, reliability, latency, cost and quota constraints. It should recommend the smallest model that clears the task's quality bar, explain uncertainty and require independent verification where risk warrants it.
-
-Foundry does **not** ship a live universal model catalog, guarantee provider access or know current quotas. The consuming project owns its model roster and must verify availability.
+</details>
 
 </details>
 
 <details>
-<summary><strong>07 · Visual, graphics and performance QA</strong></summary>
+<summary><strong>04 · Planning, delegation and multi-agent work</strong></summary>
 
-Reusable practices for visual and graphics-heavy projects include:
+Coordinate workers where the host supports them; otherwise use the same contracts for manual delegation.
 
-- Graphics/rendering architecture and creative-direction roles.
-- Visual regression and controlled before/after capture.
-- Component isolation and property-wiring checks.
-- Audio/input lifecycle checks.
-- Performance profiling and soak testing.
-- Hardware-specific validation with explicit environment limits.
+<details>
+<summary>Delegation and orchestration</summary>
 
-These practices were informed by Rave Engine (Lively Wallpaper). Project-specific shaders, assets, renderer code and hardware thresholds stay in that project; they are not copied into Foundry's universal core.
+- [**multi-agent-delegation**](skills/multi-agent-delegation/SKILL.md) · Defines accountable task decomposition, worker selection, assignment contracts, checkpoints, recovery and independent review. · Skill
+- [**multi-agent-campaign**](workflows/multi-agent-campaign.md) · Coordinates a durable multi-agent campaign with persistent assignments, checkpoints, recovery, independent review and integrated verification. · Workflow
+- [**lead-engineer**](profiles/lead-engineer.md) · Defines the accountable lead/orchestrator role for architecture, task decomposition, delegation, integration and delivery. · Specialist profile
+- [**independent-reviewer**](profiles/independent-reviewer.md) · Defines a sceptical, findings-first reviewer role that challenges implementation and evidence. · Specialist profile
+- [**model-delegation-architecture**](docs/architecture/MODEL_DELEGATION.md) · Defines task-aware model classification, roster constraints, scoring and independent-review gates. · Standard
+- [**orchestration-portability**](docs/architecture/ORCHESTRATION_PORTABILITY.md) · Maps portable orchestration contracts to host-specific capabilities and limitations across common coding agents.
 
 </details>
 
 <details>
-<summary><strong>08 · Safe updates, ownership and removal</strong></summary>
+<summary>Continuity and reporting</summary>
 
-An installation manifest records the source revision, selected resources, paths and content hashes. It is an ownership record, not permission to overwrite anything that looks familiar.
-
-For updates and removal, the agent should detect local modifications, preview conflicts, preserve user-authored content, act only on approved Foundry-managed files and verify the result.
-
-Foundry is not a sandbox. Host permissions and autonomous execution policies still matter.
+- [**project-state-management**](skills/project-state-management/SKILL.md) · Maintains canonical project context, current state, blockers and next actions without duplicating sources of truth. · Skill
+- [**plan-reconciliation**](skills/plan-reconciliation/SKILL.md) · Reconciles roadmap, implementation plans and actual repository evidence to identify the next safe task. · Skill
+- [**progress-reporting**](skills/progress-reporting/SKILL.md) · Produces progress reports grounded in implementation, test and review evidence rather than estimates or chat memory. · Skill
+- [**session-recovery**](skills/session-recovery/SKILL.md) · Reconciles interrupted work against repository state and resumes from verified checkpoints. · Skill
+- [**campaign-status**](commands/campaign-status.md) · Reconciles multi-agent campaign status against assignments, diffs, checkpoints and verification evidence. · Command
+- [**resume**](commands/resume.md) · Recovers interrupted work from durable checkpoints and verified repository state. · Command
+- [**delegate**](commands/delegate.md) · Creates a bounded task assignment and recommends a suitable model from the project roster. · Command
+- [**progress-report**](commands/progress-report.md) · Invokes evidence-backed progress reporting for a project, milestone or workstream. · Command
 
 </details>
 
-## Compatible apps
+<details>
+<summary>Work records</summary>
+
+- [**delegation-assignment**](templates/delegation-assignment.md) · Defines the objective, scope, owner, model rationale, outputs and acceptance criteria for delegated work. · Template
+- [**campaign-state**](templates/campaign-state.md) · Defines a durable campaign record for workstreams, assignment states, owner decisions, blockers and verification evidence. · Template
+- [**recovery-handoff**](templates/recovery-handoff.md) · Preserves verified checkpoints and context when a delegated worker or session is interrupted. · Template
+- [**decision-register**](templates/decision-register.md) · Records architectural and product decisions, alternatives, rationale and consequences. · Template
+- [**blocker-register**](templates/blocker-register.md) · Tracks blockers, ownership, impact, dependencies and resolution conditions. · Template
+- [**test-evidence-report**](templates/test-evidence-report.md) · Records verification commands, environments, outcomes, coverage and unresolved checks. · Template
+- [**progress-report-template**](templates/progress-report-template.md) · Provides a consistent structure for evidence-based project progress reports. · Template
+
+</details>
+
+</details>
 
 <details>
-<summary><strong>Compatibility matrix and per-app setup notes</strong></summary>
+<summary><strong>05 · Visual, graphics and performance work</strong></summary>
 
-Foundry targets coding agents that can read project context. Installation and maintenance additionally need appropriate file access.
+Practices and specialist roles for rendering-heavy, interactive and audio-reactive projects.
 
-| Host | Documented conventions | What to verify in your installed version |
+<details>
+<summary>Visual engineering</summary>
+
+- [**visual-regression**](skills/visual-regression/SKILL.md) · Compares rendered output across controlled states and identifies meaningful visual regressions. · Skill
+- [**visual-probe-engineering**](skills/visual-probe-engineering/SKILL.md) · Designs repeatable visual probes, pinned states and diagnostics for graphics-heavy applications. · Skill
+- [**graphics-engineer**](profiles/graphics-engineer.md) · Defines a specialist role for graphics pipelines, shaders, rendering quality and performance. · Specialist profile
+- [**creative-director**](profiles/creative-director.md) · Translates visual direction into coherent design intent, constraints and acceptance criteria. · Specialist profile
+- [**visual-quality-engineer**](profiles/visual-quality-engineer.md) · Reviews visual output, rendering behaviour, consistency and visual acceptance criteria. · Specialist profile
+- [**performance-qa**](profiles/performance-qa.md) · Defines repeatable performance, stability and resource-usage verification. · Specialist profile
+- [**creative-lighting-director**](profiles/creative-lighting-director.md) · Defines specialist direction for audio-reactive lighting, lasers and visual choreography. · Specialist profile
+
+</details>
+
+</details>
+
+<details>
+<summary><strong>06 · Models, settings and Foundry management</strong></summary>
+
+Project-owned model rosters, task-aware selection and conversational lifecycle management.
+
+<details>
+<summary>Model selection</summary>
+
+- [**model-roster-template**](templates/model-roster.yaml) · Provides the project-owned model roster schema and capability fields. · Template
+
+</details>
+
+<details>
+<summary>Settings and lifecycle</summary>
+
+- [**foundry-management**](foundry/MANAGEMENT.md) · Conversational management instructions: discovery, contribution, settings, installation, update, removal, diagnostics and the Foundry safety contract.
+- [**foundry-settings-spec**](foundry/SETTINGS_SPEC.md) · The single authoritative definition of supported Agent Foundry settings, their values, defaults, scope and safe modification guidance.
+- [**foundry-response-templates**](foundry/RESPONSE_TEMPLATES.md) · Reusable composition guidance for Foundry management chat responses: overview, settings, previews, diagnostics, contribution discovery and change summary.
+- [**foundry-settings-template**](templates/foundry-settings.yaml) · Provides project-level policies for delegation, model selection and session behaviour. · Template
+- [**contribution-discovery**](skills/contribution-discovery/SKILL.md) · Scans accessible user-created instructions, skills, workflows, commands, settings and templates for safe, reusable contribution candidates. · Skill
+- [**contribute**](commands/contribute.md) · Invokes explicit, approval-gated discovery of reusable user-created agent resources for Agent Foundry. · Command
+
+</details>
+
+</details>
+
+
+<details>
+<summary><strong>Cross-cutting safety and capability boundaries</strong></summary>
+
+- Foundry is a context/resource library, not an execution sandbox.
+- It does not grant filesystem, shell, network, browser or model access.
+- It does not spawn subagents or route models unless the host independently provides those capabilities.
+- A generated host file is not proof that the host discovers it.
+- Installation, updates and removal must preserve user-owned files and detect local modifications.
+
+[Host capability boundaries](integrations/README.md) · [Security boundaries](standards/security-boundaries.md) · [Evidence and verification](standards/evidence-and-verification.md)
+
+</details>
+
+## Coding-agent apps
+
+Foundry can adapt its shared resources for multiple coding-agent apps in one setup. During installation it identifies the active host, then asks which other apps you use. You can select several and type additional names.
+
+<details>
+<summary><strong>Host conventions and what must be verified</strong></summary>
+
+| Host | Common project conventions | Verify in your installed version |
 |---|---|---|
-| **OpenAI Codex** (CLI / app) | `AGENTS.md`, `.agents/skills/` | Skill discovery, app/CLI parity and delegation |
-| **Claude Code** (CLI) | `CLAUDE.md`, `.claude/skills/`, `.claude/agents/` | Skill metadata, permissions, subagents and model overrides |
-| **OpenCode** (CLI) | `AGENTS.md`, `.agents/skills/`, `.opencode/commands/` | Command discovery, agent definitions and model configuration |
-| **Kilo Code / Kilo CLI** | `AGENTS.md`, supported shared skills and Kilo-specific configuration | Named agents, model catalog, session continuation and permissions |
-| **Cline** | `.clinerules` and supported skill resources | Current rules, skills and workflow capabilities |
-| **Other CLI agents** | Their documented project instruction and resource formats | Actual file discovery, tool access and delegation support |
+| **OpenAI Codex** | AGENTS.md, .agents/skills/ | Skill discovery, app/CLI parity, delegation |
+| **Claude Code** | CLAUDE.md, .claude/skills/, .claude/agents/ | Skill metadata, permissions, subagents, model overrides |
+| **OpenCode** | AGENTS.md, .agents/skills/, .opencode/commands/ | Command discovery, agent definitions, model config |
+| **Kilo Code / Kilo CLI** | AGENTS.md, supported shared skills and Kilo config | Named agents, model catalog, sessions, permissions |
+| **Cline** | .clinerules and supported skill resources | Current rules, skills and workflow capabilities |
+| **Cursor, Windsurf, Copilot and others** | Host-specific project instructions and resource formats | Check current official conventions before adapting |
 
-These are adaptation conventions, not a claim that every host/version has passed end-to-end acceptance. A generated file is not proof that the host loads it.
+These are adaptation references, not universal guarantees. Each host is reported separately as documented, generated, structurally validated, discovery-tested, invocation-tested or behaviour-accepted.
 
-### Per-app setup
-
-The interaction is the same: open the target repository in the app, paste the [setup prompt](#quick-start), review the plan and approve the proposed changes.
-
-- **Codex:** open the repository as the active workspace. Ask Codex to initialise Foundry and review its project instructions and shared skills proposal.
-- **Claude Code:** start Claude Code from the target project. Review the CLAUDE.md pointer, skills and optional agent definitions.
-- **OpenCode:** open the project root in the active session. Review AGENTS.md, skill and command mappings against your configuration.
-- **Kilo:** open the target project in Kilo. Confirm which agent, skill and command formats your installed version supports.
-- **Cline:** open the target repository as your VS Code workspace. Review the .clinerules pointer and supported resources.
-- **Other CLI agents:** use the host's normal project/workspace mode. If it can read but not write files, request a plan and apply approved changes through a host with file access.
-
-Do not paste the setup prompt into a chat that is not connected to the target repository.
-
-[Full host integration guide](integrations/README.md)
-
+[Full host integration guide](integrations/README.md) · [Multi-host onboarding skill](skills/host-roster-onboarding/SKILL.md)
 
 </details>
+
+## Community contributions
+
+**No community-contributed resources have been published yet.**
+
+Have a useful skill, workflow, instruction set or template? In a project where Foundry is installed, just tell your coding agent:
+
+> **"I want to contribute."**
+
+Foundry will look for reusable candidates in the project context it can actually access, show you what may be useful to others and help prepare only what you select. Nothing is published without separate approval.
+
+[Contribution guide](CONTRIBUTING.md) · [Contribution discovery skill](skills/contribution-discovery/SKILL.md)
 
 ## Token impact
 
 <details>
-<summary><strong>How Foundry affects input tokens, task efficiency and cost</strong></summary>
+<summary><strong>Does Foundry increase token usage?</strong></summary>
 
-Foundry has a token cost. Every instruction or skill a host includes in a model request consumes input tokens. A file stored in the repository costs nothing until the host loads it.
+Yes, instructions and skills consume input tokens when the host loads them. Files that remain in the repository but are not loaded do not consume prompt tokens.
 
-| Design choice | Immediate effect | Possible task-level effect |
-|---|---|---|
-| Large always-loaded instructions | Higher recurring input tokens | May reduce repeated explanations, but can crowd out useful context |
-| Compact core + selective skills | Small baseline; specialist context only when relevant, if host supports it | Less irrelevant context |
-| One source of truth for project decisions | Short pointers may add tokens | Less repeated reconstruction and contradiction |
-| Load every skill for every task | High recurring overhead | Usually wasteful |
-| Structured assignments and acceptance criteria | Some coordination tokens | May reduce ambiguity and rework |
+Foundry aims for **progressive disclosure**: a compact core, project context when needed, and only the relevant specialist skill for the current task. Loading every resource on every request is not the goal.
 
-**The target is not minimum prompt size. It is minimum total tokens and cost per accepted task.**
-
-```text
-NET TOKEN SAVINGS (conceptual, not a benchmark)
-
-  Repeated explanations avoided
-+ Corrections and rework avoided
-+ Context reconstruction avoided
-- Foundry instructions loaded
-- Extra coordination and verification
-= Net task-level impact
-```
-
-Foundry's intended design is progressive disclosure:
-
-1. Compact core instructions.
-2. The project's own source of truth.
-3. Only the skill or workflow relevant to the current task.
-4. Management guidance only when the user asks to manage Foundry.
-
-Actual loading depends on the host. Some hosts inject files automatically; others load skills on demand or require explicit references. Foundry cannot force selective loading.
-
-Measure **Foundry context overhead**, **correction/rework tokens**, **total tokens per accepted task**, and **actual provider cost** (including input/output rates and cached tokens). There is no published cross-model benchmark or fixed percentage saving yet. A fair benchmark must use the same tasks, host, model, acceptance criteria and cache conditions, and count failed attempts as well as successful ones.
+The right measure is total cost per accepted task, including context overhead, retries, corrections, coordination and verification. There is no published cross-model benchmark or guaranteed percentage saving. Actual loading behaviour depends on the host.
 
 </details>
 
-## Contribute
+## Find your way around the repository
 
 <details>
-<summary><strong>How to discover and contribute reusable skills, instructions and workflows</strong></summary>
+<summary><strong>Repository map and canonical documentation</strong></summary>
 
-Have you built a useful set of instructions, a Claude skill, a Codex workflow, OpenCode commands, Kilo agent profiles, review checklists, settings or templates? Those may be useful to other people.
-
-Say **"I'd like to contribute"** or simply **"contribute"** in a project where Foundry is installed.
-
-The agent scans only accessible project context, compares candidate resources with the Foundry registry, excludes secrets/private data/project-specific state, and shows a numbered shortlist with type, portability, maturity, value and suggested destination.
-
-It then asks one focused question about the strongest candidate. It drafts only what you select. Nothing is committed, uploaded or published without separate approval.
-
-Example:
-
-**Agent:** "I found a reusable onboarding checklist, a review rubric that overlaps with an existing Foundry resource, and a Kilo-specific agent setup. The onboarding checklist looks like the strongest new contribution. Should I generalise it into a portable skill and keep the Kilo-specific parts separate?"
-
-The scan cannot access other chats, global account settings or external services unless the host makes those sources available.
-
-[Contribution discovery skill](skills/contribution-discovery/SKILL.md) · [Contribute command](commands/contribute.md) · [Contribution guide](CONTRIBUTING.md)
-
-
-</details>
-
-## Find your way around the codebase
-
-<details>
-<summary><strong>Repository map and documentation index</strong></summary>
-
-```text
-Agent-Foundry/
-├── core/             Compact baseline instructions
-├── standards/        Engineering, safety and evidence rules
-├── skills/           Detailed task procedures
-├── commands/         User-facing request contracts
-├── workflows/        Multi-step processes and quality gates
-├── profiles/         Specialist responsibilities
-├── templates/        Reusable output and state formats
-├── integrations/     Host conventions and limitations
-├── foundry/          Conversational management and settings
-├── registry/         Machine-readable resource catalog
-├── bootstrap/        First-install assessment
-└── docs/
-    ├── architecture/ Design boundaries and architecture
-    ├── audit/        Source inventory and provenance
-    └── standards/    Resource authoring guidance
-```
-
-| Looking for... | Open... |
+| Path | What lives here |
 |---|---|
-| First installation | [BOOTSTRAP.md](BOOTSTRAP.md) |
-| Full user guide | [docs/USER_GUIDE.md](docs/USER_GUIDE.md) |
-| Core agent instructions | [core/GLOBAL_INSTRUCTIONS.md](core/GLOBAL_INSTRUCTIONS.md) |
-| A particular resource | [registry/resources.yaml](registry/resources.yaml) |
-| Host integration | [integrations/README.md](integrations/README.md) |
-| Orchestration boundaries | [ORCHESTRATION_PORTABILITY.md](docs/architecture/ORCHESTRATION_PORTABILITY.md) |
-| Settings and management | [foundry/](foundry/) |
-| Resource authoring | [CONTRIBUTING.md](CONTRIBUTING.md) |
-| Security policy | [SECURITY.md](SECURITY.md) |
-| Support | [SUPPORT.md](SUPPORT.md) |
-| Change history | [CHANGELOG.md](CHANGELOG.md) |
-
-GitHub also generates a heading outline for this README. Use it to jump directly to a section without scrolling through the page.
+| `core/` | Compact global instructions |
+| `standards/` | Cross-project operating standards |
+| `skills/` | Detailed reusable procedures |
+| `commands/` | User-facing task contracts |
+| `workflows/` | Multi-step processes |
+| `profiles/` | Specialist responsibilities |
+| `templates/` | Reusable records and output structures |
+| `integrations/` | Host-specific conventions and boundaries |
+| `bootstrap/` | Project initialization procedure |
+| `foundry/` | Settings, management and response conventions |
+| `registry/` | Canonical resource catalog |
+| `docs/architecture/` | Architecture and portability decisions |
 
 </details>
 
 > [!IMPORTANT]
 > Agent Foundry does not grant tools, permissions, filesystem/network access, subagent spawning or model routing. It is not a sandbox. The host's real version and configuration determine what works. Documented compatibility is not runtime verification.
 
----
-
-<div align="center">
-
-**The right context, at the right time. Not every instruction in every prompt.**
-
-[Quick start](#quick-start) · [Feature menu](#feature-menu) · [Contribute](#contribute) · [Changelog](CHANGELOG.md)
-
-</div>
+[User guide](docs/USER_GUIDE.md) · [Changelog](CHANGELOG.md) · [Contributing](CONTRIBUTING.md) · [License](LICENSE)
