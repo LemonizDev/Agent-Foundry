@@ -153,6 +153,7 @@ All project commands accept `--project PATH`.
 | `update` | Preview updates; use `--apply` after reviewing |
 | `uninstall` | Preview removal; use `--apply` and confirm |
 | `route --task "…"` | Recommend a model from the project's roster |
+| `models explain --task "…"` | Explain task classification, model eligibility and selection rationale |
 | `settings` | Show configuration file locations |
 | `version` | Print CLI version |
 | `help` | Show usage |

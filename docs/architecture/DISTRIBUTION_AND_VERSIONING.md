@@ -24,10 +24,11 @@ The CLI is the intended deterministic path:
 
 The package is currently installable from GitHub; it has not been published to the npm registry. The package name in package.json is agent-foundry.
 
-The v0.4 CLI currently:
+The v0.5 CLI currently:
 - Detects project structure and existing agent-host signals without executing project code.
 - Offers project-aware presets and explicit resource IDs.
-- Resolves the selected ref to an immutable commit SHA and downloads resources from that exact revision.
+- Uses the registry and resources bundled in the installed package by default, keeping the CLI and its resource set version-aligned without a second network dependency.
+- When `--ref` or `--repository` is explicitly supplied, resolves the remote ref to an immutable commit SHA and downloads resources from that exact revision.
 - Copies only selected resources and generates host-native skill, command and profile files for detected hosts.
 - Preserves existing instructions and local modifications using ownership hashes.
 - Generates a JSON manifest and concise host-specific entrypoints.
@@ -66,7 +67,7 @@ project/
 .cline/skills/        # Cline
 ```
 
-The portable `.agents/skills` directory is created as the shared baseline. Additional host-specific files are generated only when their host is detected. The manifest records the exact installed file list and the immutable source commit.
+The portable `.agents/skills` directory is created as the shared baseline. Additional host-specific files are generated only when their host is detected. The manifest records the exact installed file list, Foundry version and source identity. Bundled installs record a `bundled-<version>` ref with no Git commit SHA; remote installs record the resolved immutable commit SHA.
 
 ## Selection model
 
@@ -95,7 +96,7 @@ Use Git as the canonical history and distribution mechanism.
 - Use prerelease tags such as v0.3.0-rc.1 while validating.
 - Do not install from a moving branch for production use unless the user explicitly chooses a development channel.
 
-The CLI records both the requested ref and resolved commit SHA in the installation manifest. Resource downloads use the resolved SHA rather than a moving branch. Stable installs should use a tagged release or explicit commit SHA. Initially, resource versions are tied to the Foundry release in which they are distributed. Keep an individual resource version only where independent compatibility or lifecycle decisions require it. Avoid inventing a package-management system prematurely.
+The CLI records the Foundry version and selected source identity in the installation manifest. Bundled installs use the exact resources shipped with that package. Remote installs resolve the requested ref and use the immutable SHA for all resource downloads. Stable installs should use a tagged release or explicit commit SHA. Initially, resource versions are tied to the Foundry release in which they are distributed. Keep an individual resource version only where independent compatibility or lifecycle decisions require it. Avoid inventing a package-management system prematurely.
 
 ## Updates
 

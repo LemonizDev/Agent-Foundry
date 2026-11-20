@@ -105,7 +105,7 @@ The CLI can also be invoked through npx using the GitHub package spec shown abov
 - The manifest records hashes so updates can detect local edits.
 - The model roster belongs to the consuming project. Never store API keys or provider credentials in it.
 - The CLI generates host-specific skills, commands and specialist agent files for detected Codex-compatible, Claude Code, OpenCode, Kilo Code and Cline projects. Runtime discovery and execution have not yet been validated inside every host.
-- The CLI downloads the registry and resources from GitHub over HTTPS. Signed releases and stronger provenance verification are planned.
+- By default, the CLI reads the registry and resources bundled inside its installed package; it does not require GitHub API access during installation. Supplying `--ref` or `--repository` explicitly opts into remote GitHub resources, resolved to an immutable commit SHA. Signed releases and stronger provenance verification are planned.
 - The CLI is not a sandbox and does not grant safe autonomous execution to the coding agent.
 
 For detailed existing-project migration, read [Existing Project Integration](docs/architecture/EXISTING_PROJECT_INTEGRATION.md). For product concepts and command usage, read the [User Guide](docs/USER_GUIDE.md).

@@ -2,7 +2,7 @@
 
 This guide is for developers using Agent Foundry in a real project. It explains the intended operating model, the commands, how context is maintained, how model delegation works, and how to adopt Foundry without rebuilding an existing codebase.
 
-> **Capability note:** Agent Foundry v0.4 includes a project-aware CLI, additive installer, manifest-based updates/uninstall, host-specific skill/command/profile file generation and a task-aware model recommendation engine. Host files are generated and unit-tested, but native command discovery and execution still require validation inside each supported host. The model router recommends from the owner roster; it does not dispatch providers or subagents. `/close` captures durable context but cannot close the chat UI unless the host exposes a supported API.
+> **Capability note:** Agent Foundry v0.5 includes a project-aware CLI, additive installer, manifest-based updates/uninstall, host-specific skill/command/profile file generation and a task-aware model recommendation engine. Host files are generated and unit-tested, but native command discovery and execution still require validation inside each supported host. The model router recommends from the owner roster; it does not dispatch providers or subagents. `/close` captures durable context but cannot close the chat UI unless the host exposes a supported API.
 
 ## 1. What problem does Agent Foundry solve?
 
@@ -72,7 +72,7 @@ This inspects the project and prints a read-only installation plan. To apply the
 npx --yes --package github:LemonizDev/Agent-Foundry agent-foundry init --preset auto --apply
 ```
 
-The CLI asks for explicit confirmation. Every preset and explicit resource selection includes the universal core baseline. Use `--skip-conflicts` to leave existing paths untouched and install the remaining resources. If the project is new and has no host configuration files to detect, pass the host explicitly, for example `--hosts kilo,cline` or `--hosts claude-code,opencode`.
+The CLI asks for explicit confirmation. By default it reads the registry and resource files bundled with the installed package, so it does not make a second GitHub API request during installation. Supplying `--ref` or `--repository` opts into a remote, commit-pinned source. Every preset and explicit resource selection includes the universal core baseline. Use `--skip-conflicts` to leave existing paths untouched and install the remaining resources. If the project is new and has no host configuration files to detect, pass the host explicitly, for example `--hosts kilo,cline` or `--hosts claude-code,opencode`.
 
 Useful commands:
 
@@ -84,7 +84,7 @@ Useful commands:
 - `agent-foundry update` — preview updates; use `--apply` after reviewing.
 - `agent-foundry uninstall` — preview removal; use `--apply` and type `uninstall` to confirm.
 
-Updates and uninstall preserve owner-modified files. The installer records an immutable source commit and refuses path traversal or symlinked destinations. See [BOOTSTRAP.md](../BOOTSTRAP.md) for the complete procedure and limitations.
+Updates and uninstall preserve owner-modified files. Bundled installs record the Foundry package version and bundled source identity; remote installs record an immutable commit SHA. The installer refuses path traversal or symlinked destinations. See [BOOTSTRAP.md](../BOOTSTRAP.md) for the complete procedure and limitations.
 
 
 
