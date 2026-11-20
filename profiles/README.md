@@ -1,39 +1,17 @@
 # Agent Profiles
 
-An agent profile describes a role's mission, responsibilities, decision boundaries, required resources and non-goals. It does not grant the host new tools, permissions or subagent capabilities.
+An agent profile describes a role's mission, responsibilities, decision boundaries, required context and non-goals. It does not grant the host new tools, permissions or subagent capabilities.
 
-Profiles are standalone Markdown files named after the role. Select only the roles that the target coding-agent platform can actually support.
-
-## Available profiles
+Select only roles that the target coding-agent host can actually support. Profiles are optional resources, not mandatory installation content.
 
 | Profile | Responsibility | Best used when |
 |---|---|---|
-| [Lead Engineer](lead-engineer.md) | Owns delivery, architecture, delegation, integration and final verification | One agent or team is accountable for the overall result |
-| [Independent Reviewer](independent-reviewer.md) | Challenges requirements, implementation, evidence and risks | A separate review pass is needed |
-| [Visual Quality Engineer](visual-quality-engineer.md) | Evaluates visual output and regression evidence | The product has a visual/rendered interface |
-| [Graphics Engineer](graphics-engineer.md) | Owns rendering architecture, materials and compositing | Graphics/rendering implementation is in scope |
-| [Creative Director](creative-director.md) | Translates visual/product intent into acceptance criteria | Design direction needs to be coordinated with engineering |
-| [Performance QA](performance-qa.md) | Measures frame-time, resource use and stability | Performance is a product requirement |
-| [Creative Lighting Director](creative-lighting-director.md) | Defines music-reactive lighting behaviour | Optional specialist for audio-reactive visual projects |
+| Lead Engineer | Owns delivery, architecture, integration and final verification | One agent or team is accountable for the outcome |
+| Independent Reviewer | Challenges requirements, implementation, evidence and risks | A separate review pass is needed |
+| Visual Quality Engineer | Evaluates visual output and regression evidence | The product has a rendered interface |
+| Graphics Engineer | Owns rendering architecture, materials and compositing | Graphics implementation is in scope |
+| Creative Director | Translates visual intent into acceptance criteria | Design and engineering need coordination |
+| Performance QA | Measures frame-time, resource use and stability | Performance is a product requirement |
+| Creative Lighting Director | Defines music-reactive lighting behaviour | Audio-reactive visuals are in scope |
 
-## Source-derived role families
-
-Dhan AI Trader contributes patterns for architecture, code review, QA, security, database migration, backend engineering, SRE, performance, observability, documentation, LLM/agent quality and integrations.
-
-Lively Wallpaper contributes creative direction, graphics engineering, visual QA and audio-reactive lighting direction.
-
-Only the profiles listed above have been extracted into the current catalogue. Other role families remain candidates until their source definitions are inspected and generalised.
-
-
-## Installation presets
-
-Presets are resource bundles, not specialist-agent profiles. They select a coordinated set of skills, commands, workflows, standards and templates:
-
-- `minimal` — compact project continuity and evidence baseline.
-- `balanced` — common engineering procedures and commands.
-- `autonomous-engineer` — multi-agent delegation, campaign execution, recovery and model-aware routing.
-- `visual-engineer` — autonomous engineering plus visual regression, probes, graphics and performance QA.
-- `research-engineer` — research-oriented workflow and privacy-safe evidence.
-- `auto` — autonomous baseline plus visual resources when project structure signals a graphics/rendering project.
-
-Use the CLI's `--preset` option. The project scanner is heuristic; review the proposed resource list before applying it.
+Profiles are installed selectively when the project and host can use them.
