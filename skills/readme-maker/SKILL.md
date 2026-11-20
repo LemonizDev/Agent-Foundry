@@ -73,7 +73,7 @@ Adapt and omit sections that do not apply. A small library may need only a short
 - Keep visual language consistent across banner, diagrams and screenshots.
 - Never invent screenshots, product behaviour, status metrics, contributor counts or benchmark claims.
 
-## GitHub Markdown and visual conventions
+## Navigation hierarchy and dropdown rendering\n\n- GitHub `<details>` is a disclosure widget, not a complete tree visualization. Nested accordions may look like a flat list because the rendered indentation is weak. Always pair deep navigation with a Mermaid hierarchy map when the menu is complex.\n- Keep depth intentional: goal category → subcategory/resource family → resource item → usage details. Avoid an accordion forest with five levels just because Markdown permits it.\n- Use a short description next to each category. Resource leaves need a distinct title and one-sentence purpose; command leaves also need invocation and example.\n- For resource detail, prioritize direct links and actionable detail over repetitive boilerplate that restates the registry description twice.\n\n## GitHub Markdown and visual conventions
 - Prefer GitHub Flavored Markdown; use native HTML only when it materially improves navigation/layout.
 - Keep details summaries short and descriptive.
 - Use GitHub Alerts (NOTE, TIP, IMPORTANT, WARNING, CAUTION) only for semantically important callouts. One high-value warning beats colour-coding every dialogue step.
@@ -91,7 +91,7 @@ Adapt and omit sections that do not apply. A small library may need only a short
 - Quick start explains where to run it, what to paste/run, what the agent inspects, when approval is needed and what happens afterwards.
 - Onboarding covers new, healthy existing and context-needs-repair project paths.
 - Multi-host setup identifies the active host, asks which other apps the user uses, supports multiple selections and free-text additions, and distinguishes project-local setup from global app configuration.
-- The feature tree covers every registry resource, validated by matching registry paths rather than relying on labels or filenames, and links to canonical detail. Individual resource entries can be their own nested dropdowns when the user asks for deep navigation.
+- The feature tree covers every registry resource, validated by matching registry paths rather than relying on labels or filenames, and links to canonical detail. Use a visible Mermaid overview map and grouped accordions by user goal, then resource kind, then individual item. Never rely on nested details alone to communicate hierarchy: GitHub may render nested summaries with nearly identical indentation.\n- Avoid excessive nested levels. The main feature groups should remain scannable, with resource-kind groups and only useful individual detail panels. For each command panel include what it does, when to use it, exact invocation, example, expected result and full contract link.
 - Every section has a purpose; repeated claims and filler are removed.
 - Examples are realistic, brief and conclude with an outcome/next action.
 - Alerts are not decorative quote boxes.
