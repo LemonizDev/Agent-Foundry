@@ -49,6 +49,8 @@ Commands should remain thin. Put reusable procedures in skills, orchestration in
 
 This is a default, not ceremony. Small changes may combine implementation and verification. High-risk changes should retain independent review and explicit approval gates.
 
+Use `/close` when you want durable project context retained. Use `/done` only when the session contains a potentially reusable project artefact; it classifies and saves qualified material and rejects empty or low-value sessions without writing a transcript.
+
 ## Shared behaviour rules
 
 ### Scope and ambiguity
