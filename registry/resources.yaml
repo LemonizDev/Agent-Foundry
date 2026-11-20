@@ -247,7 +247,7 @@ resources:
     status: draft
     portability: universal
   - id: close-session
-    description: "Captures useful project learnings before a chat ends without generating a transcript dump."
+    description: "Preserves durable project context at session end without creating transcript dumps or new reusable resource types."
     aliases: [close, "close session", "close chat"]
     type: command
     path: commands/close-session.md
@@ -549,6 +549,37 @@ resources:
     description: "Discovers the user's active and additional coding-agent hosts, then plans safe multi-host project integration with per-host verification."
     type: skill
     path: skills/host-roster-onboarding/SKILL.md
+    version: 0.1.0
+    status: draft
+    portability: universal
+
+  - id: feature-menu-architect
+    description: "Inspects a project and plans a user-goal-led feature menu with classified resource types, Mermaid hierarchy diagrams and resource-level usage panels."
+    type: skill
+    path: skills/feature-menu-architect/SKILL.md
+    version: 0.1.0
+    status: draft
+    portability: universal
+  - id: session-resource-curation
+    description: "Applies a strict quality bar to reusable artefacts from a chat session, classifies them by resource type and stores qualified material in canonical project locations."
+    type: skill
+    path: skills/session-resource-curation/SKILL.md
+    version: 0.1.0
+    status: draft
+    portability: universal
+  - id: done
+    description: "Ends a productive session by classifying and saving worthwhile reusable project resources, and rejects the operation without writing when nothing qualifies."
+    type: command
+    path: commands/done.md
+    aliases: [done, "/done"]
+    dependencies: [session-resource-curation, session-learning]
+    version: 0.1.0
+    status: draft
+    portability: adaptable
+  - id: readme-template
+    description: "Provides an adaptable project-first README structure with manual navigation, overview, architecture, installation, usage, documentation and contribution sections."
+    type: template
+    path: templates/README_TEMPLATE.md
     version: 0.1.0
     status: draft
     portability: universal
