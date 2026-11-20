@@ -413,6 +413,8 @@ First identify the surface: VS Code, Visual Studio, GitHub.com, Copilot CLI or C
 
 </details>
 
+</details>
+
 ## Community contributions
 
 **No community-contributed resources have been published yet.**
