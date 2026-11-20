@@ -5,6 +5,13 @@ type: profile
 version: 0.2.0
 portability: universal
 status: draft
+sources:
+  - repository: LemonizDev/dhan-chatgpt-connector
+    ref: foundation/final-trader-architecture
+    path: AGENTS.md and orchestration/README.md
+  - repository: LemonizDev/futuristic-lively-wallpaper
+    ref: main
+    path: AGENTS.md
 ---
 
 # Lead Engineer / Orchestrator
