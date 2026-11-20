@@ -57,6 +57,34 @@ sections that help its real users. Replace all bracketed placeholders.
 
 [Show the most valuable user-facing capabilities. Prefer an illustrated overview or short list before exposing deep technical detail.]
 
+## Feature menu
+
+Use the Feature Menu Architect skill to inspect the project, classify user-goal families and resource kinds, and design the menu before filling it in. Do not copy a generic category list into every project.
+
+```mermaid
+flowchart TD
+    P[Project capabilities] --> A[User goal]
+    A --> B[Capability family]
+    B --> C[Resource type]
+    C --> D[Named resource]
+    D --> E[Usage / example / canonical detail]
+```
+
+<details>
+<summary><strong>[Project-specific feature group]</strong></summary>
+
+[One-sentence user goal and when this group is useful.]
+
+<details>
+<summary>[Resource family or type]</summary>
+
+- **[Resource name]** — [short purpose]. [Canonical link]
+
+</details>
+</details>
+
+[Include only groups supported by the repository inventory. Every public resource must either appear or have an explicit exclusion reason.]
+
 ## How it works
 
 [Explain the system with a Mermaid diagram or screenshot when the architecture materially helps a newcomer.]
