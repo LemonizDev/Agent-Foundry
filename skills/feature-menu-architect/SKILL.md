@@ -133,6 +133,19 @@ Adapt categories to the project. Do not force every command into a generic "comm
 - Keep summaries short, consistent and human-readable.
 - Ensure every expanded leaf has enough context to decide whether to open the canonical resource.
 
+### Command resource drill-down
+
+For command-heavy projects, a command's leaf panel should expose the questions users actually have as separate subpanels:
+- What it does.
+- When to use it.
+- How to invoke it (exact syntax, but label host-native invocation as unverified where appropriate).
+- Example usage.
+- Expected result/output.
+- Dependencies, permissions and approval requirements.
+- Link to the complete command contract.
+
+Keep examples short and tied to the command's real contract. Do not invent flags, arguments or behaviour. For skills, standards, profiles, workflows and templates, use a shorter leaf format appropriate to that resource type. Do not multiply disclosure widgets just to make the page look interactive.
+
 ## 5. Design leaf-resource panels
 
 Use deeper, topic-level nested dropdowns primarily for commands, because a command has a user-facing invocation and an actionable output contract. For non-command types, a concise resource leaf with a one-line purpose and canonical link is usually clearer. Add further panels only when the project inspection demonstrates distinct user questions.
