@@ -35,11 +35,16 @@ A command describes an invocation contract; it does not prove that a host expose
 - [Management Instructions](../foundry/MANAGEMENT.md) — discovery, settings, installation, updates, removal, diagnostics and contribution discovery.
 - [Settings Specification](../foundry/SETTINGS_SPEC.md) — authoritative supported settings.
 - [Response Templates](../foundry/RESPONSE_TEMPLATES.md) — context-aware conversational response structures.
-- [Resource Registry](../registry/resources.yaml) — discoverable resource catalog.\n- [README Maker](../skills/readme-maker/SKILL.md) — project-first Markdown and README standards.\n- [Feature Menu Architect](../skills/feature-menu-architect/SKILL.md) — project inspection and hierarchical menu planning.\n- [README Template](../templates/README_TEMPLATE.md) — reusable project-first README structure.\n- [Done Command](../commands/done.md) — reusable resource curation from a productive session.\n- [README Maker](../skills/readme-maker/SKILL.md) — project-first Markdown/README structure and visual design.\n- [Feature Menu Architect](../skills/feature-menu-architect/SKILL.md) — project inspection, feature classification and hierarchical menu planning.\n- [README Template](../templates/README_TEMPLATE.md) — adaptable README page structure.
+- [Resource Registry](../registry/resources.yaml) — discoverable resource catalog.
+- [README Maker](../skills/readme-maker/SKILL.md) — project-first Markdown and README standards.
+- [Feature Menu Architect](../skills/feature-menu-architect/SKILL.md) — project inspection and hierarchical menu planning.
+- [README Template](../templates/README_TEMPLATE.md) — reusable project-first README structure.
+- [Done Command](../commands/done.md) — reusable resource curation from a productive session.
 
 ## Author and contribute
 - [Contribution Discovery Skill](../skills/contribution-discovery/SKILL.md) — safely identify reusable user-created material.
-- [Contribute Command](../commands/contribute.md) — user-facing contribution trigger.\n- [Done Command](../commands/done.md) — strict session resource curation and persistence.\n- [Session Resource Curation](../skills/session-resource-curation/SKILL.md) — classify, quality-check and route reusable session artefacts.
+- [Contribute Command](../commands/contribute.md) — user-facing contribution trigger.
+- [Session Resource Curation](../skills/session-resource-curation/SKILL.md) — classify, quality-check and route reusable session artefacts.
 - [Resource Authoring Standard](standards/RESOURCE_AUTHORING_STANDARD.md).
 - [Contributing Guide](../CONTRIBUTING.md).
 - [Code of Conduct](../CODE_OF_CONDUCT.md).
