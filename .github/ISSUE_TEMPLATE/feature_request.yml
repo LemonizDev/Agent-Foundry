@@ -1,31 +1,25 @@
 name: Feature request
-description: Propose a user problem and a practical improvement.
+description: Suggest an improvement to Agent Foundry.
 title: "[Feature]: "
 labels: ["enhancement"]
 body:
   - type: markdown
     attributes:
       value: |
-        Start with the problem, not a proposed pile of configuration. Check existing issues and the documentation first.
+        Search existing issues first. Describe the user problem, not only the proposed mechanism.
   - type: textarea
     id: problem
     attributes:
-      label: What problem are you trying to solve?
-      description: Who encounters it, and in what situation?
+      label: What problem does this solve?
+      description: What workflow or outcome is currently difficult?
+      placeholder: A clear, concise description of the user need.
     validations:
       required: true
   - type: textarea
-    id: current
+    id: proposal
     attributes:
-      label: Current workaround
-      description: How do you handle this today? What is missing?
-    validations:
-      required: true
-  - type: textarea
-    id: outcome
-    attributes:
-      label: Desired outcome
-      description: Describe the user-visible result. Avoid prescribing implementation unless necessary.
+      label: Proposed approach
+      description: How should Agent Foundry address it? Consider context-file and conversational solutions.
     validations:
       required: true
   - type: textarea
@@ -40,7 +34,7 @@ body:
       multiple: true
       options:
         - Resource library
-        - CLI / installer
+        - Conversational management
         - Coding-agent host integration
         - Model delegation
         - Documentation

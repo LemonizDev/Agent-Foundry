@@ -21,7 +21,6 @@
 
 - [ ] `npm test`
 - [ ] `npm run validate:repo`
-- [ ] `npm pack --dry-run` (when package contents or release behaviour changes)
 - [ ] Documentation links and examples checked
 - [ ] Manual host acceptance test performed where applicable
 

@@ -1,11 +1,20 @@
 {
-  "name":"agent-foundry","version":"0.5.0-dev.1",
-  "description":"A project-aware engineering environment for AI coding agents.",
-  "type":"module","engines":{"node":">=20"},
-  "bin":{"agent-foundry":"./bin/agent-foundry.js"},"exports":{".":"./src/index.js"},
-  "scripts":{"test":"node --test","validate":"npm run validate:repo","check":"npm test && npm run validate:repo","validate:repo":"node ./scripts/validate-repository.js && node ./scripts/lint-repository.js","validate:project":"node ./bin/agent-foundry.js validate","prepack":"npm run check"},
-  "dependencies":{"js-yaml":"^4.1.0"},"license":"MIT",
-  "repository":{"type":"git","url":"https://github.com/LemonizDev/Agent-Foundry.git"},
-  "keywords":["ai-agents","coding-agents","agentic-engineering","developer-tools"],
-  "files":["bin/","src/","core/","registry/","templates/","skills/","commands/","profiles/","workflows/","standards/","integrations/","docs/","assets/","bootstrap/","BOOTSTRAP.md","README.md","LICENSE","SECURITY.md","CONTRIBUTING.md","CODE_OF_CONDUCT.md","SUPPORT.md","CHANGELOG.md"]
+  "name": "agent-foundry",
+  "version": "0.6.0-dev.1",
+  "private": true,
+  "description": "A lightweight, project-specific context system for AI coding agents, managed entirely through conversation.",
+  "type": "module",
+  "scripts": {
+    "test": "node --test",
+    "validate:repo": "node ./scripts/validate-repository.js && node ./scripts/lint-repository.js",
+    "check": "npm test && npm run validate:repo"
+  },
+  "devDependencies": {
+    "js-yaml": "^4.1.0"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LemonizDev/Agent-Foundry.git"
+  }
 }
