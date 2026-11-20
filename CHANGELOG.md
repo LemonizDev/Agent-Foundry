@@ -2,6 +2,32 @@
 
 Unreleased entries describe development work, not release readiness.
 
+## Unreleased — v0.6 context-first redesign
+
+### Product architecture
+- Reframed Agent Foundry as context files and a resource registry managed by the consuming project's existing coding agent.
+- Added conversational management instructions, an authoritative settings specification and reusable chat response templates.
+- Defined progressive disclosure, project-specific resource selection and host capability boundaries.
+- Removed the CLI executable, engine source, engine-coupled tests and npm release workflow.
+- Kept npm tooling private and development-only for repository validation and tests.
+
+### Quality and documentation
+- Replaced the validator's dependency on deleted engine modules with direct registry validation, including safe paths and dependency-cycle detection.
+- Removed CLI-specific CI steps and package dry-run checks.
+- Added regression tests preventing the executable and obsolete CLI documentation from returning.
+- Rewrote the README, bootstrap guide, user guide, host integration guide, architecture references, contribution and security guidance for the context-first model.
+
+### Validation boundary
+- Automated repository checks must pass on the new branch before review.
+- Actual installation, natural-language discovery and lifecycle acceptance still require testing inside each supported coding-agent host.
+- No merge or stable release is implied by this development branch.
+
+## Unreleased entries from v0.5 development
+
+# Changelog
+
+Unreleased entries describe development work, not release readiness.
+
 ## Unreleased — v0.5 development
 
 ### Engine and installer
