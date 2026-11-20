@@ -1439,6 +1439,17 @@ Current settings, validated proposed changes and a concise diff.
 Discover reusable practices in the current project and prepare selected material for contribution.
 
 <details>
+<summary>Community-contributed resources</summary>
+
+**No community-contributed resources have been published yet.**
+
+Have a reusable skill, command, workflow or template? Tell your coding agent: **"I want to contribute."** It will inspect accessible project context, show candidates and help prepare only what you select. Publication still needs separate approval.
+
+[Contribution guide](CONTRIBUTING.md)
+
+</details>
+
+<details>
 <summary>Contribution discovery</summary>
 
 <details>
