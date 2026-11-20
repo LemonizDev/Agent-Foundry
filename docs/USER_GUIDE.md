@@ -236,9 +236,9 @@ Uninstall removes only unchanged Foundry-owned resources and marked instruction 
 
 ## 13. Current implementation status
 
-The v0.4 branch includes a working Node.js CLI for inspection, presets, plan-first installation, host-native resource generation, manifest/hash tracking, settings validation, model recommendation, preview-first updates and uninstall. The source registry is pinned to an immutable commit SHA, and the installer includes rollback and path/symlink protections.
+The v0.5 development branch includes a Node.js CLI for inspection, presets, plan-first installation, host-native resource generation, manifest/hash tracking, settings validation, model recommendation, preview-first updates and uninstall. Registry and resource files are loaded from the installed package by default; explicit `--ref` or `--repository` options select a remote source resolved to an immutable commit SHA. The installer includes rollback, path/symlink protections and empty-directory pruning on uninstall.
 
-CI covers Node 20 and 22 on Ubuntu, Windows and macOS. Tests cover registry integrity, installer lifecycle, host artifact generation, model routing and canonical documentation links.
+The current head passes the configured Node.js 20/22 matrix on Ubuntu, Windows and macOS. The suite has 48 passing tests; repository validation covers 64 resources; lint checks 121 files; and `npm pack --dry-run` includes 98 files. Native host discovery and invocation still require acceptance testing inside each supported coding-agent host.
 
 The remaining release gates are:
 - verify native command discovery and execution inside each supported coding-agent host and document exact versions;
