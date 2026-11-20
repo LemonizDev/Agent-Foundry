@@ -50,6 +50,6 @@ The agent follows commands/contribute.md and skills/contribution-discovery/SKILL
 
 Foundry provides portable assignment, recovery and campaign-state contracts. Ask "delegate this task" or "show campaign status". The host must actually support subagents for automatic dispatch; otherwise the agent should produce bounded assignments for manual execution. See docs/architecture/ORCHESTRATION_PORTABILITY.md for Codex, Claude Code, OpenCode, Kilo and Cline boundaries.
 
-## 9. Safety boundary
+## 9. End a session and preserve reusable resources\n\nUse `/close` to preserve durable project context such as requirements, decisions, verified lessons and current state. Use `/done` when the conversation produced a reusable project artefact worth keeping. `/done` classifies it as a command, skill, workflow, standard, profile, template, integration or documentation update, checks for duplicates and routes it to the canonical directory. If nothing meets the quality threshold, it rejects the operation and writes nothing. It does not save a transcript. See [Done command](../commands/done.md) and [Session Resource Curation](../skills/session-resource-curation/SKILL.md).\n\n## 10. Safety boundary
 
 Foundry is not a sandbox. The host controls tools, permissions, network access and execution. Inspect before editing, use minimal diffs, obtain approval for destructive actions and verify the result.
