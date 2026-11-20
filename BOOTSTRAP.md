@@ -1,28 +1,45 @@
-# Use Agent Foundry in a project
+# Install Agent Foundry
 
-You do not need to download a ZIP or manually browse this repository.
+Agent Foundry is installed and managed through your existing AI coding agent. There is no separate installer, CLI or management application.
 
-## Agent-first setup
+## First installation
 
-Open your coding agent in the project you want to configure and send:
+Open the coding agent in the target project and ask:
 
-> Initialize this project with Agent Foundry: https://github.com/LemonizDev/Agent-Foundry  
-> Read BOOTSTRAP.md and bootstrap/INITIALIZE_PROJECT.md from that repository. Inspect this project first, select only relevant resources, preserve my existing instructions and files, and show me the installation plan before writing anything.
+> Install Agent Foundry in this project from https://github.com/LemonizDev/Agent-Foundry. Read BOOTSTRAP.md and bootstrap/INITIALIZE_PROJECT.md. Inspect this project first, including existing instructions, architecture, tests and host conventions. Recommend only relevant resources, identify conflicts, show the exact files you plan to create or modify, and wait for my approval before writing.
 
-The agent inspects the project, selects relevant resources, explains what it intends to add, and installs the approved selection.
+The agent should confirm the project root and host, inspect existing practices, read the Foundry registry and relevant resources, select only what is needed, resolve an immutable source revision where possible, distinguish managed from user-owned files, preview changes, wait for approval, apply and verify.
 
-## Intended project layout
+Do not install the entire registry by default. Do not overwrite existing AGENTS.md, CLAUDE.md, project documentation or local rules. Prefer a small additive pointer when the host supports it safely.
 
-    your-project/
-    ├── AGENTS.md
-    └── .agent-foundry/
-        ├── manifest.yaml
-        ├── instructions.md
-        ├── resources/
-        └── README.md
+## Host limitations
 
-The installer must never replace an existing AGENTS.md, silently overwrite user-authored files, or install every resource by default.
+The host must provide repository access and permission to read and write project files. Some hosts may not fetch remote repositories, discover context files automatically or support every resource type. If a capability is unavailable, explain the limitation and use the smallest host-native fallback. Never claim success merely because a plan was printed.
 
-## Current status
+## Installed project state
 
-The agent-first initialization contract is documented. A tested cross-platform CLI and native tool adapters are still under development. Until released, initialization is agent-executed and must be reviewed before files are changed.
+A minimal installation may contain:
+
+    .agent-foundry/
+    ├── manifest.json
+    ├── instructions.md
+    ├── settings/
+    │   └── foundry-settings.yaml
+    └── resources/
+        └── selected resources only
+
+Actual files depend on the approved selection and host. The full source registry stays in the Agent Foundry repository; it is not copied into every project.
+
+## Managing the installation
+
+Use natural language in the same coding-agent conversation: show settings, make reviews stricter, discover resources, update Foundry, check the setup or remove Foundry.
+
+The agent consults management instructions and the settings specification, inspects actual project state, previews consequential changes, preserves user content and verifies its work.
+
+## Source and versioning
+
+Record the source repository and resolved tag or commit SHA in .agent-foundry/manifest.json. A moving branch name is not a reproducible version. If the host cannot resolve or record a revision, mark the source version as unknown rather than inventing one.
+
+## Safety
+
+Foundry management is bounded by the coding agent's existing permissions. Approval in conversation does not create a security sandbox. Do not expose secrets, run untrusted code to classify a project, or delete files that are not clearly Foundry-managed.

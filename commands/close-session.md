@@ -2,7 +2,7 @@
 id: close-session
 name: Close Session
 type: command
-version: 0.1.0
+version: 0.2.0
 portability: adaptable
 status: draft
 aliases:
@@ -17,36 +17,26 @@ dependencies:
 # Close Session
 
 ## Invocation
+`/close`, `/close session` or `/close chat`
 
-`/close`, `/close session`, or `/close chat`
+## Purpose
+Prepare the project for the next session by preserving durable, verified knowledge in the correct existing source of truth. This is not a transcript export.
 
-## Intent
+## Execution
+1. Review the session for requirements, decisions, conventions, verified fixes and stable preferences.
+2. Separate confirmed facts, proposals, unresolved questions and temporary observations.
+3. Route each durable item to its canonical file.
+4. Check for duplicates, contradictions and stale information.
+5. Present proposed changes and material conflicts when approval is required.
+6. Apply only permitted changes and preserve history.
+7. Verify modified files and update progress/changelog where appropriate.
+8. Summarise what was captured and what remains unresolved.
 
-Prepare the current conversation to be safely ended by extracting durable project learnings and updating the appropriate existing context files. This is not a generic handoff generator and not a transcript archive.
-
-## Behaviour
-
-1. Run the Durable Session Learning skill.
-2. Identify useful project-specific requirements, stable preferences, technical decisions, conventions, verified lessons and proposals.
-3. Route each item to its canonical context file.
-4. Check for duplicates and conflicts.
-5. Make justified updates under the project's normal write permissions.
-6. Verify every modified file.
-7. Return a compact capture report with changed files and excluded transient information.
+## Routing
+Requirements -> product context; architecture decisions -> architecture/decision register; stable preferences -> owner context; conventions -> engineering instructions; verified failure modes -> runbook/skill; milestone state -> roadmap; completed user-visible work -> changelog; model capability observations -> roster only with bounded evidence and date.
 
 ## Safety
-
-- Do not persist emotional content or conversational filler.
-- Do not invent facts or model capability ratings.
-- Do not silently overwrite conflicting decisions.
-- Do not create HANDOFF.md unless the project already uses one or the owner explicitly requests one.
-- Do not claim to close the actual chat unless the host exposes a tested chat-control capability.
+Do not persist emotional content, filler, raw transcripts or speculation as facts. Do not silently overwrite conflicting decisions. Do not create `HANDOFF.md` unless the project uses it or the owner asks. Do not claim to close the chat UI unless the host exposes tested session control.
 
 ## Output
-
-- Learnings captured, grouped by type.
-- Files updated.
-- Verification performed.
-- Items deliberately not captured.
-- Conflicts requiring owner decision.
-- Clear statement that the chat can now be closed manually if the host cannot close it.
+Learnings captured, files changed, verification, items excluded, unresolved conflicts and whether the chat must be closed manually.

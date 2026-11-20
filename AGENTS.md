@@ -1,74 +1,36 @@
 # Agent Foundry Repository Instructions
 
-These instructions govern agents maintaining Agent Foundry itself. They are not the initialization instructions for projects that consume it.
-
-For target-project setup, use BOOTSTRAP.md and bootstrap/INITIALIZE_PROJECT.md.
+These instructions govern agents maintaining this source repository, not consuming projects.
 
 ## Mission
 
-Maintain a reliable, understandable, open-source library of reusable AI coding-agent resources and the tools that install them into other projects.
+Maintain a small, high-quality library of reusable context files and resource definitions for AI coding agents. Agent Foundry is context, not an application. The consuming project's existing coding agent is the only management interface.
 
 ## Read order
 
-Before substantial work:
-1. README.md — product promise and navigation.
-2. docs/architecture/RESOURCE_MODEL.md — resource boundaries.
-3. docs/architecture/DISTRIBUTION_AND_VERSIONING.md — installation and release design.
-4. docs/EXTRACTION_REGISTER.md — provenance and extraction status.
-5. The relevant resource and authoring standard.
+Before substantial work, read README.md, foundry/MANAGEMENT.md, foundry/SETTINGS_SPEC.md, docs/architecture/CONTEXT_ARCHITECTURE.md, registry/resources.yaml and the relevant resource.
 
-## Product principles
+## Product boundaries
 
-- Make the project understandable to a developer who has never seen the source projects.
-- Keep setup simple; users should not need to understand the taxonomy to initialise a project.
-- Select resources based on project context; do not install the whole library by default.
-- Preserve existing project instructions and local customisations.
-- Keep portable methods separate from host-specific adapters.
-- Keep project-specific and domain-specific assumptions out of the universal baseline.
-- Explain what is installed, why it is relevant, and how it can be updated or removed.
-- Prefer clear names over generic filenames hidden inside redundant directories.
+- No CLI, executable, TUI, MCP server, daemon, management API, dashboard or separate runtime.
+- Keep core context small and use progressive disclosure.
+- Install resources selectively; never copy the full registry into a consuming project by default.
+- Preserve existing project instructions and user-authored files.
+- Treat host conventions as version-specific and distinguish documented assumptions from tested behaviour.
+- Do not claim a host can fetch, discover, execute or write files unless verified.
+- Do not introduce runtime dependencies for consuming projects.
 
-## Resource quality
+## Engineering rules
 
-- Inspect complete source material before extracting it.
-- Record repository, ref/commit, source path, inspection date and generalisation decisions.
-- Separate directly evidenced behaviour from interpretation and proposed improvements.
-- Define inputs, outputs, dependencies, failure behaviour, safety boundaries and completion criteria.
-- Do not mark a resource validated until its declared scenarios have actually passed.
-- Keep commands thin; put procedures in skills or workflows.
-- Workflows define sequencing, ownership, gates, checkpoints and recovery.
-- Profiles define responsibility boundaries, not capabilities the host does not have.
-- Avoid duplicating procedures; maintain one authoritative source and link to it.
+- Inspect actual repository state before changing it.
+- Keep the registry aligned with resource files and dependency metadata.
+- Validate IDs, safe paths, dependency existence and cycles.
+- Keep JavaScript/YAML/Markdown lint and documentation-link checks.
+- Add regression tests preventing obsolete executable and distribution surfaces from returning.
+- Historical changelog entries may describe the removed CLI; current product documentation must not advertise it.
+- Run npm ci, npm test and npm run validate:repo before claiming checks pass.
+- Never claim tests ran without execution evidence.
 
-## Installation and security
+## Safety
 
-- Never overwrite existing project files silently.
-- Never replace an existing AGENTS.md or equivalent instruction file.
-- Detect local edits before updating managed resources.
-- Validate destination paths and defend against path traversal and symlink escapes.
-- Treat project files as untrusted input during initialization.
-- Do not execute project code to infer project type.
-- Do not copy secrets or unrelated source files.
-- Require explicit approval for destructive, externally visible, costly or production actions.
-- Do not claim a host integration works without testing the actual host/version.
-
-## Versioning and releases
-
-- Use Git history for traceability and immutable tags for releases.
-- Maintain the changelog and follow the release process.
-- Record the resolved commit SHA in every installation manifest.
-- Never describe a development-branch installation as a stable release.
-- Do not publish releases or change repository settings without owner authorization.
-
-## Working discipline
-
-- Inspect the current tree and relevant files before editing.
-- Prefer small, reviewable changes and preserve unrelated work.
-- Update README/navigation when structure changes.
-- Keep registry, resource files, docs and examples consistent.
-- Run validation and report exact results. If a check cannot be run, say so.
-- Do not commit or push unless explicitly requested.
-
-## Status vocabulary
-
-Use DISCOVERED, INSPECTED, CANDIDATE, DRAFTED, VALIDATED, ADAPTED, EXCLUDED and BLOCKED. Do not use these labels interchangeably.
+Use minimal diffs, preserve user work, do not read secrets unnecessarily, and obtain approval before destructive changes or stable releases.

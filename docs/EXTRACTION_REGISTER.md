@@ -64,3 +64,19 @@ The inspected Dhan and Lively paths contain command/rule documents, not confirme
 - Inspect representative Lively probes in each family before creating portable probe templates.
 - Capture immutable source commit SHAs for a validated extraction release.
 - Add structural validators and scenario tests before changing any DRAFT to VALIDATED.
+
+
+## Engineering resource expansion
+
+The reusable library now also includes generic engineering procedures that generalise beyond the original two source projects:
+
+| Resource family | Canonical resources |
+|---|---|
+| Repository understanding | `skills/repository-audit/SKILL.md`, `commands/audit.md` |
+| Planning and architecture | `skills/implementation-planning/SKILL.md`, `skills/architecture-design/SKILL.md` |
+| Debugging and verification | `skills/debugging/SKILL.md`, `skills/testing-and-verification/SKILL.md`, `commands/debug.md`, `commands/verify.md` |
+| Independent quality review | `skills/code-review/SKILL.md`, `commands/review.md` |
+| Continuity and recovery | `skills/session-recovery/SKILL.md`, `skills/documentation-maintenance/SKILL.md`, `commands/resume.md` |
+| Engineering command interface | `commands/implement.md`, `commands/delegate.md`, `commands/next-task.md`, `commands/project-health.md` |
+
+These are generalised operating practices, not claims that every procedure existed as a standalone source file in Dhan AI Trader or Rave Engine. Source-derived elements and newly authored generalisation are distinguished in the relevant resource frontmatter and audit notes.
