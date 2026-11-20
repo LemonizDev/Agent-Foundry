@@ -63,10 +63,11 @@ If no reusable resource qualifies, explicitly say that nothing met the bar and d
 ## Procedure
 
 1. Read the project instruction entrypoint and identify the authoritative context files.
-2. Review the current session and extract candidate learnings.
-3. For each candidate, classify it as requirement, preference, decision, convention, verified lesson, proposal, or transient.
-4. Check existing files for duplicates, conflicts and superseded information.
-5. Route each accepted learning to its canonical destination:
+2. Review the current session and extract candidate learnings and reusable artefacts.
+3. Classify learnings as requirements, preferences, decisions, conventions, verified lessons, proposals or transient material. Classify each reusable artefact using the resource types above.
+4. Apply the quality threshold independently to each candidate. If no reusable artefact qualifies, reject resource extraction explicitly; do not invent a resource to justify `/done`.
+5. Check existing files and the registry for duplicates, conflicts, superseded information and canonical destinations. Prefer extending an existing resource over creating a parallel one.
+6. Route each accepted learning or artefact to its canonical destination:
    - product scope/requirements → product context or vision;
    - architecture decision → ADR/architecture document;
    - stable owner preference → owner context/preferences;
@@ -75,12 +76,13 @@ If no reusable resource qualifies, explicitly say that nothing met the bar and d
    - model capability/availability → model roster with evidence/date;
    - current milestone state → progress/roadmap;
    - completed change → changelog.
-6. Do not create a generic HANDOFF.md or session-summary file by default.
-7. Present proposed edits before writing if the destination is high-impact, conflicts with existing decisions, or the user has not granted write authority.
-8. Apply only justified changes. Prefer precise edits over rewriting whole documents.
-9. Preserve decision history. Mark changed preferences or decisions as superseded rather than silently erasing their history.
-10. Read back modified files and verify links, formatting and consistency.
-11. Report what was captured, where it was written, what was deliberately excluded, and any unresolved conflict.
+7. Do not create a generic HANDOFF.md or session-summary file by default.
+8. Present proposed edits before writing if the destination is high-impact, conflicts with existing decisions, or the user has not granted write authority.
+9. Apply only justified changes. Prefer precise edits over rewriting whole documents.
+10. Preserve decision history. Mark changed preferences or decisions as superseded rather than silently erasing their history.
+11. Update resource registry and navigation only for resources actually created or materially changed.
+12. Read back modified files and verify links, frontmatter, dependencies, formatting and consistency.
+13. Report what was captured, resource classifications and destinations, what was deliberately excluded, and any unresolved conflict.
 
 ## Confidence rules
 
