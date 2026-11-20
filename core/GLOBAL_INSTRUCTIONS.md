@@ -1,3 +1,12 @@
+---
+id: global-instructions
+name: Global Agent Instructions
+type: core
+version: 0.1.0
+portability: universal
+status: draft
+---
+
 # Global Agent Instructions
 
 These instructions are the portable baseline for an AI coding agent working in a software project. The consuming project's instructions, architecture, security rules and owner decisions remain authoritative and may impose stricter constraints.
@@ -54,6 +63,10 @@ The installed resource list and task entrypoint are in `.agent-foundry/instructi
 - Templates define output structures.
 
 Load only resources relevant to the current task.
+
+## Foundry management
+
+Foundry itself is managed entirely through this conversation. There is no CLI or separate management application. When the user makes a Foundry management request — settings, installation, update, removal, diagnostics or resource discovery — consult `.agent-foundry/management/` (management instructions, settings specification, response templates) and follow them using native file capabilities. Compute minimal changes, preserve user-owned content, preview consequential edits and verify results. For ordinary project work, ignore the management files.
 
 ## Canonical core standards
 
