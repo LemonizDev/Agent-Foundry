@@ -12,7 +12,7 @@
 [![Version](https://img.shields.io/badge/version-0.6.0-6478ff.svg)](CHANGELOG.md)
 [![License](https://img.shields.io/badge/license-MIT-2ea44f.svg)](LICENSE)
 
-[Quick start](#quick-start) · [How setup works](#project-aware-installation) · [Why Foundry](#why-agent-foundry) · [Explore every feature](#feature-explorer) · [Host compatibility](#coding-agent-apps) · [Contribute](#community-contributions)
+[Quick start](#quick-start) · [How setup works](#project-aware-installation) · [Why Foundry](#why-agent-foundry) · [Explore every feature](#feature-menu) · [Host compatibility](#coding-agent-apps) · [Contribute](#community-contributions)
 
 </div>
 
@@ -121,7 +121,7 @@ The paths are not mutually exclusive diagnoses. A repository can have excellent 
 | 🧰 **Keep your preferred apps** | One shared project resource set can serve multiple selected coding-agent hosts. |
 | 🛡️ **Owner remains in control** | Exact changes and conflicts are previewed; approval gates protect existing work. |
 
-## Feature explorer
+## Feature menu
 
 Explore by what you want to do. Each section opens into smaller categories and direct links to the individual resources. The registry is the canonical inventory.
 
