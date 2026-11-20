@@ -542,7 +542,7 @@ resources:
     description: "Creates and maintains concise, navigable GitHub READMEs with nested feature trees, accessible visual hierarchy and validated resource links."
     type: skill
     path: skills/readme-maker/SKILL.md
-    version: 0.3.0
+    version: 0.4.0
     status: draft
     portability: universal
   - id: host-roster-onboarding
@@ -557,7 +557,7 @@ resources:
     description: "Inspects a project and plans a user-goal-led feature menu with classified resource types, Mermaid hierarchy diagrams and resource-level usage panels."
     type: skill
     path: skills/feature-menu-architect/SKILL.md
-    version: 0.1.0
+    version: 0.2.0
     status: draft
     portability: universal
   - id: session-resource-curation
