@@ -77,28 +77,44 @@ A Foundry installation is a **small, approved selection**, not a wholesale copy 
 
 ## Feature menu
 
-Start with a goal, open its resource family, then open the specific resource for its purpose, usage and canonical source. This catalogue is generated from the [resource registry](registry/resources.yaml).
+Choose a goal, open its resource family, then open an individual item. The feature map makes the hierarchy visible; the catalogue below lets you drill into purpose, usage, examples and full source files.
 
 ### Feature map
 
 ```mermaid
 flowchart TD
-    F[Agent Foundry] --> A[Discover and onboard]
-    F --> B[Plan, build and debug]
-    F --> C[Test, review and protect]
-    F --> D[Maintain context and sessions]
-    F --> E[Delegate and track work]
-    F --> G[Visual and performance engineering]
-    F --> H[Models and Foundry management]
-    F --> I[Contribute resources]
-    A --> A1[Project discovery and setup]
+    AF[Agent Foundry] --> A[Discover and onboard]
+    AF --> B[Plan, build and debug]
+    AF --> C[Test, review and protect]
+    AF --> D[Maintain context and sessions]
+    AF --> E[Delegate and track work]
+    AF --> F[Visual and performance engineering]
+    AF --> G[Models and Foundry management]
+    AF --> H[Contribute resources]
+    A --> A1[Project discovery / setup]
     B --> B1[Plan / implement / debug]
     C --> C1[Standards / tests / review]
     D --> D1[Context / docs / session curation]
     E --> E1[Delegation / reporting / records]
-    G --> G1[Visual QA / graphics / performance]
-    H --> H1[Model roster / settings / management]
-    I --> I1[Contribution discovery]
+    F --> F1[Visual QA / graphics / performance]
+    G --> G1[Model roster / settings / management]
+    H --> H1[Contribution discovery]
+```
+
+### A concrete example of the drill-down
+
+```mermaid
+flowchart TD
+    FM[Feature menu] --> CG[Delegate and track work]
+    CG --> PR[Progress and delivery records]
+    PR --> CMD[Commands]
+    CMD --> PROG[Progress Report]
+    PROG --> WHAT[What it does]
+    PROG --> WHEN[When to use it]
+    PROG --> HOW[How to invoke it]
+    PROG --> EX[Example]
+    PROG --> OUT[Expected result]
+    PROG --> FULL[Full command contract]
 ```
 
 <details>
@@ -117,19 +133,49 @@ Understand a codebase, assess its current practices and integrate Foundry withou
 
 Runs a read-only, evidence-based repository audit.
 
-**What it does**  
+<details>
+<summary>What it does</summary>
+
 Runs a read-only, evidence-based repository audit.
 
-**How to use it**  
+</details>
+
+<details>
+<summary>When to use it</summary>
+
+Use this when the desired outcome matches: runs a read-only, evidence-based repository audit.
+
+</details>
+
+<details>
+<summary>How to use it</summary>
+
 `/audit [scope]`
 
-**Example**  
+Native slash-command support depends on the host and version.
+
+</details>
+
+<details>
+<summary>Example usage</summary>
+
 `/audit scope: authentication`<br>Map the auth flow, existing tests and risks. Do not change files.
 
-**Expected result**  
+</details>
+
+<details>
+<summary>Expected result</summary>
+
 A scoped project map, prioritised findings and an evidence-backed next action.
 
-[Open full resource](commands/audit.md)
+</details>
+
+<details>
+<summary>Full contract</summary>
+
+[Open Audit command contract](commands/audit.md)
+
+</details>
 
 </details>
 
@@ -138,16 +184,42 @@ A scoped project map, prioritised findings and an evidence-backed next action.
 
 Assesses project health across architecture, quality, security, operations and continuity.
 
-**What it does**  
+<details>
+<summary>What it does</summary>
+
 Assesses project health across architecture, quality, security, operations and continuity.
 
-**How to use it**  
+</details>
+
+<details>
+<summary>When to use it</summary>
+
+Use this when the desired outcome matches: assesses project health across architecture, quality, security, operations and continuity.
+
+</details>
+
+<details>
+<summary>How to use it</summary>
+
 `/project-health [project or subsystem]`
 
-**Expected result**  
+Native slash-command support depends on the host and version.
+
+</details>
+
+<details>
+<summary>Expected result</summary>
+
 A health assessment across architecture, quality, security, operations and continuity.
 
-[Open full resource](commands/project-health.md)
+</details>
+
+<details>
+<summary>Full contract</summary>
+
+[Open Project Health command contract](commands/project-health.md)
+
+</details>
 
 </details>
 
@@ -161,13 +233,35 @@ A health assessment across architecture, quality, security, operations and conti
 
 Discovers the user's active and additional coding-agent hosts, then plans safe multi-host project integration with per-host verification.
 
-**When to use it**  
-When the task needs this procedure: discovers the user's active and additional coding-agent hosts, then plans safe multi-host project integration with per-host verification.
+<details>
+<summary>What it does</summary>
 
-**How to request it**  
-Ask your coding agent to use **Host Roster Onboarding** for the current task. Automatic discovery depends on the selected host.
+Discovers the user's active and additional coding-agent hosts, then plans safe multi-host project integration with per-host verification.
 
-[Open full resource](skills/host-roster-onboarding/SKILL.md)
+</details>
+
+<details>
+<summary>When to use it</summary>
+
+Use when the current task needs this procedure. Discovers the user's active and additional coding-agent hosts, then plans safe multi-host project integration with per-host verification.
+
+</details>
+
+<details>
+<summary>How to request it</summary>
+
+Ask your coding agent to use **Host Roster Onboarding** for the task. Whether it is automatically discovered depends on your selected host.
+
+</details>
+
+<details>
+<summary>Full skill</summary>
+
+Discovers the user's active and additional coding-agent hosts, then plans safe multi-host project integration with per-host verification.
+
+[Open Host Roster Onboarding skill](skills/host-roster-onboarding/SKILL.md)
+
+</details>
 
 </details>
 
@@ -176,13 +270,35 @@ Ask your coding agent to use **Host Roster Onboarding** for the current task. Au
 
 Maps repository structure, runtime flows, authoritative context, quality controls and evidence-backed gaps.
 
-**When to use it**  
-When the task needs this procedure: maps repository structure, runtime flows, authoritative context, quality controls and evidence-backed gaps.
+<details>
+<summary>What it does</summary>
 
-**How to request it**  
-Ask your coding agent to use **Repository Audit** for the current task. Automatic discovery depends on the selected host.
+Maps repository structure, runtime flows, authoritative context, quality controls and evidence-backed gaps.
 
-[Open full resource](skills/repository-audit/SKILL.md)
+</details>
+
+<details>
+<summary>When to use it</summary>
+
+Use when the current task needs this procedure. Maps repository structure, runtime flows, authoritative context, quality controls and evidence-backed gaps.
+
+</details>
+
+<details>
+<summary>How to request it</summary>
+
+Ask your coding agent to use **Repository Audit** for the task. Whether it is automatically discovered depends on your selected host.
+
+</details>
+
+<details>
+<summary>Full skill</summary>
+
+Maps repository structure, runtime flows, authoritative context, quality controls and evidence-backed gaps.
+
+[Open Repository Audit skill](skills/repository-audit/SKILL.md)
+
+</details>
 
 </details>
 
@@ -196,10 +312,26 @@ Ask your coding agent to use **Repository Audit** for the current task. Automati
 
 Assesses an established repository and adds only relevant Foundry resources without replacing its architecture.
 
-**Use it when**  
-The work needs coordinated stages, dependencies, handoffs or explicit quality gates.
+<details>
+<summary>What it coordinates</summary>
 
-[Open full resource](docs/architecture/EXISTING_PROJECT_INTEGRATION.md)
+Assesses an established repository and adds only relevant Foundry resources without replacing its architecture.
+
+</details>
+
+<details>
+<summary>When to use it</summary>
+
+Use when the work has ordered stages, dependencies, handoffs or explicit quality gates.
+
+</details>
+
+<details>
+<summary>Full workflow</summary>
+
+[Open Existing Project Integration workflow](docs/architecture/EXISTING_PROJECT_INTEGRATION.md)
+
+</details>
 
 </details>
 
@@ -213,10 +345,19 @@ The work needs coordinated stages, dependencies, handoffs or explicit quality ga
 
 Compact, project-agnostic operating instructions that connect installed standards, task resources and Foundry management triggers into one agent entrypoint.
 
-**Reference**  
+<details>
+<summary>What it contains</summary>
+
 Compact, project-agnostic operating instructions that connect installed standards, task resources and Foundry management triggers into one agent entrypoint.
 
-[Open full resource](core/GLOBAL_INSTRUCTIONS.md)
+</details>
+
+<details>
+<summary>Full reference</summary>
+
+[Open Global Instructions reference](core/GLOBAL_INSTRUCTIONS.md)
+
+</details>
 
 </details>
 
@@ -230,10 +371,19 @@ Compact, project-agnostic operating instructions that connect installed standard
 
 Documents the context-first architecture: context-file hierarchy, progressive disclosure, conversational management and current limitations.
 
-**Reference**  
+<details>
+<summary>What it contains</summary>
+
 Documents the context-first architecture: context-file hierarchy, progressive disclosure, conversational management and current limitations.
 
-[Open full resource](docs/architecture/CONTEXT_ARCHITECTURE.md)
+</details>
+
+<details>
+<summary>Full reference</summary>
+
+[Open Context Architecture reference](docs/architecture/CONTEXT_ARCHITECTURE.md)
+
+</details>
 
 </details>
 
@@ -252,10 +402,19 @@ Documents the context-first architecture: context-file hierarchy, progressive di
 
 Explains Agent Foundry setup, chat-native management, commands, resource types, presets, delegation and maintenance.
 
-**Reference**  
+<details>
+<summary>What it contains</summary>
+
 Explains Agent Foundry setup, chat-native management, commands, resource types, presets, delegation and maintenance.
 
-[Open full resource](docs/USER_GUIDE.md)
+</details>
+
+<details>
+<summary>Full reference</summary>
+
+[Open User Guide reference](docs/USER_GUIDE.md)
+
+</details>
 
 </details>
 
@@ -281,16 +440,42 @@ Turn an intended change into bounded work, implement it safely and investigate f
 
 Recommends the highest-value next engineering action from current evidence and dependencies.
 
-**What it does**  
+<details>
+<summary>What it does</summary>
+
 Recommends the highest-value next engineering action from current evidence and dependencies.
 
-**How to use it**  
+</details>
+
+<details>
+<summary>When to use it</summary>
+
+Use this when the desired outcome matches: recommends the highest-value next engineering action from current evidence and dependencies.
+
+</details>
+
+<details>
+<summary>How to use it</summary>
+
 `/next-task [milestone or workstream]`
 
-**Expected result**  
+Native slash-command support depends on the host and version.
+
+</details>
+
+<details>
+<summary>Expected result</summary>
+
 One recommended next action with rationale and acceptance criteria.
 
-[Open full resource](commands/next-task.md)
+</details>
+
+<details>
+<summary>Full contract</summary>
+
+[Open Next Task command contract](commands/next-task.md)
+
+</details>
 
 </details>
 
@@ -304,13 +489,35 @@ One recommended next action with rationale and acceptance criteria.
 
 Turns desired outcomes into bounded tasks with dependencies, acceptance criteria and verification.
 
-**When to use it**  
-When the task needs this procedure: turns desired outcomes into bounded tasks with dependencies, acceptance criteria and verification.
+<details>
+<summary>What it does</summary>
 
-**How to request it**  
-Ask your coding agent to use **Implementation Planning** for the current task. Automatic discovery depends on the selected host.
+Turns desired outcomes into bounded tasks with dependencies, acceptance criteria and verification.
 
-[Open full resource](skills/implementation-planning/SKILL.md)
+</details>
+
+<details>
+<summary>When to use it</summary>
+
+Use when the current task needs this procedure. Turns desired outcomes into bounded tasks with dependencies, acceptance criteria and verification.
+
+</details>
+
+<details>
+<summary>How to request it</summary>
+
+Ask your coding agent to use **Implementation Planning** for the task. Whether it is automatically discovered depends on your selected host.
+
+</details>
+
+<details>
+<summary>Full skill</summary>
+
+Turns desired outcomes into bounded tasks with dependencies, acceptance criteria and verification.
+
+[Open Implementation Planning skill](skills/implementation-planning/SKILL.md)
+
+</details>
 
 </details>
 
@@ -319,13 +526,35 @@ Ask your coding agent to use **Implementation Planning** for the current task. A
 
 Designs maintainable system boundaries and decisions grounded in requirements and tradeoffs.
 
-**When to use it**  
-When the task needs this procedure: designs maintainable system boundaries and decisions grounded in requirements and tradeoffs.
+<details>
+<summary>What it does</summary>
 
-**How to request it**  
-Ask your coding agent to use **Architecture Design** for the current task. Automatic discovery depends on the selected host.
+Designs maintainable system boundaries and decisions grounded in requirements and tradeoffs.
 
-[Open full resource](skills/architecture-design/SKILL.md)
+</details>
+
+<details>
+<summary>When to use it</summary>
+
+Use when the current task needs this procedure. Designs maintainable system boundaries and decisions grounded in requirements and tradeoffs.
+
+</details>
+
+<details>
+<summary>How to request it</summary>
+
+Ask your coding agent to use **Architecture Design** for the task. Whether it is automatically discovered depends on your selected host.
+
+</details>
+
+<details>
+<summary>Full skill</summary>
+
+Designs maintainable system boundaries and decisions grounded in requirements and tradeoffs.
+
+[Open Architecture Design skill](skills/architecture-design/SKILL.md)
+
+</details>
 
 </details>
 
@@ -339,10 +568,26 @@ Ask your coding agent to use **Architecture Design** for the current task. Autom
 
 Universal engineering baseline for understanding before changing, preserving project intent, incremental implementation and evidence-based completion.
 
-**Scope**  
-A reusable rule for the relevant tasks. Follow the project's own authority hierarchy where it is stricter.
+<details>
+<summary>What it governs</summary>
 
-[Open full resource](standards/engineering-principles.md)
+Universal engineering baseline for understanding before changing, preserving project intent, incremental implementation and evidence-based completion.
+
+</details>
+
+<details>
+<summary>Where it applies</summary>
+
+Applies to tasks and resources within this subject area, subject to the project's own instruction hierarchy.
+
+</details>
+
+<details>
+<summary>Full standard</summary>
+
+[Open Engineering Principles standard](standards/engineering-principles.md)
+
+</details>
 
 </details>
 
@@ -351,10 +596,26 @@ A reusable rule for the relevant tasks. Follow the project's own authority hiera
 
 Provides an evidence-based procedure for comparing options, recording tradeoffs and escalating owner decisions.
 
-**Scope**  
-A reusable rule for the relevant tasks. Follow the project's own authority hierarchy where it is stricter.
+<details>
+<summary>What it governs</summary>
 
-[Open full resource](standards/decision-making.md)
+Provides an evidence-based procedure for comparing options, recording tradeoffs and escalating owner decisions.
+
+</details>
+
+<details>
+<summary>Where it applies</summary>
+
+Applies to tasks and resources within this subject area, subject to the project's own instruction hierarchy.
+
+</details>
+
+<details>
+<summary>Full standard</summary>
+
+[Open Decision Making standard](standards/decision-making.md)
+
+</details>
 
 </details>
 
@@ -373,19 +634,49 @@ A reusable rule for the relevant tasks. Follow the project's own authority hiera
 
 Executes an approved implementation plan with incremental verification.
 
-**What it does**  
+<details>
+<summary>What it does</summary>
+
 Executes an approved implementation plan with incremental verification.
 
-**How to use it**  
+</details>
+
+<details>
+<summary>When to use it</summary>
+
+Use this when the desired outcome matches: executes an approved implementation plan with incremental verification.
+
+</details>
+
+<details>
+<summary>How to use it</summary>
+
 `/implement [feature, bug or approved plan]`
 
-**Example**  
+Native slash-command support depends on the host and version.
+
+</details>
+
+<details>
+<summary>Example usage</summary>
+
 `/implement the approved retry policy`<br>Follow the agreed scope and verify each acceptance criterion.
 
-**Expected result**  
+</details>
+
+<details>
+<summary>Expected result</summary>
+
 Delivered behaviour, files changed, verification evidence, limitations and remaining risks.
 
-[Open full resource](commands/implement.md)
+</details>
+
+<details>
+<summary>Full contract</summary>
+
+[Open Implement command contract](commands/implement.md)
+
+</details>
 
 </details>
 
@@ -394,16 +685,42 @@ Delivered behaviour, files changed, verification evidence, limitations and remai
 
 Explains a completed implementation in a structured, project-relevant way.
 
-**What it does**  
+<details>
+<summary>What it does</summary>
+
 Explains a completed implementation in a structured, project-relevant way.
 
-**How to use it**  
+</details>
+
+<details>
+<summary>When to use it</summary>
+
+Use this when the desired outcome matches: explains a completed implementation in a structured, project-relevant way.
+
+</details>
+
+<details>
+<summary>How to use it</summary>
+
 `/teach-implementation [change-or-feature]`
 
-**Expected result**  
+Native slash-command support depends on the host and version.
+
+</details>
+
+<details>
+<summary>Expected result</summary>
+
 An explanation of changed files, runtime behaviour, trade-offs and verification.
 
-[Open full resource](commands/teach-implementation.md)
+</details>
+
+<details>
+<summary>Full contract</summary>
+
+[Open Teach Implementation command contract](commands/teach-implementation.md)
+
+</details>
 
 </details>
 
@@ -417,13 +734,35 @@ An explanation of changed files, runtime behaviour, trade-offs and verification.
 
 Guides small, bounded implementation steps with clear acceptance criteria and verification.
 
-**When to use it**  
-When the task needs this procedure: guides small, bounded implementation steps with clear acceptance criteria and verification.
+<details>
+<summary>What it does</summary>
 
-**How to request it**  
-Ask your coding agent to use **Atomic Implementation** for the current task. Automatic discovery depends on the selected host.
+Guides small, bounded implementation steps with clear acceptance criteria and verification.
 
-[Open full resource](skills/atomic-implementation/SKILL.md)
+</details>
+
+<details>
+<summary>When to use it</summary>
+
+Use when the current task needs this procedure. Guides small, bounded implementation steps with clear acceptance criteria and verification.
+
+</details>
+
+<details>
+<summary>How to request it</summary>
+
+Ask your coding agent to use **Atomic Implementation** for the task. Whether it is automatically discovered depends on your selected host.
+
+</details>
+
+<details>
+<summary>Full skill</summary>
+
+Guides small, bounded implementation steps with clear acceptance criteria and verification.
+
+[Open Atomic Implementation skill](skills/atomic-implementation/SKILL.md)
+
+</details>
 
 </details>
 
@@ -432,13 +771,35 @@ Ask your coding agent to use **Atomic Implementation** for the current task. Aut
 
 Explains code changes, their runtime behaviour, tradeoffs and verification evidence.
 
-**When to use it**  
-When the task needs this procedure: explains code changes, their runtime behaviour, tradeoffs and verification evidence.
+<details>
+<summary>What it does</summary>
 
-**How to request it**  
-Ask your coding agent to use **Implementation Explanation** for the current task. Automatic discovery depends on the selected host.
+Explains code changes, their runtime behaviour, tradeoffs and verification evidence.
 
-[Open full resource](skills/implementation-explanation/SKILL.md)
+</details>
+
+<details>
+<summary>When to use it</summary>
+
+Use when the current task needs this procedure. Explains code changes, their runtime behaviour, tradeoffs and verification evidence.
+
+</details>
+
+<details>
+<summary>How to request it</summary>
+
+Ask your coding agent to use **Implementation Explanation** for the task. Whether it is automatically discovered depends on your selected host.
+
+</details>
+
+<details>
+<summary>Full skill</summary>
+
+Explains code changes, their runtime behaviour, tradeoffs and verification evidence.
+
+[Open Implementation Explanation skill](skills/implementation-explanation/SKILL.md)
+
+</details>
 
 </details>
 
@@ -457,16 +818,42 @@ Ask your coding agent to use **Implementation Explanation** for the current task
 
 Investigates a reproducible failure and isolates its root cause.
 
-**What it does**  
+<details>
+<summary>What it does</summary>
+
 Investigates a reproducible failure and isolates its root cause.
 
-**How to use it**  
+</details>
+
+<details>
+<summary>When to use it</summary>
+
+Use this when the desired outcome matches: investigates a reproducible failure and isolates its root cause.
+
+</details>
+
+<details>
+<summary>How to use it</summary>
+
 `/debug [symptom, error or failing behaviour]`
 
-**Expected result**  
+Native slash-command support depends on the host and version.
+
+</details>
+
+<details>
+<summary>Expected result</summary>
+
 A reproducible cause, supporting evidence and the smallest safe fix or next experiment.
 
-[Open full resource](commands/debug.md)
+</details>
+
+<details>
+<summary>Full contract</summary>
+
+[Open Debug command contract](commands/debug.md)
+
+</details>
 
 </details>
 
@@ -480,13 +867,35 @@ A reproducible cause, supporting evidence and the smallest safe fix or next expe
 
 Diagnoses failures through reproducible experiments and root-cause analysis.
 
-**When to use it**  
-When the task needs this procedure: diagnoses failures through reproducible experiments and root-cause analysis.
+<details>
+<summary>What it does</summary>
 
-**How to request it**  
-Ask your coding agent to use **Debugging** for the current task. Automatic discovery depends on the selected host.
+Diagnoses failures through reproducible experiments and root-cause analysis.
 
-[Open full resource](skills/debugging/SKILL.md)
+</details>
+
+<details>
+<summary>When to use it</summary>
+
+Use when the current task needs this procedure. Diagnoses failures through reproducible experiments and root-cause analysis.
+
+</details>
+
+<details>
+<summary>How to request it</summary>
+
+Ask your coding agent to use **Debugging** for the task. Whether it is automatically discovered depends on your selected host.
+
+</details>
+
+<details>
+<summary>Full skill</summary>
+
+Diagnoses failures through reproducible experiments and root-cause analysis.
+
+[Open Debugging skill](skills/debugging/SKILL.md)
+
+</details>
 
 </details>
 
@@ -512,13 +921,35 @@ Verify outcomes against criteria, review independently and protect project data 
 
 Selects risk-based tests and reports exactly what was and was not verified.
 
-**When to use it**  
-When the task needs this procedure: selects risk-based tests and reports exactly what was and was not verified.
+<details>
+<summary>What it does</summary>
 
-**How to request it**  
-Ask your coding agent to use **Testing And Verification** for the current task. Automatic discovery depends on the selected host.
+Selects risk-based tests and reports exactly what was and was not verified.
 
-[Open full resource](skills/testing-and-verification/SKILL.md)
+</details>
+
+<details>
+<summary>When to use it</summary>
+
+Use when the current task needs this procedure. Selects risk-based tests and reports exactly what was and was not verified.
+
+</details>
+
+<details>
+<summary>How to request it</summary>
+
+Ask your coding agent to use **Testing And Verification** for the task. Whether it is automatically discovered depends on your selected host.
+
+</details>
+
+<details>
+<summary>Full skill</summary>
+
+Selects risk-based tests and reports exactly what was and was not verified.
+
+[Open Testing And Verification skill](skills/testing-and-verification/SKILL.md)
+
+</details>
 
 </details>
 
@@ -527,13 +958,35 @@ Ask your coding agent to use **Testing And Verification** for the current task. 
 
 Performs independent, findings-first review of code changes, risks and test quality.
 
-**When to use it**  
-When the task needs this procedure: performs independent, findings-first review of code changes, risks and test quality.
+<details>
+<summary>What it does</summary>
 
-**How to request it**  
-Ask your coding agent to use **Code Review** for the current task. Automatic discovery depends on the selected host.
+Performs independent, findings-first review of code changes, risks and test quality.
 
-[Open full resource](skills/code-review/SKILL.md)
+</details>
+
+<details>
+<summary>When to use it</summary>
+
+Use when the current task needs this procedure. Performs independent, findings-first review of code changes, risks and test quality.
+
+</details>
+
+<details>
+<summary>How to request it</summary>
+
+Ask your coding agent to use **Code Review** for the task. Whether it is automatically discovered depends on your selected host.
+
+</details>
+
+<details>
+<summary>Full skill</summary>
+
+Performs independent, findings-first review of code changes, risks and test quality.
+
+[Open Code Review skill](skills/code-review/SKILL.md)
+
+</details>
 
 </details>
 
@@ -542,13 +995,35 @@ Ask your coding agent to use **Code Review** for the current task. Automatic dis
 
 Collects and reports useful evidence while minimising secrets, personal data and sensitive project details.
 
-**When to use it**  
-When the task needs this procedure: collects and reports useful evidence while minimising secrets, personal data and sensitive project details.
+<details>
+<summary>What it does</summary>
 
-**How to request it**  
-Ask your coding agent to use **Privacy Safe Evidence** for the current task. Automatic discovery depends on the selected host.
+Collects and reports useful evidence while minimising secrets, personal data and sensitive project details.
 
-[Open full resource](skills/privacy-safe-evidence/SKILL.md)
+</details>
+
+<details>
+<summary>When to use it</summary>
+
+Use when the current task needs this procedure. Collects and reports useful evidence while minimising secrets, personal data and sensitive project details.
+
+</details>
+
+<details>
+<summary>How to request it</summary>
+
+Ask your coding agent to use **Privacy Safe Evidence** for the task. Whether it is automatically discovered depends on your selected host.
+
+</details>
+
+<details>
+<summary>Full skill</summary>
+
+Collects and reports useful evidence while minimising secrets, personal data and sensitive project details.
+
+[Open Privacy Safe Evidence skill](skills/privacy-safe-evidence/SKILL.md)
+
+</details>
 
 </details>
 
@@ -557,13 +1032,35 @@ Ask your coding agent to use **Privacy Safe Evidence** for the current task. Aut
 
 Assesses permissions, isolation, secrets exposure and risks from autonomous agent execution.
 
-**When to use it**  
-When the task needs this procedure: assesses permissions, isolation, secrets exposure and risks from autonomous agent execution.
+<details>
+<summary>What it does</summary>
 
-**How to request it**  
-Ask your coding agent to use **Agent Execution Security** for the current task. Automatic discovery depends on the selected host.
+Assesses permissions, isolation, secrets exposure and risks from autonomous agent execution.
 
-[Open full resource](skills/agent-execution-security/SKILL.md)
+</details>
+
+<details>
+<summary>When to use it</summary>
+
+Use when the current task needs this procedure. Assesses permissions, isolation, secrets exposure and risks from autonomous agent execution.
+
+</details>
+
+<details>
+<summary>How to request it</summary>
+
+Ask your coding agent to use **Agent Execution Security** for the task. Whether it is automatically discovered depends on your selected host.
+
+</details>
+
+<details>
+<summary>Full skill</summary>
+
+Assesses permissions, isolation, secrets exposure and risks from autonomous agent execution.
+
+[Open Agent Execution Security skill](skills/agent-execution-security/SKILL.md)
+
+</details>
 
 </details>
 
@@ -577,10 +1074,26 @@ Ask your coding agent to use **Agent Execution Security** for the current task. 
 
 Sets least-privilege, secret-handling, untrusted-input and approval boundaries for AI-assisted engineering.
 
-**Scope**  
-A reusable rule for the relevant tasks. Follow the project's own authority hierarchy where it is stricter.
+<details>
+<summary>What it governs</summary>
 
-[Open full resource](standards/security-boundaries.md)
+Sets least-privilege, secret-handling, untrusted-input and approval boundaries for AI-assisted engineering.
+
+</details>
+
+<details>
+<summary>Where it applies</summary>
+
+Applies to tasks and resources within this subject area, subject to the project's own instruction hierarchy.
+
+</details>
+
+<details>
+<summary>Full standard</summary>
+
+[Open Security Boundaries standard](standards/security-boundaries.md)
+
+</details>
 
 </details>
 
@@ -589,10 +1102,26 @@ A reusable rule for the relevant tasks. Follow the project's own authority hiera
 
 Sets rules for evidence quality, verification claims and explicit unverified or blocked states.
 
-**Scope**  
-A reusable rule for the relevant tasks. Follow the project's own authority hierarchy where it is stricter.
+<details>
+<summary>What it governs</summary>
 
-[Open full resource](standards/evidence-and-verification.md)
+Sets rules for evidence quality, verification claims and explicit unverified or blocked states.
+
+</details>
+
+<details>
+<summary>Where it applies</summary>
+
+Applies to tasks and resources within this subject area, subject to the project's own instruction hierarchy.
+
+</details>
+
+<details>
+<summary>Full standard</summary>
+
+[Open Evidence And Verification standard](standards/evidence-and-verification.md)
+
+</details>
 
 </details>
 
@@ -611,19 +1140,49 @@ A reusable rule for the relevant tasks. Follow the project's own authority hiera
 
 Runs an independent, read-only engineering review.
 
-**What it does**  
+<details>
+<summary>What it does</summary>
+
 Runs an independent, read-only engineering review.
 
-**How to use it**  
+</details>
+
+<details>
+<summary>When to use it</summary>
+
+Use this when the desired outcome matches: runs an independent, read-only engineering review.
+
+</details>
+
+<details>
+<summary>How to use it</summary>
+
 `/review [diff, commit, feature or scope]`
 
-**Example**  
+Native slash-command support depends on the host and version.
+
+</details>
+
+<details>
+<summary>Example usage</summary>
+
 `/review current diff`<br>Return findings first, with evidence and severity.
 
-**Expected result**  
+</details>
+
+<details>
+<summary>Expected result</summary>
+
 Findings first, reviewed/unreviewed areas, test gaps and overall risk.
 
-[Open full resource](commands/review.md)
+</details>
+
+<details>
+<summary>Full contract</summary>
+
+[Open Review command contract](commands/review.md)
+
+</details>
 
 </details>
 
@@ -632,16 +1191,42 @@ Findings first, reviewed/unreviewed areas, test gaps and overall risk.
 
 Checks acceptance criteria against explicit test and runtime evidence.
 
-**What it does**  
+<details>
+<summary>What it does</summary>
+
 Checks acceptance criteria against explicit test and runtime evidence.
 
-**How to use it**  
+</details>
+
+<details>
+<summary>When to use it</summary>
+
+Use this when the desired outcome matches: checks acceptance criteria against explicit test and runtime evidence.
+
+</details>
+
+<details>
+<summary>How to use it</summary>
+
 `/verify [change, milestone or acceptance criteria]`
 
-**Expected result**  
+Native slash-command support depends on the host and version.
+
+</details>
+
+<details>
+<summary>Expected result</summary>
+
 A criterion-by-criterion PASS / FAIL / BLOCKED / NOT RUN result with evidence.
 
-[Open full resource](commands/verify.md)
+</details>
+
+<details>
+<summary>Full contract</summary>
+
+[Open Verify command contract](commands/verify.md)
+
+</details>
 
 </details>
 
@@ -655,10 +1240,26 @@ A criterion-by-criterion PASS / FAIL / BLOCKED / NOT RUN result with evidence.
 
 Records verification commands, environments, outcomes, coverage and unresolved checks.
 
-**Use it for**  
-A consistent record or output for this purpose. Fill only fields supported by project evidence.
+<details>
+<summary>What it is for</summary>
 
-[Open full resource](templates/test-evidence-report.md)
+Records verification commands, environments, outcomes, coverage and unresolved checks.
+
+</details>
+
+<details>
+<summary>How to use it</summary>
+
+Copy or adapt the template only when the project needs this record. Populate fields from evidence; remove fields that do not apply rather than inventing values.
+
+</details>
+
+<details>
+<summary>Full template</summary>
+
+[Open Test Evidence Report template](templates/test-evidence-report.md)
+
+</details>
 
 </details>
 
@@ -677,13 +1278,26 @@ A consistent record or output for this purpose. Fill only fields supported by pr
 
 Defines a sceptical, findings-first reviewer role that challenges implementation and evidence.
 
-**Responsibility**  
-Defines the role and its expected focus.
+<details>
+<summary>Role and responsibility</summary>
 
-**Boundary**  
-A profile describes responsibility; it does not grant tools, permissions or independent runtime access.
+Defines a sceptical, findings-first reviewer role that challenges implementation and evidence.
 
-[Open full resource](profiles/independent-reviewer.md)
+</details>
+
+<details>
+<summary>Boundaries</summary>
+
+A profile defines responsibility. It does not grant tools, permissions, independent runtime access or authority beyond the owner's instructions.
+
+</details>
+
+<details>
+<summary>Full profile</summary>
+
+[Open Independent Reviewer profile](profiles/independent-reviewer.md)
+
+</details>
 
 </details>
 
@@ -709,13 +1323,35 @@ Keep project knowledge coherent and decide what is worth saving from a productiv
 
 Maintains canonical project context, current state, blockers and next actions without duplicating sources of truth.
 
-**When to use it**  
-When the task needs this procedure: maintains canonical project context, current state, blockers and next actions without duplicating sources of truth.
+<details>
+<summary>What it does</summary>
 
-**How to request it**  
-Ask your coding agent to use **Project State Management** for the current task. Automatic discovery depends on the selected host.
+Maintains canonical project context, current state, blockers and next actions without duplicating sources of truth.
 
-[Open full resource](skills/project-state-management/SKILL.md)
+</details>
+
+<details>
+<summary>When to use it</summary>
+
+Use when the current task needs this procedure. Maintains canonical project context, current state, blockers and next actions without duplicating sources of truth.
+
+</details>
+
+<details>
+<summary>How to request it</summary>
+
+Ask your coding agent to use **Project State Management** for the task. Whether it is automatically discovered depends on your selected host.
+
+</details>
+
+<details>
+<summary>Full skill</summary>
+
+Maintains canonical project context, current state, blockers and next actions without duplicating sources of truth.
+
+[Open Project State Management skill](skills/project-state-management/SKILL.md)
+
+</details>
 
 </details>
 
@@ -724,13 +1360,35 @@ Ask your coding agent to use **Project State Management** for the current task. 
 
 Keeps project documentation accurate, navigable and free of competing sources of truth.
 
-**When to use it**  
-When the task needs this procedure: keeps project documentation accurate, navigable and free of competing sources of truth.
+<details>
+<summary>What it does</summary>
 
-**How to request it**  
-Ask your coding agent to use **Documentation Maintenance** for the current task. Automatic discovery depends on the selected host.
+Keeps project documentation accurate, navigable and free of competing sources of truth.
 
-[Open full resource](skills/documentation-maintenance/SKILL.md)
+</details>
+
+<details>
+<summary>When to use it</summary>
+
+Use when the current task needs this procedure. Keeps project documentation accurate, navigable and free of competing sources of truth.
+
+</details>
+
+<details>
+<summary>How to request it</summary>
+
+Ask your coding agent to use **Documentation Maintenance** for the task. Whether it is automatically discovered depends on your selected host.
+
+</details>
+
+<details>
+<summary>Full skill</summary>
+
+Keeps project documentation accurate, navigable and free of competing sources of truth.
+
+[Open Documentation Maintenance skill](skills/documentation-maintenance/SKILL.md)
+
+</details>
 
 </details>
 
@@ -744,10 +1402,26 @@ Ask your coding agent to use **Documentation Maintenance** for the current task.
 
 Defines clear owner communication, progress reporting, uncertainty labels and approval gates.
 
-**Scope**  
-A reusable rule for the relevant tasks. Follow the project's own authority hierarchy where it is stricter.
+<details>
+<summary>What it governs</summary>
 
-[Open full resource](standards/agent-communication.md)
+Defines clear owner communication, progress reporting, uncertainty labels and approval gates.
+
+</details>
+
+<details>
+<summary>Where it applies</summary>
+
+Applies to tasks and resources within this subject area, subject to the project's own instruction hierarchy.
+
+</details>
+
+<details>
+<summary>Full standard</summary>
+
+[Open Agent Communication standard](standards/agent-communication.md)
+
+</details>
 
 </details>
 
@@ -756,10 +1430,26 @@ A reusable rule for the relevant tasks. Follow the project's own authority hiera
 
 Defines canonical project context, progressive disclosure and durable session learning without transcript dumps.
 
-**Scope**  
-A reusable rule for the relevant tasks. Follow the project's own authority hierarchy where it is stricter.
+<details>
+<summary>What it governs</summary>
 
-[Open full resource](standards/context-management.md)
+Defines canonical project context, progressive disclosure and durable session learning without transcript dumps.
+
+</details>
+
+<details>
+<summary>Where it applies</summary>
+
+Applies to tasks and resources within this subject area, subject to the project's own instruction hierarchy.
+
+</details>
+
+<details>
+<summary>Full standard</summary>
+
+[Open Context Management standard](standards/context-management.md)
+
+</details>
 
 </details>
 
@@ -768,10 +1458,26 @@ A reusable rule for the relevant tasks. Follow the project's own authority hiera
 
 Defines documentation ownership, source-of-truth hierarchy, lifecycle and navigation rules.
 
-**Scope**  
-A reusable rule for the relevant tasks. Follow the project's own authority hierarchy where it is stricter.
+<details>
+<summary>What it governs</summary>
 
-[Open full resource](standards/documentation-governance.md)
+Defines documentation ownership, source-of-truth hierarchy, lifecycle and navigation rules.
+
+</details>
+
+<details>
+<summary>Where it applies</summary>
+
+Applies to tasks and resources within this subject area, subject to the project's own instruction hierarchy.
+
+</details>
+
+<details>
+<summary>Full standard</summary>
+
+[Open Documentation Governance standard](standards/documentation-governance.md)
+
+</details>
 
 </details>
 
@@ -790,13 +1496,35 @@ A reusable rule for the relevant tasks. Follow the project's own authority hiera
 
 Creates and maintains concise, navigable GitHub READMEs with nested feature trees, accessible visual hierarchy and validated resource links.
 
-**When to use it**  
-When the task needs this procedure: creates and maintains concise, navigable GitHub READMEs with nested feature trees, accessible visual hierarchy and validated resource links.
+<details>
+<summary>What it does</summary>
 
-**How to request it**  
-Ask your coding agent to use **Readme Maker** for the current task. Automatic discovery depends on the selected host.
+Creates and maintains concise, navigable GitHub READMEs with nested feature trees, accessible visual hierarchy and validated resource links.
 
-[Open full resource](skills/readme-maker/SKILL.md)
+</details>
+
+<details>
+<summary>When to use it</summary>
+
+Use when the current task needs this procedure. Creates and maintains concise, navigable GitHub READMEs with nested feature trees, accessible visual hierarchy and validated resource links.
+
+</details>
+
+<details>
+<summary>How to request it</summary>
+
+Ask your coding agent to use **Readme Maker** for the task. Whether it is automatically discovered depends on your selected host.
+
+</details>
+
+<details>
+<summary>Full skill</summary>
+
+Creates and maintains concise, navigable GitHub READMEs with nested feature trees, accessible visual hierarchy and validated resource links.
+
+[Open Readme Maker skill](skills/readme-maker/SKILL.md)
+
+</details>
 
 </details>
 
@@ -805,13 +1533,35 @@ Ask your coding agent to use **Readme Maker** for the current task. Automatic di
 
 Inspects a project and plans a user-goal-led feature menu with classified resource types, Mermaid hierarchy diagrams and resource-level usage panels.
 
-**When to use it**  
-When the task needs this procedure: inspects a project and plans a user-goal-led feature menu with classified resource types, Mermaid hierarchy diagrams and resource-level usage panels.
+<details>
+<summary>What it does</summary>
 
-**How to request it**  
-Ask your coding agent to use **Feature Menu Architect** for the current task. Automatic discovery depends on the selected host.
+Inspects a project and plans a user-goal-led feature menu with classified resource types, Mermaid hierarchy diagrams and resource-level usage panels.
 
-[Open full resource](skills/feature-menu-architect/SKILL.md)
+</details>
+
+<details>
+<summary>When to use it</summary>
+
+Use when the current task needs this procedure. Inspects a project and plans a user-goal-led feature menu with classified resource types, Mermaid hierarchy diagrams and resource-level usage panels.
+
+</details>
+
+<details>
+<summary>How to request it</summary>
+
+Ask your coding agent to use **Feature Menu Architect** for the task. Whether it is automatically discovered depends on your selected host.
+
+</details>
+
+<details>
+<summary>Full skill</summary>
+
+Inspects a project and plans a user-goal-led feature menu with classified resource types, Mermaid hierarchy diagrams and resource-level usage panels.
+
+[Open Feature Menu Architect skill](skills/feature-menu-architect/SKILL.md)
+
+</details>
 
 </details>
 
@@ -825,10 +1575,26 @@ Ask your coding agent to use **Feature Menu Architect** for the current task. Au
 
 Provides an adaptable project-first README structure with manual navigation, overview, architecture, installation, usage, documentation and contribution sections.
 
-**Use it for**  
-A consistent record or output for this purpose. Fill only fields supported by project evidence.
+<details>
+<summary>What it is for</summary>
 
-[Open full resource](templates/README_TEMPLATE.md)
+Provides an adaptable project-first README structure with manual navigation, overview, architecture, installation, usage, documentation and contribution sections.
+
+</details>
+
+<details>
+<summary>How to use it</summary>
+
+Copy or adapt the template only when the project needs this record. Populate fields from evidence; remove fields that do not apply rather than inventing values.
+
+</details>
+
+<details>
+<summary>Full template</summary>
+
+[Open Readme Template template](templates/README_TEMPLATE.md)
+
+</details>
 
 </details>
 
@@ -847,21 +1613,56 @@ A consistent record or output for this purpose. Fill only fields supported by pr
 
 Preserves durable project context at session end without creating transcript dumps or new reusable resource types.
 
-**What it does**  
+<details>
+<summary>What it does</summary>
+
 Preserves durable project context at session end without creating transcript dumps or new reusable resource types.
 
-**How to use it**  
+</details>
+
+<details>
+<summary>When to use it</summary>
+
+Use this when the desired outcome matches: preserves durable project context at session end without creating transcript dumps or new reusable resource types.
+
+</details>
+
+<details>
+<summary>How to use it</summary>
+
 `/close, /close session, /close chat`
 
-**Example**  
+Native slash-command support depends on the host and version.
+
+</details>
+
+<details>
+<summary>Example usage</summary>
+
 `/close`<br>Capture durable project decisions and verified lessons without creating a new resource.
 
-**Expected result**  
+</details>
+
+<details>
+<summary>Expected result</summary>
+
 Durable context captured, files updated and unresolved questions.
 
-**Choose this when:** you want durable project decisions, verified lessons and stable context retained. It should not invent a new reusable resource.
+</details>
 
-[Open full resource](commands/close-session.md)
+<details>
+<summary>When to choose /close</summary>
+
+Use `/close` for durable project context such as decisions, stable preferences and verified lessons. It should not create new resource types.
+
+</details>
+
+<details>
+<summary>Full contract</summary>
+
+[Open Close Session command contract](commands/close-session.md)
+
+</details>
 
 </details>
 
@@ -870,21 +1671,56 @@ Durable context captured, files updated and unresolved questions.
 
 Ends a productive session by classifying and saving worthwhile reusable project resources, and rejects the operation without writing when nothing qualifies.
 
-**What it does**  
+<details>
+<summary>What it does</summary>
+
 Ends a productive session by classifying and saving worthwhile reusable project resources, and rejects the operation without writing when nothing qualifies.
 
-**How to use it**  
+</details>
+
+<details>
+<summary>When to use it</summary>
+
+Use this when the desired outcome matches: ends a productive session by classifying and saving worthwhile reusable project resources, and rejects the operation without writing when nothing qualifies.
+
+</details>
+
+<details>
+<summary>How to use it</summary>
+
 `/done`
 
-**Example**  
+Native slash-command support depends on the host and version.
+
+</details>
+
+<details>
+<summary>Example usage</summary>
+
 `/done`<br>Inspect this session for worthwhile reusable project resources. Save only items that meet the quality bar; reject an empty session.
 
-**Expected result**  
+</details>
+
+<details>
+<summary>Expected result</summary>
+
 Accepted resource type(s) and destinations, or explicit rejection with no files written.
 
-**Strict acceptance rule:** only create a resource when the session contains a complete, reusable project artefact. If nothing qualifies, say so and write nothing. `/close` remains the context-continuity command.
+</details>
 
-[Open full resource](commands/done.md)
+<details>
+<summary>Acceptance and rejection</summary>
+
+`/done` is selective. It should save a complete, reusable project artefact to the right resource type, and reject the operation with no writes if nothing qualifies. `/close` remains the context-continuity command.
+
+</details>
+
+<details>
+<summary>Full contract</summary>
+
+[Open Done command contract](commands/done.md)
+
+</details>
 
 </details>
 
@@ -893,16 +1729,42 @@ Accepted resource type(s) and destinations, or explicit rejection with no files 
 
 Recovers interrupted work from durable checkpoints and verified repository state.
 
-**What it does**  
+<details>
+<summary>What it does</summary>
+
 Recovers interrupted work from durable checkpoints and verified repository state.
 
-**How to use it**  
+</details>
+
+<details>
+<summary>When to use it</summary>
+
+Use this when the desired outcome matches: recovers interrupted work from durable checkpoints and verified repository state.
+
+</details>
+
+<details>
+<summary>How to use it</summary>
+
 `/resume [task or milestone]`
 
-**Expected result**  
+Native slash-command support depends on the host and version.
+
+</details>
+
+<details>
+<summary>Expected result</summary>
+
 Verified current state, recovery point, unresolved work and next action.
 
-[Open full resource](commands/resume.md)
+</details>
+
+<details>
+<summary>Full contract</summary>
+
+[Open Resume command contract](commands/resume.md)
+
+</details>
 
 </details>
 
@@ -916,13 +1778,35 @@ Verified current state, recovery point, unresolved work and next action.
 
 Extracts durable, actionable project knowledge from a session and updates its proper context source.
 
-**When to use it**  
-When the task needs this procedure: extracts durable, actionable project knowledge from a session and updates its proper context source.
+<details>
+<summary>What it does</summary>
 
-**How to request it**  
-Ask your coding agent to use **Session Learning** for the current task. Automatic discovery depends on the selected host.
+Extracts durable, actionable project knowledge from a session and updates its proper context source.
 
-[Open full resource](skills/session-learning/SKILL.md)
+</details>
+
+<details>
+<summary>When to use it</summary>
+
+Use when the current task needs this procedure. Extracts durable, actionable project knowledge from a session and updates its proper context source.
+
+</details>
+
+<details>
+<summary>How to request it</summary>
+
+Ask your coding agent to use **Session Learning** for the task. Whether it is automatically discovered depends on your selected host.
+
+</details>
+
+<details>
+<summary>Full skill</summary>
+
+Extracts durable, actionable project knowledge from a session and updates its proper context source.
+
+[Open Session Learning skill](skills/session-learning/SKILL.md)
+
+</details>
 
 </details>
 
@@ -931,13 +1815,35 @@ Ask your coding agent to use **Session Learning** for the current task. Automati
 
 Applies a strict quality bar to reusable artefacts from a chat session, classifies them by resource type and stores qualified material in canonical project locations.
 
-**When to use it**  
-When the task needs this procedure: applies a strict quality bar to reusable artefacts from a chat session, classifies them by resource type and stores qualified material in canonical project locations.
+<details>
+<summary>What it does</summary>
 
-**How to request it**  
-Ask your coding agent to use **Session Resource Curation** for the current task. Automatic discovery depends on the selected host.
+Applies a strict quality bar to reusable artefacts from a chat session, classifies them by resource type and stores qualified material in canonical project locations.
 
-[Open full resource](skills/session-resource-curation/SKILL.md)
+</details>
+
+<details>
+<summary>When to use it</summary>
+
+Use when the current task needs this procedure. Applies a strict quality bar to reusable artefacts from a chat session, classifies them by resource type and stores qualified material in canonical project locations.
+
+</details>
+
+<details>
+<summary>How to request it</summary>
+
+Ask your coding agent to use **Session Resource Curation** for the task. Whether it is automatically discovered depends on your selected host.
+
+</details>
+
+<details>
+<summary>Full skill</summary>
+
+Applies a strict quality bar to reusable artefacts from a chat session, classifies them by resource type and stores qualified material in canonical project locations.
+
+[Open Session Resource Curation skill](skills/session-resource-curation/SKILL.md)
+
+</details>
 
 </details>
 
@@ -946,13 +1852,35 @@ Ask your coding agent to use **Session Resource Curation** for the current task.
 
 Reconciles interrupted work against repository state and resumes from verified checkpoints.
 
-**When to use it**  
-When the task needs this procedure: reconciles interrupted work against repository state and resumes from verified checkpoints.
+<details>
+<summary>What it does</summary>
 
-**How to request it**  
-Ask your coding agent to use **Session Recovery** for the current task. Automatic discovery depends on the selected host.
+Reconciles interrupted work against repository state and resumes from verified checkpoints.
 
-[Open full resource](skills/session-recovery/SKILL.md)
+</details>
+
+<details>
+<summary>When to use it</summary>
+
+Use when the current task needs this procedure. Reconciles interrupted work against repository state and resumes from verified checkpoints.
+
+</details>
+
+<details>
+<summary>How to request it</summary>
+
+Ask your coding agent to use **Session Recovery** for the task. Whether it is automatically discovered depends on your selected host.
+
+</details>
+
+<details>
+<summary>Full skill</summary>
+
+Reconciles interrupted work against repository state and resumes from verified checkpoints.
+
+[Open Session Recovery skill](skills/session-recovery/SKILL.md)
+
+</details>
 
 </details>
 
@@ -966,10 +1894,26 @@ Ask your coding agent to use **Session Recovery** for the current task. Automati
 
 Coordinates the review, consolidation and verification of durable session learnings.
 
-**Use it when**  
-The work needs coordinated stages, dependencies, handoffs or explicit quality gates.
+<details>
+<summary>What it coordinates</summary>
 
-[Open full resource](workflows/session-close.md)
+Coordinates the review, consolidation and verification of durable session learnings.
+
+</details>
+
+<details>
+<summary>When to use it</summary>
+
+Use when the work has ordered stages, dependencies, handoffs or explicit quality gates.
+
+</details>
+
+<details>
+<summary>Full workflow</summary>
+
+[Open Session Close workflow](workflows/session-close.md)
+
+</details>
 
 </details>
 
@@ -983,10 +1927,26 @@ The work needs coordinated stages, dependencies, handoffs or explicit quality ga
 
 Records architectural and product decisions, alternatives, rationale and consequences.
 
-**Use it for**  
-A consistent record or output for this purpose. Fill only fields supported by project evidence.
+<details>
+<summary>What it is for</summary>
 
-[Open full resource](templates/decision-register.md)
+Records architectural and product decisions, alternatives, rationale and consequences.
+
+</details>
+
+<details>
+<summary>How to use it</summary>
+
+Copy or adapt the template only when the project needs this record. Populate fields from evidence; remove fields that do not apply rather than inventing values.
+
+</details>
+
+<details>
+<summary>Full template</summary>
+
+[Open Decision Register template](templates/decision-register.md)
+
+</details>
 
 </details>
 
@@ -1012,16 +1972,42 @@ Coordinate work across agents or people, preserve checkpoints and report progres
 
 Creates a bounded task assignment and recommends a suitable model from the project roster.
 
-**What it does**  
+<details>
+<summary>What it does</summary>
+
 Creates a bounded task assignment and recommends a suitable model from the project roster.
 
-**How to use it**  
+</details>
+
+<details>
+<summary>When to use it</summary>
+
+Use this when the desired outcome matches: creates a bounded task assignment and recommends a suitable model from the project roster.
+
+</details>
+
+<details>
+<summary>How to use it</summary>
+
 `/delegate [task or workstream]`
 
-**Expected result**  
+Native slash-command support depends on the host and version.
+
+</details>
+
+<details>
+<summary>Expected result</summary>
+
 An assignment, worker/model rationale, ownership and dispatch status.
 
-[Open full resource](commands/delegate.md)
+</details>
+
+<details>
+<summary>Full contract</summary>
+
+[Open Delegate command contract](commands/delegate.md)
+
+</details>
 
 </details>
 
@@ -1030,16 +2016,42 @@ An assignment, worker/model rationale, ownership and dispatch status.
 
 Reconciles multi-agent campaign status against assignments, diffs, checkpoints and verification evidence.
 
-**What it does**  
+<details>
+<summary>What it does</summary>
+
 Reconciles multi-agent campaign status against assignments, diffs, checkpoints and verification evidence.
 
-**How to use it**  
+</details>
+
+<details>
+<summary>When to use it</summary>
+
+Use this when the desired outcome matches: reconciles multi-agent campaign status against assignments, diffs, checkpoints and verification evidence.
+
+</details>
+
+<details>
+<summary>How to use it</summary>
+
 `campaign-status / campaign status`
 
-**Expected result**  
+Native slash-command support depends on the host and version.
+
+</details>
+
+<details>
+<summary>Expected result</summary>
+
 Campaign status reconciled against assignments, checkpoints and verification evidence.
 
-[Open full resource](commands/campaign-status.md)
+</details>
+
+<details>
+<summary>Full contract</summary>
+
+[Open Campaign Status command contract](commands/campaign-status.md)
+
+</details>
 
 </details>
 
@@ -1053,13 +2065,35 @@ Campaign status reconciled against assignments, checkpoints and verification evi
 
 Defines accountable task decomposition, worker selection, assignment contracts, checkpoints, recovery and independent review.
 
-**When to use it**  
-When the task needs this procedure: defines accountable task decomposition, worker selection, assignment contracts, checkpoints, recovery and independent review.
+<details>
+<summary>What it does</summary>
 
-**How to request it**  
-Ask your coding agent to use **Multi Agent Delegation** for the current task. Automatic discovery depends on the selected host.
+Defines accountable task decomposition, worker selection, assignment contracts, checkpoints, recovery and independent review.
 
-[Open full resource](skills/multi-agent-delegation/SKILL.md)
+</details>
+
+<details>
+<summary>When to use it</summary>
+
+Use when the current task needs this procedure. Defines accountable task decomposition, worker selection, assignment contracts, checkpoints, recovery and independent review.
+
+</details>
+
+<details>
+<summary>How to request it</summary>
+
+Ask your coding agent to use **Multi Agent Delegation** for the task. Whether it is automatically discovered depends on your selected host.
+
+</details>
+
+<details>
+<summary>Full skill</summary>
+
+Defines accountable task decomposition, worker selection, assignment contracts, checkpoints, recovery and independent review.
+
+[Open Multi Agent Delegation skill](skills/multi-agent-delegation/SKILL.md)
+
+</details>
 
 </details>
 
@@ -1068,13 +2102,35 @@ Ask your coding agent to use **Multi Agent Delegation** for the current task. Au
 
 Reconciles roadmap, implementation plans and actual repository evidence to identify the next safe task.
 
-**When to use it**  
-When the task needs this procedure: reconciles roadmap, implementation plans and actual repository evidence to identify the next safe task.
+<details>
+<summary>What it does</summary>
 
-**How to request it**  
-Ask your coding agent to use **Plan Reconciliation** for the current task. Automatic discovery depends on the selected host.
+Reconciles roadmap, implementation plans and actual repository evidence to identify the next safe task.
 
-[Open full resource](skills/plan-reconciliation/SKILL.md)
+</details>
+
+<details>
+<summary>When to use it</summary>
+
+Use when the current task needs this procedure. Reconciles roadmap, implementation plans and actual repository evidence to identify the next safe task.
+
+</details>
+
+<details>
+<summary>How to request it</summary>
+
+Ask your coding agent to use **Plan Reconciliation** for the task. Whether it is automatically discovered depends on your selected host.
+
+</details>
+
+<details>
+<summary>Full skill</summary>
+
+Reconciles roadmap, implementation plans and actual repository evidence to identify the next safe task.
+
+[Open Plan Reconciliation skill](skills/plan-reconciliation/SKILL.md)
+
+</details>
 
 </details>
 
@@ -1088,10 +2144,26 @@ Ask your coding agent to use **Plan Reconciliation** for the current task. Autom
 
 Coordinates a durable multi-agent campaign with persistent assignments, checkpoints, recovery, independent review and integrated verification.
 
-**Use it when**  
-The work needs coordinated stages, dependencies, handoffs or explicit quality gates.
+<details>
+<summary>What it coordinates</summary>
 
-[Open full resource](workflows/multi-agent-campaign.md)
+Coordinates a durable multi-agent campaign with persistent assignments, checkpoints, recovery, independent review and integrated verification.
+
+</details>
+
+<details>
+<summary>When to use it</summary>
+
+Use when the work has ordered stages, dependencies, handoffs or explicit quality gates.
+
+</details>
+
+<details>
+<summary>Full workflow</summary>
+
+[Open Multi Agent Campaign workflow](workflows/multi-agent-campaign.md)
+
+</details>
 
 </details>
 
@@ -1105,13 +2177,26 @@ The work needs coordinated stages, dependencies, handoffs or explicit quality ga
 
 Defines the accountable lead/orchestrator role for architecture, task decomposition, delegation, integration and delivery.
 
-**Responsibility**  
-Defines the role and its expected focus.
+<details>
+<summary>Role and responsibility</summary>
 
-**Boundary**  
-A profile describes responsibility; it does not grant tools, permissions or independent runtime access.
+Defines the accountable lead/orchestrator role for architecture, task decomposition, delegation, integration and delivery.
 
-[Open full resource](profiles/lead-engineer.md)
+</details>
+
+<details>
+<summary>Boundaries</summary>
+
+A profile defines responsibility. It does not grant tools, permissions, independent runtime access or authority beyond the owner's instructions.
+
+</details>
+
+<details>
+<summary>Full profile</summary>
+
+[Open Lead Engineer profile](profiles/lead-engineer.md)
+
+</details>
 
 </details>
 
@@ -1125,10 +2210,26 @@ A profile describes responsibility; it does not grant tools, permissions or inde
 
 Defines a durable campaign record for workstreams, assignment states, owner decisions, blockers and verification evidence.
 
-**Use it for**  
-A consistent record or output for this purpose. Fill only fields supported by project evidence.
+<details>
+<summary>What it is for</summary>
 
-[Open full resource](templates/campaign-state.md)
+Defines a durable campaign record for workstreams, assignment states, owner decisions, blockers and verification evidence.
+
+</details>
+
+<details>
+<summary>How to use it</summary>
+
+Copy or adapt the template only when the project needs this record. Populate fields from evidence; remove fields that do not apply rather than inventing values.
+
+</details>
+
+<details>
+<summary>Full template</summary>
+
+[Open Campaign State template](templates/campaign-state.md)
+
+</details>
 
 </details>
 
@@ -1137,10 +2238,26 @@ A consistent record or output for this purpose. Fill only fields supported by pr
 
 Defines the objective, scope, owner, model rationale, outputs and acceptance criteria for delegated work.
 
-**Use it for**  
-A consistent record or output for this purpose. Fill only fields supported by project evidence.
+<details>
+<summary>What it is for</summary>
 
-[Open full resource](templates/delegation-assignment.md)
+Defines the objective, scope, owner, model rationale, outputs and acceptance criteria for delegated work.
+
+</details>
+
+<details>
+<summary>How to use it</summary>
+
+Copy or adapt the template only when the project needs this record. Populate fields from evidence; remove fields that do not apply rather than inventing values.
+
+</details>
+
+<details>
+<summary>Full template</summary>
+
+[Open Delegation Assignment template](templates/delegation-assignment.md)
+
+</details>
 
 </details>
 
@@ -1149,10 +2266,26 @@ A consistent record or output for this purpose. Fill only fields supported by pr
 
 Preserves verified checkpoints and context when a delegated worker or session is interrupted.
 
-**Use it for**  
-A consistent record or output for this purpose. Fill only fields supported by project evidence.
+<details>
+<summary>What it is for</summary>
 
-[Open full resource](templates/recovery-handoff.md)
+Preserves verified checkpoints and context when a delegated worker or session is interrupted.
+
+</details>
+
+<details>
+<summary>How to use it</summary>
+
+Copy or adapt the template only when the project needs this record. Populate fields from evidence; remove fields that do not apply rather than inventing values.
+
+</details>
+
+<details>
+<summary>Full template</summary>
+
+[Open Recovery Handoff template](templates/recovery-handoff.md)
+
+</details>
 
 </details>
 
@@ -1171,19 +2304,49 @@ A consistent record or output for this purpose. Fill only fields supported by pr
 
 Invokes evidence-backed progress reporting for a project, milestone or workstream.
 
-**What it does**  
+<details>
+<summary>What it does</summary>
+
 Invokes evidence-backed progress reporting for a project, milestone or workstream.
 
-**How to use it**  
+</details>
+
+<details>
+<summary>When to use it</summary>
+
+Use this when the desired outcome matches: invokes evidence-backed progress reporting for a project, milestone or workstream.
+
+</details>
+
+<details>
+<summary>How to use it</summary>
+
 `/progress-report [project|milestone|workstream]`
 
-**Example**  
+Native slash-command support depends on the host and version.
+
+</details>
+
+<details>
+<summary>Example usage</summary>
+
 `/progress-report milestone: M7`<br>Report completed, in-progress and blocked outcomes with evidence.
 
-**Expected result**  
+</details>
+
+<details>
+<summary>Expected result</summary>
+
 Status, completed outcomes with evidence, in-progress work, blockers and next action.
 
-[Open full resource](commands/progress-report.md)
+</details>
+
+<details>
+<summary>Full contract</summary>
+
+[Open Progress Report command contract](commands/progress-report.md)
+
+</details>
 
 </details>
 
@@ -1197,13 +2360,35 @@ Status, completed outcomes with evidence, in-progress work, blockers and next ac
 
 Produces progress reports grounded in implementation, test and review evidence rather than estimates or chat memory.
 
-**When to use it**  
-When the task needs this procedure: produces progress reports grounded in implementation, test and review evidence rather than estimates or chat memory.
+<details>
+<summary>What it does</summary>
 
-**How to request it**  
-Ask your coding agent to use **Progress Reporting** for the current task. Automatic discovery depends on the selected host.
+Produces progress reports grounded in implementation, test and review evidence rather than estimates or chat memory.
 
-[Open full resource](skills/progress-reporting/SKILL.md)
+</details>
+
+<details>
+<summary>When to use it</summary>
+
+Use when the current task needs this procedure. Produces progress reports grounded in implementation, test and review evidence rather than estimates or chat memory.
+
+</details>
+
+<details>
+<summary>How to request it</summary>
+
+Ask your coding agent to use **Progress Reporting** for the task. Whether it is automatically discovered depends on your selected host.
+
+</details>
+
+<details>
+<summary>Full skill</summary>
+
+Produces progress reports grounded in implementation, test and review evidence rather than estimates or chat memory.
+
+[Open Progress Reporting skill](skills/progress-reporting/SKILL.md)
+
+</details>
 
 </details>
 
@@ -1217,10 +2402,26 @@ Ask your coding agent to use **Progress Reporting** for the current task. Automa
 
 Provides a consistent structure for evidence-based project progress reports.
 
-**Use it for**  
-A consistent record or output for this purpose. Fill only fields supported by project evidence.
+<details>
+<summary>What it is for</summary>
 
-[Open full resource](templates/progress-report-template.md)
+Provides a consistent structure for evidence-based project progress reports.
+
+</details>
+
+<details>
+<summary>How to use it</summary>
+
+Copy or adapt the template only when the project needs this record. Populate fields from evidence; remove fields that do not apply rather than inventing values.
+
+</details>
+
+<details>
+<summary>Full template</summary>
+
+[Open Progress Report Template template](templates/progress-report-template.md)
+
+</details>
 
 </details>
 
@@ -1229,10 +2430,26 @@ A consistent record or output for this purpose. Fill only fields supported by pr
 
 Tracks blockers, ownership, impact, dependencies and resolution conditions.
 
-**Use it for**  
-A consistent record or output for this purpose. Fill only fields supported by project evidence.
+<details>
+<summary>What it is for</summary>
 
-[Open full resource](templates/blocker-register.md)
+Tracks blockers, ownership, impact, dependencies and resolution conditions.
+
+</details>
+
+<details>
+<summary>How to use it</summary>
+
+Copy or adapt the template only when the project needs this record. Populate fields from evidence; remove fields that do not apply rather than inventing values.
+
+</details>
+
+<details>
+<summary>Full template</summary>
+
+[Open Blocker Register template](templates/blocker-register.md)
+
+</details>
 
 </details>
 
@@ -1251,10 +2468,26 @@ A consistent record or output for this purpose. Fill only fields supported by pr
 
 Defines task-aware model classification, roster constraints, scoring and independent-review gates.
 
-**Scope**  
-A reusable rule for the relevant tasks. Follow the project's own authority hierarchy where it is stricter.
+<details>
+<summary>What it governs</summary>
 
-[Open full resource](docs/architecture/MODEL_DELEGATION.md)
+Defines task-aware model classification, roster constraints, scoring and independent-review gates.
+
+</details>
+
+<details>
+<summary>Where it applies</summary>
+
+Applies to tasks and resources within this subject area, subject to the project's own instruction hierarchy.
+
+</details>
+
+<details>
+<summary>Full standard</summary>
+
+[Open Model Delegation Architecture standard](docs/architecture/MODEL_DELEGATION.md)
+
+</details>
 
 </details>
 
@@ -1268,10 +2501,19 @@ A reusable rule for the relevant tasks. Follow the project's own authority hiera
 
 Maps portable orchestration contracts to host-specific capabilities and limitations across common coding agents.
 
-**Reference**  
+<details>
+<summary>What it contains</summary>
+
 Maps portable orchestration contracts to host-specific capabilities and limitations across common coding agents.
 
-[Open full resource](docs/architecture/ORCHESTRATION_PORTABILITY.md)
+</details>
+
+<details>
+<summary>Full reference</summary>
+
+[Open Orchestration Portability reference](docs/architecture/ORCHESTRATION_PORTABILITY.md)
+
+</details>
 
 </details>
 
@@ -1297,13 +2539,35 @@ Use repeatable visual, graphics, lighting and performance practices in interacti
 
 Compares rendered output across controlled states and identifies meaningful visual regressions.
 
-**When to use it**  
-When the task needs this procedure: compares rendered output across controlled states and identifies meaningful visual regressions.
+<details>
+<summary>What it does</summary>
 
-**How to request it**  
-Ask your coding agent to use **Visual Regression** for the current task. Automatic discovery depends on the selected host.
+Compares rendered output across controlled states and identifies meaningful visual regressions.
 
-[Open full resource](skills/visual-regression/SKILL.md)
+</details>
+
+<details>
+<summary>When to use it</summary>
+
+Use when the current task needs this procedure. Compares rendered output across controlled states and identifies meaningful visual regressions.
+
+</details>
+
+<details>
+<summary>How to request it</summary>
+
+Ask your coding agent to use **Visual Regression** for the task. Whether it is automatically discovered depends on your selected host.
+
+</details>
+
+<details>
+<summary>Full skill</summary>
+
+Compares rendered output across controlled states and identifies meaningful visual regressions.
+
+[Open Visual Regression skill](skills/visual-regression/SKILL.md)
+
+</details>
 
 </details>
 
@@ -1312,13 +2576,35 @@ Ask your coding agent to use **Visual Regression** for the current task. Automat
 
 Designs repeatable visual probes, pinned states and diagnostics for graphics-heavy applications.
 
-**When to use it**  
-When the task needs this procedure: designs repeatable visual probes, pinned states and diagnostics for graphics-heavy applications.
+<details>
+<summary>What it does</summary>
 
-**How to request it**  
-Ask your coding agent to use **Visual Probe Engineering** for the current task. Automatic discovery depends on the selected host.
+Designs repeatable visual probes, pinned states and diagnostics for graphics-heavy applications.
 
-[Open full resource](skills/visual-probe-engineering/SKILL.md)
+</details>
+
+<details>
+<summary>When to use it</summary>
+
+Use when the current task needs this procedure. Designs repeatable visual probes, pinned states and diagnostics for graphics-heavy applications.
+
+</details>
+
+<details>
+<summary>How to request it</summary>
+
+Ask your coding agent to use **Visual Probe Engineering** for the task. Whether it is automatically discovered depends on your selected host.
+
+</details>
+
+<details>
+<summary>Full skill</summary>
+
+Designs repeatable visual probes, pinned states and diagnostics for graphics-heavy applications.
+
+[Open Visual Probe Engineering skill](skills/visual-probe-engineering/SKILL.md)
+
+</details>
 
 </details>
 
@@ -1332,13 +2618,26 @@ Ask your coding agent to use **Visual Probe Engineering** for the current task. 
 
 Reviews visual output, rendering behaviour, consistency and visual acceptance criteria.
 
-**Responsibility**  
-Defines the role and its expected focus.
+<details>
+<summary>Role and responsibility</summary>
 
-**Boundary**  
-A profile describes responsibility; it does not grant tools, permissions or independent runtime access.
+Reviews visual output, rendering behaviour, consistency and visual acceptance criteria.
 
-[Open full resource](profiles/visual-quality-engineer.md)
+</details>
+
+<details>
+<summary>Boundaries</summary>
+
+A profile defines responsibility. It does not grant tools, permissions, independent runtime access or authority beyond the owner's instructions.
+
+</details>
+
+<details>
+<summary>Full profile</summary>
+
+[Open Visual Quality Engineer profile](profiles/visual-quality-engineer.md)
+
+</details>
 
 </details>
 
@@ -1357,13 +2656,26 @@ A profile describes responsibility; it does not grant tools, permissions or inde
 
 Defines a specialist role for graphics pipelines, shaders, rendering quality and performance.
 
-**Responsibility**  
-Defines the role and its expected focus.
+<details>
+<summary>Role and responsibility</summary>
 
-**Boundary**  
-A profile describes responsibility; it does not grant tools, permissions or independent runtime access.
+Defines a specialist role for graphics pipelines, shaders, rendering quality and performance.
 
-[Open full resource](profiles/graphics-engineer.md)
+</details>
+
+<details>
+<summary>Boundaries</summary>
+
+A profile defines responsibility. It does not grant tools, permissions, independent runtime access or authority beyond the owner's instructions.
+
+</details>
+
+<details>
+<summary>Full profile</summary>
+
+[Open Graphics Engineer profile](profiles/graphics-engineer.md)
+
+</details>
 
 </details>
 
@@ -1372,13 +2684,26 @@ A profile describes responsibility; it does not grant tools, permissions or inde
 
 Translates visual direction into coherent design intent, constraints and acceptance criteria.
 
-**Responsibility**  
-Defines the role and its expected focus.
+<details>
+<summary>Role and responsibility</summary>
 
-**Boundary**  
-A profile describes responsibility; it does not grant tools, permissions or independent runtime access.
+Translates visual direction into coherent design intent, constraints and acceptance criteria.
 
-[Open full resource](profiles/creative-director.md)
+</details>
+
+<details>
+<summary>Boundaries</summary>
+
+A profile defines responsibility. It does not grant tools, permissions, independent runtime access or authority beyond the owner's instructions.
+
+</details>
+
+<details>
+<summary>Full profile</summary>
+
+[Open Creative Director profile](profiles/creative-director.md)
+
+</details>
 
 </details>
 
@@ -1387,13 +2712,26 @@ A profile describes responsibility; it does not grant tools, permissions or inde
 
 Defines specialist direction for audio-reactive lighting, lasers and visual choreography.
 
-**Responsibility**  
-Defines the role and its expected focus.
+<details>
+<summary>Role and responsibility</summary>
 
-**Boundary**  
-A profile describes responsibility; it does not grant tools, permissions or independent runtime access.
+Defines specialist direction for audio-reactive lighting, lasers and visual choreography.
 
-[Open full resource](profiles/creative-lighting-director.md)
+</details>
+
+<details>
+<summary>Boundaries</summary>
+
+A profile defines responsibility. It does not grant tools, permissions, independent runtime access or authority beyond the owner's instructions.
+
+</details>
+
+<details>
+<summary>Full profile</summary>
+
+[Open Creative Lighting Director profile](profiles/creative-lighting-director.md)
+
+</details>
 
 </details>
 
@@ -1412,13 +2750,26 @@ A profile describes responsibility; it does not grant tools, permissions or inde
 
 Defines repeatable performance, stability and resource-usage verification.
 
-**Responsibility**  
-Defines the role and its expected focus.
+<details>
+<summary>Role and responsibility</summary>
 
-**Boundary**  
-A profile describes responsibility; it does not grant tools, permissions or independent runtime access.
+Defines repeatable performance, stability and resource-usage verification.
 
-[Open full resource](profiles/performance-qa.md)
+</details>
+
+<details>
+<summary>Boundaries</summary>
+
+A profile defines responsibility. It does not grant tools, permissions, independent runtime access or authority beyond the owner's instructions.
+
+</details>
+
+<details>
+<summary>Full profile</summary>
+
+[Open Performance Qa profile](profiles/performance-qa.md)
+
+</details>
 
 </details>
 
@@ -1444,16 +2795,42 @@ Maintain the owner-defined model roster and manage project-local Foundry configu
 
 Edits the owner-defined model roster used by task-aware delegation.
 
-**What it does**  
+<details>
+<summary>What it does</summary>
+
 Edits the owner-defined model roster used by task-aware delegation.
 
-**How to use it**  
+</details>
+
+<details>
+<summary>When to use it</summary>
+
+Use this when the desired outcome matches: edits the owner-defined model roster used by task-aware delegation.
+
+</details>
+
+<details>
+<summary>How to use it</summary>
+
 `/models edit`
 
-**Expected result**  
+Native slash-command support depends on the host and version.
+
+</details>
+
+<details>
+<summary>Expected result</summary>
+
 Validated owner-approved roster changes.
 
-[Open full resource](commands/edit-model-roster.md)
+</details>
+
+<details>
+<summary>Full contract</summary>
+
+[Open Edit Model Roster command contract](commands/edit-model-roster.md)
+
+</details>
 
 </details>
 
@@ -1462,16 +2839,42 @@ Validated owner-approved roster changes.
 
 Explains task classification, eligibility filters and model-selection rationale.
 
-**What it does**  
+<details>
+<summary>What it does</summary>
+
 Explains task classification, eligibility filters and model-selection rationale.
 
-**How to use it**  
+</details>
+
+<details>
+<summary>When to use it</summary>
+
+Use this when the desired outcome matches: explains task classification, eligibility filters and model-selection rationale.
+
+</details>
+
+<details>
+<summary>How to use it</summary>
+
 `/models explain [task]`
 
-**Expected result**  
+Native slash-command support depends on the host and version.
+
+</details>
+
+<details>
+<summary>Expected result</summary>
+
 Eligibility and model-selection rationale, including constraints.
 
-[Open full resource](commands/explain-model-selection.md)
+</details>
+
+<details>
+<summary>Full contract</summary>
+
+[Open Explain Model Selection command contract](commands/explain-model-selection.md)
+
+</details>
 
 </details>
 
@@ -1480,16 +2883,42 @@ Eligibility and model-selection rationale, including constraints.
 
 Runs bounded, owner-approved capability checks on a configured model.
 
-**What it does**  
+<details>
+<summary>What it does</summary>
+
 Runs bounded, owner-approved capability checks on a configured model.
 
-**How to use it**  
+</details>
+
+<details>
+<summary>When to use it</summary>
+
+Use this when the desired outcome matches: runs bounded, owner-approved capability checks on a configured model.
+
+</details>
+
+<details>
+<summary>How to use it</summary>
+
 `/models test [alias]`
 
-**Expected result**  
+Native slash-command support depends on the host and version.
+
+</details>
+
+<details>
+<summary>Expected result</summary>
+
 Bounded evaluation evidence, cost/execution limits and caveats.
 
-[Open full resource](commands/test-model.md)
+</details>
+
+<details>
+<summary>Full contract</summary>
+
+[Open Test Model command contract](commands/test-model.md)
+
+</details>
 
 </details>
 
@@ -1503,10 +2932,26 @@ Bounded evaluation evidence, cost/execution limits and caveats.
 
 Provides the project-owned model roster schema and capability fields.
 
-**Use it for**  
-A consistent record or output for this purpose. Fill only fields supported by project evidence.
+<details>
+<summary>What it is for</summary>
 
-[Open full resource](templates/model-roster.yaml)
+Provides the project-owned model roster schema and capability fields.
+
+</details>
+
+<details>
+<summary>How to use it</summary>
+
+Copy or adapt the template only when the project needs this record. Populate fields from evidence; remove fields that do not apply rather than inventing values.
+
+</details>
+
+<details>
+<summary>Full template</summary>
+
+[Open Model Roster Template template](templates/model-roster.yaml)
+
+</details>
 
 </details>
 
@@ -1525,16 +2970,42 @@ A consistent record or output for this purpose. Fill only fields supported by pr
 
 Inspects and edits project-local Agent Foundry configuration conversationally, backed by the authoritative settings specification.
 
-**What it does**  
+<details>
+<summary>What it does</summary>
+
 Inspects and edits project-local Agent Foundry configuration conversationally, backed by the authoritative settings specification.
 
-**How to use it**  
+</details>
+
+<details>
+<summary>When to use it</summary>
+
+Use this when the desired outcome matches: inspects and edits project-local Agent Foundry configuration conversationally, backed by the authoritative settings specification.
+
+</details>
+
+<details>
+<summary>How to use it</summary>
+
 `/settings`
 
-**Expected result**  
+Native slash-command support depends on the host and version.
+
+</details>
+
+<details>
+<summary>Expected result</summary>
+
 Current settings, validated proposed changes and a concise diff.
 
-[Open full resource](commands/settings.md)
+</details>
+
+<details>
+<summary>Full contract</summary>
+
+[Open Foundry Settings command contract](commands/settings.md)
+
+</details>
 
 </details>
 
@@ -1548,10 +3019,26 @@ Current settings, validated proposed changes and a concise diff.
 
 Provides project-level policies for delegation, model selection and session behaviour.
 
-**Use it for**  
-A consistent record or output for this purpose. Fill only fields supported by project evidence.
+<details>
+<summary>What it is for</summary>
 
-[Open full resource](templates/foundry-settings.yaml)
+Provides project-level policies for delegation, model selection and session behaviour.
+
+</details>
+
+<details>
+<summary>How to use it</summary>
+
+Copy or adapt the template only when the project needs this record. Populate fields from evidence; remove fields that do not apply rather than inventing values.
+
+</details>
+
+<details>
+<summary>Full template</summary>
+
+[Open Foundry Settings Template template](templates/foundry-settings.yaml)
+
+</details>
 
 </details>
 
@@ -1565,10 +3052,19 @@ A consistent record or output for this purpose. Fill only fields supported by pr
 
 Conversational management instructions: discovery, contribution, settings, installation, update, removal, diagnostics and the Foundry safety contract.
 
-**Reference**  
+<details>
+<summary>What it contains</summary>
+
 Conversational management instructions: discovery, contribution, settings, installation, update, removal, diagnostics and the Foundry safety contract.
 
-[Open full resource](foundry/MANAGEMENT.md)
+</details>
+
+<details>
+<summary>Full reference</summary>
+
+[Open Foundry Management reference](foundry/MANAGEMENT.md)
+
+</details>
 
 </details>
 
@@ -1577,27 +3073,45 @@ Conversational management instructions: discovery, contribution, settings, insta
 
 Reusable composition guidance for Foundry management chat responses: overview, settings, previews, diagnostics, contribution discovery and change summary.
 
-**Reference**  
+<details>
+<summary>What it contains</summary>
+
 Reusable composition guidance for Foundry management chat responses: overview, settings, previews, diagnostics, contribution discovery and change summary.
 
-[Open full resource](foundry/RESPONSE_TEMPLATES.md)
+</details>
+
+<details>
+<summary>Full reference</summary>
+
+[Open Foundry Response Templates reference](foundry/RESPONSE_TEMPLATES.md)
+
+</details>
 
 </details>
 
 </details>
 
 <details>
-<summary><strong>Settings reference (1)</strong></summary>
+<summary><strong>Settings references (1)</strong></summary>
 
 <details>
 <summary>Foundry Settings Spec</summary>
 
 The single authoritative definition of supported Agent Foundry settings, their values, defaults, scope and safe modification guidance.
 
-**Reference**  
+<details>
+<summary>What it contains</summary>
+
 The single authoritative definition of supported Agent Foundry settings, their values, defaults, scope and safe modification guidance.
 
-[Open full resource](foundry/SETTINGS_SPEC.md)
+</details>
+
+<details>
+<summary>Full reference</summary>
+
+[Open Foundry Settings Spec reference](foundry/SETTINGS_SPEC.md)
+
+</details>
 
 </details>
 
@@ -1623,21 +3137,56 @@ Discover reusable practices in the current project and prepare selected material
 
 Invokes explicit, approval-gated discovery of reusable user-created agent resources for Agent Foundry.
 
-**What it does**  
+<details>
+<summary>What it does</summary>
+
 Invokes explicit, approval-gated discovery of reusable user-created agent resources for Agent Foundry.
 
-**How to use it**  
+</details>
+
+<details>
+<summary>When to use it</summary>
+
+Use this when the desired outcome matches: invokes explicit, approval-gated discovery of reusable user-created agent resources for Agent Foundry.
+
+</details>
+
+<details>
+<summary>How to use it</summary>
+
 `Say: contribute / I'd like to contribute`
 
-**Example**  
+Native slash-command support depends on the host and version.
+
+</details>
+
+<details>
+<summary>Example usage</summary>
+
 `contribute`<br>Find reusable project practices and show a shortlist. Do not publish without approval.
 
-**Expected result**  
+</details>
+
+<details>
+<summary>Expected result</summary>
+
 A numbered candidate shortlist, with drafts only for selected candidates.
 
-**Approval boundary:** a discovery shortlist is not publication approval. The owner chooses what gets drafted and separately approves anything external.
+</details>
 
-[Open full resource](commands/contribute.md)
+<details>
+<summary>Approval boundary</summary>
+
+Discovery is not publication approval. The owner chooses what gets drafted and separately approves any external publication.
+
+</details>
+
+<details>
+<summary>Full contract</summary>
+
+[Open Contribute command contract](commands/contribute.md)
+
+</details>
 
 </details>
 
@@ -1651,13 +3200,35 @@ A numbered candidate shortlist, with drafts only for selected candidates.
 
 Scans accessible user-created instructions, skills, workflows, commands, settings and templates for safe, reusable contribution candidates.
 
-**When to use it**  
-When the task needs this procedure: scans accessible user-created instructions, skills, workflows, commands, settings and templates for safe, reusable contribution candidates.
+<details>
+<summary>What it does</summary>
 
-**How to request it**  
-Ask your coding agent to use **Contribution Discovery** for the current task. Automatic discovery depends on the selected host.
+Scans accessible user-created instructions, skills, workflows, commands, settings and templates for safe, reusable contribution candidates.
 
-[Open full resource](skills/contribution-discovery/SKILL.md)
+</details>
+
+<details>
+<summary>When to use it</summary>
+
+Use when the current task needs this procedure. Scans accessible user-created instructions, skills, workflows, commands, settings and templates for safe, reusable contribution candidates.
+
+</details>
+
+<details>
+<summary>How to request it</summary>
+
+Ask your coding agent to use **Contribution Discovery** for the task. Whether it is automatically discovered depends on your selected host.
+
+</details>
+
+<details>
+<summary>Full skill</summary>
+
+Scans accessible user-created instructions, skills, workflows, commands, settings and templates for safe, reusable contribution candidates.
+
+[Open Contribution Discovery skill](skills/contribution-discovery/SKILL.md)
+
+</details>
 
 </details>
 
