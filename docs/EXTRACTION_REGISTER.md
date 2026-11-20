@@ -23,7 +23,8 @@ This register links source evidence to canonical Agent Foundry resources. The de
 | Dhan `tests/telegram_regression/*` | privacy-safe evidence, test-spec/report schemas, regression workflow | PARTIALLY_EXTRACTED |
 | Dhan `docs/operations/KILO_UNATTENDED_EXECUTION_THREAT_MODEL.md` | agent execution security skill | EXTRACTED_DRAFT |
 | Dhan `docs/README.md`, governance and verification reports | documentation standard, decision/test/audit templates | PARTIALLY_EXTRACTED |
-| Dhan `orchestration/*` | multi-agent campaign workflow and durable state templates | EXTRACTED_DRAFT |
+| Dhan `orchestration/*`, `AGENTS.md`, `docs/governance/DELEGATION_POLICY.md` | lead/orchestrator profile, task-aware delegation, durable campaign workflow, assignment/recovery records and campaign status | EXTRACTED_DRAFT |
+| Lively `AGENTS.md`, `.kilo/plans/awakening-master-plan.md` | explicit plan-state taxonomy, phase gates, source-of-truth discipline and visual/technical acceptance practices | EXTRACTED_DRAFT |
 
 ## Current Agent Foundry resources
 
@@ -40,6 +41,10 @@ This register links source evidence to canonical Agent Foundry resources. The de
 | Privacy-safe evidence | `skills/privacy-safe-evidence/SKILL.md` | DRAFT |
 | Agent execution security | `skills/agent-execution-security/SKILL.md` | DRAFT |
 | Multi-agent campaign | `workflows/multi-agent-campaign.md` | DRAFT |
+| Lead engineer / orchestrator | `profiles/lead-engineer.md` | DRAFT |
+| Campaign state and status | `templates/campaign-state.md`, `commands/campaign-status.md` | DRAFT |
+| Host orchestration portability | `docs/architecture/ORCHESTRATION_PORTABILITY.md` | DRAFT |
+| Contribution discovery | `skills/contribution-discovery/SKILL.md`, `commands/contribute.md` | DRAFT |
 | Progress report | `commands/progress-report.md` | DRAFT |
 | Teach implementation | `commands/teach-implementation.md` | DRAFT |
 | Durable session learning | `skills/session-learning/SKILL.md` | DRAFT |
@@ -80,3 +85,12 @@ The reusable library now also includes generic engineering procedures that gener
 | Engineering command interface | `commands/implement.md`, `commands/delegate.md`, `commands/next-task.md`, `commands/project-health.md` |
 
 These are generalised operating practices, not claims that every procedure existed as a standalone source file in Dhan AI Trader or Rave Engine. Source-derived elements and newly authored generalisation are distinguished in the relevant resource frontmatter and audit notes.
+
+
+## Context-first orchestration and contribution additions
+
+The 0.6.0 context-first line adds a durable campaign-state template, a campaign-status command, a more explicit lead/orchestrator profile and a host capability map. These generalise the inspected Dhan campaign lifecycle and delegation policy while preserving the distinction between portable coordination and host-provided dispatch.
+
+Lively's single-active-plan discipline, requirement status taxonomy and visual acceptance gates are documented as reusable planning/QA practices. Its renderer probes, Lively metadata, shaders and hardware-specific thresholds remain project-specific.
+
+Contribution discovery is a newly authored Foundry capability rather than a source extraction: it provides an opt-in process for identifying reusable user-owned resources, ranking candidates, excluding sensitive material and obtaining separate approval before publication.
