@@ -127,13 +127,15 @@ Adapt categories to the project. Do not force every command into a generic "comm
 - Show a Mermaid navigation map before the long menu where the project has enough complexity to justify one.
 - Use clear heading levels and visibly indented child groups.
 - Use nested `<details>` only when the reader benefits from progressive disclosure.
-- For GitHub, visually distinguish nested levels with supported structural markup such as nested lists/blockquotes. Do not depend on CSS, classes, inline styles or JavaScript because GitHub sanitizes or ignores them.
+- For GitHub, use a Mermaid hierarchy map to make parent/child relationships visible. Do not assume nested `<details>` summaries will appear progressively indented; GitHub may render them with nearly identical alignment. Use accordions for disclosure, not as the only proof of hierarchy.
 - Do not create 100 sibling dropdowns that appear as one undifferentiated list.
 - Do not open every parent or child by default.
 - Keep summaries short, consistent and human-readable.
 - Ensure every expanded leaf has enough context to decide whether to open the canonical resource.
 
 ## 5. Design leaf-resource panels
+
+Use deeper, topic-level nested dropdowns primarily for commands, because a command has a user-facing invocation and an actionable output contract. For non-command types, a concise resource leaf with a one-line purpose and canonical link is usually clearer. Add further panels only when the project inspection demonstrates distinct user questions.
 
 A resource panel should answer the questions relevant to its type. Do not copy the entire source file into the README.
 
