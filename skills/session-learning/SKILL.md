@@ -2,7 +2,7 @@
 id: session-learning
 name: Durable Session Learning
 type: skill
-version: 0.1.0
+version: 0.2.0
 portability: universal
 status: draft
 dependencies:
@@ -14,11 +14,11 @@ dependencies:
 
 ## Purpose
 
-Extract useful, durable project knowledge from a completed conversation and write it into the correct existing context source. The objective is to improve future work, not to preserve the conversation.
+At the end of a productive session, preserve durable project learnings and any genuinely reusable project resources created or refined in the conversation. Classify each item and route it to its canonical home. The objective is to improve future work, not to preserve the conversation.
 
 ## Trigger
 
-Run when the user invokes `/close`, `/close session`, `/close chat`, asks to wrap up, or explicitly requests durable session-context capture. For reusable artefacts that should become a project resource, use the separate `/done` command and `skills/session-resource-curation/SKILL.md`.
+Run when the user invokes `/done` or its legacy aliases `/close`, `/close session`, `/close chat`, or explicitly asks to finish the session and preserve worthwhile project material. This single end-of-session procedure handles context learning and reusable-resource extraction; do not split them into competing commands or parallel curation skills.
 
 ## What qualifies as a learning
 
@@ -40,6 +40,25 @@ Do not capture:
 - duplicated information already recorded accurately;
 - unverified agent claims;
 - raw transcripts or verbose task histories.
+
+## Reusable resource classification
+
+In addition to durable learnings, inspect whether the session produced a complete, reusable artefact that belongs in the project. A candidate must solve a recurring or important project problem, stand alone without the chat, have a clear purpose and audience, and not duplicate an existing resource. Reject vague, transient, project-irrelevant, unverified or redundant material. Invoking `/done` is not permission to invent something to save.
+
+Classify qualifying artefacts by their actual form:
+- **Command:** repeatable user-invoked action with inputs, permissions, behaviour and output contract → `commands/<name>.md`.
+- **Skill:** reusable procedure for a class of work → `skills/<name>/SKILL.md`.
+- **Workflow:** multi-stage process with gates, dependencies or handoffs → `workflows/<name>.md`.
+- **Standard:** durable rule governing multiple tasks → `standards/<name>.md`.
+- **Profile:** specialist responsibility, scope and boundaries → `profiles/<name>.md`.
+- **Template:** reusable output or record structure → `templates/<name>.md`.
+- **Integration:** host-specific discovery, configuration or capability adaptation → `integrations/`.
+- **Documentation:** durable architecture, decision, reference or user guide → canonical `docs/` location.
+- **Context update:** requirement, preference, decision or verified lesson → update its existing authoritative context source; do not create a new resource.
+
+Prefer extending an existing resource over creating a new file. A paragraph is not automatically a skill: use each resource type's authoring contract. Split material only when it contains distinct independently useful artefacts.
+
+If no reusable resource qualifies, explicitly say that nothing met the bar and do not create a generic summary, placeholder, transcript dump or registry entry. Independently justified durable context updates may still be preserved.
 
 ## Procedure
 
@@ -70,9 +89,9 @@ Do not capture:
 - Agent inference: label as hypothesis and do not promote to authoritative context.
 - Conflicting evidence: do not resolve by guessing; record the conflict and ask for owner direction.
 
-## Distinction from /done
+## Rejection and session end
 
-`/close` preserves durable project context (requirements, decisions, progress, stable preferences and verified lessons). `/done` is stricter resource curation: it looks for a reusable command, skill, workflow, standard, profile, template or integration created in the conversation. `/done` must reject the operation when no resource meets the quality bar. Do not use session learning to turn every conversation into a new resource.
+Reject resource extraction when no candidate meets the quality bar. Do not lower the threshold because the user invoked `/done`. Report accepted resources and their classifications, durable context updates, excluded material, destinations, verification and unresolved owner decisions. Do not claim the chat UI was closed unless the host exposes tested session-control capability.
 
 ## Chat closure limitation
 
@@ -85,4 +104,4 @@ The skill prepares the project for a clean session end. It cannot close the chat
 - No generic handoff file is created by default.
 - Conflicts and proposals remain clearly labelled.
 - Updated context files are read back and verified.
-- The user receives a concise capture report and can end the chat safely.
+- The user receives a concise end-of-session report: resources kept (with type and destination), durable context updated, candidates rejected and why, verification, blockers and whether manual chat closure is required.
