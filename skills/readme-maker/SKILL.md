@@ -48,7 +48,7 @@ Adapt to the repository; do not force every section:
 ## Feature-tree rules
 - Use one clear top-level category per user goal or capability family.
 - Nest subcategories using their own details blocks.
-- At the deepest useful level, list every concrete skill, command, workflow, profile, standard, template, integration and canonical document with a one-line purpose and direct relative link.
+- At the deepest useful level, give each concrete skill, command, workflow, profile, standard, template, integration and canonical document its own nested dropdown with a plain-language title, one-line purpose, resource type/status where useful and direct relative link.
 - Include relevant limitations and dependencies.
 - Cover all registry resources, including additions. Mark draft/experimental status honestly.
 - Explain internal jargon in plain language.
@@ -73,7 +73,7 @@ Adapt to the repository; do not force every section:
 - Quick start explains where to run it, what to paste/run, what the agent inspects, when approval is needed and what happens afterwards.
 - Onboarding covers new, healthy existing and context-needs-repair project paths.
 - Multi-host setup identifies the active host, asks which other apps the user uses, supports multiple selections and free-text additions, and distinguishes project-local setup from global app configuration.
-- The feature tree covers every registry resource and links to canonical detail.
+- The feature tree covers every registry resource, validated by matching registry paths rather than relying on labels or filenames, and links to canonical detail. Individual resource entries can be their own nested dropdowns when the user asks for deep navigation.
 - Every section has a purpose; repeated claims and filler are removed.
 - Examples are realistic, brief and conclude with an outcome/next action.
 - Alerts are not decorative quote boxes.
