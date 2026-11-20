@@ -52,6 +52,7 @@ test("GitHub Actions workflow YAML is parseable and release workflow is tag-gate
 test("npm package allowlist includes every registered resource directory", async () => {
   const pkg = JSON.parse(await fs.readFile(path.join(root, "package.json"), "utf8"));
   const included = new Set((pkg.files ?? []).map(item => item.replace(/\/$/, "")));
+  for (const required of ["assets", "bootstrap"]) assert.ok(included.has(required), "npm package must include " + required);
   for (const resource of registry.resources) {
     const directory = resource.path.split("/")[0];
     assert.ok(included.has(directory), "npm package allowlist omits " + directory + " required by " + resource.id);

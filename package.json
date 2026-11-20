@@ -7,5 +7,5 @@
   "dependencies":{"js-yaml":"^4.1.0"},"license":"MIT",
   "repository":{"type":"git","url":"https://github.com/LemonizDev/Agent-Foundry.git"},
   "keywords":["ai-agents","coding-agents","agentic-engineering","developer-tools"],
-  "files":["bin/","src/","core/","registry/","templates/","skills/","commands/","profiles/","workflows/","standards/","integrations/","docs/","BOOTSTRAP.md","README.md","LICENSE","SECURITY.md","CONTRIBUTING.md","CODE_OF_CONDUCT.md","SUPPORT.md","CHANGELOG.md"]
+  "files":["bin/","src/","core/","registry/","templates/","skills/","commands/","profiles/","workflows/","standards/","integrations/","docs/","assets/","bootstrap/","BOOTSTRAP.md","README.md","LICENSE","SECURITY.md","CONTRIBUTING.md","CODE_OF_CONDUCT.md","SUPPORT.md","CHANGELOG.md"]
 }
