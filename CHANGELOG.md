@@ -1,5 +1,19 @@
 # Changelog
 
+## Unreleased
+
+### Added
+- README Maker skill for iterative landing-page design, nested feature navigation, visual hierarchy, accessibility and content validation.
+- Host Roster Onboarding skill for discovering multiple coding-agent apps and planning shared project-local integration with per-host adapters.
+- Interactive multi-host discovery in project initialization, including multiple selections and free-text host names.
+
+### Changed
+- Rebuilt README as a nested feature explorer covering all resources currently listed in the registry.
+- Replaced colour-coded synthetic dialogue callouts with a compact onboarding journey and clearer practical benefits.
+- Added concise contribution status and an explicit conversational contribution trigger.
+- Expanded per-host integration guidance and separated documented conventions from runtime verification.
+- Updated bootstrap and user-guide instructions for multi-host setup.
+
 This file records user-visible changes by release.
 
 ## 0.6.0 — 2026-11-20
