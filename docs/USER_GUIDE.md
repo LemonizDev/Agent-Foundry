@@ -34,6 +34,16 @@ Updates compare source revisions and local content hashes. The agent previews co
 
 See integrations/README.md. Documented file conventions are not proof of runtime discovery. Verify the exact host version and report unsupported behaviour honestly.
 
-## 7. Safety boundary
+## 7. Contribution discovery
+
+If you have built useful instructions, skills, commands, workflows, profiles, settings or templates, say "I'd like to contribute" or simply "contribute" in the installed coding-agent conversation.
+
+The agent follows commands/contribute.md and skills/contribution-discovery/SKILL.md. It scans only accessible project context, compares candidates with the Foundry registry, excludes sensitive and project-specific material, shows a numbered shortlist and asks one focused question. It drafts only the resources you select. Discovery does not authorise publication; explicit approval is required before anything is committed, pushed or sent outside your project.
+
+## 8. Multi-agent campaigns
+
+Foundry provides portable assignment, recovery and campaign-state contracts. Ask "delegate this task" or "show campaign status". The host must actually support subagents for automatic dispatch; otherwise the agent should produce bounded assignments for manual execution. See docs/architecture/ORCHESTRATION_PORTABILITY.md for Codex, Claude Code, OpenCode, Kilo and Cline boundaries.
+
+## 9. Safety boundary
 
 Foundry is not a sandbox. The host controls tools, permissions, network access and execution. Inspect before editing, use minimal diffs, obtain approval for destructive actions and verify the result.
