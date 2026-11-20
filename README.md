@@ -20,6 +20,8 @@
 
 > **The short version:** Agent Foundry is a reusable library of instructions, skills, workflows, commands, role profiles, settings and templates. Your existing coding agent reads the relevant files and does the work using its own tools. Foundry does not replace your agent, model, IDE or terminal.
 
+Whether you're Claude-maxxing in Claude Code, GPT-maxxing with Codex, or running an OpenCode/Kilo CLI setup, Foundry is meant to make the agent you already use more consistent without forcing you into a new runtime.
+
 ## Start here
 
 | You are... | Start with... |
