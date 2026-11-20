@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+### Changed
+- Refined the README into a project-first guide with an intentional navigator, project explanation and architecture before onboarding.
+- Rebuilt the feature explorer from all 78 registered resources, with a Mermaid hierarchy map, command-specific topic panels and compact linked entries for other resource kinds.
+- Fixed README template placeholders and Markdown escaping issues found by repository lint.
+
+
 ### Added
 - Project-first README template, feature-menu architecture planner and README Maker refinements informed by GitHub Markdown guidance and curated README examples.
 - `/done` command and Session Resource Curation skill to classify, validate and store reusable project artefacts from productive chat sessions, rejecting empty sessions.
