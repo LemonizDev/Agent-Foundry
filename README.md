@@ -14,21 +14,13 @@
 
 </div>
 
-## Contents
+## Navigation
 
-- [About Agent Foundry](#about-agent-foundry)
-- [The problem it solves](#the-problem-it-solves)
-- [How it works](#how-it-works)
-- [What you get](#what-you-get)
-- [Feature menu](#feature-menu)
-- [Project-aware installation](#project-aware-installation)
-- [Coding-agent apps](#coding-agent-apps)
-- [Usage and examples](#usage-and-examples)
-- [Configuration and management](#configuration-and-management)
-- [Documentation and support](#documentation-and-support)
-- [Community contributions](#community-contributions)
-- [Security and boundaries](#security-and-boundaries)
-- [License](#license)
+**Project overview** · [How it works](#how-it-works) · [Capabilities](#what-you-get) · [Feature menu](#feature-menu)
+
+**Getting started** · [Installation](#project-aware-installation) · [Coding-agent apps](#coding-agent-apps) · [Usage](#usage-and-examples)
+
+**Reference** · [Configuration](#configuration-and-management) · [Documentation](#documentation-and-support) · [Contributions](#community-contributions) · [Security](#security-and-boundaries) · [License](#license)
 
 ## About Agent Foundry
 
