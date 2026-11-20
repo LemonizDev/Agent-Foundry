@@ -514,7 +514,7 @@ You should not need to wander through the whole repo to find one useful file.
 | Install Foundry in a project | BOOTSTRAP.md, bootstrap/ |
 | Find a resource by type | registry/resources.yaml |
 | Read core operating instructions | core/GLOBAL_INSTRUCTIONS.md |
-| Find a skill | skills/<skill-name>/SKILL.md |
+| Find a skill | skills/{skill-name}/SKILL.md |
 | Find a user-facing command | commands/ |
 | Understand a multi-step workflow | workflows/ |
 | Find a specialist role | profiles/ |
