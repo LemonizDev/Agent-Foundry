@@ -133,21 +133,21 @@ Choose the right onboarding path, inspect an existing project and install Foundr
 <details>
 <summary>Project onboarding</summary>
 
-- [**existing-project-integration**](docs/architecture/EXISTING_PROJECT_INTEGRATION.md) · Assesses an established repository and adds only relevant Foundry resources without replacing its architecture. · Workflow
-- [**repository-audit**](skills/repository-audit/SKILL.md) · Maps repository structure, runtime flows, authoritative context, quality controls and evidence-backed gaps. · Skill
-- [**host-roster-onboarding**](skills/host-roster-onboarding/SKILL.md) · Discovers the user's active and additional coding-agent hosts, then plans safe multi-host project integration with per-host verification. · Skill
-- [**global-instructions**](core/GLOBAL_INSTRUCTIONS.md) · Compact, project-agnostic operating instructions that connect installed standards, task resources and Foundry management triggers into one agent entrypoint.
-- [**context-architecture**](docs/architecture/CONTEXT_ARCHITECTURE.md) · Documents the context-first architecture: context-file hierarchy, progressive disclosure, conversational management and current limitations.
+- [**Existing Project Integration**](docs/architecture/EXISTING_PROJECT_INTEGRATION.md) · Assesses an established repository and adds only relevant Foundry resources without replacing its architecture. · Workflow
+- [**Repository Audit**](skills/repository-audit/SKILL.md) · Maps repository structure, runtime flows, authoritative context, quality controls and evidence-backed gaps. · Skill
+- [**Host Roster Onboarding**](skills/host-roster-onboarding/SKILL.md) · Discovers the user's active and additional coding-agent hosts, then plans safe multi-host project integration with per-host verification. · Skill
+- [**Global Instructions**](core/GLOBAL_INSTRUCTIONS.md) · Compact, project-agnostic operating instructions that connect installed standards, task resources and Foundry management triggers into one agent entrypoint.
+- [**Context Architecture**](docs/architecture/CONTEXT_ARCHITECTURE.md) · Documents the context-first architecture: context-file hierarchy, progressive disclosure, conversational management and current limitations.
 
 </details>
 
 <details>
 <summary>First steps and implementation</summary>
 
-- [**implementation-planning**](skills/implementation-planning/SKILL.md) · Turns desired outcomes into bounded tasks with dependencies, acceptance criteria and verification. · Skill
-- [**atomic-implementation**](skills/atomic-implementation/SKILL.md) · Guides small, bounded implementation steps with clear acceptance criteria and verification. · Skill
-- [**engineering-principles**](standards/engineering-principles.md) · Universal engineering baseline for understanding before changing, preserving project intent, incremental implementation and evidence-based completion. · Standard
-- [**decision-making**](standards/decision-making.md) · Provides an evidence-based procedure for comparing options, recording tradeoffs and escalating owner decisions. · Standard
+- [**Implementation Planning**](skills/implementation-planning/SKILL.md) · Turns desired outcomes into bounded tasks with dependencies, acceptance criteria and verification. · Skill
+- [**Atomic Implementation**](skills/atomic-implementation/SKILL.md) · Guides small, bounded implementation steps with clear acceptance criteria and verification. · Skill
+- [**Engineering Principles**](standards/engineering-principles.md) · Universal engineering baseline for understanding before changing, preserving project intent, incremental implementation and evidence-based completion. · Standard
+- [**Decision Making**](standards/decision-making.md) · Provides an evidence-based procedure for comparing options, recording tradeoffs and escalating owner decisions. · Standard
 
 </details>
 
@@ -161,22 +161,22 @@ Keep instructions coherent, establish canonical sources and maintain useful proj
 <details>
 <summary>Context standards</summary>
 
-- [**context-management**](standards/context-management.md) · Defines canonical project context, progressive disclosure and durable session learning without transcript dumps. · Standard
-- [**documentation-governance**](standards/documentation-governance.md) · Defines documentation ownership, source-of-truth hierarchy, lifecycle and navigation rules. · Standard
-- [**agent-communication**](standards/agent-communication.md) · Defines clear owner communication, progress reporting, uncertainty labels and approval gates. · Standard
-- [**security-boundaries**](standards/security-boundaries.md) · Sets least-privilege, secret-handling, untrusted-input and approval boundaries for AI-assisted engineering. · Standard
-- [**evidence-and-verification**](standards/evidence-and-verification.md) · Sets rules for evidence quality, verification claims and explicit unverified or blocked states. · Standard
+- [**Context Management**](standards/context-management.md) · Defines canonical project context, progressive disclosure and durable session learning without transcript dumps. · Standard
+- [**Documentation Governance**](standards/documentation-governance.md) · Defines documentation ownership, source-of-truth hierarchy, lifecycle and navigation rules. · Standard
+- [**Agent Communication**](standards/agent-communication.md) · Defines clear owner communication, progress reporting, uncertainty labels and approval gates. · Standard
+- [**Security Boundaries**](standards/security-boundaries.md) · Sets least-privilege, secret-handling, untrusted-input and approval boundaries for AI-assisted engineering. · Standard
+- [**Evidence And Verification**](standards/evidence-and-verification.md) · Sets rules for evidence quality, verification claims and explicit unverified or blocked states. · Standard
 
 </details>
 
 <details>
 <summary>Documentation and learning</summary>
 
-- [**documentation-maintenance**](skills/documentation-maintenance/SKILL.md) · Keeps project documentation accurate, navigable and free of competing sources of truth. · Skill
-- [**session-learning**](skills/session-learning/SKILL.md) · Extracts durable, actionable project knowledge from a session and updates its proper context source. · Skill
-- [**session-close**](workflows/session-close.md) · Coordinates the review, consolidation and verification of durable session learnings. · Workflow
-- [**readme-maker**](skills/readme-maker/SKILL.md) · Creates and maintains concise, navigable GitHub READMEs with nested feature trees, accessible visual hierarchy and validated resource links. · Skill
-- [**user-guide**](docs/USER_GUIDE.md) · Explains Agent Foundry setup, chat-native management, commands, resource types, presets, delegation and maintenance.
+- [**Documentation Maintenance**](skills/documentation-maintenance/SKILL.md) · Keeps project documentation accurate, navigable and free of competing sources of truth. · Skill
+- [**Session Learning**](skills/session-learning/SKILL.md) · Extracts durable, actionable project knowledge from a session and updates its proper context source. · Skill
+- [**Session Close**](workflows/session-close.md) · Coordinates the review, consolidation and verification of durable session learnings. · Workflow
+- [**Readme Maker**](skills/readme-maker/SKILL.md) · Creates and maintains concise, navigable GitHub READMEs with nested feature trees, accessible visual hierarchy and validated resource links. · Skill
+- [**User Guide**](docs/USER_GUIDE.md) · Explains Agent Foundry setup, chat-native management, commands, resource types, presets, delegation and maintenance.
 
 </details>
 
@@ -190,27 +190,27 @@ Engineering procedures for bounded implementation and evidence-backed quality.
 <details>
 <summary>Engineering skills</summary>
 
-- [**debugging**](skills/debugging/SKILL.md) · Diagnoses failures through reproducible experiments and root-cause analysis. · Skill
-- [**testing-and-verification**](skills/testing-and-verification/SKILL.md) · Selects risk-based tests and reports exactly what was and was not verified. · Skill
-- [**code-review**](skills/code-review/SKILL.md) · Performs independent, findings-first review of code changes, risks and test quality. · Skill
-- [**architecture-design**](skills/architecture-design/SKILL.md) · Designs maintainable system boundaries and decisions grounded in requirements and tradeoffs. · Skill
-- [**implementation-explanation**](skills/implementation-explanation/SKILL.md) · Explains code changes, their runtime behaviour, tradeoffs and verification evidence. · Skill
-- [**privacy-safe-evidence**](skills/privacy-safe-evidence/SKILL.md) · Collects and reports useful evidence while minimising secrets, personal data and sensitive project details. · Skill
-- [**agent-execution-security**](skills/agent-execution-security/SKILL.md) · Assesses permissions, isolation, secrets exposure and risks from autonomous agent execution. · Skill
+- [**Debugging**](skills/debugging/SKILL.md) · Diagnoses failures through reproducible experiments and root-cause analysis. · Skill
+- [**Testing And Verification**](skills/testing-and-verification/SKILL.md) · Selects risk-based tests and reports exactly what was and was not verified. · Skill
+- [**Code Review**](skills/code-review/SKILL.md) · Performs independent, findings-first review of code changes, risks and test quality. · Skill
+- [**Architecture Design**](skills/architecture-design/SKILL.md) · Designs maintainable system boundaries and decisions grounded in requirements and tradeoffs. · Skill
+- [**Implementation Explanation**](skills/implementation-explanation/SKILL.md) · Explains code changes, their runtime behaviour, tradeoffs and verification evidence. · Skill
+- [**Privacy Safe Evidence**](skills/privacy-safe-evidence/SKILL.md) · Collects and reports useful evidence while minimising secrets, personal data and sensitive project details. · Skill
+- [**Agent Execution Security**](skills/agent-execution-security/SKILL.md) · Assesses permissions, isolation, secrets exposure and risks from autonomous agent execution. · Skill
 
 </details>
 
 <details>
 <summary>Commands</summary>
 
-- [**implement**](commands/implement.md) · Executes an approved implementation plan with incremental verification. · Command
-- [**debug**](commands/debug.md) · Investigates a reproducible failure and isolates its root cause. · Command
-- [**review**](commands/review.md) · Runs an independent, read-only engineering review. · Command
-- [**verify**](commands/verify.md) · Checks acceptance criteria against explicit test and runtime evidence. · Command
-- [**audit**](commands/audit.md) · Runs a read-only, evidence-based repository audit. · Command
-- [**teach-implementation**](commands/teach-implementation.md) · Explains a completed implementation in a structured, project-relevant way. · Command
-- [**project-health**](commands/project-health.md) · Assesses project health across architecture, quality, security, operations and continuity. · Command
-- [**next-task**](commands/next-task.md) · Recommends the highest-value next engineering action from current evidence and dependencies. · Command
+- [**Implement**](commands/implement.md) · Executes an approved implementation plan with incremental verification. · Command
+- [**Debug**](commands/debug.md) · Investigates a reproducible failure and isolates its root cause. · Command
+- [**Review**](commands/review.md) · Runs an independent, read-only engineering review. · Command
+- [**Verify**](commands/verify.md) · Checks acceptance criteria against explicit test and runtime evidence. · Command
+- [**Audit**](commands/audit.md) · Runs a read-only, evidence-based repository audit. · Command
+- [**Teach Implementation**](commands/teach-implementation.md) · Explains a completed implementation in a structured, project-relevant way. · Command
+- [**Project Health**](commands/project-health.md) · Assesses project health across architecture, quality, security, operations and continuity. · Command
+- [**Next Task**](commands/next-task.md) · Recommends the highest-value next engineering action from current evidence and dependencies. · Command
 
 </details>
 
@@ -224,39 +224,39 @@ Coordinate workers where the host supports them; otherwise use the same contract
 <details>
 <summary>Delegation and orchestration</summary>
 
-- [**multi-agent-delegation**](skills/multi-agent-delegation/SKILL.md) · Defines accountable task decomposition, worker selection, assignment contracts, checkpoints, recovery and independent review. · Skill
-- [**multi-agent-campaign**](workflows/multi-agent-campaign.md) · Coordinates a durable multi-agent campaign with persistent assignments, checkpoints, recovery, independent review and integrated verification. · Workflow
-- [**lead-engineer**](profiles/lead-engineer.md) · Defines the accountable lead/orchestrator role for architecture, task decomposition, delegation, integration and delivery. · Specialist profile
-- [**independent-reviewer**](profiles/independent-reviewer.md) · Defines a sceptical, findings-first reviewer role that challenges implementation and evidence. · Specialist profile
-- [**model-delegation-architecture**](docs/architecture/MODEL_DELEGATION.md) · Defines task-aware model classification, roster constraints, scoring and independent-review gates. · Standard
-- [**orchestration-portability**](docs/architecture/ORCHESTRATION_PORTABILITY.md) · Maps portable orchestration contracts to host-specific capabilities and limitations across common coding agents.
+- [**Multi Agent Delegation**](skills/multi-agent-delegation/SKILL.md) · Defines accountable task decomposition, worker selection, assignment contracts, checkpoints, recovery and independent review. · Skill
+- [**Multi Agent Campaign**](workflows/multi-agent-campaign.md) · Coordinates a durable multi-agent campaign with persistent assignments, checkpoints, recovery, independent review and integrated verification. · Workflow
+- [**Lead Engineer**](profiles/lead-engineer.md) · Defines the accountable lead/orchestrator role for architecture, task decomposition, delegation, integration and delivery. · Specialist profile
+- [**Independent Reviewer**](profiles/independent-reviewer.md) · Defines a sceptical, findings-first reviewer role that challenges implementation and evidence. · Specialist profile
+- [**Model Delegation Architecture**](docs/architecture/MODEL_DELEGATION.md) · Defines task-aware model classification, roster constraints, scoring and independent-review gates. · Standard
+- [**Orchestration Portability**](docs/architecture/ORCHESTRATION_PORTABILITY.md) · Maps portable orchestration contracts to host-specific capabilities and limitations across common coding agents.
 
 </details>
 
 <details>
 <summary>Continuity and reporting</summary>
 
-- [**project-state-management**](skills/project-state-management/SKILL.md) · Maintains canonical project context, current state, blockers and next actions without duplicating sources of truth. · Skill
-- [**plan-reconciliation**](skills/plan-reconciliation/SKILL.md) · Reconciles roadmap, implementation plans and actual repository evidence to identify the next safe task. · Skill
-- [**progress-reporting**](skills/progress-reporting/SKILL.md) · Produces progress reports grounded in implementation, test and review evidence rather than estimates or chat memory. · Skill
-- [**session-recovery**](skills/session-recovery/SKILL.md) · Reconciles interrupted work against repository state and resumes from verified checkpoints. · Skill
-- [**campaign-status**](commands/campaign-status.md) · Reconciles multi-agent campaign status against assignments, diffs, checkpoints and verification evidence. · Command
-- [**resume**](commands/resume.md) · Recovers interrupted work from durable checkpoints and verified repository state. · Command
-- [**delegate**](commands/delegate.md) · Creates a bounded task assignment and recommends a suitable model from the project roster. · Command
-- [**progress-report**](commands/progress-report.md) · Invokes evidence-backed progress reporting for a project, milestone or workstream. · Command
+- [**Project State Management**](skills/project-state-management/SKILL.md) · Maintains canonical project context, current state, blockers and next actions without duplicating sources of truth. · Skill
+- [**Plan Reconciliation**](skills/plan-reconciliation/SKILL.md) · Reconciles roadmap, implementation plans and actual repository evidence to identify the next safe task. · Skill
+- [**Progress Reporting**](skills/progress-reporting/SKILL.md) · Produces progress reports grounded in implementation, test and review evidence rather than estimates or chat memory. · Skill
+- [**Session Recovery**](skills/session-recovery/SKILL.md) · Reconciles interrupted work against repository state and resumes from verified checkpoints. · Skill
+- [**Campaign Status**](commands/campaign-status.md) · Reconciles multi-agent campaign status against assignments, diffs, checkpoints and verification evidence. · Command
+- [**Resume**](commands/resume.md) · Recovers interrupted work from durable checkpoints and verified repository state. · Command
+- [**Delegate**](commands/delegate.md) · Creates a bounded task assignment and recommends a suitable model from the project roster. · Command
+- [**Progress Report**](commands/progress-report.md) · Invokes evidence-backed progress reporting for a project, milestone or workstream. · Command
 
 </details>
 
 <details>
 <summary>Work records</summary>
 
-- [**delegation-assignment**](templates/delegation-assignment.md) · Defines the objective, scope, owner, model rationale, outputs and acceptance criteria for delegated work. · Template
-- [**campaign-state**](templates/campaign-state.md) · Defines a durable campaign record for workstreams, assignment states, owner decisions, blockers and verification evidence. · Template
-- [**recovery-handoff**](templates/recovery-handoff.md) · Preserves verified checkpoints and context when a delegated worker or session is interrupted. · Template
-- [**decision-register**](templates/decision-register.md) · Records architectural and product decisions, alternatives, rationale and consequences. · Template
-- [**blocker-register**](templates/blocker-register.md) · Tracks blockers, ownership, impact, dependencies and resolution conditions. · Template
-- [**test-evidence-report**](templates/test-evidence-report.md) · Records verification commands, environments, outcomes, coverage and unresolved checks. · Template
-- [**progress-report-template**](templates/progress-report-template.md) · Provides a consistent structure for evidence-based project progress reports. · Template
+- [**Delegation Assignment**](templates/delegation-assignment.md) · Defines the objective, scope, owner, model rationale, outputs and acceptance criteria for delegated work. · Template
+- [**Campaign State**](templates/campaign-state.md) · Defines a durable campaign record for workstreams, assignment states, owner decisions, blockers and verification evidence. · Template
+- [**Recovery Handoff**](templates/recovery-handoff.md) · Preserves verified checkpoints and context when a delegated worker or session is interrupted. · Template
+- [**Decision Register**](templates/decision-register.md) · Records architectural and product decisions, alternatives, rationale and consequences. · Template
+- [**Blocker Register**](templates/blocker-register.md) · Tracks blockers, ownership, impact, dependencies and resolution conditions. · Template
+- [**Test Evidence Report**](templates/test-evidence-report.md) · Records verification commands, environments, outcomes, coverage and unresolved checks. · Template
+- [**Progress Report Template**](templates/progress-report-template.md) · Provides a consistent structure for evidence-based project progress reports. · Template
 
 </details>
 
@@ -270,13 +270,13 @@ Practices and specialist roles for rendering-heavy, interactive and audio-reacti
 <details>
 <summary>Visual engineering</summary>
 
-- [**visual-regression**](skills/visual-regression/SKILL.md) · Compares rendered output across controlled states and identifies meaningful visual regressions. · Skill
-- [**visual-probe-engineering**](skills/visual-probe-engineering/SKILL.md) · Designs repeatable visual probes, pinned states and diagnostics for graphics-heavy applications. · Skill
-- [**graphics-engineer**](profiles/graphics-engineer.md) · Defines a specialist role for graphics pipelines, shaders, rendering quality and performance. · Specialist profile
-- [**creative-director**](profiles/creative-director.md) · Translates visual direction into coherent design intent, constraints and acceptance criteria. · Specialist profile
-- [**visual-quality-engineer**](profiles/visual-quality-engineer.md) · Reviews visual output, rendering behaviour, consistency and visual acceptance criteria. · Specialist profile
-- [**performance-qa**](profiles/performance-qa.md) · Defines repeatable performance, stability and resource-usage verification. · Specialist profile
-- [**creative-lighting-director**](profiles/creative-lighting-director.md) · Defines specialist direction for audio-reactive lighting, lasers and visual choreography. · Specialist profile
+- [**Visual Regression**](skills/visual-regression/SKILL.md) · Compares rendered output across controlled states and identifies meaningful visual regressions. · Skill
+- [**Visual Probe Engineering**](skills/visual-probe-engineering/SKILL.md) · Designs repeatable visual probes, pinned states and diagnostics for graphics-heavy applications. · Skill
+- [**Graphics Engineer**](profiles/graphics-engineer.md) · Defines a specialist role for graphics pipelines, shaders, rendering quality and performance. · Specialist profile
+- [**Creative Director**](profiles/creative-director.md) · Translates visual direction into coherent design intent, constraints and acceptance criteria. · Specialist profile
+- [**Visual Quality Engineer**](profiles/visual-quality-engineer.md) · Reviews visual output, rendering behaviour, consistency and visual acceptance criteria. · Specialist profile
+- [**Performance Qa**](profiles/performance-qa.md) · Defines repeatable performance, stability and resource-usage verification. · Specialist profile
+- [**Creative Lighting Director**](profiles/creative-lighting-director.md) · Defines specialist direction for audio-reactive lighting, lasers and visual choreography. · Specialist profile
 
 </details>
 
@@ -290,19 +290,19 @@ Project-owned model rosters, task-aware selection and conversational lifecycle m
 <details>
 <summary>Model selection</summary>
 
-- [**model-roster-template**](templates/model-roster.yaml) · Provides the project-owned model roster schema and capability fields. · Template
+- [**Model Roster Template**](templates/model-roster.yaml) · Provides the project-owned model roster schema and capability fields. · Template
 
 </details>
 
 <details>
 <summary>Settings and lifecycle</summary>
 
-- [**foundry-management**](foundry/MANAGEMENT.md) · Conversational management instructions: discovery, contribution, settings, installation, update, removal, diagnostics and the Foundry safety contract.
-- [**foundry-settings-spec**](foundry/SETTINGS_SPEC.md) · The single authoritative definition of supported Agent Foundry settings, their values, defaults, scope and safe modification guidance.
-- [**foundry-response-templates**](foundry/RESPONSE_TEMPLATES.md) · Reusable composition guidance for Foundry management chat responses: overview, settings, previews, diagnostics, contribution discovery and change summary.
-- [**foundry-settings-template**](templates/foundry-settings.yaml) · Provides project-level policies for delegation, model selection and session behaviour. · Template
-- [**contribution-discovery**](skills/contribution-discovery/SKILL.md) · Scans accessible user-created instructions, skills, workflows, commands, settings and templates for safe, reusable contribution candidates. · Skill
-- [**contribute**](commands/contribute.md) · Invokes explicit, approval-gated discovery of reusable user-created agent resources for Agent Foundry. · Command
+- [**Foundry Management**](foundry/MANAGEMENT.md) · Conversational management instructions: discovery, contribution, settings, installation, update, removal, diagnostics and the Foundry safety contract.
+- [**Foundry Settings Spec**](foundry/SETTINGS_SPEC.md) · The single authoritative definition of supported Agent Foundry settings, their values, defaults, scope and safe modification guidance.
+- [**Foundry Response Templates**](foundry/RESPONSE_TEMPLATES.md) · Reusable composition guidance for Foundry management chat responses: overview, settings, previews, diagnostics, contribution discovery and change summary.
+- [**Foundry Settings Template**](templates/foundry-settings.yaml) · Provides project-level policies for delegation, model selection and session behaviour. · Template
+- [**Contribution Discovery**](skills/contribution-discovery/SKILL.md) · Scans accessible user-created instructions, skills, workflows, commands, settings and templates for safe, reusable contribution candidates. · Skill
+- [**Contribute**](commands/contribute.md) · Invokes explicit, approval-gated discovery of reusable user-created agent resources for Agent Foundry. · Command
 
 </details>
 
