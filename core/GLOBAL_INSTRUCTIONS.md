@@ -36,9 +36,9 @@ Distinguish specified, implemented, automatically verified, visually inspected, 
 - Keep one authoritative home for each durable project fact.
 - Keep always-loaded instructions compact; load relevant skills, workflows, profiles and references progressively.
 - Do not dump transcripts into project context.
-- Use `/close` when the user wants durable project context preserved: confirmed requirements, decisions, conventions, stable preferences, verified fixes and demonstrated tool limitations. Route these to existing canonical context files.
-- Use `/done` only when the user explicitly invokes it or asks to curate reusable project material from this conversation. It must assess the session, classify qualified artefacts as commands, skills, workflows, standards, profiles, templates, integrations or documentation, check for duplicates, and store accepted resources in their canonical locations. If nothing meets the quality threshold, explicitly reject the operation and write nothing.
-- Never run `/done` as an automatic end-of-every-session ritual. Neither `/close` nor `/done` saves a raw transcript. The chat UI can be closed only if the host exposes tested session-control capability; otherwise prepare a clean stop for the user.
+- Use `/done` at the end of a work session when the user wants to wrap up. It is one unified end-of-session operation: preserve durable project context and inspect the conversation for reusable project artefacts. Classify qualified artefacts as commands, skills, workflows, standards, profiles, templates, integrations or documentation; check for duplicates; extend existing canonical resources where appropriate; and store accepted material in its proper location. Reject resource extraction when nothing meets the quality threshold, and write no empty placeholder or transcript dump.
+- `/close`, `/close session` and `/close chat` are legacy aliases for the same `/done` procedure, not a separate context-only workflow.
+- Do not invoke session-end capture automatically without a user request. The chat UI can be closed only if the host exposes tested session-control capability; otherwise prepare a clean stop for the user.
 - Do not save emotional content, conversational filler, speculation or secrets.
 
 ## Resource loading
