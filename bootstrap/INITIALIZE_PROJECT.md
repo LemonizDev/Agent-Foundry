@@ -24,7 +24,13 @@ This is an execution specification, not a request to install the entire reposito
 4. Read README, the resource model, authoring standard, registry and this workflow.
 5. Never treat the Foundry repository's own AGENTS.md as the target project's global instructions. It governs maintenance of Agent Foundry itself.
 
-## 3. Integrate with an existing project\n\nRead [Existing Project Integration](../docs/architecture/EXISTING_PROJECT_INTEGRATION.md) before assessing an established repository. Treat installation as an additive migration, not a rewrite. Map capabilities by behaviour, not filename. Existing architecture, project context, commands, tests and agent rules are authoritative unless the owner explicitly approves a change. Classify each capability as KEEP, LINK, EXTEND, INSTALL, ADAPT, DEFER or EXCLUDE. Show this mapping in the installation plan.\n\nFor a brand-new repository, use the minimal baseline and create only the project context files needed for its type.\n\n## 4. Inspect the target project
+## 3. Integrate with an existing project
+
+Read [Existing Project Integration](../docs/architecture/EXISTING_PROJECT_INTEGRATION.md) before assessing an established repository. Treat installation as an additive migration, not a rewrite. Map capabilities by behaviour, not filename. Existing architecture, project context, commands, tests and agent rules are authoritative unless the owner explicitly approves a change. Classify each capability as KEEP, LINK, EXTEND, INSTALL, ADAPT, DEFER or EXCLUDE. Show this mapping in the installation plan.
+
+For a brand-new repository, use the minimal baseline and create only the project context files needed for its type.
+
+## 4. Inspect the target project
 
 Read, without modifying:
 - Existing root agent instructions (AGENTS.md, CLAUDE.md, Copilot instructions, or equivalent).
