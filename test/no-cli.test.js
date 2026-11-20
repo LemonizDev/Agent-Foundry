@@ -25,9 +25,9 @@ test("active product docs do not instruct users to install or run the CLI", asyn
     "docs/architecture/EXISTING_PROJECT_INTEGRATION.md", "integrations/README.md", "profiles/README.md"
   ];
   const forbidden = [
-    /npx\\s+.*agent-foundry/i,
-    /agent-foundry\\s+(init|inspect|install|update|uninstall|validate)/i,
-    /--preset\\s+auto/i,
+    /npx\s+.*agent-foundry/i,
+    /agent-foundry\s+(init|inspect|install|update|uninstall|validate)/i,
+    /--preset\s+auto/i,
     /project-integration CLI/i
   ];
   for (const relative of documents) {
