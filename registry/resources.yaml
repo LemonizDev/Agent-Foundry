@@ -560,20 +560,14 @@ resources:
     version: 0.2.0
     status: draft
     portability: universal
-  - id: session-resource-curation
-    description: "Applies a strict quality bar to reusable artefacts from a chat session, classifies them by resource type and stores qualified material in canonical project locations."
-    type: skill
-    path: skills/session-resource-curation/SKILL.md
-    version: 0.1.0
-    status: draft
-    portability: universal
+
   - id: done
     description: "Ends a productive session by classifying and saving worthwhile reusable project resources, and rejects the operation without writing when nothing qualifies."
     type: command
     path: commands/done.md
     aliases: [done, "/done"]
-    dependencies: [session-resource-curation, session-learning]
-    version: 0.1.0
+    dependencies: [session-learning]
+    version: 0.2.0
     status: draft
     portability: adaptable
   - id: readme-template
