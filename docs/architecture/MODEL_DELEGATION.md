@@ -119,15 +119,11 @@ Capability values should be `unknown`, `low`, `medium`, `high` or an evidence-ba
 - Do not evade provider quotas or rotate credentials to bypass limits.
 - Do not let model choice override permission or security boundaries.
 
-## 9. User control and settings commands
+## 9. User control and conversational management
 
-The user can inspect and edit the roster conversationally:
-- `/settings` — show active Foundry settings and configuration locations.
-- `/models edit` — open the roster for editing.
-- `/models test [alias]` — run a bounded capability check when tools and permission allow.
-- `/models explain [task]` — explain the classifier's task label and selection rationale.
+The consuming coding agent reads the owner-maintained model roster and settings when relevant. The user can ask naturally to inspect or edit delegation preferences, explain a model recommendation, or review the roster.
 
-Natural-language equivalent: “Edit model delegation roster” should route to the same operation. The agent must ask which fields to change if the request is underspecified, and must never invent model IDs or credentials.
+The agent must preserve owner-entered model identifiers and capability evidence, avoid inventing availability or credentials, and explain when the host cannot select or dispatch a model automatically. Settings are governed by foundry/SETTINGS_SPEC.md; the roster remains a separate owner-maintained resource.
 
 ## 10. Validation
 
@@ -145,10 +141,10 @@ Test the classifier with representative tasks:
 Measure classification agreement, eligible model selection, task success, correction rate, latency, tool failures and unsafe downgrades. Tune thresholds from observed outcomes, not intuition alone.
 
 
-## 11. Initial CLI implementation
+## 11. Agent-mediated recommendation boundary
 
-The v0.4 CLI exposes a first-pass deterministic classifier and roster selector. Run the route command with a task description from the consuming project.
+Task classification and roster comparison are procedures the coding agent may perform using this document and the project's owner-maintained roster. They are not an executable routing engine.
 
-The classifier uses transparent keyword and risk heuristics to suggest a task class and estimate intensity. The selector then filters the owner roster by confirmed availability, task allowlists/blocklists, minimum capability declarations, modality/tool requirements and high-risk evidence gates. Eligible candidates are ranked using declared capability levels, evidence confidence and measured latency for latency-sensitive work.
+The agent should classify the task, state the evidence and uncertainty, filter candidates against owner-declared capabilities and constraints, and explain the recommendation. It must not claim to have tested a provider, verified current availability, switched models or dispatched a worker unless the host actually performed that action.
 
-This is a recommendation engine, not a model execution gateway. It does not call providers, dispatch agents, measure model quality itself or guarantee that user-entered capability claims are accurate. High-risk tasks fail closed unless the roster contains a model with high reasoning, high instruction-following and high-confidence evidence.
+This guidance does not call model providers, launch subagents or guarantee automatic model selection. Host capabilities and owner permissions remain authoritative.
