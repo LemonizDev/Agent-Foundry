@@ -80,4 +80,4 @@ When required context, permission, tooling or evidence is unavailable, stop safe
 - [ ] Approval boundaries are clear.
 - [ ] Output and failure states are predictable.
 - [ ] No unsupported host or provider behaviour is promised.
-- [ ] Examples match the current CLI and integration status.
+- [ ] Examples match the current conversational contracts and documented host integration status.
