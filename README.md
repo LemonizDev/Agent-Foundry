@@ -204,6 +204,57 @@ These protections reduce accidental damage; they do not make Foundry a security 
 
 Do not describe a host as fully supported until discovery and invocation have been tested against a stated host version. Unit tests for generated text do not prove runtime compatibility.
 
+## Where the practices came from
+
+The first extraction sources are two real engineering projects:
+
+- **Dhan AI Trader:** reusable practices around specialist responsibilities, bounded delegation, orchestration checkpoints, architecture governance, security review and evidence-backed progress. Trading strategy, broker rules and financial-risk policy remain product-specific.
+- **Rave Engine:** reusable practices around visual acceptance criteria, graphics-specialist roles, rendering probes, before/after comparison, performance testing and separating automated checks from actual visual inspection. Its shaders, audio-reactive choreography, Lively-specific metadata and hardware assumptions remain product-specific.
+
+The goal is to extract repeatable engineering practices, not copy either project's architecture or domain rules. Source inventory and extraction decisions are documented in [the audit index](docs/README.md).
+
+## Designed for different coding-agent hosts
+
+The portable resource model is separate from host-specific file formats. Adapters may map resources into host conventions, but host support is an evidence claim, not a folder name.
+
+| Host target | Adapter intent | Acceptance boundary |
+|---|---|---|
+| Codex-compatible hosts | Shared skill discovery and project instructions | Verify discovery and invocation in the exact host version |
+| Claude Code | Skills, commands and specialist agent definitions | Verify frontmatter, discovery and actual invocation |
+| OpenCode | Skills, commands and agent definitions | Verify the configured OpenCode version and project layout |
+| Kilo | Skills, commands and agent definitions | Verify runtime discovery and delegation behaviour |
+| Cline | Project rules and supported skill artifacts | Verify rules/skills are loaded by the target version |
+| Generic agents | Portable project instructions and resource references | The host must be able to read the referenced files |
+
+A host is not fully supported merely because an adapter can write files. The release checklist requires discovery, invocation and behaviour evidence for every host we claim.
+
+<details>
+<summary><strong>Explore the source repository layout</strong></summary>
+
+```text
+Agent-Foundry/
+├── bin/                 # CLI entrypoint
+├── src/                 # Scanner, registry, installer, adapters and model router
+├── core/                # Compact global operating instructions
+├── registry/            # Machine-readable resource catalog
+├── standards/           # Universal engineering policies
+├── skills/              # Detailed task procedures
+├── commands/            # User-facing command contracts
+├── workflows/           # Multi-step coordination
+├── profiles/            # Specialist responsibilities
+├── templates/           # Reusable records and settings
+├── integrations/        # Host adapter documentation and mappings
+├── bootstrap/           # Agent-executed project initialisation specification
+├── scripts/             # Repository validation and lint gates
+├── test/                # Unit, lifecycle and CLI acceptance tests
+├── docs/                # User, architecture, audit and contributor documentation
+└── assets/              # Project artwork
+```
+
+The installed project receives only the selected resources and generated host artifacts, not a copy of the entire source repository.
+
+</details>
+
 ## Project maturity
 
 v0.5 is a development milestone, not a stable production-certified agent runtime.
@@ -219,6 +270,43 @@ v0.5 is a development milestone, not a stable production-certified agent runtime
 | Stable npm release | Not published by this development branch |
 
 A capability moves from draft to validated only when acceptance evidence is recorded. Documentation is not implementation, generated artifacts are not host acceptance, and passing unit tests are not production readiness.
+
+## Common questions
+
+<details>
+<summary><strong>Does Agent Foundry run or call the models?</strong></summary>
+
+No. It classifies tasks and recommends from the project's own model roster. Provider calls, worker dispatch and model switching depend on capabilities and permissions supplied by the host or a separately configured runtime.
+
+</details>
+
+<details>
+<summary><strong>Will every command appear as a native slash command?</strong></summary>
+
+No. The portable command contract is the source definition. Each host adapter maps only the features it can represent. A command is native only after discovery and invocation have been tested in that host.
+
+</details>
+
+<details>
+<summary><strong>Can I use it in a project that already has agent instructions?</strong></summary>
+
+Yes. Existing projects are a primary use case. Inspect the plan, preserve existing instructions and resolve conflicts explicitly. Do not delete or replace local rules to make the repository look like the Foundry template.
+
+</details>
+
+<details>
+<summary><strong>Does /close actually close my chat window?</strong></summary>
+
+No, not unless the host exposes a tested session-control API. The command prepares the project for the next session by capturing durable learning; the user closes the chat interface.
+
+</details>
+
+<details>
+<summary><strong>Is Agent Foundry a sandbox for autonomous agents?</strong></summary>
+
+No. It documents and encourages permission boundaries, but it does not isolate operating-system processes, enforce network policy or replace the host's security model. Configure and review host permissions independently.
+
+</details>
 
 ## Contributing
 

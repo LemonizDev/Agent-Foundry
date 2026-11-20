@@ -9,7 +9,11 @@ test("command frontmatter aliases match registry aliases", () => {
   const registry = yaml.load(fs.readFileSync("registry/resources.yaml", "utf8"));
   for (const resource of registry.resources.filter(item => item.type === "command")) {
     const frontmatter = fs.readFileSync(resource.path, "utf8").match(/^---\n([\s\S]*?)\n---/);
-    const declared = normalize(frontmatter ? yaml.load(frontmatter[1]).aliases : []);
+    assert.ok(frontmatter, "missing frontmatter in " + resource.path);
+    const metadata = yaml.load(frontmatter[1]);
+    const declared = normalize(metadata.aliases);
+    assert.equal(metadata.id, resource.id, "frontmatter ID drift in " + resource.id);
+    assert.equal(metadata.version, resource.version, "resource version drift in " + resource.id);
     assert.deepEqual(normalize(resource.aliases), declared, "alias drift in " + resource.id);
   }
 });

@@ -48,3 +48,18 @@ test("GitHub Actions workflow YAML is parseable and release workflow is tag-gate
   assert.ok(ci.jobs.test.strategy.matrix.os.includes("macos-latest"));
   assert.ok(release.on.push.tags.includes("v*"));
 });
+
+test("npm package allowlist includes every registered resource directory", async () => {
+  const pkg = JSON.parse(await fs.readFile(path.join(root, "package.json"), "utf8"));
+  const included = new Set((pkg.files ?? []).map(item => item.replace(/\/$/, "")));
+  for (const resource of registry.resources) {
+    const directory = resource.path.split("/")[0];
+    assert.ok(included.has(directory), "npm package allowlist omits " + directory + " required by " + resource.id);
+  }
+});
+
+test("package and CLI versions agree", async () => {
+  const pkg = JSON.parse(await fs.readFile(path.join(root, "package.json"), "utf8"));
+  const cli = await fs.readFile(path.join(root, "bin/agent-foundry.js"), "utf8");
+  assert.ok(cli.includes('const VERSION = "' + pkg.version + '";'), "package and CLI versions differ");
+});
