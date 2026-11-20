@@ -4,595 +4,1244 @@
 
 # Agent Foundry
 
-### A reusable operating playbook for the coding agent you already use.
+### A project-aware resource system for the AI coding agent you already use.
 
-**Project-aware instructions, skills, workflows and specialist resources for Codex, Claude Code, OpenCode, Kilo, Cline and other file-capable coding agents.**
+**Agent Foundry helps coding agents understand a project, follow repeatable engineering practices, preserve useful context and coordinate work without replacing the host app or model.**
 
 [![CI](https://github.com/LemonizDev/Agent-Foundry/actions/workflows/ci.yml/badge.svg)](https://github.com/LemonizDev/Agent-Foundry/actions/workflows/ci.yml)
 [![Version](https://img.shields.io/badge/version-0.6.0-6478ff.svg)](CHANGELOG.md)
 [![License](https://img.shields.io/badge/license-MIT-2ea44f.svg)](LICENSE)
 
-[Quick start](#quick-start) · [How setup works](#project-aware-installation) · [Why Foundry](#why-agent-foundry) · [Explore every feature](#feature-menu) · [Host compatibility](#coding-agent-apps) · [Contribute](#community-contributions)
-
 </div>
 
-> **In one sentence:** Foundry helps your existing coding agent work with better project context, repeatable procedures and accountable workflows. It does not replace the agent, model or runtime.
+## Contents
 
-## Quick start
+- [About Agent Foundry](#about-agent-foundry)
+- [The problem it solves](#the-problem-it-solves)
+- [How it works](#how-it-works)
+- [What you get](#what-you-get)
+- [Feature menu](#feature-menu)
+- [Project-aware installation](#project-aware-installation)
+- [Coding-agent apps](#coding-agent-apps)
+- [Usage and examples](#usage-and-examples)
+- [Configuration and management](#configuration-and-management)
+- [Documentation and support](#documentation-and-support)
+- [Community contributions](#community-contributions)
+- [Security and boundaries](#security-and-boundaries)
+- [License](#license)
 
-1. Open your project in the coding-agent app you want to use.
-2. Paste the setup prompt below.
-3. Foundry inspects the project and host, then asks which other coding-agent apps you use.
-4. Review the proposed shared resources and host-specific changes. Approve before anything is written.
+## About Agent Foundry
 
-<details>
-<summary><strong>Copy the interactive setup prompt</strong></summary>
+Agent Foundry is a **reusable context and workflow library for AI coding agents**. It provides project instructions, engineering standards, task skills, user-facing command contracts, workflows, specialist profiles, templates and host-integration guidance.
 
-```text
-Install Agent Foundry in this repository from https://github.com/LemonizDev/Agent-Foundry.
+It is designed for people who already use coding-agent apps such as Codex, Claude Code, OpenCode, Kilo, Cline, Cursor, Windsurf or GitHub Copilot. Keep the agent and model you prefer; Foundry supplies reusable project practices that the agent can inspect and apply when relevant.
 
-1. Read BOOTSTRAP.md and bootstrap/INITIALIZE_PROJECT.md.
-2. Inspect this project and classify it as new, established with healthy context,
-   or established with context that needs repair. Show evidence.
-3. Identify the active coding-agent host and version where possible.
-4. Ask which other coding-agent apps I use with this project. Allow multiple
-   selections and free-text additions. Include Codex, Claude Code, OpenCode,
-   Kilo, Cline, Cursor, Windsurf, GitHub Copilot and Other.
-5. Assess each selected host and propose one shared project-local Foundry
-   resource set plus only the required host-specific pointers. Distinguish
-   project-local files from global app settings.
-6. Recommend the smallest useful resource set. For messy context, audit first.
-7. Show exact files, conflicts, host evidence and verification plan. Wait for
-   my approval before writing anything.
-8. After installation, run one safe, project-specific quickstart using a
-   selected resource. Show the result and one useful next action.
+Foundry is not another coding agent, an IDE, a model provider, a daemon, a CLI installer or a security sandbox. The consuming host remains responsible for model access, tools, filesystem/network permissions, command execution and any subagent capability.
 
-Do not copy the entire registry, overwrite existing instructions, or change
-global app settings without explicit approval.
+## The problem it solves
+
+AI coding agents often start each task with incomplete or scattered context. Project rules may be duplicated across files, architecture knowledge can be difficult to locate, and useful procedures get buried in old conversations. Large instruction files create prompt overhead, while copying every available skill into every project creates clutter.
+
+Agent Foundry addresses this by making reusable practices discoverable and project-aware:
+
+- **Inspect before installing:** preserve instructions, tools and workflows that already work.
+- **One source of truth:** link to canonical project context instead of duplicating it.
+- **Progressive disclosure:** keep the core small and bring in specialist procedures only when relevant and supported by the host.
+- **Repeatable execution:** use clear task contracts, acceptance criteria, checkpoints and verification.
+- **Durable continuity:** preserve decisions and useful lessons without dumping transcripts into the repository.
+
+## How it works
+
+Foundry is a collection of files, not a separate runtime. Your coding-agent host reads the project context, consults selected Foundry resources and performs work using its own capabilities.
+
+```mermaid
+flowchart TD
+    U[Project owner] --> H[Existing coding-agent host]
+    H --> P[Inspect project and host context]
+    P --> A[Assess existing rules and capabilities]
+    A --> R[Select relevant Foundry resources]
+    R --> C[Project-local context and resource pointers]
+    C --> H
+    H --> W[Perform requested project work]
+    W --> V[Verify against evidence and acceptance criteria]
+    V --> S[Preserve durable project knowledge]
+    S --> H
+    H -. Host supplies tools, models and permissions .-> X[Runtime capabilities]
 ```
 
-**What happens next:** the agent classifies the project, checks existing context, discovers your host roster, recommends a minimal integration, previews exact changes and waits for approval. After installation it demonstrates one relevant resource on a safe project-specific task.
+A Foundry installation is a **small, approved selection**, not a wholesale copy of the registry. Existing project instructions remain authoritative unless the owner explicitly approves an additive change.
 
-[Full bootstrap guide](BOOTSTRAP.md) · [Initialization procedure](bootstrap/INITIALIZE_PROJECT.md)
+## What you get
 
-</details>
-
-## Project-aware installation
-
-Foundry does not dump the same bundle into every repository. It adapts to the project it finds.
-
-| Project type | What Foundry does |
+| Capability | Practical value |
 |---|---|
-| 🌱 **New / empty** | Establish a compact baseline, identify the stack and purpose, and create only essential project context. |
-| 🏗️ **Established / healthy** | Preserve working instructions and workflows, link to existing sources and fill only proven gaps. |
-| 🧭 **Established / context needs repair** | Audit first. Identify stale, scattered, duplicated or conflicting context; propose canonical sources and staged repairs before adding more rules. |
-
-### The setup path
-
-```text
- INSPECT PROJECT + ACTIVE HOST
-              |
-       CLASSIFY PROJECT
-              |
-       ASSESS CONTEXT HEALTH
-              |
-       ASK YOUR HOST ROSTER
-       (multiple + free text)
-              |
-       MAP EACH SELECTED HOST
-              |
-       SELECT SHARED RESOURCES
-        + HOST-SPECIFIC ADAPTERS
-              |
-       PREVIEW EXACT FILE CHANGES
-              |
-          YOUR APPROVAL
-              |
-       INSTALL + VERIFY EACH HOST
-              |
-       PROJECT-SPECIFIC QUICKSTART
-```
-
-**One project, several coding agents:** Foundry aims to keep one shared project-local resource set and use small host-specific pointers where supported. It does not silently edit global app settings or create competing root instruction files.
-
-<details>
-<summary><strong>See the three onboarding paths in more detail</strong></summary>
-
-- **New project:** detect the actual stack and intended product from available context. Propose a minimal instruction baseline, source-of-truth structure and first milestone. Avoid generating a documentation bureaucracy before there is a project to document.
-- **Healthy existing project:** map existing instructions, architecture, skills, workflows, tests and verification practices. Mark capabilities KEEP, LINK, EXTEND, INSTALL, ADAPT, DEFER or EXCLUDE. Preserve existing rules unless the owner approves a change.
-- **Context needs repair:** assess instruction precedence, architecture coverage, canonical sources, freshness, duplication, contradictions, test guidance and session continuity. Recommend a read-only repository audit and documentation-maintenance pass where useful. Diagnosis and repair are separate approval steps.
-
-The paths are not mutually exclusive diagnoses. A repository can have excellent tests and poor documentation, or strong architecture notes and no session recovery.
-
-**The first-use demo is selected from evidence.** A new project might use implementation planning; a healthy project might use review or testing; a context-heavy project might get a read-only audit summary. The demo must show its output, what was actually verified and one sensible next step. No invented project weaknesses just to make the demo look impressive.
-
-</details>
-
-## Why Agent Foundry
-
-| Advantage | Practical difference |
-|---|---|
-| 🧠 **Fits the project you have** | Onboarding adapts to project maturity, conventions, stack and existing context. |
-| 🧹 **Reduces context mess** | Finds duplication, stale guidance and competing sources instead of piling on more instructions. |
-| 🎯 **Relevant resources, not a giant bundle** | Selects procedures for the task and project rather than loading everything all the time. |
-| 🔁 **Continuity between sessions** | Keeps decisions, progress, blockers and recovery information in durable project context. |
-| 🧪 **Evidence-based completion** | Separates implemented, tested, reviewed, runtime-verified and unverified work. |
-| 🤝 **More accountable delegation** | Uses bounded assignments, ownership, checkpoints and independent review where the host supports it. |
-| 🧰 **Keep your preferred apps** | One shared project resource set can serve multiple selected coding-agent hosts. |
-| 🛡️ **Owner remains in control** | Exact changes and conflicts are previewed; approval gates protect existing work. |
+| Project-aware onboarding | Fit the resource set to the project you actually have. |
+| Skills and workflows | Reusable methods for planning, implementation, debugging, testing and review. |
+| Session continuity | Keep verified decisions, blockers and next actions discoverable. |
+| Delegation contracts | Make multi-agent work more bounded and accountable where the host supports it. |
+| Documentation practices | Reduce stale context and competing sources of truth. |
+| Multi-host adaptation | Share project-local resources across selected coding-agent apps with thin host-specific pointers. |
+| Owner-controlled lifecycle | Preview changes, preserve local edits and maintain an ownership manifest. |
 
 ## Feature menu
 
-Explore by what you want to do. Each section opens into smaller categories and direct links to the individual resources. The registry is the canonical inventory.
+Start with a goal, open its resource family, then open the specific resource for its purpose, usage and canonical source. This catalogue is generated from the [resource registry](registry/resources.yaml).
+
+### Feature map
+
+```mermaid
+flowchart TD
+    F[Agent Foundry] --> A[Discover and onboard]
+    F --> B[Plan, build and debug]
+    F --> C[Test, review and protect]
+    F --> D[Maintain context and sessions]
+    F --> E[Delegate and track work]
+    F --> G[Visual and performance engineering]
+    F --> H[Models and Foundry management]
+    F --> I[Contribute resources]
+    A --> A1[Project discovery and setup]
+    B --> B1[Plan / implement / debug]
+    C --> C1[Standards / tests / review]
+    D --> D1[Context / docs / session curation]
+    E --> E1[Delegation / reporting / records]
+    G --> G1[Visual QA / graphics / performance]
+    H --> H1[Model roster / settings / management]
+    I --> I1[Contribution discovery]
+```
 
 <details>
-<summary><strong>01 · Start here: installation and project fit</strong></summary>
+<summary><strong>01 · Discover and onboard a project</strong></summary>
 
-Choose the right onboarding path, inspect an existing project and install Foundry without replacing what already works.
+Understand a codebase, assess its current practices and integrate Foundry without replacing existing project rules.
 
 <details>
-<summary>Project onboarding</summary>
+<summary>Project discovery</summary>
+
+<details>
+<summary><strong>Commands (2)</strong></summary>
+
+<details>
+<summary>Audit</summary>
+
+Runs a read-only, evidence-based repository audit.
+
+**What it does**  
+Runs a read-only, evidence-based repository audit.
+
+**How to use it**  
+`/audit [scope]`
+
+**Example**  
+`/audit scope: authentication`<br>Map the auth flow, existing tests and risks. Do not change files.
+
+**Expected result**  
+A scoped project map, prioritised findings and an evidence-backed next action.
+
+[Open full resource](../commands/audit.md)
+
+</details>
+
+<details>
+<summary>Project Health</summary>
+
+Assesses project health across architecture, quality, security, operations and continuity.
+
+**What it does**  
+Assesses project health across architecture, quality, security, operations and continuity.
+
+**How to use it**  
+`/project-health [project or subsystem]`
+
+**Expected result**  
+A health assessment across architecture, quality, security, operations and continuity.
+
+[Open full resource](../commands/project-health.md)
+
+</details>
+
+</details>
+
+<details>
+<summary><strong>Skills (2)</strong></summary>
+
+<details>
+<summary>Host Roster Onboarding</summary>
+
+Discovers the user's active and additional coding-agent hosts, then plans safe multi-host project integration with per-host verification.
+
+**When to use it**  
+When the task needs this procedure: discovers the user's active and additional coding-agent hosts, then plans safe multi-host project integration with per-host verification.
+
+**How to request it**  
+Ask your coding agent to use **Host Roster Onboarding** for the current task. Automatic discovery depends on the selected host.
+
+[Open full resource](../skills/host-roster-onboarding/SKILL.md)
+
+</details>
+
+<details>
+<summary>Repository Audit</summary>
+
+Maps repository structure, runtime flows, authoritative context, quality controls and evidence-backed gaps.
+
+**When to use it**  
+When the task needs this procedure: maps repository structure, runtime flows, authoritative context, quality controls and evidence-backed gaps.
+
+**How to request it**  
+Ask your coding agent to use **Repository Audit** for the current task. Automatic discovery depends on the selected host.
+
+[Open full resource](../skills/repository-audit/SKILL.md)
+
+</details>
+
+</details>
+
+<details>
+<summary><strong>Workflows (1)</strong></summary>
 
 <details>
 <summary>Existing Project Integration</summary>
 
 Assesses an established repository and adds only relevant Foundry resources without replacing its architecture.
 
-[Open workflow](docs/architecture/EXISTING_PROJECT_INTEGRATION.md)
+**Use it when**  
+The work needs coordinated stages, dependencies, handoffs or explicit quality gates.
+
+[Open full resource](../docs/architecture/EXISTING_PROJECT_INTEGRATION.md)
+
 </details>
+
+</details>
+
 <details>
-<summary>Repository Audit</summary>
+<summary><strong>Core instructions (1)</strong></summary>
 
-Maps repository structure, runtime flows, authoritative context, quality controls and evidence-backed gaps.
-
-[Open skill](skills/repository-audit/SKILL.md)
-</details>
-<details>
-<summary>Host Roster Onboarding</summary>
-
-Discovers the user's active and additional coding-agent hosts, then plans safe multi-host project integration with per-host verification.
-
-[Open skill](skills/host-roster-onboarding/SKILL.md)
-</details>
 <details>
 <summary>Global Instructions</summary>
 
 Compact, project-agnostic operating instructions that connect installed standards, task resources and Foundry management triggers into one agent entrypoint.
 
-[Open resource](core/GLOBAL_INSTRUCTIONS.md)
+**Reference**  
+Compact, project-agnostic operating instructions that connect installed standards, task resources and Foundry management triggers into one agent entrypoint.
+
+[Open full resource](../core/GLOBAL_INSTRUCTIONS.md)
+
 </details>
+
+</details>
+
+<details>
+<summary><strong>Documentation (1)</strong></summary>
+
 <details>
 <summary>Context Architecture</summary>
 
 Documents the context-first architecture: context-file hierarchy, progressive disclosure, conversational management and current limitations.
 
-[Open resource](docs/architecture/CONTEXT_ARCHITECTURE.md)
+**Reference**  
+Documents the context-first architecture: context-file hierarchy, progressive disclosure, conversational management and current limitations.
+
+[Open full resource](../docs/architecture/CONTEXT_ARCHITECTURE.md)
+
+</details>
+
 </details>
 
 </details>
 
 <details>
-<summary>First steps and implementation</summary>
+<summary>Getting started and guidance</summary>
+
+<details>
+<summary><strong>Documentation (1)</strong></summary>
+
+<details>
+<summary>User Guide</summary>
+
+Explains Agent Foundry setup, chat-native management, commands, resource types, presets, delegation and maintenance.
+
+**Reference**  
+Explains Agent Foundry setup, chat-native management, commands, resource types, presets, delegation and maintenance.
+
+[Open full resource](../docs/USER_GUIDE.md)
+
+</details>
+
+</details>
+
+</details>
+
+</details>
+
+<details>
+<summary><strong>02 · Plan, build and debug</strong></summary>
+
+Turn an intended change into bounded work, implement it safely and investigate failures.
+
+<details>
+<summary>Plan and design</summary>
+
+<details>
+<summary><strong>Commands (1)</strong></summary>
+
+<details>
+<summary>Next Task</summary>
+
+Recommends the highest-value next engineering action from current evidence and dependencies.
+
+**What it does**  
+Recommends the highest-value next engineering action from current evidence and dependencies.
+
+**How to use it**  
+`/next-task [milestone or workstream]`
+
+**Expected result**  
+One recommended next action with rationale and acceptance criteria.
+
+[Open full resource](../commands/next-task.md)
+
+</details>
+
+</details>
+
+<details>
+<summary><strong>Skills (2)</strong></summary>
 
 <details>
 <summary>Implementation Planning</summary>
 
 Turns desired outcomes into bounded tasks with dependencies, acceptance criteria and verification.
 
-[Open skill](skills/implementation-planning/SKILL.md)
-</details>
-<details>
-<summary>Atomic Implementation</summary>
+**When to use it**  
+When the task needs this procedure: turns desired outcomes into bounded tasks with dependencies, acceptance criteria and verification.
 
-Guides small, bounded implementation steps with clear acceptance criteria and verification.
+**How to request it**  
+Ask your coding agent to use **Implementation Planning** for the current task. Automatic discovery depends on the selected host.
 
-[Open skill](skills/atomic-implementation/SKILL.md)
-</details>
-<details>
-<summary>Engineering Principles</summary>
-
-Universal engineering baseline for understanding before changing, preserving project intent, incremental implementation and evidence-based completion.
-
-[Open standard](standards/engineering-principles.md)
-</details>
-<details>
-<summary>Decision Making</summary>
-
-Provides an evidence-based procedure for comparing options, recording tradeoffs and escalating owner decisions.
-
-[Open standard](standards/decision-making.md)
-</details>
+[Open full resource](../skills/implementation-planning/SKILL.md)
 
 </details>
 
-</details>
-
-<details>
-<summary><strong>02 · Project context and documentation</strong></summary>
-
-Keep instructions coherent, establish canonical sources and maintain useful project memory.
-
-<details>
-<summary>Context standards</summary>
-
-<details>
-<summary>Context Management</summary>
-
-Defines canonical project context, progressive disclosure and durable session learning without transcript dumps.
-
-[Open standard](standards/context-management.md)
-</details>
-<details>
-<summary>Documentation Governance</summary>
-
-Defines documentation ownership, source-of-truth hierarchy, lifecycle and navigation rules.
-
-[Open standard](standards/documentation-governance.md)
-</details>
-<details>
-<summary>Agent Communication</summary>
-
-Defines clear owner communication, progress reporting, uncertainty labels and approval gates.
-
-[Open standard](standards/agent-communication.md)
-</details>
-<details>
-<summary>Security Boundaries</summary>
-
-Sets least-privilege, secret-handling, untrusted-input and approval boundaries for AI-assisted engineering.
-
-[Open standard](standards/security-boundaries.md)
-</details>
-<details>
-<summary>Evidence And Verification</summary>
-
-Sets rules for evidence quality, verification claims and explicit unverified or blocked states.
-
-[Open standard](standards/evidence-and-verification.md)
-</details>
-
-</details>
-
-<details>
-<summary>Documentation and learning</summary>
-
-<details>
-<summary>Documentation Maintenance</summary>
-
-Keeps project documentation accurate, navigable and free of competing sources of truth.
-
-[Open skill](skills/documentation-maintenance/SKILL.md)
-</details>
-<details>
-<summary>Session Learning</summary>
-
-Extracts durable, actionable project knowledge from a session and updates its proper context source.
-
-[Open skill](skills/session-learning/SKILL.md)
-</details>
-<details>
-<summary>Session Close</summary>
-
-Coordinates the review, consolidation and verification of durable session learnings.
-
-[Open workflow](workflows/session-close.md)
-</details>
-<details>
-<summary>Readme Maker</summary>
-
-Creates and maintains concise, navigable GitHub READMEs with nested feature trees, accessible visual hierarchy and validated resource links.
-
-[Open skill](skills/readme-maker/SKILL.md)
-</details>
-<details>
-<summary>User Guide</summary>
-
-Explains Agent Foundry setup, chat-native management, commands, resource types, presets, delegation and maintenance.
-
-[Open resource](docs/USER_GUIDE.md)
-</details>
-
-</details>
-
-</details>
-
-<details>
-<summary><strong>03 · Build, debug, test and review</strong></summary>
-
-Engineering procedures for bounded implementation and evidence-backed quality.
-
-<details>
-<summary>Engineering skills</summary>
-
-<details>
-<summary>Debugging</summary>
-
-Diagnoses failures through reproducible experiments and root-cause analysis.
-
-[Open skill](skills/debugging/SKILL.md)
-</details>
-<details>
-<summary>Testing And Verification</summary>
-
-Selects risk-based tests and reports exactly what was and was not verified.
-
-[Open skill](skills/testing-and-verification/SKILL.md)
-</details>
-<details>
-<summary>Code Review</summary>
-
-Performs independent, findings-first review of code changes, risks and test quality.
-
-[Open skill](skills/code-review/SKILL.md)
-</details>
 <details>
 <summary>Architecture Design</summary>
 
 Designs maintainable system boundaries and decisions grounded in requirements and tradeoffs.
 
-[Open skill](skills/architecture-design/SKILL.md)
-</details>
-<details>
-<summary>Implementation Explanation</summary>
+**When to use it**  
+When the task needs this procedure: designs maintainable system boundaries and decisions grounded in requirements and tradeoffs.
 
-Explains code changes, their runtime behaviour, tradeoffs and verification evidence.
+**How to request it**  
+Ask your coding agent to use **Architecture Design** for the current task. Automatic discovery depends on the selected host.
 
-[Open skill](skills/implementation-explanation/SKILL.md)
-</details>
-<details>
-<summary>Privacy Safe Evidence</summary>
+[Open full resource](../skills/architecture-design/SKILL.md)
 
-Collects and reports useful evidence while minimising secrets, personal data and sensitive project details.
-
-[Open skill](skills/privacy-safe-evidence/SKILL.md)
-</details>
-<details>
-<summary>Agent Execution Security</summary>
-
-Assesses permissions, isolation, secrets exposure and risks from autonomous agent execution.
-
-[Open skill](skills/agent-execution-security/SKILL.md)
 </details>
 
 </details>
 
 <details>
-<summary>Commands</summary>
+<summary><strong>Standards (2)</strong></summary>
+
+<details>
+<summary>Engineering Principles</summary>
+
+Universal engineering baseline for understanding before changing, preserving project intent, incremental implementation and evidence-based completion.
+
+**Scope**  
+A reusable rule for the relevant tasks. Follow the project's own authority hierarchy where it is stricter.
+
+[Open full resource](../standards/engineering-principles.md)
+
+</details>
+
+<details>
+<summary>Decision Making</summary>
+
+Provides an evidence-based procedure for comparing options, recording tradeoffs and escalating owner decisions.
+
+**Scope**  
+A reusable rule for the relevant tasks. Follow the project's own authority hierarchy where it is stricter.
+
+[Open full resource](../standards/decision-making.md)
+
+</details>
+
+</details>
+
+</details>
+
+<details>
+<summary>Build and explain</summary>
+
+<details>
+<summary><strong>Commands (2)</strong></summary>
 
 <details>
 <summary>Implement</summary>
 
 Executes an approved implementation plan with incremental verification.
 
-[Open command](commands/implement.md)
+**What it does**  
+Executes an approved implementation plan with incremental verification.
+
+**How to use it**  
+`/implement [feature, bug or approved plan]`
+
+**Example**  
+`/implement the approved retry policy`<br>Follow the agreed scope and verify each acceptance criterion.
+
+**Expected result**  
+Delivered behaviour, files changed, verification evidence, limitations and remaining risks.
+
+[Open full resource](../commands/implement.md)
+
 </details>
-<details>
-<summary>Debug</summary>
 
-Investigates a reproducible failure and isolates its root cause.
-
-[Open command](commands/debug.md)
-</details>
-<details>
-<summary>Review</summary>
-
-Runs an independent, read-only engineering review.
-
-[Open command](commands/review.md)
-</details>
-<details>
-<summary>Verify</summary>
-
-Checks acceptance criteria against explicit test and runtime evidence.
-
-[Open command](commands/verify.md)
-</details>
-<details>
-<summary>Audit</summary>
-
-Runs a read-only, evidence-based repository audit.
-
-[Open command](commands/audit.md)
-</details>
 <details>
 <summary>Teach Implementation</summary>
 
 Explains a completed implementation in a structured, project-relevant way.
 
-[Open command](commands/teach-implementation.md)
-</details>
-<details>
-<summary>Project Health</summary>
+**What it does**  
+Explains a completed implementation in a structured, project-relevant way.
 
-Assesses project health across architecture, quality, security, operations and continuity.
+**How to use it**  
+`/teach-implementation [change-or-feature]`
 
-[Open command](commands/project-health.md)
-</details>
-<details>
-<summary>Next Task</summary>
+**Expected result**  
+An explanation of changed files, runtime behaviour, trade-offs and verification.
 
-Recommends the highest-value next engineering action from current evidence and dependencies.
-
-[Open command](commands/next-task.md)
-</details>
+[Open full resource](../commands/teach-implementation.md)
 
 </details>
 
 </details>
 
 <details>
-<summary><strong>04 · Planning, delegation and multi-agent work</strong></summary>
-
-Coordinate workers where the host supports them; otherwise use the same contracts for manual delegation.
+<summary><strong>Skills (2)</strong></summary>
 
 <details>
-<summary>Delegation and orchestration</summary>
+<summary>Atomic Implementation</summary>
 
-<details>
-<summary>Multi Agent Delegation</summary>
+Guides small, bounded implementation steps with clear acceptance criteria and verification.
 
-Defines accountable task decomposition, worker selection, assignment contracts, checkpoints, recovery and independent review.
+**When to use it**  
+When the task needs this procedure: guides small, bounded implementation steps with clear acceptance criteria and verification.
 
-[Open skill](skills/multi-agent-delegation/SKILL.md)
+**How to request it**  
+Ask your coding agent to use **Atomic Implementation** for the current task. Automatic discovery depends on the selected host.
+
+[Open full resource](../skills/atomic-implementation/SKILL.md)
+
 </details>
+
 <details>
-<summary>Multi Agent Campaign</summary>
+<summary>Implementation Explanation</summary>
 
-Coordinates a durable multi-agent campaign with persistent assignments, checkpoints, recovery, independent review and integrated verification.
+Explains code changes, their runtime behaviour, tradeoffs and verification evidence.
 
-[Open workflow](workflows/multi-agent-campaign.md)
+**When to use it**  
+When the task needs this procedure: explains code changes, their runtime behaviour, tradeoffs and verification evidence.
+
+**How to request it**  
+Ask your coding agent to use **Implementation Explanation** for the current task. Automatic discovery depends on the selected host.
+
+[Open full resource](../skills/implementation-explanation/SKILL.md)
+
 </details>
+
+</details>
+
+</details>
+
 <details>
-<summary>Lead Engineer</summary>
+<summary>Debug</summary>
 
-Defines the accountable lead/orchestrator role for architecture, task decomposition, delegation, integration and delivery.
+<details>
+<summary><strong>Commands (1)</strong></summary>
 
-[Open specialist profile](profiles/lead-engineer.md)
+<details>
+<summary>Debug</summary>
+
+Investigates a reproducible failure and isolates its root cause.
+
+**What it does**  
+Investigates a reproducible failure and isolates its root cause.
+
+**How to use it**  
+`/debug [symptom, error or failing behaviour]`
+
+**Expected result**  
+A reproducible cause, supporting evidence and the smallest safe fix or next experiment.
+
+[Open full resource](../commands/debug.md)
+
 </details>
+
+</details>
+
+<details>
+<summary><strong>Skills (1)</strong></summary>
+
+<details>
+<summary>Debugging</summary>
+
+Diagnoses failures through reproducible experiments and root-cause analysis.
+
+**When to use it**  
+When the task needs this procedure: diagnoses failures through reproducible experiments and root-cause analysis.
+
+**How to request it**  
+Ask your coding agent to use **Debugging** for the current task. Automatic discovery depends on the selected host.
+
+[Open full resource](../skills/debugging/SKILL.md)
+
+</details>
+
+</details>
+
+</details>
+
+</details>
+
+<details>
+<summary><strong>03 · Test, review and protect</strong></summary>
+
+Verify outcomes against criteria, review independently and protect project data and execution boundaries.
+
+<details>
+<summary>Standards and procedures</summary>
+
+<details>
+<summary><strong>Skills (4)</strong></summary>
+
+<details>
+<summary>Testing And Verification</summary>
+
+Selects risk-based tests and reports exactly what was and was not verified.
+
+**When to use it**  
+When the task needs this procedure: selects risk-based tests and reports exactly what was and was not verified.
+
+**How to request it**  
+Ask your coding agent to use **Testing And Verification** for the current task. Automatic discovery depends on the selected host.
+
+[Open full resource](../skills/testing-and-verification/SKILL.md)
+
+</details>
+
+<details>
+<summary>Code Review</summary>
+
+Performs independent, findings-first review of code changes, risks and test quality.
+
+**When to use it**  
+When the task needs this procedure: performs independent, findings-first review of code changes, risks and test quality.
+
+**How to request it**  
+Ask your coding agent to use **Code Review** for the current task. Automatic discovery depends on the selected host.
+
+[Open full resource](../skills/code-review/SKILL.md)
+
+</details>
+
+<details>
+<summary>Privacy Safe Evidence</summary>
+
+Collects and reports useful evidence while minimising secrets, personal data and sensitive project details.
+
+**When to use it**  
+When the task needs this procedure: collects and reports useful evidence while minimising secrets, personal data and sensitive project details.
+
+**How to request it**  
+Ask your coding agent to use **Privacy Safe Evidence** for the current task. Automatic discovery depends on the selected host.
+
+[Open full resource](../skills/privacy-safe-evidence/SKILL.md)
+
+</details>
+
+<details>
+<summary>Agent Execution Security</summary>
+
+Assesses permissions, isolation, secrets exposure and risks from autonomous agent execution.
+
+**When to use it**  
+When the task needs this procedure: assesses permissions, isolation, secrets exposure and risks from autonomous agent execution.
+
+**How to request it**  
+Ask your coding agent to use **Agent Execution Security** for the current task. Automatic discovery depends on the selected host.
+
+[Open full resource](../skills/agent-execution-security/SKILL.md)
+
+</details>
+
+</details>
+
+<details>
+<summary><strong>Standards (2)</strong></summary>
+
+<details>
+<summary>Security Boundaries</summary>
+
+Sets least-privilege, secret-handling, untrusted-input and approval boundaries for AI-assisted engineering.
+
+**Scope**  
+A reusable rule for the relevant tasks. Follow the project's own authority hierarchy where it is stricter.
+
+[Open full resource](../standards/security-boundaries.md)
+
+</details>
+
+<details>
+<summary>Evidence And Verification</summary>
+
+Sets rules for evidence quality, verification claims and explicit unverified or blocked states.
+
+**Scope**  
+A reusable rule for the relevant tasks. Follow the project's own authority hierarchy where it is stricter.
+
+[Open full resource](../standards/evidence-and-verification.md)
+
+</details>
+
+</details>
+
+</details>
+
+<details>
+<summary>Review and verification</summary>
+
+<details>
+<summary><strong>Commands (2)</strong></summary>
+
+<details>
+<summary>Review</summary>
+
+Runs an independent, read-only engineering review.
+
+**What it does**  
+Runs an independent, read-only engineering review.
+
+**How to use it**  
+`/review [diff, commit, feature or scope]`
+
+**Example**  
+`/review current diff`<br>Return findings first, with evidence and severity.
+
+**Expected result**  
+Findings first, reviewed/unreviewed areas, test gaps and overall risk.
+
+[Open full resource](../commands/review.md)
+
+</details>
+
+<details>
+<summary>Verify</summary>
+
+Checks acceptance criteria against explicit test and runtime evidence.
+
+**What it does**  
+Checks acceptance criteria against explicit test and runtime evidence.
+
+**How to use it**  
+`/verify [change, milestone or acceptance criteria]`
+
+**Expected result**  
+A criterion-by-criterion PASS / FAIL / BLOCKED / NOT RUN result with evidence.
+
+[Open full resource](../commands/verify.md)
+
+</details>
+
+</details>
+
+<details>
+<summary><strong>Templates (1)</strong></summary>
+
+<details>
+<summary>Test Evidence Report</summary>
+
+Records verification commands, environments, outcomes, coverage and unresolved checks.
+
+**Use it for**  
+A consistent record or output for this purpose. Fill only fields supported by project evidence.
+
+[Open full resource](../templates/test-evidence-report.md)
+
+</details>
+
+</details>
+
+</details>
+
+<details>
+<summary>Specialist review</summary>
+
+<details>
+<summary><strong>Specialist profiles (1)</strong></summary>
+
 <details>
 <summary>Independent Reviewer</summary>
 
 Defines a sceptical, findings-first reviewer role that challenges implementation and evidence.
 
-[Open specialist profile](profiles/independent-reviewer.md)
+**Responsibility**  
+Defines the role and its expected focus.
+
+**Boundary**  
+A profile describes responsibility; it does not grant tools, permissions or independent runtime access.
+
+[Open full resource](../profiles/independent-reviewer.md)
+
 </details>
-<details>
-<summary>Model Delegation Architecture</summary>
 
-Defines task-aware model classification, roster constraints, scoring and independent-review gates.
-
-[Open standard](docs/architecture/MODEL_DELEGATION.md)
 </details>
-<details>
-<summary>Orchestration Portability</summary>
 
-Maps portable orchestration contracts to host-specific capabilities and limitations across common coding agents.
-
-[Open resource](docs/architecture/ORCHESTRATION_PORTABILITY.md)
 </details>
 
 </details>
 
 <details>
-<summary>Continuity and reporting</summary>
+<summary><strong>04 · Maintain context and finish sessions</strong></summary>
+
+Keep project knowledge coherent and decide what is worth saving from a productive conversation.
+
+<details>
+<summary>Context and documentation standards</summary>
+
+<details>
+<summary><strong>Skills (2)</strong></summary>
 
 <details>
 <summary>Project State Management</summary>
 
 Maintains canonical project context, current state, blockers and next actions without duplicating sources of truth.
 
-[Open skill](skills/project-state-management/SKILL.md)
+**When to use it**  
+When the task needs this procedure: maintains canonical project context, current state, blockers and next actions without duplicating sources of truth.
+
+**How to request it**  
+Ask your coding agent to use **Project State Management** for the current task. Automatic discovery depends on the selected host.
+
+[Open full resource](../skills/project-state-management/SKILL.md)
+
 </details>
+
 <details>
-<summary>Plan Reconciliation</summary>
+<summary>Documentation Maintenance</summary>
 
-Reconciles roadmap, implementation plans and actual repository evidence to identify the next safe task.
+Keeps project documentation accurate, navigable and free of competing sources of truth.
 
-[Open skill](skills/plan-reconciliation/SKILL.md)
+**When to use it**  
+When the task needs this procedure: keeps project documentation accurate, navigable and free of competing sources of truth.
+
+**How to request it**  
+Ask your coding agent to use **Documentation Maintenance** for the current task. Automatic discovery depends on the selected host.
+
+[Open full resource](../skills/documentation-maintenance/SKILL.md)
+
 </details>
+
+</details>
+
 <details>
-<summary>Progress Reporting</summary>
+<summary><strong>Standards (3)</strong></summary>
 
-Produces progress reports grounded in implementation, test and review evidence rather than estimates or chat memory.
-
-[Open skill](skills/progress-reporting/SKILL.md)
-</details>
 <details>
-<summary>Session Recovery</summary>
+<summary>Agent Communication</summary>
 
-Reconciles interrupted work against repository state and resumes from verified checkpoints.
+Defines clear owner communication, progress reporting, uncertainty labels and approval gates.
 
-[Open skill](skills/session-recovery/SKILL.md)
+**Scope**  
+A reusable rule for the relevant tasks. Follow the project's own authority hierarchy where it is stricter.
+
+[Open full resource](../standards/agent-communication.md)
+
 </details>
+
 <details>
-<summary>Campaign Status</summary>
+<summary>Context Management</summary>
 
-Reconciles multi-agent campaign status against assignments, diffs, checkpoints and verification evidence.
+Defines canonical project context, progressive disclosure and durable session learning without transcript dumps.
 
-[Open command](commands/campaign-status.md)
+**Scope**  
+A reusable rule for the relevant tasks. Follow the project's own authority hierarchy where it is stricter.
+
+[Open full resource](../standards/context-management.md)
+
 </details>
+
+<details>
+<summary>Documentation Governance</summary>
+
+Defines documentation ownership, source-of-truth hierarchy, lifecycle and navigation rules.
+
+**Scope**  
+A reusable rule for the relevant tasks. Follow the project's own authority hierarchy where it is stricter.
+
+[Open full resource](../standards/documentation-governance.md)
+
+</details>
+
+</details>
+
+</details>
+
+<details>
+<summary>README design and navigation</summary>
+
+<details>
+<summary><strong>Skills (2)</strong></summary>
+
+<details>
+<summary>Readme Maker</summary>
+
+Creates and maintains concise, navigable GitHub READMEs with nested feature trees, accessible visual hierarchy and validated resource links.
+
+**When to use it**  
+When the task needs this procedure: creates and maintains concise, navigable GitHub READMEs with nested feature trees, accessible visual hierarchy and validated resource links.
+
+**How to request it**  
+Ask your coding agent to use **Readme Maker** for the current task. Automatic discovery depends on the selected host.
+
+[Open full resource](../skills/readme-maker/SKILL.md)
+
+</details>
+
+<details>
+<summary>Feature Menu Architect</summary>
+
+Inspects a project and plans a user-goal-led feature menu with classified resource types, Mermaid hierarchy diagrams and resource-level usage panels.
+
+**When to use it**  
+When the task needs this procedure: inspects a project and plans a user-goal-led feature menu with classified resource types, Mermaid hierarchy diagrams and resource-level usage panels.
+
+**How to request it**  
+Ask your coding agent to use **Feature Menu Architect** for the current task. Automatic discovery depends on the selected host.
+
+[Open full resource](../skills/feature-menu-architect/SKILL.md)
+
+</details>
+
+</details>
+
+<details>
+<summary><strong>Templates (1)</strong></summary>
+
+<details>
+<summary>Readme Template</summary>
+
+Provides an adaptable project-first README structure with manual navigation, overview, architecture, installation, usage, documentation and contribution sections.
+
+**Use it for**  
+A consistent record or output for this purpose. Fill only fields supported by project evidence.
+
+[Open full resource](../templates/README_TEMPLATE.md)
+
+</details>
+
+</details>
+
+</details>
+
+<details>
+<summary>Session learning and recovery</summary>
+
+<details>
+<summary><strong>Commands (3)</strong></summary>
+
+<details>
+<summary>Close Session</summary>
+
+Preserves durable project context at session end without creating transcript dumps or new reusable resource types.
+
+**What it does**  
+Preserves durable project context at session end without creating transcript dumps or new reusable resource types.
+
+**How to use it**  
+`/close, /close session, /close chat`
+
+**Example**  
+`/close`<br>Capture durable project decisions and verified lessons without creating a new resource.
+
+**Expected result**  
+Durable context captured, files updated and unresolved questions.
+
+**Choose this when:** you want durable project decisions, verified lessons and stable context retained. It should not invent a new reusable resource.
+
+[Open full resource](../commands/close-session.md)
+
+</details>
+
+<details>
+<summary>Done</summary>
+
+Ends a productive session by classifying and saving worthwhile reusable project resources, and rejects the operation without writing when nothing qualifies.
+
+**What it does**  
+Ends a productive session by classifying and saving worthwhile reusable project resources, and rejects the operation without writing when nothing qualifies.
+
+**How to use it**  
+`/done`
+
+**Example**  
+`/done`<br>Inspect this session for worthwhile reusable project resources. Save only items that meet the quality bar; reject an empty session.
+
+**Expected result**  
+Accepted resource type(s) and destinations, or explicit rejection with no files written.
+
+**Strict acceptance rule:** only create a resource when the session contains a complete, reusable project artefact. If nothing qualifies, say so and write nothing. `/close` remains the context-continuity command.
+
+[Open full resource](../commands/done.md)
+
+</details>
+
 <details>
 <summary>Resume</summary>
 
 Recovers interrupted work from durable checkpoints and verified repository state.
 
-[Open command](commands/resume.md)
+**What it does**  
+Recovers interrupted work from durable checkpoints and verified repository state.
+
+**How to use it**  
+`/resume [task or milestone]`
+
+**Expected result**  
+Verified current state, recovery point, unresolved work and next action.
+
+[Open full resource](../commands/resume.md)
+
 </details>
+
+</details>
+
 <details>
-<summary>Close Session</summary>
+<summary><strong>Skills (3)</strong></summary>
 
-Captures useful project learnings before a chat ends without a transcript dump.
+<details>
+<summary>Session Learning</summary>
 
-[Open resource](commands/close-session.md)
+Extracts durable, actionable project knowledge from a session and updates its proper context source.
+
+**When to use it**  
+When the task needs this procedure: extracts durable, actionable project knowledge from a session and updates its proper context source.
+
+**How to request it**  
+Ask your coding agent to use **Session Learning** for the current task. Automatic discovery depends on the selected host.
+
+[Open full resource](../skills/session-learning/SKILL.md)
+
 </details>
+
+<details>
+<summary>Session Resource Curation</summary>
+
+Applies a strict quality bar to reusable artefacts from a chat session, classifies them by resource type and stores qualified material in canonical project locations.
+
+**When to use it**  
+When the task needs this procedure: applies a strict quality bar to reusable artefacts from a chat session, classifies them by resource type and stores qualified material in canonical project locations.
+
+**How to request it**  
+Ask your coding agent to use **Session Resource Curation** for the current task. Automatic discovery depends on the selected host.
+
+[Open full resource](../skills/session-resource-curation/SKILL.md)
+
+</details>
+
+<details>
+<summary>Session Recovery</summary>
+
+Reconciles interrupted work against repository state and resumes from verified checkpoints.
+
+**When to use it**  
+When the task needs this procedure: reconciles interrupted work against repository state and resumes from verified checkpoints.
+
+**How to request it**  
+Ask your coding agent to use **Session Recovery** for the current task. Automatic discovery depends on the selected host.
+
+[Open full resource](../skills/session-recovery/SKILL.md)
+
+</details>
+
+</details>
+
+<details>
+<summary><strong>Workflows (1)</strong></summary>
+
+<details>
+<summary>Session Close</summary>
+
+Coordinates the review, consolidation and verification of durable session learnings.
+
+**Use it when**  
+The work needs coordinated stages, dependencies, handoffs or explicit quality gates.
+
+[Open full resource](../workflows/session-close.md)
+
+</details>
+
+</details>
+
+<details>
+<summary><strong>Templates (1)</strong></summary>
+
+<details>
+<summary>Decision Register</summary>
+
+Records architectural and product decisions, alternatives, rationale and consequences.
+
+**Use it for**  
+A consistent record or output for this purpose. Fill only fields supported by project evidence.
+
+[Open full resource](../templates/decision-register.md)
+
+</details>
+
+</details>
+
+</details>
+
+</details>
+
+<details>
+<summary><strong>05 · Delegate and track work</strong></summary>
+
+Coordinate work across agents or people, preserve checkpoints and report progress from evidence.
+
+<details>
+<summary>Delegation and orchestration</summary>
+
+<details>
+<summary><strong>Commands (2)</strong></summary>
+
 <details>
 <summary>Delegate</summary>
 
 Creates a bounded task assignment and recommends a suitable model from the project roster.
 
-[Open command](commands/delegate.md)
+**What it does**  
+Creates a bounded task assignment and recommends a suitable model from the project roster.
+
+**How to use it**  
+`/delegate [task or workstream]`
+
+**Expected result**  
+An assignment, worker/model rationale, ownership and dispatch status.
+
+[Open full resource](../commands/delegate.md)
+
 </details>
+
 <details>
-<summary>Progress Report</summary>
+<summary>Campaign Status</summary>
 
-Invokes evidence-backed progress reporting for a project, milestone or workstream.
+Reconciles multi-agent campaign status against assignments, diffs, checkpoints and verification evidence.
 
-[Open command](commands/progress-report.md)
+**What it does**  
+Reconciles multi-agent campaign status against assignments, diffs, checkpoints and verification evidence.
+
+**How to use it**  
+`campaign-status / campaign status`
+
+**Expected result**  
+Campaign status reconciled against assignments, checkpoints and verification evidence.
+
+[Open full resource](../commands/campaign-status.md)
+
 </details>
 
 </details>
 
 <details>
-<summary>Work records</summary>
+<summary><strong>Skills (2)</strong></summary>
+
+<details>
+<summary>Multi Agent Delegation</summary>
+
+Defines accountable task decomposition, worker selection, assignment contracts, checkpoints, recovery and independent review.
+
+**When to use it**  
+When the task needs this procedure: defines accountable task decomposition, worker selection, assignment contracts, checkpoints, recovery and independent review.
+
+**How to request it**  
+Ask your coding agent to use **Multi Agent Delegation** for the current task. Automatic discovery depends on the selected host.
+
+[Open full resource](../skills/multi-agent-delegation/SKILL.md)
+
+</details>
+
+<details>
+<summary>Plan Reconciliation</summary>
+
+Reconciles roadmap, implementation plans and actual repository evidence to identify the next safe task.
+
+**When to use it**  
+When the task needs this procedure: reconciles roadmap, implementation plans and actual repository evidence to identify the next safe task.
+
+**How to request it**  
+Ask your coding agent to use **Plan Reconciliation** for the current task. Automatic discovery depends on the selected host.
+
+[Open full resource](../skills/plan-reconciliation/SKILL.md)
+
+</details>
+
+</details>
+
+<details>
+<summary><strong>Workflows (1)</strong></summary>
+
+<details>
+<summary>Multi Agent Campaign</summary>
+
+Coordinates a durable multi-agent campaign with persistent assignments, checkpoints, recovery, independent review and integrated verification.
+
+**Use it when**  
+The work needs coordinated stages, dependencies, handoffs or explicit quality gates.
+
+[Open full resource](../workflows/multi-agent-campaign.md)
+
+</details>
+
+</details>
+
+<details>
+<summary><strong>Specialist profiles (1)</strong></summary>
+
+<details>
+<summary>Lead Engineer</summary>
+
+Defines the accountable lead/orchestrator role for architecture, task decomposition, delegation, integration and delivery.
+
+**Responsibility**  
+Defines the role and its expected focus.
+
+**Boundary**  
+A profile describes responsibility; it does not grant tools, permissions or independent runtime access.
+
+[Open full resource](../profiles/lead-engineer.md)
+
+</details>
+
+</details>
+
+<details>
+<summary><strong>Templates (3)</strong></summary>
+
+<details>
+<summary>Campaign State</summary>
+
+Defines a durable campaign record for workstreams, assignment states, owner decisions, blockers and verification evidence.
+
+**Use it for**  
+A consistent record or output for this purpose. Fill only fields supported by project evidence.
+
+[Open full resource](../templates/campaign-state.md)
+
+</details>
 
 <details>
 <summary>Delegation Assignment</summary>
 
 Defines the objective, scope, owner, model rationale, outputs and acceptance criteria for delegated work.
 
-[Open template](templates/delegation-assignment.md)
-</details>
-<details>
-<summary>Campaign State</summary>
+**Use it for**  
+A consistent record or output for this purpose. Fill only fields supported by project evidence.
 
-Defines a durable campaign record for workstreams, assignment states, owner decisions, blockers and verification evidence.
+[Open full resource](../templates/delegation-assignment.md)
 
-[Open template](templates/campaign-state.md)
 </details>
+
 <details>
 <summary>Recovery Handoff</summary>
 
 Preserves verified checkpoints and context when a delegated worker or session is interrupted.
 
-[Open template](templates/recovery-handoff.md)
+**Use it for**  
+A consistent record or output for this purpose. Fill only fields supported by project evidence.
+
+[Open full resource](../templates/recovery-handoff.md)
+
 </details>
+
+</details>
+
+</details>
+
 <details>
-<summary>Decision Register</summary>
+<summary>Progress and delivery records</summary>
 
-Records architectural and product decisions, alternatives, rationale and consequences.
-
-[Open template](templates/decision-register.md)
-</details>
 <details>
-<summary>Blocker Register</summary>
+<summary><strong>Commands (1)</strong></summary>
 
-Tracks blockers, ownership, impact, dependencies and resolution conditions.
-
-[Open template](templates/blocker-register.md)
-</details>
 <details>
-<summary>Test Evidence Report</summary>
+<summary>Progress Report</summary>
 
-Records verification commands, environments, outcomes, coverage and unresolved checks.
+Invokes evidence-backed progress reporting for a project, milestone or workstream.
 
-[Open template](templates/test-evidence-report.md)
+**What it does**  
+Invokes evidence-backed progress reporting for a project, milestone or workstream.
+
+**How to use it**  
+`/progress-report [project|milestone|workstream]`
+
+**Example**  
+`/progress-report milestone: M7`<br>Report completed, in-progress and blocked outcomes with evidence.
+
+**Expected result**  
+Status, completed outcomes with evidence, in-progress work, blockers and next action.
+
+[Open full resource](../commands/progress-report.md)
+
 </details>
+
+</details>
+
+<details>
+<summary><strong>Skills (1)</strong></summary>
+
+<details>
+<summary>Progress Reporting</summary>
+
+Produces progress reports grounded in implementation, test and review evidence rather than estimates or chat memory.
+
+**When to use it**  
+When the task needs this procedure: produces progress reports grounded in implementation, test and review evidence rather than estimates or chat memory.
+
+**How to request it**  
+Ask your coding agent to use **Progress Reporting** for the current task. Automatic discovery depends on the selected host.
+
+[Open full resource](../skills/progress-reporting/SKILL.md)
+
+</details>
+
+</details>
+
+<details>
+<summary><strong>Templates (2)</strong></summary>
+
 <details>
 <summary>Progress Report Template</summary>
 
 Provides a consistent structure for evidence-based project progress reports.
 
-[Open template](templates/progress-report-template.md)
+**Use it for**  
+A consistent record or output for this purpose. Fill only fields supported by project evidence.
+
+[Open full resource](../templates/progress-report-template.md)
+
+</details>
+
+<details>
+<summary>Blocker Register</summary>
+
+Tracks blockers, ownership, impact, dependencies and resolution conditions.
+
+**Use it for**  
+A consistent record or output for this purpose. Fill only fields supported by project evidence.
+
+[Open full resource](../templates/blocker-register.md)
+
 </details>
 
 </details>
@@ -600,61 +1249,160 @@ Provides a consistent structure for evidence-based project progress reports.
 </details>
 
 <details>
-<summary><strong>05 · Visual, graphics and performance work</strong></summary>
-
-Practices and specialist roles for rendering-heavy, interactive and audio-reactive projects.
+<summary>Model and host portability</summary>
 
 <details>
-<summary>Visual engineering</summary>
+<summary><strong>Standards (1)</strong></summary>
+
+<details>
+<summary>Model Delegation Architecture</summary>
+
+Defines task-aware model classification, roster constraints, scoring and independent-review gates.
+
+**Scope**  
+A reusable rule for the relevant tasks. Follow the project's own authority hierarchy where it is stricter.
+
+[Open full resource](../docs/architecture/MODEL_DELEGATION.md)
+
+</details>
+
+</details>
+
+<details>
+<summary><strong>Documentation (1)</strong></summary>
+
+<details>
+<summary>Orchestration Portability</summary>
+
+Maps portable orchestration contracts to host-specific capabilities and limitations across common coding agents.
+
+**Reference**  
+Maps portable orchestration contracts to host-specific capabilities and limitations across common coding agents.
+
+[Open full resource](../docs/architecture/ORCHESTRATION_PORTABILITY.md)
+
+</details>
+
+</details>
+
+</details>
+
+</details>
+
+<details>
+<summary><strong>06 · Visual and performance engineering</strong></summary>
+
+Use repeatable visual, graphics, lighting and performance practices in interactive projects.
+
+<details>
+<summary>Visual quality</summary>
+
+<details>
+<summary><strong>Skills (2)</strong></summary>
 
 <details>
 <summary>Visual Regression</summary>
 
 Compares rendered output across controlled states and identifies meaningful visual regressions.
 
-[Open skill](skills/visual-regression/SKILL.md)
+**When to use it**  
+When the task needs this procedure: compares rendered output across controlled states and identifies meaningful visual regressions.
+
+**How to request it**  
+Ask your coding agent to use **Visual Regression** for the current task. Automatic discovery depends on the selected host.
+
+[Open full resource](../skills/visual-regression/SKILL.md)
+
 </details>
+
 <details>
 <summary>Visual Probe Engineering</summary>
 
 Designs repeatable visual probes, pinned states and diagnostics for graphics-heavy applications.
 
-[Open skill](skills/visual-probe-engineering/SKILL.md)
+**When to use it**  
+When the task needs this procedure: designs repeatable visual probes, pinned states and diagnostics for graphics-heavy applications.
+
+**How to request it**  
+Ask your coding agent to use **Visual Probe Engineering** for the current task. Automatic discovery depends on the selected host.
+
+[Open full resource](../skills/visual-probe-engineering/SKILL.md)
+
 </details>
+
+</details>
+
 <details>
-<summary>Graphics Engineer</summary>
+<summary><strong>Specialist profiles (1)</strong></summary>
 
-Defines a specialist role for graphics pipelines, shaders, rendering quality and performance.
-
-[Open specialist profile](profiles/graphics-engineer.md)
-</details>
-<details>
-<summary>Creative Director</summary>
-
-Translates visual direction into coherent design intent, constraints and acceptance criteria.
-
-[Open specialist profile](profiles/creative-director.md)
-</details>
 <details>
 <summary>Visual Quality Engineer</summary>
 
 Reviews visual output, rendering behaviour, consistency and visual acceptance criteria.
 
-[Open specialist profile](profiles/visual-quality-engineer.md)
+**Responsibility**  
+Defines the role and its expected focus.
+
+**Boundary**  
+A profile describes responsibility; it does not grant tools, permissions or independent runtime access.
+
+[Open full resource](../profiles/visual-quality-engineer.md)
+
 </details>
+
+</details>
+
+</details>
+
 <details>
-<summary>Performance Qa</summary>
+<summary>Graphics and creative direction</summary>
 
-Defines repeatable performance, stability and resource-usage verification.
+<details>
+<summary><strong>Specialist profiles (3)</strong></summary>
 
-[Open specialist profile](profiles/performance-qa.md)
+<details>
+<summary>Graphics Engineer</summary>
+
+Defines a specialist role for graphics pipelines, shaders, rendering quality and performance.
+
+**Responsibility**  
+Defines the role and its expected focus.
+
+**Boundary**  
+A profile describes responsibility; it does not grant tools, permissions or independent runtime access.
+
+[Open full resource](../profiles/graphics-engineer.md)
+
 </details>
+
+<details>
+<summary>Creative Director</summary>
+
+Translates visual direction into coherent design intent, constraints and acceptance criteria.
+
+**Responsibility**  
+Defines the role and its expected focus.
+
+**Boundary**  
+A profile describes responsibility; it does not grant tools, permissions or independent runtime access.
+
+[Open full resource](../profiles/creative-director.md)
+
+</details>
+
 <details>
 <summary>Creative Lighting Director</summary>
 
 Defines specialist direction for audio-reactive lighting, lasers and visual choreography.
 
-[Open specialist profile](profiles/creative-lighting-director.md)
+**Responsibility**  
+Defines the role and its expected focus.
+
+**Boundary**  
+A profile describes responsibility; it does not grant tools, permissions or independent runtime access.
+
+[Open full resource](../profiles/creative-lighting-director.md)
+
 </details>
 
 </details>
@@ -662,256 +1410,504 @@ Defines specialist direction for audio-reactive lighting, lasers and visual chor
 </details>
 
 <details>
-<summary><strong>06 · Models, settings and Foundry management</strong></summary>
+<summary>Performance assurance</summary>
 
-Project-owned model rosters, task-aware selection and conversational lifecycle management.
+<details>
+<summary><strong>Specialist profiles (1)</strong></summary>
+
+<details>
+<summary>Performance Qa</summary>
+
+Defines repeatable performance, stability and resource-usage verification.
+
+**Responsibility**  
+Defines the role and its expected focus.
+
+**Boundary**  
+A profile describes responsibility; it does not grant tools, permissions or independent runtime access.
+
+[Open full resource](../profiles/performance-qa.md)
+
+</details>
+
+</details>
+
+</details>
+
+</details>
+
+<details>
+<summary><strong>07 · Models, settings and Foundry management</strong></summary>
+
+Maintain the owner-defined model roster and manage project-local Foundry configuration.
 
 <details>
 <summary>Model selection</summary>
+
+<details>
+<summary><strong>Commands (3)</strong></summary>
+
+<details>
+<summary>Edit Model Roster</summary>
+
+Edits the owner-defined model roster used by task-aware delegation.
+
+**What it does**  
+Edits the owner-defined model roster used by task-aware delegation.
+
+**How to use it**  
+`/models edit`
+
+**Expected result**  
+Validated owner-approved roster changes.
+
+[Open full resource](../commands/edit-model-roster.md)
+
+</details>
+
+<details>
+<summary>Explain Model Selection</summary>
+
+Explains task classification, eligibility filters and model-selection rationale.
+
+**What it does**  
+Explains task classification, eligibility filters and model-selection rationale.
+
+**How to use it**  
+`/models explain [task]`
+
+**Expected result**  
+Eligibility and model-selection rationale, including constraints.
+
+[Open full resource](../commands/explain-model-selection.md)
+
+</details>
+
+<details>
+<summary>Test Model</summary>
+
+Runs bounded, owner-approved capability checks on a configured model.
+
+**What it does**  
+Runs bounded, owner-approved capability checks on a configured model.
+
+**How to use it**  
+`/models test [alias]`
+
+**Expected result**  
+Bounded evaluation evidence, cost/execution limits and caveats.
+
+[Open full resource](../commands/test-model.md)
+
+</details>
+
+</details>
+
+<details>
+<summary><strong>Templates (1)</strong></summary>
 
 <details>
 <summary>Model Roster Template</summary>
 
 Provides the project-owned model roster schema and capability fields.
 
-[Open template](templates/model-roster.yaml)
+**Use it for**  
+A consistent record or output for this purpose. Fill only fields supported by project evidence.
+
+[Open full resource](../templates/model-roster.yaml)
+
+</details>
+
 </details>
 
 </details>
 
 <details>
-<summary>Settings and lifecycle</summary>
+<summary>Settings and management</summary>
 
 <details>
-<summary>Foundry Settings Command</summary>
+<summary><strong>Commands (1)</strong></summary>
 
-Inspects and edits project-local Foundry configuration conversationally.
-
-[Open resource](commands/settings.md)
-</details>
 <details>
-<summary>Foundry Management</summary>
+<summary>Foundry Settings</summary>
 
-Conversational management instructions: discovery, contribution, settings, installation, update, removal, diagnostics and the Foundry safety contract.
+Inspects and edits project-local Agent Foundry configuration conversationally, backed by the authoritative settings specification.
 
-[Open resource](foundry/MANAGEMENT.md)
+**What it does**  
+Inspects and edits project-local Agent Foundry configuration conversationally, backed by the authoritative settings specification.
+
+**How to use it**  
+`/settings`
+
+**Expected result**  
+Current settings, validated proposed changes and a concise diff.
+
+[Open full resource](../commands/settings.md)
+
 </details>
+
+</details>
+
 <details>
-<summary>Foundry Settings Spec</summary>
+<summary><strong>Templates (1)</strong></summary>
 
-The single authoritative definition of supported Agent Foundry settings, their values, defaults, scope and safe modification guidance.
-
-[Open resource](foundry/SETTINGS_SPEC.md)
-</details>
-<details>
-<summary>Foundry Response Templates</summary>
-
-Reusable composition guidance for Foundry management chat responses: overview, settings, previews, diagnostics, contribution discovery and change summary.
-
-[Open resource](foundry/RESPONSE_TEMPLATES.md)
-</details>
 <details>
 <summary>Foundry Settings Template</summary>
 
 Provides project-level policies for delegation, model selection and session behaviour.
 
-[Open resource](templates/foundry-settings.yaml)
+**Use it for**  
+A consistent record or output for this purpose. Fill only fields supported by project evidence.
+
+[Open full resource](../templates/foundry-settings.yaml)
+
 </details>
+
+</details>
+
 <details>
-<summary>Explain Model Selection</summary>
+<summary><strong>Management resources (2)</strong></summary>
 
-Explains task classification, eligibility filters and selection rationale.
-
-[Open resource](commands/explain-model-selection.md)
-</details>
 <details>
-<summary>Test Model</summary>
+<summary>Foundry Management</summary>
 
-Runs bounded, owner-approved capability checks on a configured model.
+Conversational management instructions: discovery, contribution, settings, installation, update, removal, diagnostics and the Foundry safety contract.
 
-[Open resource](commands/test-model.md)
+**Reference**  
+Conversational management instructions: discovery, contribution, settings, installation, update, removal, diagnostics and the Foundry safety contract.
+
+[Open full resource](../foundry/MANAGEMENT.md)
+
 </details>
+
 <details>
-<summary>Edit Model Roster</summary>
+<summary>Foundry Response Templates</summary>
 
-Edits the owner-defined model roster used by task-aware delegation.
+Reusable composition guidance for Foundry management chat responses: overview, settings, previews, diagnostics, contribution discovery and change summary.
 
-[Open template](commands/edit-model-roster.md)
+**Reference**  
+Reusable composition guidance for Foundry management chat responses: overview, settings, previews, diagnostics, contribution discovery and change summary.
+
+[Open full resource](../foundry/RESPONSE_TEMPLATES.md)
+
 </details>
+
+</details>
+
 <details>
-<summary>Contribution Discovery</summary>
+<summary><strong>Settings reference (1)</strong></summary>
 
-Scans accessible user-created instructions, skills, workflows, commands, settings and templates for safe, reusable contribution candidates.
+<details>
+<summary>Foundry Settings Spec</summary>
 
-[Open skill](skills/contribution-discovery/SKILL.md)
+The single authoritative definition of supported Agent Foundry settings, their values, defaults, scope and safe modification guidance.
+
+**Reference**  
+The single authoritative definition of supported Agent Foundry settings, their values, defaults, scope and safe modification guidance.
+
+[Open full resource](../foundry/SETTINGS_SPEC.md)
+
 </details>
+
+</details>
+
+</details>
+
+</details>
+
+<details>
+<summary><strong>08 · Contribute reusable resources</strong></summary>
+
+Discover reusable practices in the current project and prepare selected material for contribution.
+
+<details>
+<summary>Contribution discovery</summary>
+
+<details>
+<summary><strong>Commands (1)</strong></summary>
+
 <details>
 <summary>Contribute</summary>
 
 Invokes explicit, approval-gated discovery of reusable user-created agent resources for Agent Foundry.
 
-[Open command](commands/contribute.md)
-</details>
+**What it does**  
+Invokes explicit, approval-gated discovery of reusable user-created agent resources for Agent Foundry.
+
+**How to use it**  
+`Say: contribute / I'd like to contribute`
+
+**Example**  
+`contribute`<br>Find reusable project practices and show a shortlist. Do not publish without approval.
+
+**Expected result**  
+A numbered candidate shortlist, with drafts only for selected candidates.
+
+**Approval boundary:** a discovery shortlist is not publication approval. The owner chooses what gets drafted and separately approves anything external.
+
+[Open full resource](../commands/contribute.md)
 
 </details>
 
 </details>
-
 
 <details>
-<summary><strong>Cross-cutting safety and capability boundaries</strong></summary>
+<summary><strong>Skills (1)</strong></summary>
 
-- Foundry is a context/resource library, not an execution sandbox.
-- It does not grant filesystem, shell, network, browser or model access.
-- It does not spawn subagents or route models unless the host independently provides those capabilities.
-- A generated host file is not proof that the host discovers it.
-- Installation, updates and removal must preserve user-owned files and detect local modifications.
+<details>
+<summary>Contribution Discovery</summary>
 
-[Host capability boundaries](integrations/README.md) · [Security boundaries](standards/security-boundaries.md) · [Evidence and verification](standards/evidence-and-verification.md)
+Scans accessible user-created instructions, skills, workflows, commands, settings and templates for safe, reusable contribution candidates.
+
+**When to use it**  
+When the task needs this procedure: scans accessible user-created instructions, skills, workflows, commands, settings and templates for safe, reusable contribution candidates.
+
+**How to request it**  
+Ask your coding agent to use **Contribution Discovery** for the current task. Automatic discovery depends on the selected host.
+
+[Open full resource](../skills/contribution-discovery/SKILL.md)
+
+</details>
+
+</details>
+
+</details>
+
+</details>
+
+## Project-aware installation
+
+Foundry first determines how mature the project is and how healthy its existing context is. These are assessment paths, not rigid presets.
+
+| Project state | Recommended approach |
+|---|---|
+| **New / empty** | Identify the intended product and stack, then propose a compact baseline and only essential project context. |
+| **Established / healthy** | Map existing instructions, docs, tests, skills and workflows. Keep or link equivalent capabilities and install only genuine gaps. |
+| **Established / context needs repair** | Audit first. Identify stale, scattered, duplicated or conflicting context. Propose canonical sources and staged repairs before adding more instruction files. |
+
+The installer also checks context quality: instruction precedence, architecture coverage, source-of-truth clarity, documentation freshness, test guidance and session continuity. A large repository is not automatically a poorly documented one.
+
+### Installation journey
+
+```mermaid
+flowchart TD
+    A[Inspect project and active host] --> B[Classify project and context health]
+    B --> C[Ask for the host roster]
+    C --> D[Assess selected hosts]
+    D --> E[Select shared resources and thin host adapters]
+    E --> F[Preview exact files and diffs]
+    F --> G{Owner approves?}
+    G -- No --> H[Stop without writing]
+    G -- Yes --> I[Install and verify each host]
+    I --> J[Run a safe project-specific first-use example]
+```
+
+### Copy the setup prompt
+
+<details>
+<summary><strong>Show installation prompt</strong></summary>
+
+```text
+Install Agent Foundry in this repository from
+https://github.com/LemonizDev/Agent-Foundry.
+
+Read BOOTSTRAP.md and bootstrap/INITIALIZE_PROJECT.md. Inspect this project
+before writing anything. Classify it as new/empty, established with healthy
+context, or established with context that needs repair. Show evidence and
+assess instructions, architecture, canonical sources, documentation freshness,
+duplication/conflicts, verification guidance and session continuity.
+
+Identify the active coding-agent host and version where possible. Ask which
+other coding-agent apps I use with this project. Allow multiple selections
+and free-text names.
+
+Plan one shared project-local Foundry resource set and only the host-specific
+pointers required for my selected apps. Preserve existing project instructions.
+Do not change global app settings or create competing root instruction files
+without explicit approval.
+
+Recommend the smallest useful resources. For messy context, consider a
+read-only repository audit before proposing documentation repair. Show exact
+files, conflicts, host evidence and verification plan. Wait for approval
+before writing.
+
+After installation, demonstrate one relevant installed resource on a safe,
+small task grounded in the project you inspected. Show the result, verification
+and one sensible next step. If no safe demo fits, explain why.
+```
+
+**After you paste it:** the agent should inspect first, discover your host roster, present a proposed installation and wait for approval. A first-use demo is selected from actual project evidence, not a generic canned example.
+
+[Bootstrap guide](BOOTSTRAP.md) · [Initialization procedure](bootstrap/INITIALIZE_PROJECT.md) · [Host roster skill](skills/host-roster-onboarding/SKILL.md)
 
 </details>
 
 ## Coding-agent apps
 
-Foundry can adapt its shared resources for multiple coding-agent apps in one setup. During installation it identifies the active host, then asks which other apps you use. You can select several and type additional names.
+Foundry adapts resources for the host apps you actually use. The active app/version is checked first; additional apps are selected during setup.
 
 <details>
-<summary><strong>Host conventions and what must be verified</strong></summary>
+<summary><strong>Codex</strong></summary>
 
-| Host | Common project conventions | Verify in your installed version |
-|---|---|---|
-| **OpenAI Codex** | AGENTS.md; .agents/skills/ | Instruction precedence, skill discovery, app/CLI differences |
-| **Claude Code** | CLAUDE.md; .claude/skills/; optional .claude/agents/ | Skill metadata, permissions, subagent tools and model overrides |
-| **OpenCode** | AGENTS.md; .opencode/skills/; .opencode/commands/ | Instruction composition, skill permissions/ID collisions, agent and model config |
-| **Kilo Code / Kilo CLI** | AGENTS.md; .kilo/skills/; compatible .agents/skills/ | Project/global skill precedence, trust boundaries, reload and permissions |
-| **Cline** | .clinerules/ or .cline/rules/; AGENTS.md support | Workspace rules, rule precedence and separately verified skill discovery |
-| **Cursor** | .cursor/rules/*.mdc; AGENTS.md; .agents/skills/ or .cursor/skills/ | MDC frontmatter, rule scope and skill discovery |\n| **Windsurf** | AGENTS.md; .windsurf/rules/; .windsurf/skills/ | Product surface and current path conventions |\n| **GitHub Copilot** | .github/copilot-instructions.md; .github/instructions/; supported AGENTS.md | Product-surface-specific instructions and skill discovery |\n| **Other hosts** | Their documented project instructions and skill formats | Verify current official conventions before adapting |
+Inspect the repository's AGENTS.md hierarchy and existing .agents/skills resources. Keep root instructions concise and point to shared Foundry context. Verify that the installed Codex app/CLI discovers and can load a selected skill.
 
-These are adaptation references, not universal guarantees. Each host is reported separately as documented, generated, structurally validated, discovery-tested, invocation-tested or behaviour-accepted.
+[Integration guide](integrations/README.md#host-conventions-and-setup-paths) · [Official project instructions](https://learn.chatgpt.com/docs/agent-configuration/agents-md)
 
-[Full host integration guide](integrations/README.md) · [Multi-host onboarding skill](skills/host-roster-onboarding/SKILL.md)
-
-<details>
-<summary><strong>Per-app setup: Codex, Claude Code, OpenCode, Kilo, Cline, Cursor, Windsurf and Copilot</strong></summary>
-
-These are project-level starting points. The installer checks your actual app/version and existing files before choosing paths. It does not silently change global settings.
-
-<details>
-<summary>OpenAI Codex</summary>
-
-Open the repository as the active Codex workspace. Inspect the AGENTS.md hierarchy and use the shared Agent Skills location where supported. Add only a short pointer to the shared Foundry instructions. Verify that Codex discovers and can load one selected skill.
-
-[Official project-instructions guide](https://learn.chatgpt.com/docs/agent-configuration/agents-md)
 </details>
 
 <details>
-<summary>Claude Code</summary>
+<summary><strong>Claude Code</strong></summary>
 
-Start Claude Code in the repository. Inspect CLAUDE.md imports and existing .claude configuration. Use .claude/skills/<name>/SKILL.md for Claude-specific skills when needed. Keep CLAUDE.md concise; create specialist agent definitions only when selected and supported.
+Inspect CLAUDE.md imports and existing .claude configuration. Use Claude-specific skill or agent formats only when the installed version supports them; keep root project context as a short pointer.
 
-[Claude Code customization guide](https://claude.com/resources/articles/steering-claude-code-skills-hooks-rules-subagents-and-more)
+[Integration guide](integrations/README.md#host-conventions-and-setup-paths) · [Claude Code customization](https://claude.com/resources/articles/steering-claude-code-skills-hooks-rules-subagents-and-more)
+
 </details>
 
 <details>
-<summary>OpenCode</summary>
+<summary><strong>OpenCode</strong></summary>
 
-Open the project root. Inspect AGENTS.md, opencode.json/jsonc, permissions and existing .opencode directories. Prefer .opencode/skills/<name>/SKILL.md for OpenCode-specific skill discovery; compatibility locations such as .agents/skills are also documented. Check skill permissions and ID collisions.
+Inspect AGENTS.md, OpenCode configuration, permissions and existing .opencode resources. Verify current skill discovery, command mappings and agent configuration before writing adapters.
 
-[Instructions](https://opencode.ai/docs/instructions/) · [Skills](https://opencode.ai/docs/skills)
+[Instructions](https://opencode.ai/docs/instructions/) · [Skills](https://opencode.ai/docs/skills) · [Integration guide](integrations/README.md)
+
 </details>
 
 <details>
-<summary>Kilo Code / Kilo CLI</summary>
+<summary><strong>Kilo</strong></summary>
 
-Identify the editor or CLI surface and version. Inspect .kilo/skills and .agents/skills before installing. Review project-skill trust boundaries, especially embedded shell commands, and reload the host as required.
+Identify editor versus CLI and exact version. Inspect .kilo/ and shared skill locations; review project-skill trust boundaries and permission behaviour before setup.
 
-[Official Kilo skills guide](https://kilo.ai/docs/customize/skills)
+[Official skills guide](https://kilo.ai/docs/customize/skills) · [Integration guide](integrations/README.md)
+
 </details>
 
 <details>
-<summary>Cline</summary>
+<summary><strong>Cline</strong></summary>
 
-Open the repository as the active workspace. Inspect .clinerules/ and .cline/rules/ before editing. Cline documents both rule directories and recognition of AGENTS.md and other tool rule formats. Verify skill discovery separately; rule support does not prove skills are loaded.
+Inspect current workspace rules and instruction files. Rule-file support does not automatically prove that skill or workflow discovery is available; verify those separately.
 
-[Official Cline rules guide](https://github.com/cline/cline/blob/main/docs/customization/cline-rules.mdx)
+[Official Cline rules](https://github.com/cline/cline/blob/main/docs/customization/cline-rules.mdx) · [Integration guide](integrations/README.md)
+
 </details>
 
 <details>
-<summary>Cursor</summary>
+<summary><strong>Cursor</strong></summary>
 
-Open the project in Cursor. Inspect .cursor/rules/*.mdc, AGENTS.md and .agents/skills. Project rules need valid MDC frontmatter; use .agents/skills or .cursor/skills for Agent Skills rather than placing SKILL.md files in the rules directory.
+Inspect .cursor/rules, AGENTS.md and Agent Skills locations. Use valid Cursor rule frontmatter and keep skills separate from rule files.
 
 [Rules](https://cursor.com/docs/rules) · [Skills](https://cursor.com/docs/skills)
+
 </details>
 
 <details>
-<summary>Windsurf</summary>
+<summary><strong>Windsurf and GitHub Copilot</strong></summary>
 
-Confirm which Windsurf/Cascade or newer product surface and version you mean. Inspect AGENTS.md, .windsurf/rules, .windsurf/skills and legacy .windsurfrules as appropriate. Product documentation is in transition, so the installer must verify current official conventions before writing an adapter.
+Confirm exact product surface and installed version first. Windsurf/Cascade and newer Devin surfaces can have different configuration boundaries. Copilot's instruction and skill features also differ across VS Code, Visual Studio, GitHub.com, CLI and app surfaces.
 
-[Windsurf documentation](https://docs.windsurf.com/)
+[Windsurf docs](https://docs.windsurf.com/) · [Copilot repository instructions](https://docs.github.com/en/copilot/how-tos/copilot-in-your-ide/customize-copilot/configure-custom-instructions/add-repository-instructions-in-your-ide) · [Copilot skills](https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/customize-cloud-agent/add-skills)
+
+</details>
+
+> **Compatibility boundary:** documented conventions are not runtime verification. A generated file does not prove a host loaded it. Foundry cannot grant a host tools, permissions, filesystem/network access, subagent spawning or model routing.
+
+[Full host integration guide](integrations/README.md)
+
+## Usage and examples
+
+Foundry is used through your existing coding agent. Ask for the task you need; the agent should consult the matching command contract and skill when available. Native slash-command support is host-dependent.
+
+<details>
+<summary><strong>Get a project health assessment</strong></summary>
+
+```text
+/project-health [project or subsystem]
+```
+
+Use this when onboarding to a codebase or after a major change. The agent should assess architecture, quality, security, operations and continuity, and distinguish evidenced findings from unknowns.
+
+[Project Health command](commands/project-health.md) · [Repository Audit skill](skills/repository-audit/SKILL.md)
+
 </details>
 
 <details>
-<summary>GitHub Copilot</summary>
+<summary><strong>Get an evidence-based progress report</strong></summary>
 
-First identify the surface: VS Code, Visual Studio, GitHub.com, Copilot CLI or Copilot app. For IDE repository instructions, inspect .github/copilot-instructions.md and .github/instructions/*.instructions.md. Skills and AGENTS.md support vary by product surface; verify the actual app.
+```text
+/progress-report milestone: M7
+```
 
-[Repository instructions](https://docs.github.com/en/copilot/how-tos/copilot-in-your-ide/customize-copilot/configure-custom-instructions/add-repository-instructions-in-your-ide) · [Agent skills](https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/customize-cloud-agent/add-skills)
+The report should distinguish completed, in-progress, blocked and unverified work, with the evidence behind each status.
+
+[Progress Report command](commands/progress-report.md) · [Progress Reporting skill](skills/progress-reporting/SKILL.md)
+
 </details>
 
-</details>
+<details>
+<summary><strong>Close a session or curate a reusable resource</strong></summary>
+
+Use **/close** when you want durable project context preserved: requirements, decisions, stable preferences, verified lessons and current state.
+
+Use **/done** only when the conversation produced a genuinely reusable artefact such as a command, skill, workflow, standard, profile or template. It classifies and routes the artefact. If nothing meets the quality bar, it must reject the operation and write nothing.
+
+```text
+/close
+/done
+```
+
+Neither command is a transcript dump. The agent cannot close the chat UI unless the host exposes a tested session-control feature.
+
+[Close Session](commands/close-session.md) · [Done](commands/done.md) · [Session Resource Curation](skills/session-resource-curation/SKILL.md)
 
 </details>
+
+## Configuration and management
+
+Manage a project installation conversationally through the same coding agent:
+
+- "Show my Foundry settings."
+- "Check this Foundry installation."
+- "Update Foundry and show me the diff first."
+- "Make reviews stricter."
+- "Remove Foundry from this project."
+
+The agent should inspect the installation manifest, preserve locally modified files, preview consequential changes and verify the result. Global app configuration and files outside the repository are not changed by default.
+
+[Settings specification](foundry/SETTINGS_SPEC.md) · [Management instructions](foundry/MANAGEMENT.md) · [User guide](docs/USER_GUIDE.md)
+
+## Documentation and support
+
+| Need | Start here |
+|---|---|
+| First installation | [Bootstrap guide](BOOTSTRAP.md) |
+| Full usage and lifecycle | [User guide](docs/USER_GUIDE.md) |
+| Architecture and resource model | [Resource Model](docs/architecture/RESOURCE_MODEL.md) |
+| Host integrations | [Host integration guide](integrations/README.md) |
+| Contributing | [Contribution guide](CONTRIBUTING.md) |
+| Security | [Security policy](SECURITY.md) |
+| Support | [Support guide](SUPPORT.md) |
+| Change history | [Changelog](CHANGELOG.md) |
 
 ## Community contributions
 
 **No community-contributed resources have been published yet.**
 
-Have a useful skill, workflow, instruction set or template? In a project where Foundry is installed, just tell your coding agent:
+Have a reusable skill, instruction set, workflow or command? In a project where Foundry is installed, simply tell your coding agent:
 
-> **"I want to contribute."**
+> "I want to contribute."
 
-Foundry will look for reusable candidates in the project context it can actually access, show you what may be useful to others and help prepare only what you select. Nothing is published without separate approval.
+It should inspect accessible project context, show reusable candidates and help prepare only the ones you select. Discovery does not authorise publication; nothing is committed or published without separate approval.
 
-[Contribution guide](CONTRIBUTING.md) · [Contribution discovery skill](skills/contribution-discovery/SKILL.md)
+[Contribution discovery skill](skills/contribution-discovery/SKILL.md) · [Contribute command](commands/contribute.md)
 
-## Token impact
-
-<details>
-<summary><strong>Does Foundry increase token usage?</strong></summary>
-
-Yes, instructions and skills consume input tokens when the host loads them. Files that remain in the repository but are not loaded do not consume prompt tokens.
-
-Foundry aims for **progressive disclosure**: a compact core, project context when needed, and only the relevant specialist skill for the current task. Loading every resource on every request is not the goal.
-
-The right measure is total cost per accepted task, including context overhead, retries, corrections, coordination and verification. There is no published cross-model benchmark or guaranteed percentage saving. Actual loading behaviour depends on the host.
-
-</details>
-
-## Find your way around the repository
-
-<details>
-<summary><strong>Repository map and canonical documentation</strong></summary>
-
-| Path | What lives here |
-|---|---|
-| `core/` | Compact global instructions |
-| `standards/` | Cross-project operating standards |
-| `skills/` | Detailed reusable procedures |
-| `commands/` | User-facing task contracts |
-| `workflows/` | Multi-step processes |
-| `profiles/` | Specialist responsibilities |
-| `templates/` | Reusable records and output structures |
-| `integrations/` | Host-specific conventions and boundaries |
-| `bootstrap/` | Project initialization procedure |
-| `foundry/` | Settings, management and response conventions |
-| `registry/` | Canonical resource catalog |
-| `docs/architecture/` | Architecture and portability decisions |
-
-</details>
+## Security and boundaries
 
 > [!IMPORTANT]
-> Agent Foundry does not grant tools, permissions, filesystem/network access, subagent spawning or model routing. It is not a sandbox. The host's real version and configuration determine what works. Documented compatibility is not runtime verification.
+> Agent Foundry is a context and resource library, not a sandbox or runtime. The host controls tools, permissions, filesystem/network access, execution and model availability. A role or generated file does not grant capabilities.
 
-[User guide](docs/USER_GUIDE.md) · [Changelog](CHANGELOG.md) · [Contributing](CONTRIBUTING.md) · [License](LICENSE)
+See the [security policy](SECURITY.md) and [host capability boundaries](integrations/README.md#capability-boundary).
+
+## License
+
+Agent Foundry is distributed under the [MIT License](LICENSE).
+
