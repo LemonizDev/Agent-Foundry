@@ -9,6 +9,13 @@ dependencies:
   - skills/multi-agent-delegation
   - skills/atomic-implementation
   - campaign-state
+sources:
+  - repository: LemonizDev/dhan-chatgpt-connector
+    ref: foundation/final-trader-architecture
+    path: orchestration/README.md and docs/governance/DELEGATION_POLICY.md
+  - repository: LemonizDev/futuristic-lively-wallpaper
+    ref: main
+    path: AGENTS.md and .kilo/plans/awakening-master-plan.md
 ---
 
 # Durable Multi-Agent Campaign
