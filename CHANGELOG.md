@@ -22,14 +22,7 @@ Unreleased entries describe development work, not release readiness.
 - Actual installation, natural-language discovery and lifecycle acceptance still require testing inside each supported coding-agent host.
 - No merge or stable release is implied by this development branch.
 
-## Unreleased entries from v0.5 development
-
-# Changelog
-
-Unreleased entries describe development work, not release readiness.
-
-## Unreleased — v0.5 development
-
+## Historical — v0.5 development
 ### Engine and installer
 - Added package-bundled registry/resource loading as the default source, removing the second GitHub network dependency during installation.
 - Kept remote source mode available through explicit `--ref` or `--repository`, with immutable commit resolution.
