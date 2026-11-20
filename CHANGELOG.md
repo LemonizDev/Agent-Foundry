@@ -1,8 +1,8 @@
 # Changelog
 
-Unreleased entries describe development work, not release readiness.
+This file records user-visible changes by release.
 
-## Unreleased — v0.6 context-first redesign
+## 0.6.0 — 2026-11-20
 
 ### Product architecture
 - Reframed Agent Foundry as context files and a resource registry managed by the consuming project's existing coding agent.
