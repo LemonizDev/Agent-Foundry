@@ -3,6 +3,13 @@
 ## Unreleased
 
 ### Added
+- Project-first README template, feature-menu architecture planner and README Maker refinements informed by GitHub Markdown guidance and curated README examples.
+- `/done` command and Session Resource Curation skill to classify, validate and store reusable project artefacts from productive chat sessions, rejecting empty sessions.
+
+### Changed
+- Clarified the distinction between `/close` (durable context continuity) and `/done` (reusable resource extraction).
+
+### Added
 - README Maker skill for iterative landing-page design, nested feature navigation, visual hierarchy, accessibility and content validation.
 - Host Roster Onboarding skill for discovering multiple coding-agent apps and planning shared project-local integration with per-host adapters.
 - Interactive multi-host discovery in project initialization, including multiple selections and free-text host names.
