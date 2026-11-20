@@ -14,9 +14,7 @@ sections that help its real users. Replace all bracketed placeholders.
 
 ### [One-sentence description of the project's main outcome.]
 
-[![Build](...)](...)
-[![Version](...)](...)
-[![License](...)](...)
+[Add only maintained status badges. Each badge must point to a real status source and target URL. Remove this note after adding valid badges.]
 
 [Overview](#about-the-project) · [Features](#features) · [Architecture](#how-it-works) · [Install](#installation) · [Usage](#usage) · [Documentation](#documentation) · [Contribute](#contributing)
 
@@ -112,10 +110,10 @@ flowchart TD
 
 | Need | Resource |
 |---|---|
-| Getting started | [Guide](docs/...) |
-| Architecture | [Design](docs/...) |
-| API/reference | [Reference](docs/...) |
-| Operations/troubleshooting | [Runbook](docs/...) |
+| Getting started | Replace with a relative link to the canonical getting-started guide. |
+| Architecture | Replace with the canonical architecture document. |
+| API/reference | Replace with the canonical API reference. |
+| Operations/troubleshooting | Replace with the canonical runbook or troubleshooting guide. |
 
 ## FAQ
 
