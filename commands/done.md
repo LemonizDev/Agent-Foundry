@@ -2,14 +2,13 @@
 id: done
 name: Done - Curate Session Resources
 type: command
-version: 0.1.0
+version: 0.2.0
 portability: adaptable
 status: draft
 aliases:
   - /done
   - done
 dependencies:
-  - skills/session-resource-curation/SKILL.md
   - skills/session-learning/SKILL.md
 ---
 
@@ -21,11 +20,11 @@ dependencies:
 
 ## Purpose
 
-End a productive work session by checking whether it produced a reusable, project-relevant resource worth preserving. This command is intentionally selective. Invoking it does not guarantee that anything will be saved.
+End the work session cleanly. Preserve durable project learnings and identify reusable artefacts, classify each, and store qualifying material in its canonical location. Reject low-value material; invoking `/done` does not guarantee that a resource will be saved.
 
 ## Behaviour
 
-1. Apply [Session Resource Curation](../skills/session-resource-curation/SKILL.md).
+1. Apply [Durable Session Learning](../skills/session-learning/SKILL.md). This existing resource owns the unified end-of-session procedure.
 2. Inspect the current conversation for resource-quality artefacts, not every fact or discussion point.
 3. Reject the request when nothing meets the acceptance threshold. Do not create a session summary or empty placeholder.
 4. For each accepted artefact, classify it as a command, skill, workflow, standard, profile, template, integration, documentation item or context update.
@@ -40,7 +39,7 @@ A saved item must solve a recurring project problem, be complete enough to reuse
 
 ## Permissions
 
-The invocation authorises additive project-local resource curation when the host can write the repository. It does not authorise deleting or replacing existing resources, resolving material policy conflicts, publishing externally, committing/pushing, or changing global app settings. Obtain separate approval for those actions.
+The invocation authorises justified project-local context and resource updates when the host can write the repository. It does not authorise deleting or replacing existing resources, resolving material policy conflicts, publishing externally, committing/pushing, or changing global app settings. Obtain separate approval for those actions.
 
 ## Session end
 
