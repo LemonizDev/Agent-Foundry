@@ -1,6 +1,6 @@
 {
   "name": "agent-foundry",
-  "version": "0.6.0-dev.1",
+  "version": "0.6.0",
   "private": true,
   "description": "A lightweight, project-specific context system for AI coding agents, managed entirely through conversation.",
   "type": "module",
