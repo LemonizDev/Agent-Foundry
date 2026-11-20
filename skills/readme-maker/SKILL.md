@@ -2,7 +2,7 @@
 id: readme-maker
 name: README Design and Information Architecture
 type: skill
-version: 0.3.0
+version: 0.4.0
 portability: universal
 status: draft
 ---
@@ -134,6 +134,20 @@ The skill was refined against GitHub's README documentation, GitHub's advanced M
 - Curated examples repeatedly pair concise project identity with real screenshots/GIFs, feature summaries, navigation, architecture visuals, installation variants, runnable examples and links to deeper docs. Borrow patterns, not another project's content or visual gimmicks.
 - Google describes READMEs as summaries and stresses what a package contains, what it is used for, how to use it and where to find relevant documentation. Root README must stay navigable and point to the detailed docs.
 - For a large project, the README is the product front door and navigator. It is not an archive of all technical detail. Use nested resource guides and docs indexes for depth.
+
+## Lessons from rendered GitHub README refinement
+
+- Lead with identity and explanation: hero, manual navigation, project overview/problem, how it works, capabilities, feature explorer, requirements/compatibility, installation, usage, configuration/docs/contribution/support. Do not force Quick Start to be the first substantive section.
+- A manual navigator is valuable on long pages even though GitHub generates an Outline. Group links into Project overview, Getting started and Reference.
+- Generate the feature tree from the inspected project and its resource registry. Classify user goals separately from resource kinds, and verify every public registry path appears.
+- Use a Mermaid overview map when the accordion structure is deep. Show goal families and child families; add one small leaf drill-down diagram for an important command.
+- Use accordion depth selectively: goal, subcategory, resource kind, item. Commands deserve topic subpanels (what, when, how, example, expected result, full contract). Most skills, standards, profiles, templates and docs should be concise linked leaf entries.
+- GitHub nested <details> summaries can appear at nearly identical indentation. Do not claim nested accordions alone form a visible tree; pair them with Mermaid and descriptive group headings.
+- Use plain-language labels, not just mechanically title-cased IDs. Use exact command invocation from the source contract; label host-native slash support as unverified if not tested.
+- Avoid redundant copy. Topic panels should add distinct practical information, not restate the same description.
+- Templates must be repository-lint-safe. Never use fake Markdown link destinations such as (...) or docs/...; use plain-text/code placeholders and replace them with valid links before publishing.
+- Programmatic Markdown must write real line breaks, not literal backslash-n sequences. Run repository lint after generation; visual inspection alone will not catch escaping corruption.
+- A README template is a scaffold, not a checklist. Mark optional sections, use safe placeholders, and instruct the writer to inspect the project before keeping/omitting sections.
 
 ## Standards learned from Agent Foundry README reviews
 - A README should feel like an explorable interface, not a ChatGPT answer pasted into Markdown.
