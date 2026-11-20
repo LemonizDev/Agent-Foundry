@@ -31,7 +31,8 @@ Commands should remain thin. Put reusable procedures in skills, orchestration in
 | `/next-task` | Read-only | Recommend one high-value next action | [next-task](../commands/next-task.md) |
 | `/project-health` | Read-only | Assess health dimensions and material risks | [project-health](../commands/project-health.md) |
 | `/resume` | Read-only reconciliation first | Recover work from actual state | [resume](../commands/resume.md) |
-| `/close` | Proposed context edits | Preserve durable session learning | [close-session](../commands/close-session.md) |
+| `/close` | Proposed context edits | Preserve durable project context | [close-session](../commands/close-session.md) |
+| `/done` | Additive resource curation | Classify and save worthwhile session artefacts, or reject empty sessions | [done](../commands/done.md) |
 | `/done` | Additive project-resource writes | Classify and persist reusable session artefacts; reject empty sessions | [done](../commands/done.md) |
 | `/settings` | Approved configuration edits | Inspect and change Foundry settings | [settings](../commands/settings.md) |
 | `/teach-implementation` | Read-only | Explain a completed change and evidence | [teach-implementation](../commands/teach-implementation.md) |
