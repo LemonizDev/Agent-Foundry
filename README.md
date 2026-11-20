@@ -331,12 +331,12 @@ Foundry can adapt its shared resources for multiple coding-agent apps in one set
 
 | Host | Common project conventions | Verify in your installed version |
 |---|---|---|
-| **OpenAI Codex** | AGENTS.md, .agents/skills/ | Skill discovery, app/CLI parity, delegation |
-| **Claude Code** | CLAUDE.md, .claude/skills/, .claude/agents/ | Skill metadata, permissions, subagents, model overrides |
-| **OpenCode** | AGENTS.md, .agents/skills/, .opencode/commands/ | Command discovery, agent definitions, model config |
-| **Kilo Code / Kilo CLI** | AGENTS.md, supported shared skills and Kilo config | Named agents, model catalog, sessions, permissions |
-| **Cline** | .clinerules and supported skill resources | Current rules, skills and workflow capabilities |
-| **Cursor, Windsurf, Copilot and others** | Host-specific project instructions and resource formats | Check current official conventions before adapting |
+| **OpenAI Codex** | AGENTS.md; .agents/skills/ | Instruction precedence, skill discovery, app/CLI differences |
+| **Claude Code** | CLAUDE.md; .claude/skills/; optional .claude/agents/ | Skill metadata, permissions, subagent tools and model overrides |
+| **OpenCode** | AGENTS.md; .opencode/skills/; .opencode/commands/ | Instruction composition, skill permissions/ID collisions, agent and model config |
+| **Kilo Code / Kilo CLI** | AGENTS.md; .kilo/skills/; compatible .agents/skills/ | Project/global skill precedence, trust boundaries, reload and permissions |
+| **Cline** | .clinerules/ or .cline/rules/; AGENTS.md support | Workspace rules, rule precedence and separately verified skill discovery |
+| **Cursor** | .cursor/rules/*.mdc; AGENTS.md; .agents/skills/ or .cursor/skills/ | MDC frontmatter, rule scope and skill discovery |\n| **Windsurf** | AGENTS.md; .windsurf/rules/; .windsurf/skills/ | Product surface and current path conventions |\n| **GitHub Copilot** | .github/copilot-instructions.md; .github/instructions/; supported AGENTS.md | Product-surface-specific instructions and skill discovery |\n| **Other hosts** | Their documented project instructions and skill formats | Verify current official conventions before adapting |
 
 These are adaptation references, not universal guarantees. Each host is reported separately as documented, generated, structurally validated, discovery-tested, invocation-tested or behaviour-accepted.
 
