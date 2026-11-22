@@ -2,12 +2,10 @@
 id: progress-report
 name: Progress Report
 type: command
-version: 0.2.0
+version: 0.3.0
 portability: adaptable
 status: draft
-dependencies:
-  - skills/progress-reporting
-  - templates/progress-report-template.md
+dependencies: [progress-reporting, progress-report-template, response-presentation, conversational-interaction]
 ---
 
 # Progress Report
@@ -36,6 +34,12 @@ Read-only by default. Do not edit project files unless the owner separately asks
 ## Evidence rules
 A task is not complete because work started or files changed. Tests count only when command, environment and result are known. Do not infer percentages without a defensible denominator. Historical metrics retain date and source.
 
+
+## Presentation
+
+Follow `standards/response-presentation.md` and `standards/conversational-interaction.md`. Use `templates/progress-report-template.md` as the canonical layout.
+
+Use the existing six-section progress template. Do not change its reporting logic or omit Goal vs. today, progress method, workstreams, safety gates, evidence distinctions or next step. Preserve the command's procedure, permissions and required evidence fields.
 ## Output
 Status summary, completed outcomes with evidence, in-progress work, blockers, risks, scope variance, confidence and next action.
 

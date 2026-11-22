@@ -1,63 +1,103 @@
 # Command Catalog
 
-This catalog defines the portable user-facing command contracts shipped by Agent Foundry. The files in `commands/` are canonical per-command definitions; this page explains how to interpret and use them.
+This catalog maps Agent Foundry's portable command contracts to the work a project owner is trying to accomplish. The files in `commands/` remain canonical for invocation, permissions, procedure and acceptance criteria.
 
-> A Markdown command contract is not automatically a native slash command. An adapter must generate the appropriate artifact, and the host must be tested for discovery and invocation before native support is claimed.
+> A Markdown command contract is not automatically a native slash command. A host adapter and actual host testing are required before native discovery or invocation can be claimed.
 
-## Command contract model
+## How the commands fit together
 
-Every command should make six things clear:
+### 1. Understand the project
 
-1. **Intent:** the user outcome, not merely agent activity.
-2. **Inputs:** target, scope, constraints and optional context.
-3. **Permissions:** read-only, proposed-write or approved-write behaviour.
-4. **Procedure:** the skill or workflow that owns the detailed method.
-5. **Evidence:** what must be inspected or tested before reporting completion.
-6. **Output:** a predictable response shape, including uncertainty and blockers.
+| Command | Use it to | Default permission |
+|---|---|---|
+| `/audit` | Map repository structure, architecture, conventions, quality controls and gaps | Read-only |
+| `/project-health` | Assess delivery health, evidence gaps and material risks | Read-only |
 
-Commands should remain thin. Put reusable procedures in skills, orchestration in workflows and durable policy in standards. Do not duplicate a full skill inside every command that references it.
+### 2. Decide what to do next
 
-## Command matrix
+| Command | Use it to | Default permission |
+|---|---|---|
+| `/next-task` | Select the single highest-value next action | Read-only |
+| `/delegate` | Create bounded assignments and assess dispatch eligibility | Planning; dispatch requires support and authorisation |
+| `/models explain` | Explain task classification, eligible models, recommendation and trade-offs | Read-only |
 
-| Command | Default permission | Responsibility | Contract |
-|---|---|---|---|
-| `/audit` | Read-only | Map repository structure, conventions, risks and gaps | [audit](../commands/audit.md) |
-| `/implement` | Approved-scope writes | Deliver a bounded change and verify it | [implement](../commands/implement.md) |
-| `/debug` | Read; fix after cause is established | Reproduce and isolate a failure | [debug](../commands/debug.md) |
-| `/review` | Read-only | Find defects and unsupported claims | [review](../commands/review.md) |
-| `/verify` | Read-only by default | Test acceptance criteria and report evidence | [verify](../commands/verify.md) |
-| `/delegate` | Planning unless dispatch approved | Produce accountable assignments | [delegate](../commands/delegate.md) |
-| `/progress-report` | Read-only | Report verified status | [progress-report](../commands/progress-report.md) |
-| `/next-task` | Read-only | Recommend one high-value next action | [next-task](../commands/next-task.md) |
-| `/project-health` | Read-only | Assess health dimensions and material risks | [project-health](../commands/project-health.md) |
-| `/resume` | Read-only reconciliation first | Recover work from actual state | [resume](../commands/resume.md) |
-| `/done` | Approved project-local context/resource updates | End a session, preserve durable learnings and classify worthwhile reusable artefacts | [done](../commands/done.md) |
+### 3. Execute and diagnose
 
-| `/campaign-status` | Read-only | Reconcile campaign state against evidence | [campaign-status](../commands/campaign-status.md) |
-| `contribute` | Read-only discovery, then selected drafts | Find reusable project resources; publication requires separate approval | [contribute](../commands/contribute.md) |
-| `/settings` | Approved configuration edits | Inspect and change Foundry settings | [settings](../commands/settings.md) |
-| `/teach-implementation` | Read-only | Explain a completed change and evidence | [teach-implementation](../commands/teach-implementation.md) |
-| `/models edit` | Proposed configuration edit | Maintain the owner-controlled roster | [edit-model-roster](../commands/edit-model-roster.md) |
-| `/models explain` | Read-only | Explain model eligibility and selection | [explain-model-selection](../commands/explain-model-selection.md) |
-| `/models test` | Explicit cost and execution approval | Run bounded evaluation where supported | [test-model](../commands/test-model.md) |
+| Command | Use it to | Default permission |
+|---|---|---|
+| `/implement` | Deliver an approved, bounded change | Approved-scope writes |
+| `/debug` | Reproduce a failure, isolate root cause and implement a justified fix | Read first; fix after cause is established |
+
+### 4. Verify quality
+
+| Command | Use it to | Default permission |
+|---|---|---|
+| `/verify` | Check acceptance criteria against explicit evidence | Read-only by default |
+| `/review` | Find defects, regressions and unsupported claims | Read-only |
+| `/models test` | Run a bounded model evaluation where supported | Explicit cost and execution approval |
+
+### 5. Track work and end sessions
+
+| Command | Use it to | Default permission |
+|---|---|---|
+| `/campaign-status` | Reconcile assignments, checkpoints, blockers and verification | Read-only unless state maintenance is requested |
+| `/progress-report` | Report goal versus today, progress method, workstreams, evidence and next step | Read-only |
+| `/resume` | Recover interrupted work from actual repository state | Read-only reconciliation first |
+| `/done` | End a productive session, preserve durable context and curate reusable artefacts | Approved project-local context/resource updates |
+| `/close` | Legacy compatibility alias for `/done` | Same as `/done`; no separate procedure |
+| `/teach-implementation` | Explain a completed change and its behavioural difference | Read-only |
+
+**Important:** `/done` is the unified session-ending operation. It preserves durable project learning and separately evaluates reusable artefacts. If nothing qualifies, it rejects resource extraction and writes no empty placeholder. `/close`, `/close session` and `/close chat` are deprecated aliases for the same procedure, not a separate context-only workflow.
+
+### 6. Manage Agent Foundry
+
+| Command | Use it to | Default permission |
+|---|---|---|
+| `/settings` | Inspect and change Foundry project settings | Approved configuration edits |
+| `/models edit` | Maintain the owner-controlled model roster | Proposed configuration edit |
+| `contribute` | Discover reusable project resources and draft selected contributions | Read-only discovery; external publication requires separate approval |
+
+## Command-to-template map
+
+| Command | Canonical presentation |
+|---|---|
+| `/audit` | `templates/repository-audit-report.md` |
+| `/implement` | `templates/implementation-plan.md` |
+| `/debug`, `/review`, `/project-health` | `templates/diagnostic-report.md` |
+| `/verify`, `/models test` | `templates/verification-report.md` |
+| `/delegate` | Existing `templates/delegation-assignment.md` |
+| `/progress-report` | Existing `templates/progress-report-template.md` |
+| `/next-task`, `/models edit` when owner input is required | `templates/decision-prompt.md` |
+| `/resume` | `templates/session-handoff.md` |
+| `/done` | `templates/resource-inventory.md` and `templates/session-handoff.md` |
+| `/close` | Same output and procedure as `/done` |
+| `/campaign-status` | Existing `templates/campaign-state.md` |
+| `contribute` | `templates/resource-inventory.md` and `templates/decision-prompt.md` |
+| `/settings` | `foundry/RESPONSE_TEMPLATES.md` |
+| `/models explain`, `/teach-implementation` | Task-specific compact layout under the response-presentation standard |
+
+A command must use its canonical layout without changing its procedure, permissions, required fields or evidence rules. Existing templates are refined visually, not replaced with generic summaries.
 
 ## Recommended operating sequence
 
 ```text
-/audit -> /next-task -> /implement -> /verify -> /review -> /progress-report -> /done
+/audit -> /next-task -> /implement -> /verify -> /review
+   |                                             |
+   +---------------- /progress-report <----------+
+                         |
+                       /done
 ```
 
-This is a default, not ceremony. Small changes may combine implementation and verification. High-risk changes should retain independent review and explicit approval gates.
-
-Use `/done` to finish a work session. It preserves durable context and classifies worthwhile reusable artefacts in one pass. `/close` and its longer forms are legacy aliases. If no reusable artefact qualifies, `/done` rejects resource extraction without creating a summary or placeholder.
+This is a guide, not mandatory ceremony. Small changes may combine implementation and verification. High-risk changes retain explicit approval and independent review gates. Use `/campaign-status` when coordinating multi-agent work.
 
 ## Shared behaviour rules
 
 ### Scope and ambiguity
 - Resolve the target project and subsystem before acting.
-- If one essential input is missing, ask one focused question.
-- Do not silently expand scope because adjacent cleanup looks attractive.
-- Record assumptions that materially affect the result.
+- Inspect project context before asking for input.
+- If one essential detail is missing, ask one focused question.
+- If several independent decisions are required, follow `standards/conversational-interaction.md` and ask them one at a time.
+- Retain answers, do not re-ask, and do not silently expand scope.
 
 ### Permissions
 - Read-only commands do not edit project files.
@@ -72,17 +112,25 @@ Use `/done` to finish a work session. It preserves durable context and classifie
 - Never infer completion from a progress percentage, changed-file count or agent activity.
 - A recommendation is not an executed action; a generated file is not host acceptance.
 
-### Failure behaviour
+### Presentation
+- Follow `standards/response-presentation.md`.
+- Identify resources by human-readable name, type, purpose and actual contents.
+- Use progress bars only with a defensible measurement model.
+- Use ASCII diagrams for meaningful flows, dependencies and handoffs.
+- Keep output readable in plain Markdown and narrow terminal-like surfaces.
+- Do not force ordinary conversational answers into templates.
 
+### Failure behaviour
 When required context, permission, tooling or evidence is unavailable, stop safely and report what was attempted, what could not be established, evidence gathered, whether anything changed and the smallest safe next action.
 
 ## Authoring checklist
 
-- [ ] Frontmatter ID, path, aliases and dependencies agree with the registry.
+- [ ] Frontmatter ID, path, aliases, version and dependencies agree with the registry.
 - [ ] Invocation and arguments are explicit.
 - [ ] Default permission level is stated.
 - [ ] Detailed procedure is delegated to the correct skill or workflow.
 - [ ] Approval boundaries are clear.
 - [ ] Output and failure states are predictable.
+- [ ] A canonical presentation contract is referenced.
+- [ ] Multi-step input follows the sequential interaction standard.
 - [ ] No unsupported host or provider behaviour is promised.
-- [ ] Examples match the current conversational contracts and documented host integration status.

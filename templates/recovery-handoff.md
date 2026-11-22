@@ -1,5 +1,9 @@
 # Recovery Handoff: [assignment-id]
 
+```text
+┌─ RECOVERY HANDOFF ──────────────────────────────────────────────
+```
+
 - **Original assignment ID:**
 - **Original objective:**
 - **Original scope:**

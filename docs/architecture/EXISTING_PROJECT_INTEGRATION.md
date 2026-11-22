@@ -20,7 +20,7 @@ A project does not need to adopt the Dhan AI Trader document taxonomy, directory
 
 ## 3. Assessment before installation
 
-The integration agent performs a read-only assessment. The v0.4 CLI provides a local structural scan and project signals; it does not claim to understand architecture from filenames alone. The coding agent must inspect relevant source and documentation before recommending a final resource set.
+The existing coding agent performs the read-only assessment using the host's available repository and file capabilities. Agent Foundry has no installer runtime or CLI. Structural signals are clues, not proof of architecture; the agent must inspect relevant source and documentation before recommending a final resource set.
 
 Inspect:
 - root and nested agent instructions;
@@ -34,7 +34,7 @@ Inspect:
 Do not read secrets or dump environment files. Do not execute project code merely to classify it. Do not assume a similarly named file has the same meaning as a Foundry resource.
 
 Create an assessment with:
-- detected project type and confidence (the CLI signals are heuristic; deeper semantic assessment is performed by the coding agent);
+- detected project type and confidence, with evidence and any heuristic assumptions;
 - existing capability and its source file;
 - Foundry capability that overlaps;
 - gap or conflict;
@@ -117,10 +117,10 @@ For an existing Foundry installation:
 3. Read release notes and resource dependency changes.
 4. Produce added/changed/deprecated/removed summary.
 5. Classify each local divergence as keep, merge, replace with approval, or retire.
-6. Run the CLI update preview and review changed paths and local-modification conflicts.
-7. Apply only after explicit approval. The updater backs up changed file contents and restores them if a write fails.
+6. Compare source resource content, manifest hashes and local modifications using the host's native file capabilities; show the exact changed paths and conflicts.
+7. Apply only after explicit approval. Preserve prior content for each changed file and stop safely if a write fails; report partial state rather than claiming rollback that was not verified.
 8. Validate the resulting manifest, resource hashes, YAML settings and model roster.
-9. Exercise host discovery and command execution manually; the current CLI does not yet run end-to-end tests inside each host.
+9. Exercise host discovery and command invocation manually; text validation does not prove that a host loads or executes a resource.
 
 ## 10. Completion criteria
 
@@ -135,18 +135,20 @@ For an existing Foundry installation:
 
 ## 11. Current implementation boundary
 
-The v0.4 installer:
-- creates a local `.agent-foundry/` manifest, instructions, README and owner-editable settings;
-- copies selected source resources into the project;
-- generates host-specific skills, commands and specialist profile files for detected hosts;
-- adds marked pointers to AGENTS.md and, when detected, CLAUDE.md or Cline rules;
-- resolves the source ref to an immutable Git commit before downloading resource content;
-- refuses path collisions by default and can explicitly skip them;
-- previews updates/uninstall and uses ownership hashes to preserve local changes.
+Agent Foundry is a context-file system managed by the consuming project's existing coding agent. There is no installer runtime, CLI, executable, TUI, MCP server, daemon, management API or separate application.
 
-It does not yet:
-- semantically reconcile every existing project skill or command with every Foundry resource automatically;
-- store external project-document links as first-class manifest dependencies;
-- prove command discovery or execution inside every supported host;
-- dispatch model workers or control host session lifecycle;
-- migrate arbitrary existing agent frameworks without an agent-led review.
+The agent-led workflow can:
+- inspect an existing project and map capabilities by behaviour;
+- recommend a minimal resource selection and explain each resource's actual contents;
+- install selected context files using the host's native file capabilities after approval;
+- record source revision, resource IDs, versions, paths and content hashes in the project manifest;
+- add a small, approved pointer to the project's existing agent instructions;
+- detect local changes before updates and preserve user-owned files;
+- verify file presence, hashes, dependencies and available host conventions.
+
+It cannot, by context files alone:
+- guarantee that every host automatically discovers or invokes every command, skill or profile;
+- create permissions, sandboxing, network access or tools the host does not provide;
+- dispatch workers or control session lifecycle on hosts without those capabilities;
+- guarantee transactional rollback across arbitrary host file operations;
+- semantically reconcile every existing project resource without agent-led inspection and owner review.

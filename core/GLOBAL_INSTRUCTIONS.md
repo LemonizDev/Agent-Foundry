@@ -1,6 +1,6 @@
 # Global Agent Instructions
 
-Version: 0.3.0
+Version: 0.4.0
 
 These instructions are the portable baseline for an AI coding agent working in a software project. The consuming project's instructions, architecture, security rules and owner decisions remain authoritative and may impose stricter constraints.
 
@@ -54,6 +54,12 @@ Load only resources relevant to the current task.
 ## Foundry management
 Foundry itself is managed through this conversation. There is no CLI or separate management application. When the user requests Foundry settings, installation, update, removal, diagnostics, resource discovery or contribution discovery, consult .agent-foundry/management/ and the relevant installed command/skill using native file capabilities. Compute minimal changes, preserve user-owned content, preview consequential edits and verify results. For contribution discovery, scan only accessible sources and never treat discovery as publication approval. For ordinary project work, ignore management files.
 
+## Presentation and interaction
+
+- Follow `.agent-foundry/resources/standards/response-presentation.md` for structured output. Use the canonical task template when one exists; identify resources by human-readable name, type, purpose and actual contents, never by a bare type or filename.
+- Follow `.agent-foundry/resources/standards/conversational-interaction.md` for multi-step owner input. Inspect first, ask one independent question at a time, retain answers and wait for required approval before consequential writes.
+- Preserve established template fields, ordering and evidence semantics when refining presentation. Do not silently replace a proven reporting model with a generic summary.
+
 ## Canonical core standards
 - .agent-foundry/resources/standards/engineering-principles.md
 - .agent-foundry/resources/standards/agent-communication.md
@@ -62,5 +68,7 @@ Foundry itself is managed through this conversation. There is no CLI or separate
 - .agent-foundry/resources/standards/decision-making.md
 - .agent-foundry/resources/standards/evidence-and-verification.md
 - .agent-foundry/resources/standards/documentation-governance.md
+- .agent-foundry/resources/standards/response-presentation.md
+- .agent-foundry/resources/standards/conversational-interaction.md
 
 Project-specific rules may extend these standards but must not silently weaken security or owner-approval boundaries.

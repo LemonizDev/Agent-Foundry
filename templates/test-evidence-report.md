@@ -1,5 +1,9 @@
 # Test Evidence Report
 
+```text
+┌─ TEST EVIDENCE REPORT ──────────────────────────────────────────
+```
+
 - **Scope:**
 - **Commit/ref:**
 - **Date/time:**

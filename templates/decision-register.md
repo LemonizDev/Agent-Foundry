@@ -1,5 +1,11 @@
 # Decision Register
 
+```text
+╔══════════════════════════════════════════════════════════════════╗
+║ DECISION REGISTER                                               ║
+╚══════════════════════════════════════════════════════════════════╝
+```
+
 | ID | Date | Decision | Status | Context / evidence | Alternatives considered | Consequences | Owner |
 |---|---|---|---|---|---|---|---|
 | DEC-001 | YYYY-MM-DD | [Decision] | PROPOSED / ACCEPTED / REJECTED / SUPERSEDED | [Evidence] | [Options] | [Impact] | [Owner] |
