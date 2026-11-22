@@ -2,11 +2,11 @@
 id: delegate
 name: Delegate
 type: command
-version: 0.2.0
+version: 0.3.0
 portability: adaptable
 status: draft
+dependencies: [multi-agent-delegation, model-delegation-architecture, response-presentation, conversational-interaction, delegation-assignment]
 aliases: [delegate]
-dependencies: [multi-agent-delegation, model-delegation-architecture]
 ---
 
 # Delegate
@@ -33,6 +33,12 @@ Desired outcome, acceptance criteria, constraints, available agents, model roste
 ## Safety
 Never claim a worker launched when only an assignment was written. Do not delegate secrets or unrestricted production access. Avoid overlapping file ownership. Lead agent retains integration and final verification accountability.
 
+
+## Presentation
+
+Follow `standards/response-presentation.md` and `standards/conversational-interaction.md`. Use `templates/delegation-assignment.md` as the canonical layout.
+
+Populate the delegation-assignment template. Make objective, scope, file ownership, acceptance criteria, checkpoints and dispatch state explicit.
 ## Output
 Assignment, worker/model rationale, ownership, checkpoint plan, acceptance criteria and dispatch status. If dispatch is unsupported, provide the assignment for manual execution.
 

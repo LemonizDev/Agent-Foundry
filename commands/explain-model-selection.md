@@ -2,13 +2,12 @@
 id: explain-model-selection
 name: Explain Model Selection
 type: command
-version: 0.1.0
+version: 0.2.0
 portability: adaptable
 status: draft
+dependencies: [model-delegation-architecture, model-roster-template, response-presentation, conversational-interaction]
 aliases:
   - /models explain
-dependencies:
-  - docs/architecture/MODEL_DELEGATION.md
 ---
 
 # Explain Model Selection
@@ -28,3 +27,9 @@ dependencies:
 7. If the roster is missing or incomplete, identify exactly what information is needed.
 
 Do not invent model capability ratings or claim that a recommendation was automatically executed. This command explains a decision; it does not itself dispatch a worker.
+
+## Presentation
+
+Follow `standards/response-presentation.md` and `standards/conversational-interaction.md`. Use `standards/response-presentation.md` as the canonical layout.
+
+Use a compact recommendation comparison: task classification, eligible candidates, excluded candidates with reasons, recommendation, trade-offs and fallback. Do not turn an explanation into an unnecessary questionnaire.

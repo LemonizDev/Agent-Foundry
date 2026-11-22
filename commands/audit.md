@@ -2,11 +2,11 @@
 id: audit
 name: Repository Audit
 type: command
-version: 0.2.0
+version: 0.3.0
 portability: adaptable
 status: draft
+dependencies: [repository-audit, response-presentation, conversational-interaction, repository-audit-report]
 aliases: [audit, "repo audit"]
-dependencies: [repository-audit]
 ---
 
 # Repository Audit
@@ -38,6 +38,12 @@ Read-only. Do not edit files, install dependencies, run migrations or alter conf
 ## Verification
 Cross-check material findings against source, tests, configuration or runtime evidence. Record inspected paths and uninspected areas.
 
+
+## Presentation
+
+Follow `standards/response-presentation.md` and `standards/conversational-interaction.md`. Use `templates/repository-audit-report.md` as the canonical layout.
+
+Use the repository-audit report layout. Show scope and coverage, a readable repository map, prioritised evidence-backed findings, strengths to preserve and one next action.
 ## Output
 Executive assessment; scope and coverage; architecture/source-of-truth map; prioritised findings with evidence; strengths to preserve; recommended next action.
 

@@ -1,5 +1,13 @@
 # Recovery Handoff: [assignment-id]
 
+```text
+┌─ RECOVERY CHECKPOINT ─────────────────────────────────────────
+│ Assignment: [assignment-id]
+│ State: [READY TO RESUME / BLOCKED]
+│ Recovery owner: [owner]
+└──────────────────────────────────────────────────────────────
+```
+
 - **Original assignment ID:**
 - **Original objective:**
 - **Original scope:**

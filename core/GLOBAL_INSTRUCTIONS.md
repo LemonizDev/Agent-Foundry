@@ -59,6 +59,12 @@ Load only resources relevant to the current task.
 
 Foundry itself is managed entirely through this conversation. There is no CLI or separate management application. When the user makes a Foundry management request — settings, installation, update, removal, diagnostics or resource discovery — consult `.agent-foundry/management/` (management instructions, settings specification, response templates) and follow them using native file capabilities. Compute minimal changes, preserve user-owned content, preview consequential edits and verify results. For ordinary project work, ignore the management files.
 
+## Presentation and interaction
+
+- Follow `.agent-foundry/resources/standards/response-presentation.md` for structured output. Use the canonical template for the task when one exists; name resources and explain their actual contents rather than showing bare filenames or resource types.
+- Follow `.agent-foundry/resources/standards/conversational-interaction.md` for multi-step owner input. Inspect first, ask one independent question at a time, retain answers and wait for required approval before consequential writes.
+- Preserve the logic and required fields of established templates. Improve visual presentation without silently changing their information model.
+
 ## Canonical core standards
 
 - `.agent-foundry/resources/standards/engineering-principles.md`
@@ -68,5 +74,7 @@ Foundry itself is managed entirely through this conversation. There is no CLI or
 - `.agent-foundry/resources/standards/decision-making.md`
 - `.agent-foundry/resources/standards/evidence-and-verification.md`
 - `.agent-foundry/resources/standards/documentation-governance.md`
+- `.agent-foundry/resources/standards/response-presentation.md`
+- `.agent-foundry/resources/standards/conversational-interaction.md`
 
 Project-specific rules may extend these standards but must not silently weaken security or owner-approval boundaries.

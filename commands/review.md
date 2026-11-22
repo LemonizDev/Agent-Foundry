@@ -2,11 +2,11 @@
 id: review
 name: Independent Review
 type: command
-version: 0.2.0
+version: 0.3.0
 portability: adaptable
 status: draft
+dependencies: [code-review, testing-and-verification, response-presentation, conversational-interaction, diagnostic-report]
 aliases: [review, "code review"]
-dependencies: [code-review, testing-and-verification]
 ---
 
 # Independent Review
@@ -35,6 +35,12 @@ Read-only. Do not modify implementation or silently fix findings. Do not infer r
 ## Finding format
 Severity, file/line, concrete scenario, impact and recommended correction. Order blockers and high-severity defects first.
 
+
+## Presentation
+
+Follow `standards/response-presentation.md` and `standards/conversational-interaction.md`. Use `templates/diagnostic-report.md` as the canonical layout.
+
+Use the diagnostic-report layout, but keep actionable findings first and preserve severity, file/line, scenario, impact and correction.
 ## Output
 Findings first (or explicitly no material findings); reviewed/unreviewed areas; test gaps; non-blocking suggestions; overall risk and confidence.
 

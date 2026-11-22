@@ -2,16 +2,14 @@
 id: close-session
 name: Close Session
 type: command
-version: 0.2.0
+version: 0.3.0
 portability: adaptable
 status: draft
+dependencies: [session-learning, project-state-management, response-presentation, conversational-interaction, session-handoff]
 aliases:
   - /close
   - /close session
   - /close chat
-dependencies:
-  - skills/session-learning/SKILL.md
-  - skills/project-state-management/SKILL.md
 ---
 
 # Close Session
@@ -38,5 +36,11 @@ Requirements -> product context; architecture decisions -> architecture/decision
 ## Safety
 Do not persist emotional content, filler, raw transcripts or speculation as facts. Do not silently overwrite conflicting decisions. Do not create `HANDOFF.md` unless the project uses it or the owner asks. Do not claim to close the chat UI unless the host exposes tested session control.
 
+
+## Presentation
+
+Follow `standards/response-presentation.md` and `standards/conversational-interaction.md`. Use `templates/session-handoff.md` as the canonical layout.
+
+Use the session-handoff layout for captured learnings and remaining work. Do not imply that the chat UI itself was closed.
 ## Output
 Learnings captured, files changed, verification, items excluded, unresolved conflicts and whether the chat must be closed manually.

@@ -2,109 +2,122 @@
 id: foundry-response-templates
 name: Agent Foundry Response Templates
 type: management
-version: 0.1.0
+version: 0.2.0
 portability: universal
 status: draft
+dependencies:
+  - response-presentation
+  - conversational-interaction
 ---
 
 # Agent Foundry Response Templates
 
-Reusable instructions for how the coding agent composes chat responses during Foundry management. These are composition guidance, not a UI. Populate every template from actual project state discovered per `foundry/MANAGEMENT.md`; never fabricate values. Keep responses compact: show what the user asked for, not everything Foundry knows.
+These are concrete response contracts for Foundry management, not merely suggestions about tone. Populate them from the actual project state and the full content of selected resources. Follow `standards/response-presentation.md` for layout and `standards/conversational-interaction.md` for multi-step owner input.
 
-General rules for all templates:
+## Shared rules
 
-- State what was inspected (files, revision) in one line when it matters.
-- Distinguish facts from defaults and from unverified assumptions.
-- Offer the natural next actions at the end; do not force a questionnaire.
-- If the project has no Foundry installation, say so plainly and offer installation instead of presenting empty sections.
+- Lead with the current state and the consequence for the owner.
+- Use concise ASCII frames for summaries, previews and inventories; do not box every paragraph.
+- Identify every resource by human-readable name, type, purpose and relevant contents. A filename or the word "skill" is never a sufficient description.
+- Include dependencies, related commands and destination paths when relevant.
+- Distinguish observed facts, configured defaults, inferred values and unknowns.
+- Use only real states: `INSTALLED`, `UPDATED`, `KEPT`, `SKIPPED`, `BLOCKED`, `FAILED`.
+- Do not show empty sections or fabricate resource descriptions, versions, host support or verification results.
+- Ask required owner questions sequentially. Never present multiple independent questions as a batch.
+- Do not write files until the applicable approval gate is satisfied.
+- If Foundry is not installed, state that plainly; do not render an empty installed-resource inventory.
 
 ## 1. Foundry overview
 
-Use when the user asks what Foundry is doing in this project, or "check my Foundry setup" at a glance.
+Use for "check my Foundry setup" or a general status request.
 
-Structure:
+```text
+╔══════════════════════════════════════════════════════════════╗
+║ AGENT FOUNDRY · PROJECT OVERVIEW                             ║
+╠══════════════════════════════════════════════════════════════╣
+║ STATUS: [INSTALLED / NOT INSTALLED / PARTIAL]                ║
+║ SOURCE: [release tag or exact commit]                        ║
+║ PROFILE: [profile or UNKNOWN]                                ║
+║ RESOURCES: [count] · MANAGEMENT FILES: [present/missing]     ║
+╚══════════════════════════════════════════════════════════════╝
+```
 
-- One-line status: installed or not; source revision (tag or commit SHA) from the manifest.
-- Adapted profile and resource count; management files present or missing.
-- Settings snapshot: only the settings whose values differ from defaults, plus a count of the rest.
-- Health: one line per discovered issue, or "no issues found".
-- Offer: settings, update check, diagnostics detail, removal.
+Then show:
+- installed resource count grouped by type;
+- settings that differ from defaults, plus a count of unchanged defaults;
+- detected health issues with evidence, or "No issues found in inspected scope";
+- host integration status and any unverified capability.
+
+Do not list every resource unless requested. Use the Resource Inventory response when the user asks what is installed.
 
 ## 2. Foundry settings
 
-Use for "Foundry settings", "show my Foundry configuration".
+Use for "show my Foundry settings" or a settings inspection.
 
-Structure:
+Group values under Reviews, Delegation, Session learning and Documentation. Annotate each value as `DEFAULT`, `EXPLICIT` or `CUSTOM`. Give a short explanation for actionable settings.
 
-- Current values grouped by area (Reviews, Delegation, Session learning, Documentation), each annotated `(default)` or `(set)` or `(custom key)`.
-- One-line meaning for any setting the user is likely to act on.
-- Suggested changes only when the user's request implies one; otherwise stop and wait.
-- After a change: confirmation with old → new value, everything preserved, and verification result.
+For a change, show the exact old → new value, effect, compatibility impact and approval requirement. After applying, re-read the file and report the verification result. Preserve unknown keys and comments.
 
 ## 3. Resource discovery
 
-Use for "show available Foundry resources".
+Use when the user asks what Foundry resources are available.
 
-Structure:
+Group only relevant candidates by type. Each entry must include:
+- **Name and type**
+- **Purpose:** what the resource actually does
+- **Contents:** key procedures, rules or outputs
+- **Why relevant:** the project need it addresses
+- **Dependencies:** required resources and related commands
 
-- Note that the full registry lives in the source repository and is not copied into the project.
-- Compact grouped list of relevant candidates (skills, commands, workflows, profiles, templates) with a one-line description each, filtered to plausibly relevant ones for this project.
-- For each candidate: what it would add and what it depends on.
-- Offer: install selected resources.
+State that the complete catalog remains in the source repository and is not copied into the project by default. Do not present the catalog as an installation.
 
 ## 4. Installation preview
 
-Use before any installation write, after assessment.
+Use after discovery and before any installation write. Follow `templates/installation-preview.md` and `templates/resource-inventory.md`.
 
-Structure:
+Required content:
+- project classification and inspected evidence;
+- capability mapping: KEEP, LINK, EXTEND, INSTALL, ADAPT, DEFER or EXCLUDE;
+- every proposed resource with its name, type, purpose, contents and rationale;
+- exact files to create and exact additive edits to existing files;
+- conflicts, overlaps, host limitations and source revision;
+- verification plan and explicit approval request.
 
-- Detected project type and the evidence used (one or two lines).
-- Proposed resource list with rationale, grouped by core baseline / management / selected resources; explicitly list what was excluded and why.
-- Files to be created (paths) and any existing files receiving an additive pointer block.
-- Conflicts or overlaps found and how they will be handled.
-- Source revision (release tag or commit SHA) and manifest plan.
-- Approval request. Do not write anything until approved.
+Render the file tree with a short explanation beside each path. Never show filenames alone as the change explanation.
 
 ## 5. Update preview
 
-Use before applying an update.
+Show installed revision → target revision, then group changes as ADDED, UPDATED, DEPRECATED, REMOVED and KEPT.
 
-Structure:
-
-- Installed revision → target revision.
-- Added / changed / deprecated / removed resources.
-- Locally modified files (hash drift) and the proposed resolution for each: keep, merge with approval, or retire with approval.
-- What will be preserved unconditionally.
-- Approval request.
+For every changed resource, describe what it contains and why it changed. Identify hash drift and local edits individually, with a proposed KEEP / MERGE / REPLACE / RETIRE action. State what remains untouched. Obtain approval before writes.
 
 ## 6. Removal preview
 
-Use before removing Foundry.
-
-Structure:
-
-- Foundry-managed files and pointer blocks that will be removed, grouped by directory.
-- Owner-modified Foundry files that will be preserved as user-owned.
-- User-owned files that are untouched.
-- Confirmation request that explicitly names removal.
+Show only files recorded as Foundry-managed, grouped by directory. Identify locally modified resources that will be preserved and all user-owned files that will remain untouched. State the exact pointer block, if any, proposed for removal. Ask for explicit confirmation naming the removal operation.
 
 ## 7. Diagnostics
 
-Use for "check my Foundry setup" when detail is wanted, or after discovery finds issues.
+Use `templates/diagnostic-report.md`.
 
-Structure:
-
-- Inspected: manifest, settings, root instruction pointers, host artifacts (one line each, found/missing/malformed).
-- Issues table: issue, evidence, suggested repair, risk of the repair.
-- Repairs are proposed, not applied, until approved.
+Show inspected artifacts (manifest, settings, instruction pointers, resource files and host artifacts) with FOUND / MISSING / MALFORMED / NOT VERIFIED states. Each issue needs evidence, impact, recommended repair and repair risk. Propose repairs; do not apply them before approval.
 
 ## 8. Change summary
 
-Use after any approved settings, installation, update or removal change.
+Use after an approved installation, update, removal or settings change.
 
-Structure:
+```text
+┌─ CHANGE COMPLETE ────────────────────────────────────────────
+│ Operation: [operation]
+│ Result: [SUCCESS / PARTIAL / FAILED]
+│ Verification: [PASS / PARTIAL / NOT VERIFIED]
+└──────────────────────────────────────────────────────────────
+```
 
-- What changed: bullet list with paths.
-- What was preserved: unrelated files, owner edits, custom keys and comments.
-- Verification performed and its result; anything not verified labelled as such.
-- Current state in one line.
+Then show:
+- what changed, with paths and resource names;
+- what was preserved, including unrelated files and owner edits;
+- resource-by-resource outcome and purpose;
+- exact verification performed and anything not verified;
+- current installation state and one relevant next action.
+
+Never label a resource installed merely because a copy was attempted. Confirm file existence, content/hash and dependency resolution first.

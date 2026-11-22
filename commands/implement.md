@@ -2,11 +2,11 @@
 id: implement
 name: Implement
 type: command
-version: 0.2.0
+version: 0.3.0
 portability: adaptable
 status: draft
+dependencies: [implementation-planning, atomic-implementation, testing-and-verification, response-presentation, conversational-interaction, implementation-plan]
 aliases: [implement]
-dependencies: [implementation-planning, atomic-implementation, testing-and-verification]
 ---
 
 # Implement
@@ -39,6 +39,12 @@ Do not overwrite user changes, introduce dependencies without rationale, or make
 ## Verification
 Run targeted tests, then required repository checks. Record exact commands, exit status and environment. Separate implemented, tested, reviewed and released.
 
+
+## Presentation
+
+Follow `standards/response-presentation.md` and `standards/conversational-interaction.md`. Use `templates/implementation-plan.md` as the canonical layout.
+
+Use the implementation-plan layout for proposed or multi-step work. For a completed change, retain the command's outcome, file, test and risk details in a concise change summary.
 ## Output
 Behaviour delivered; design decisions and files changed; test evidence; limitations/deferred work; remaining risks and next action.
 

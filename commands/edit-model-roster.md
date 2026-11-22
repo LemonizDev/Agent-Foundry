@@ -2,15 +2,13 @@
 id: edit-model-roster
 name: Edit Model Delegation Roster
 type: command
-version: 0.1.0
+version: 0.2.0
 portability: adaptable
 status: draft
+dependencies: [model-delegation-architecture, model-roster-template, response-presentation, conversational-interaction, decision-prompt]
 aliases:
   - /models edit
   - /model-roster
-dependencies:
-  - docs/architecture/MODEL_DELEGATION.md
-  - templates/settings/model-roster.yaml
 ---
 
 # Edit Model Delegation Roster
@@ -47,3 +45,9 @@ Let the project owner maintain the models available to the task-aware delegation
 - `/settings` — inspect overall Foundry configuration.
 - `/models explain [task]` — explain model selection for a task.
 - `/models test [alias]` — run a bounded capability evaluation when supported.
+
+## Presentation
+
+Follow `standards/response-presentation.md` and `standards/conversational-interaction.md`. Use `templates/decision-prompt.md` as the canonical layout.
+
+Use the decision-prompt for each unresolved model or field choice. Ask one question at a time, then preview the roster diff.

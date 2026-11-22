@@ -2,14 +2,12 @@
 id: foundry-settings
 name: Agent Foundry Settings
 type: command
-version: 0.3.0
+version: 0.4.0
 portability: adaptable
 status: draft
+dependencies: [foundry-settings-spec, foundry-response-templates, response-presentation, conversational-interaction]
 aliases:
   - /settings
-dependencies:
-  - foundry-settings-spec
-  - foundry-response-templates
 ---
 
 # Agent Foundry Settings
@@ -39,5 +37,11 @@ Read files that actually exist; do not silently substitute a similarly named fil
 ## Safety
 Never display secrets or tokens. Never invent settings, provider names, model IDs, capability scores or host support. Do not silently change autonomy settings. Preserve unknown keys and comments where possible.
 
+
+## Presentation
+
+Follow `standards/response-presentation.md` and `standards/conversational-interaction.md`. Use `foundry/RESPONSE_TEMPLATES.md` as the canonical layout.
+
+Use the Foundry settings response contract. For multiple independent changes, resolve one setting decision at a time and preview the combined diff before approval.
 ## Output
 Configuration summary grouped by area, source paths, missing/unsupported settings, proposed/applied changes and verification results.

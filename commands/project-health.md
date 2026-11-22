@@ -2,11 +2,11 @@
 id: project-health
 name: Project Health
 type: command
-version: 0.2.0
+version: 0.3.0
 portability: adaptable
 status: draft
+dependencies: [repository-audit, progress-reporting, testing-and-verification, documentation-maintenance, response-presentation, conversational-interaction, diagnostic-report]
 aliases: [project-health, health]
-dependencies: [repository-audit, progress-reporting, testing-and-verification, documentation-maintenance]
 ---
 
 # Project Health
@@ -32,5 +32,11 @@ Product clarity; architecture; implementation; verification; security; operation
 ## Safety
 Read-only. Do not run destructive probes or alter production state. Missing evidence is `UNKNOWN`, not a pass. Do not present subjective scores as measured metrics.
 
+
+## Presentation
+
+Follow `standards/response-presentation.md` and `standards/conversational-interaction.md`. Use `templates/diagnostic-report.md` as the canonical layout.
+
+Use the diagnostic-report layout as a scorecard of named dimensions, evidence, risk and one priority action. Do not invent an aggregate health score.
 ## Output
 Dimension scorecard, top risks, evidence gaps, strengths to preserve, one priority action, inspected scope and exclusions.

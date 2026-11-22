@@ -2,11 +2,11 @@
 id: debug
 name: Debug
 type: command
-version: 0.2.0
+version: 0.3.0
 portability: adaptable
 status: draft
+dependencies: [debugging, testing-and-verification, response-presentation, conversational-interaction, diagnostic-report]
 aliases: [debug]
-dependencies: [debugging, testing-and-verification]
 ---
 
 # Debug
@@ -37,5 +37,11 @@ Do not expose secrets or personal data. Do not delete data, reset environments, 
 ## Verification
 Show original reproduction, regression protection, relevant test results and environment limitations.
 
+
+## Presentation
+
+Follow `standards/response-presentation.md` and `standards/conversational-interaction.md`. Use `templates/diagnostic-report.md` as the canonical layout.
+
+Use the diagnostic-report layout. Put reproduction, root cause, evidence, impact, fix and residual risk together.
 ## Output
 Reproduction status; root cause and evidence; hypotheses eliminated/open; fix and regression test; verification results; residual risk.

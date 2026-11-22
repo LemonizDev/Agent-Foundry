@@ -2,9 +2,12 @@
 id: progress-reporting
 name: Evidence-Based Progress Reporting
 type: skill
-version: 0.1.0
+version: 0.2.0
 portability: adaptable
 status: draft
+dependencies:
+  - response-presentation
+  - progress-report-template
 sources:
   - repository: LemonizDev/dhan-chatgpt-connector
     ref: foundation/final-trader-architecture

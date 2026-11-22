@@ -2,6 +2,17 @@
 
 This file records user-visible changes by release.
 
+## Unreleased
+
+### Presentation and interaction
+- Added universal response-presentation and conversational-interaction standards for structured output and sequential owner input.
+- Added reusable report templates for repository audits, installation previews, implementation plans, verification, diagnostics, resource inventories, decisions and session handoffs.
+- Reworked the command catalog around the project lifecycle and mapped each command to a canonical presentation contract.
+- Updated Foundry management and installation guidance to ask one consequential question per turn and describe each resource by name, purpose and actual contents.
+- Refined existing templates visually while preserving their information model, including the established six-section progress-report structure.
+- Added automated checks for command presentation contracts, dependency consistency, sequential installation input and progress-report section preservation.
+- Corrected stale CLI-specific guidance in the existing-project integration architecture document.
+
 ## 0.6.0 — 2026-11-20
 
 ### Product architecture

@@ -1,10 +1,11 @@
 schema_version: 1
 resources:
   - id: global-instructions
-    description: "Compact, project-agnostic operating instructions that connect the installed standards and task resources into one agent entrypoint."
+    description: "Compact project-agnostic instructions that establish the agent entrypoint and load presentation, interaction and engineering standards progressively."
     type: core
     path: core/GLOBAL_INSTRUCTIONS.md
-    version: 0.1.0
+    dependencies: [response-presentation, conversational-interaction]
+    version: 0.2.0
     status: draft
     portability: universal
   - id: engineering-principles
@@ -46,7 +47,8 @@ resources:
     description: "Produces progress reports grounded in implementation, test and review evidence rather than estimates or chat memory."
     type: skill
     path: skills/progress-reporting/SKILL.md
-    version: 0.1.0
+    dependencies: [response-presentation, progress-report-template]
+    version: 0.2.0
     status: draft
     portability: adaptable
   - id: multi-agent-delegation
@@ -88,28 +90,30 @@ resources:
     description: "Invokes evidence-backed progress reporting for a project, milestone or workstream."
     type: command
     path: commands/progress-report.md
-    version: 0.2.0
+    dependencies: [progress-reporting, progress-report-template, response-presentation, conversational-interaction]
+
+    version: 0.3.0
     status: draft
     portability: adaptable
   - id: progress-report-template
     description: "Provides a consistent structure for evidence-based project progress reports."
     type: template
     path: templates/progress-report-template.md
-    version: 0.1.0
+    version: 0.2.0
     status: draft
     portability: adaptable
   - id: delegation-assignment
     description: "Defines the objective, scope, owner, model rationale, outputs and acceptance criteria for delegated work."
     type: template
     path: templates/delegation-assignment.md
-    version: 0.1.0
+    version: 0.2.0
     status: draft
     portability: adaptable
   - id: recovery-handoff
     description: "Preserves verified checkpoints and context when a delegated worker or session is interrupted."
     type: template
     path: templates/recovery-handoff.md
-    version: 0.1.0
+    version: 0.2.0
     status: draft
     portability: adaptable
   - id: evidence-and-verification
@@ -186,28 +190,30 @@ resources:
     description: "Explains a completed implementation in a structured, project-relevant way."
     type: command
     path: commands/teach-implementation.md
-    version: 0.2.0
+    dependencies: [implementation-explanation, response-presentation, conversational-interaction]
+
+    version: 0.3.0
     status: draft
     portability: adaptable
   - id: decision-register
     description: "Records architectural and product decisions, alternatives, rationale and consequences."
     type: template
     path: templates/decision-register.md
-    version: 0.2.0
+    version: 0.3.0
     status: draft
     portability: adaptable
   - id: test-evidence-report
     description: "Records verification commands, environments, outcomes, coverage and unresolved checks."
     type: template
     path: templates/test-evidence-report.md
-    version: 0.2.0
+    version: 0.3.0
     status: draft
     portability: adaptable
   - id: blocker-register
     description: "Tracks blockers, ownership, impact, dependencies and resolution conditions."
     type: template
     path: templates/blocker-register.md
-    version: 0.2.0
+    version: 0.3.0
     status: draft
     portability: adaptable
   - id: graphics-engineer
@@ -251,7 +257,9 @@ resources:
     aliases: [close, "close session", "close chat"]
     type: command
     path: commands/close-session.md
-    version: 0.2.0
+    dependencies: [session-learning, project-state-management, response-presentation, conversational-interaction, session-handoff]
+
+    version: 0.3.0
     status: draft
     portability: adaptable
   - id: foundry-settings
@@ -259,8 +267,9 @@ resources:
     aliases: [settings]
     type: command
     path: commands/settings.md
-    dependencies: [foundry-settings-spec, foundry-response-templates]
-    version: 0.3.0
+    dependencies: [foundry-settings-spec, foundry-response-templates, response-presentation, conversational-interaction]
+
+    version: 0.4.0
     status: draft
     portability: adaptable
   - id: edit-model-roster
@@ -268,7 +277,9 @@ resources:
     aliases: ["models edit", model-roster]
     type: command
     path: commands/edit-model-roster.md
-    version: 0.1.0
+    dependencies: [model-delegation-architecture, model-roster-template, response-presentation, conversational-interaction, decision-prompt]
+
+    version: 0.2.0
     status: draft
     portability: adaptable
   - id: session-close
@@ -282,7 +293,8 @@ resources:
     description: "Assesses an established repository and adds only relevant Foundry resources without replacing its architecture."
     type: workflow
     path: docs/architecture/EXISTING_PROJECT_INTEGRATION.md
-    version: 0.1.0
+    dependencies: [conversational-interaction, installation-preview, resource-inventory, response-presentation]
+    version: 0.2.0
     status: draft
     portability: universal
   - id: model-delegation-architecture
@@ -319,7 +331,9 @@ resources:
     aliases: ["models explain"]
     type: command
     path: commands/explain-model-selection.md
-    version: 0.1.0
+    dependencies: [model-delegation-architecture, model-roster-template, response-presentation, conversational-interaction]
+
+    version: 0.2.0
     status: draft
     portability: adaptable
   - id: test-model
@@ -327,7 +341,9 @@ resources:
     aliases: ["models test"]
     type: command
     path: commands/test-model.md
-    version: 0.1.0
+    dependencies: [model-delegation-architecture, model-roster-template, response-presentation, conversational-interaction, verification-report]
+
+    version: 0.2.0
     status: draft
     portability: adaptable
 
@@ -399,89 +415,108 @@ resources:
     description: "Runs a read-only, evidence-based repository audit."
     type: command
     path: commands/audit.md
+    dependencies: [repository-audit, response-presentation, conversational-interaction, repository-audit-report]
+
     aliases: [audit, "repo audit"]
-    dependencies: [repository-audit]
-    version: 0.2.0
+
+    version: 0.3.0
     status: draft
     portability: adaptable
   - id: implement
     description: "Executes an approved implementation plan with incremental verification."
     type: command
     path: commands/implement.md
+    dependencies: [implementation-planning, atomic-implementation, testing-and-verification, response-presentation, conversational-interaction, implementation-plan]
+
     aliases: [implement]
-    dependencies: [implementation-planning, atomic-implementation, testing-and-verification]
-    version: 0.2.0
+
+    version: 0.3.0
     status: draft
     portability: adaptable
   - id: debug
     description: "Investigates a reproducible failure and isolates its root cause."
     type: command
     path: commands/debug.md
+    dependencies: [debugging, testing-and-verification, response-presentation, conversational-interaction, diagnostic-report]
+
     aliases: [debug]
-    dependencies: [debugging, testing-and-verification]
-    version: 0.2.0
+
+    version: 0.3.0
     status: draft
     portability: adaptable
   - id: review
     description: "Runs an independent, read-only engineering review."
     type: command
     path: commands/review.md
+    dependencies: [code-review, testing-and-verification, response-presentation, conversational-interaction, diagnostic-report]
+
     aliases: [review, "code review"]
-    dependencies: [code-review, testing-and-verification]
-    version: 0.2.0
+
+    version: 0.3.0
     status: draft
     portability: adaptable
   - id: verify
     description: "Checks acceptance criteria against explicit test and runtime evidence."
     type: command
     path: commands/verify.md
+    dependencies: [testing-and-verification, response-presentation, conversational-interaction, verification-report]
+
     aliases: [verify]
-    dependencies: [testing-and-verification]
-    version: 0.2.0
+
+    version: 0.3.0
     status: draft
     portability: adaptable
   - id: delegate
     description: "Creates a bounded task assignment and recommends a suitable model from the project roster."
     type: command
     path: commands/delegate.md
+    dependencies: [multi-agent-delegation, model-delegation-architecture, response-presentation, conversational-interaction, delegation-assignment]
+
     aliases: [delegate]
-    dependencies: [multi-agent-delegation, model-delegation-architecture]
-    version: 0.2.0
+
+    version: 0.3.0
     status: draft
     portability: adaptable
   - id: next-task
     description: "Recommends the highest-value next engineering action from current evidence and dependencies."
     type: command
     path: commands/next-task.md
+    dependencies: [project-state-management, plan-reconciliation, implementation-planning, response-presentation, conversational-interaction, decision-prompt]
+
     aliases: [next-task, next]
-    dependencies: [project-state-management, plan-reconciliation, implementation-planning]
-    version: 0.2.0
+
+    version: 0.3.0
     status: draft
     portability: adaptable
   - id: project-health
     description: "Assesses project health across architecture, quality, security, operations and continuity."
     type: command
     path: commands/project-health.md
+    dependencies: [repository-audit, progress-reporting, testing-and-verification, documentation-maintenance, response-presentation, conversational-interaction, diagnostic-report]
+
     aliases: [project-health, health]
-    dependencies: [repository-audit, progress-reporting, testing-and-verification, documentation-maintenance]
-    version: 0.2.0
+
+    version: 0.3.0
     status: draft
     portability: adaptable
   - id: resume
     description: "Recovers interrupted work from durable checkpoints and verified repository state."
     type: command
     path: commands/resume.md
+    dependencies: [session-recovery, project-state-management, plan-reconciliation, response-presentation, conversational-interaction, session-handoff]
+
     aliases: [resume, resume-work]
-    dependencies: [session-recovery, project-state-management, plan-reconciliation]
-    version: 0.2.0
+
+    version: 0.3.0
     status: draft
     portability: adaptable
   - id: foundry-management
     description: "Conversational management instructions: discovery, settings, installation, update, removal, diagnostics and the Foundry safety contract."
     type: management
     path: foundry/MANAGEMENT.md
-    dependencies: [foundry-settings-spec, foundry-response-templates]
-    version: 0.1.0
+    dependencies: [foundry-settings-spec, foundry-response-templates, response-presentation, conversational-interaction]
+
+    version: 0.2.0
     status: draft
     portability: universal
   - id: foundry-settings-spec
@@ -492,9 +527,81 @@ resources:
     status: draft
     portability: universal
   - id: foundry-response-templates
-    description: "Reusable composition guidance for Foundry management chat responses: overview, settings, previews, diagnostics and change summary."
+    description: "Defines concrete visual response contracts for Foundry overview, settings, resource discovery, installation/update/removal previews, diagnostics and change summaries."
     type: management
     path: foundry/RESPONSE_TEMPLATES.md
+    dependencies: [response-presentation, conversational-interaction]
+    version: 0.2.0
+    status: draft
+    portability: universal
+
+  - id: response-presentation
+    description: "Defines reusable visual hierarchy, ASCII diagrams, progress indicators, resource descriptions and terminal-safe structured output."
+    type: standard
+    path: standards/response-presentation.md
     version: 0.1.0
     status: draft
     portability: universal
+  - id: conversational-interaction
+    description: "Defines sequential one-question-at-a-time owner input, answer tracking, defaults and explicit approval gates for multi-step work."
+    type: standard
+    path: standards/conversational-interaction.md
+    version: 0.1.0
+    status: draft
+    portability: universal
+  - id: repository-audit-report
+    description: "Structures evidence-backed repository audits with coverage, architecture maps, prioritised findings and one next action."
+    type: template
+    path: templates/repository-audit-report.md
+    version: 0.1.0
+    status: draft
+    portability: adaptable
+  - id: installation-preview
+    description: "Presents a project-specific Foundry installation plan, capability mapping, resource selection, file tree, conflicts and approval gate."
+    type: template
+    path: templates/installation-preview.md
+    version: 0.1.0
+    status: draft
+    portability: adaptable
+  - id: implementation-plan
+    description: "Presents bounded implementation steps, acceptance criteria, dependencies, ownership, risks and verification."
+    type: template
+    path: templates/implementation-plan.md
+    version: 0.1.0
+    status: draft
+    portability: adaptable
+  - id: verification-report
+    description: "Reports criterion-by-criterion verification, exact test execution, evidence, blockers and untested areas."
+    type: template
+    path: templates/verification-report.md
+    version: 0.1.0
+    status: draft
+    portability: adaptable
+  - id: diagnostic-report
+    description: "Presents debugging, review and health findings with severity, evidence, impact, confidence and corrective action."
+    type: template
+    path: templates/diagnostic-report.md
+    version: 0.1.0
+    status: draft
+    portability: adaptable
+  - id: resource-inventory
+    description: "Explains every discovered or installed resource by name, type, purpose, contents, relevance, dependencies, destination and actual state."
+    type: template
+    path: templates/resource-inventory.md
+    version: 0.1.0
+    status: draft
+    portability: adaptable
+  - id: session-handoff
+    description: "Summarises verified progress, partial work, blockers, authoritative files and the next recovery action."
+    type: template
+    path: templates/session-handoff.md
+    version: 0.1.0
+    status: draft
+    portability: adaptable
+  - id: decision-prompt
+    description: "Structures one focused owner decision with context, recommendation, trade-offs and sequential follow-up."
+    type: template
+    path: templates/decision-prompt.md
+    version: 0.1.0
+    status: draft
+    portability: adaptable

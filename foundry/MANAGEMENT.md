@@ -2,9 +2,14 @@
 id: foundry-management
 name: Agent Foundry Management
 type: management
-version: 0.1.0
+version: 0.2.0
 portability: universal
 status: draft
+dependencies:
+  - foundry-settings-spec
+  - foundry-response-templates
+  - response-presentation
+  - conversational-interaction
 ---
 
 # Agent Foundry Management

@@ -2,11 +2,11 @@
 id: verify
 name: Verify
 type: command
-version: 0.2.0
+version: 0.3.0
 portability: adaptable
 status: draft
+dependencies: [testing-and-verification, response-presentation, conversational-interaction, verification-report]
 aliases: [verify]
-dependencies: [testing-and-verification]
 ---
 
 # Verify
@@ -32,6 +32,12 @@ Acceptance criteria, target commit/working-tree state and required platforms/run
 ## Safety
 Read-only by default. Use isolated fixtures and safe test data. Do not run destructive or production-facing checks without approval. Do not claim host/platform acceptance from text-only tests.
 
+
+## Presentation
+
+Follow `standards/response-presentation.md` and `standards/conversational-interaction.md`. Use `templates/verification-report.md` as the canonical layout.
+
+Use the verification-report layout. Every acceptance criterion must have its own PASS, FAIL, BLOCKED or NOT RUN state and evidence.
 ## Output
 Criterion-by-criterion matrix with status `PASS`, `FAIL`, `BLOCKED` or `NOT RUN`, evidence and caveat. Overall verdict must not hide missing checks.
 

@@ -2,11 +2,11 @@
 id: resume
 name: Resume Work
 type: command
-version: 0.2.0
+version: 0.3.0
 portability: adaptable
 status: draft
+dependencies: [session-recovery, project-state-management, plan-reconciliation, response-presentation, conversational-interaction, session-handoff]
 aliases: [resume, resume-work]
-dependencies: [session-recovery, project-state-management, plan-reconciliation]
 ---
 
 # Resume Work
@@ -29,5 +29,11 @@ Recover interrupted work from actual repository state and durable records, not u
 ## Safety
 Read-only during reconciliation. Never reset, clean, stash, checkout over or discard uncommitted work without explicit approval. Treat old claims as leads to verify, not evidence.
 
+
+## Presentation
+
+Follow `standards/response-presentation.md` and `standards/conversational-interaction.md`. Use `templates/session-handoff.md` as the canonical layout.
+
+Use the session-handoff layout. Distinguish completed/verified work from partial or unverified work and state the last reliable checkpoint.
 ## Output
 Actual branch/worktree state; verified work; partial or unverified work; blockers; last reliable checkpoint; recommended next action and verification.

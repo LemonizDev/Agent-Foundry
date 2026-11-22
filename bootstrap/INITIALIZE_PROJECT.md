@@ -50,9 +50,36 @@ Identify:
 
 Do not infer sensitive or business-critical requirements from filenames alone.
 
+## 4A. Conduct the owner interview
+
+Follow `standards/conversational-interaction.md` whenever installation requires owner input.
+
+- Finish read-only discovery before asking questions.
+- Resolve facts already present in the repository; do not ask the owner to repeat them.
+- Identify only unresolved decisions that materially affect resource selection, host compatibility, configuration or safety.
+- Ask one independent question per turn. Explain why it matters and give a recommendation when evidence supports one.
+- Record each answer as ANSWERED, INFERRED, DEFAULTED, SKIPPED or OPEN. Reuse answers and never restart the interview unnecessarily.
+- If a clarification is required, ask about that answer only. Do not append the next question in the same message.
+- Do not treat a skipped optional preference as a blocker or as approval.
+- Summarise resolved choices in the final preview and wait for explicit approval before writes.
+
+A short decision prompt should look like:
+
+\`\`\`text
+DECISION 1 OF [N] · HOST SCOPE
+
+Which coding-agent host should this installation target?
+
+Recommended: [detected host], based on [evidence].
+1. [option] (recommended)
+2. [option]
+
+You can also describe a different setup.
+\`\`\`
+
 ## 5. Select resources
 
-Use registry/resources.yaml as the catalog. For each candidate, inspect its full content, status, portability, dependencies and source notes.
+Use registry/resources.yaml as the catalog. For each candidate, inspect its full content, status, portability, dependencies and source notes. Never describe a resource from its registry summary alone.
 
 Selection rules:
 - Include the compact global baseline unless it conflicts with stricter project rules.
@@ -72,11 +99,11 @@ Create a proposed selection matrix:
 
 ## 6. Present an installation plan
 
-Before writing files, tell the owner:
+Before writing files, use `templates/installation-preview.md` and `templates/resource-inventory.md`. Tell the owner:
 1. What project type you detected and the evidence used.
-2. Which resources you propose to install and why.
+2. Which resources you propose to install, what each actually contains, why it is relevant and what depends on it.
 3. What existing instructions overlap or conflict.
-4. Which files will be created.
+4. Which files will be created, with a short explanation of each file's contents and role.
 5. Which existing files, if any, need a proposed additive edit.
 6. Which capabilities are unsupported by the host.
 7. The Foundry release tag or exact source commit.
@@ -142,14 +169,14 @@ Check:
 - No secrets or unrelated files were copied.
 - The selected host can actually load generated instruction/skill/command formats.
 
-Report exact checks and results. If native host loading cannot be tested, label it NOT VERIFIED.
+Report exact checks and results using `templates/verification-report.md` where useful. If native host loading cannot be tested, label it NOT VERIFIED.
 
 ## 9. Completion report
 
 Provide:
 - Foundry version/commit.
 - Project classification.
-- Installed resource list and rationale.
+- A resource inventory grouped by type. For every resource, show its human-readable name, type, purpose, key contents, relevance, dependencies/related commands, destination and actual outcome.
 - Files created and modified.
 - Existing instructions preserved.
 - Host integration status.

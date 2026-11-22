@@ -1,5 +1,12 @@
 # Project Progress Report
 
+```text
+╔══════════════════════════════════════════════════════════════════╗
+║ PROJECT PROGRESS REPORT                                         ║
+║ [PROJECT / MILESTONE]                                           ║
+╚══════════════════════════════════════════════════════════════════╝
+```
+
 **As of:** [date/time and timezone]  
 **Evidence checked:** [tests, builds, runtime state, reports, commit/ref]  
 **Evidence limitations:** [what could not be checked]
