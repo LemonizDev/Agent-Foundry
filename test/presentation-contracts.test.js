@@ -70,7 +70,7 @@ test("installation workflow requires sequential owner input and a described reso
   assert.match(workflow, /one independent question per turn/i);
   assert.match(workflow, /do not append the next question/i);
   assert.match(workflow, /templates\/resource-inventory\.md/);
-  assert.match(workflow, /what each actually contains/i);
+  assert.match(workflow, /what it actually contains/i);
 });
 
 test("Done remains the unified session-ending operation and Close stays a compatibility alias", async () => {
