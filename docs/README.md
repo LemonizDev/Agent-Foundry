@@ -42,8 +42,8 @@ A command describes an invocation contract; it does not prove that a host expose
 - [Done Command](../commands/done.md) — reusable resource curation from a productive session.
 
 ## Presentation and interaction
-- [Response Presentation Standard](standards/response-presentation.md) — visual hierarchy, ASCII diagrams, progress indicators, resource descriptions and terminal-safe output.
-- [Conversational Interaction Standard](standards/conversational-interaction.md) — sequential owner input, answer tracking and approval gates.
+- [Response Presentation Standard](../standards/response-presentation.md) — visual hierarchy, ASCII diagrams, progress indicators, resource descriptions and terminal-safe output.
+- [Conversational Interaction Standard](../standards/conversational-interaction.md) — sequential owner input, answer tracking and approval gates.
 - [Command Catalog](COMMAND_CATALOG.md) — commands grouped by project lifecycle and mapped to canonical output templates.
 
 ## Author and contribute

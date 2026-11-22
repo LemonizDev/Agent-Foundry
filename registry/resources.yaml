@@ -652,7 +652,7 @@ resources:
     status: draft
     portability: adaptable
   - id: resource-inventory
-    description: "Explains every discovered or installed resource by name, type, purpose, contents, relevance, dependencies, destination and actual state."
+    description: "Explains every discovered, installed or curated resource by name, type, purpose, contents, relevance, dependencies, destination and actual state."
     type: template
     path: templates/resource-inventory.md
     version: 0.1.0

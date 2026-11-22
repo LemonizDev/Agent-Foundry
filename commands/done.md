@@ -48,7 +48,7 @@ Report whether resources were accepted, their types and destinations, the files 
 
 ## Presentation
 
-Follow `standards/response-presentation.md` and `standards/conversational-interaction.md`. Use `templates/resource-inventory.md and templates/session-handoff.md` as the canonical layout.
+Follow `standards/response-presentation.md` and `standards/conversational-interaction.md`. Use `templates/resource-inventory.md` and `templates/session-handoff.md` as the canonical layouts.
 
 Identify each accepted resource by name, type, purpose, contents, destination and verification outcome. Preserve the existing acceptance threshold and no-empty-output rule. Preserve the command's procedure, permissions and required evidence fields.
 ## Output

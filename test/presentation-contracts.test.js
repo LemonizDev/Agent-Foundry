@@ -25,6 +25,9 @@ test("every registered command has a presentation contract and matching dependen
     assert.deepEqual(metadata.dependencies ?? [], resource.dependencies ?? [], "dependency drift: " + resource.id);
     assert.match(markdown, /^## Presentation$/m, "missing presentation contract: " + resource.id);
     assert.match(markdown, /standards\/response-presentation\.md/, "missing shared presentation standard: " + resource.id);
+    assert.match(markdown, /standards\/conversational-interaction\.md/, "missing shared interaction standard: " + resource.id);
+    assert.ok((metadata.dependencies ?? []).includes("response-presentation"), "missing presentation dependency: " + resource.id);
+    assert.ok((metadata.dependencies ?? []).includes("conversational-interaction"), "missing interaction dependency: " + resource.id);
     for (const dependency of resource.dependencies ?? []) {
       assert.ok(byId.has(dependency), resource.id + " references missing dependency " + dependency);
     }
@@ -89,5 +92,5 @@ test("command catalog documents the full lifecycle and canonical template map", 
   for (const command of ["/audit", "/implement", "/debug", "/review", "/verify", "/delegate", "/progress-report", "/next-task", "/project-health", "/resume", "/done", "/campaign-status", "contribute", "/settings", "/models edit", "/models explain", "/models test", "/teach-implementation"]) {
     assert.ok(catalog.includes(command), "command missing from catalog: " + command);
   }
-  assert.match(catalog, //close.*legacy compatibility alias for.*/done/i);
+  assert.ok(catalog.includes('Legacy compatibility alias for `/done`'));
 });
