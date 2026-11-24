@@ -13,7 +13,7 @@
 - `/done` command and Session Resource Curation skill to classify, validate and store reusable project artefacts from productive chat sessions, rejecting empty sessions.
 
 ### Changed
-- Clarified the distinction between `/close` (durable context continuity) and `/done` (reusable resource extraction).
+- Unified `/close`, `/close session` and `/close chat` as deprecated compatibility aliases for `/done`; the single `/done` operation preserves durable context and curates reusable resources.
 
 ### Added
 - README Maker skill for iterative landing-page design, nested feature navigation, visual hierarchy, accessibility and content validation.
@@ -28,6 +28,14 @@
 - Updated bootstrap and user-guide instructions for multi-host setup.
 
 This file records user-visible changes by release.
+
+### Presentation and interaction
+- Added universal presentation and conversational interaction standards for structured output and sequential owner input.
+- Added reusable report templates for audits, installation previews, implementation plans, verification, diagnostics, resource inventories, decisions and session handoffs.
+- Mapped every command to a canonical presentation contract, including `/done`, campaign status and contribution discovery.
+- Visually refined existing report and state templates while preserving their fields and information models, including the established progress-report structure.
+- Updated installation and management guidance to ask one consequential question per turn and explain resources by name, purpose and actual contents.
+- Added regression tests for command presentation contracts, dependency alignment, sequential installation input and progress-template preservation.
 
 ## 0.6.0 — 2026-11-20
 

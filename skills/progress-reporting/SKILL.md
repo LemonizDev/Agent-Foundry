@@ -2,9 +2,12 @@
 id: progress-reporting
 name: Evidence-Based Progress Reporting
 type: skill
-version: 0.1.0
+version: 0.2.0
 portability: adaptable
 status: draft
+dependencies:
+  - response-presentation
+  - progress-report-template
 sources:
   - repository: LemonizDev/dhan-chatgpt-connector
     ref: foundation/final-trader-architecture
@@ -52,6 +55,10 @@ Use when the project owner asks for progress, status, completion percentage, mil
 6. Next small step
 
 The exact sections may be adapted to the project. The source Dhan report uses six fixed sections and ASCII bars; that presentation is a proven project-specific format, not a universal requirement.
+
+## Presentation
+
+Use the existing `templates/progress-report-template.md` when available and follow `standards/response-presentation.md` for visual hierarchy. Presentation refinements must preserve the report's established information model, required fields and evidence semantics. Do not replace its goal-versus-today comparison, workstream detail, safety gates or next-step reporting with a generic progress bar.
 
 ## Honesty rules
 

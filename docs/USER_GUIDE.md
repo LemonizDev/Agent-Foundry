@@ -8,6 +8,12 @@ Open the coding agent in your project and ask it to install Agent Foundry from t
 
 Installation depends on the host's repository access and filesystem tools. If those are unavailable, make the repository source available using the host's supported workflow. The agent must report this limitation instead of pretending it fetched files.
 
+## 1A. What to expect during installation
+
+The agent starts with read-only discovery. It inspects existing instructions, architecture, tests, conventions and host support before asking for information. If owner input is required, it asks one consequential question per turn, records the answer and continues from the next unresolved decision. It does not send a batch questionnaire or ask for facts already present in the repository.
+
+Before writing, the agent presents the complete plan: each selected resource by name and type, what it actually contains, why it is relevant, dependencies, destination paths, existing-file changes, conflicts and verification. It waits for explicit approval. After installation, it reports each resource by name, purpose, contents and actual outcome, not just a category label or filename.
+
 ## 2. Managing Foundry in chat
 
 Use natural language: "Show my Foundry configuration", "Make reviews stricter", "Show available Foundry resources", "Update Foundry", "Check my Foundry setup" or "Remove Foundry from this project".
@@ -52,7 +58,7 @@ Foundry provides portable assignment, recovery and campaign-state contracts. Ask
 
 ## 9. End a session and preserve reusable resources
 
-Use `/close` to preserve durable project context such as requirements, decisions, verified lessons and current state. Use `/done` when the conversation produced a reusable project artefact worth keeping. `/done` classifies it as a command, skill, workflow, standard, profile, template, integration or documentation update, checks for duplicates and routes it to the canonical directory. If nothing meets the quality threshold, it rejects the operation and writes nothing. It does not save a transcript. See [Done command](../commands/done.md) and [Session Resource Curation](../skills/session-resource-curation/SKILL.md).
+Use `/done` at the end of a productive session. It is the unified session-ending operation: it preserves durable project context and separately inspects the conversation for reusable artefacts, classifies qualifying material, checks for duplicates and routes it to the canonical directory. If no artefact meets the quality threshold, it rejects resource extraction and writes no empty placeholder or transcript dump. `/close`, `/close session` and `/close chat` are deprecated compatibility aliases for the same `/done` procedure, not a separate context-only workflow. See [Done command](../commands/done.md), [legacy Close Session alias](../commands/close-session.md) and [Session Resource Curation](../skills/session-resource-curation/SKILL.md).
 
 ## 10. Safety boundary
 

@@ -2,13 +2,11 @@
 id: campaign-status
 name: Campaign Status
 type: command
-version: 0.1.0
+version: 0.2.0
 portability: adaptable
 status: draft
+dependencies: [multi-agent-campaign, campaign-state, response-presentation, conversational-interaction]
 aliases: [campaign-status, "campaign status", "orchestration status"]
-dependencies:
-  - multi-agent-campaign
-  - campaign-state
 ---
 
 # Campaign Status
@@ -25,6 +23,12 @@ Reconcile the actual state of a multi-agent campaign and report progress, blocke
 6. Update the campaign record only if the user asked for state maintenance and the host has write access; otherwise report proposed corrections.
 7. Recommend one highest-value next action.
 
+
+## Presentation
+
+Follow `standards/response-presentation.md` and `standards/conversational-interaction.md`. Use `templates/campaign-state.md` as the canonical layout.
+
+Preserve the campaign's existing state definitions, assignment ledger, blockers, verification ledger and next actions. Never calculate progress from agent messages or elapsed time. Preserve the command's procedure, permissions and required evidence fields.
 ## Response
 Show campaign goal and last reconciled timestamp; compact progress by state; an assignment table with ID, owner, state, dependency, last checkpoint and evidence; blockers and owner decisions; verification gaps; and one recommended next action.
 

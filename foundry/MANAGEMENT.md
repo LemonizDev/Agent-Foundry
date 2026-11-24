@@ -2,9 +2,15 @@
 id: foundry-management
 name: Agent Foundry Management
 type: management
-version: 0.2.0
+version: 0.3.0
 portability: universal
 status: draft
+dependencies:
+  - foundry-settings-spec
+  - foundry-response-templates
+  - contribution-discovery
+  - response-presentation
+  - conversational-interaction
 ---
 
 # Agent Foundry Management
@@ -18,7 +24,9 @@ Consult this file only when the user makes a Foundry management request: setting
 
 Companion files:
 - foundry/SETTINGS_SPEC.md — authoritative settings definitions.
-- foundry/RESPONSE_TEMPLATES.md — composition guidance for management responses.
+- foundry/RESPONSE_TEMPLATES.md — concrete visual management response contracts.
+- standards/response-presentation.md — visual hierarchy and terminal-safe output.
+- standards/conversational-interaction.md — sequential owner input and approval gates.
 - integrations/README.md — host-specific file conventions.
 
 ## 1. Discovery
@@ -31,7 +39,7 @@ When a Foundry management request arrives, establish the actual state first:
 6. Detect missing/malformed state, hash drift and broken host pointers.
 7. Distinguish Foundry-managed files from user-owned files. Unlisted files are user-owned.
 
-Report only state actually inspected. Never fabricate versions, resources or settings.
+Report only state actually inspected. Inspect the full content of any resource you describe. Name each resource, explain its purpose and actual contents, and never use a bare type label or filename as the complete description.
 
 ## 2. Settings
 Follow the /settings contract in the installed commands/settings.md, backed by foundry/SETTINGS_SPEC.md.
@@ -49,10 +57,11 @@ For "Install Agent Foundry in this project":
 2. Inspect the official source repository. Prefer a tagged release; otherwise record the exact commit SHA. If the host cannot fetch source, state the limitation and ask for a local checkout or archive.
 3. Recommend the smallest useful set: compact core, management files, settings and only project-relevant resources.
 4. Detect existing instructions and conflicts. Never replace an existing AGENTS.md, CLAUDE.md or equivalent.
-5. Present exact proposed files, skipped resources, conflicts and source revision. Wait for approval before writing.
-6. Create only approved files and minimal host-native pointers.
-7. Record source identity, selected resources, versions, paths and ownership hashes in the manifest.
-8. Verify selected files, manifest hashes and approved pointers; report what could not be verified.
+5. Resolve remaining owner decisions using `standards/conversational-interaction.md`: ask one consequential question per turn, retain each answer and do not repeat answered questions.
+6. Present the installation preview using `templates/installation-preview.md` and the resource inventory using `templates/resource-inventory.md`. Explain every selected resource's purpose, contents, relevance, dependencies and destination. Show a described file tree and exact additive edits. Wait for explicit approval before writing.
+7. Create only approved files and minimal host-native pointers.
+8. Record source identity, selected resources, versions, paths and ownership hashes in the manifest.
+9. Verify selected files, manifest hashes and approved pointers; report what could not be verified.
 
 Do not install the entire registry by default.
 
@@ -60,8 +69,9 @@ Do not install the entire registry by default.
 For "show available Foundry resources":
 1. Read the registry and filter to resources relevant to the current project/task.
 2. Check whether equivalent capabilities already exist locally.
-3. Show a compact grouped shortlist, purpose, dependencies and what each resource adds.
-4. Do not copy resources until selected and approved.
+3. Inspect the actual content of each relevant candidate. Show its human-readable name, type, purpose, key contents, project relevance, dependencies and related commands.
+4. Ask one focused question at a time if owner selection is needed; do not batch unrelated decisions.
+5. Do not copy resources until selected and approved.
 
 ## 5. Contribution discovery
 Trigger on explicit requests such as "contribute", "I'd like to contribute", "help me contribute to Agent Foundry", or "I have skills/instructions others could use".
@@ -95,7 +105,7 @@ Identify only files listed as Foundry-managed in the manifest. Preview removals,
 Inspect manifest, settings, host pointers, installed resource paths, hashes and broken references. Report evidence and proposed repairs. Do not perform destructive repairs without approval.
 
 ## 9. Response quality
-Use foundry/RESPONSE_TEMPLATES.md. Keep responses compact, factual and easy to scan. Prefer a short summary, a clear table, numbered choices and one targeted question. Where the host supports Markdown collapsibles or structured UI, use them for detail; otherwise provide the same information as a concise numbered list. Never invent a UI capability.
+Follow `standards/response-presentation.md` and use the concrete layouts in `foundry/RESPONSE_TEMPLATES.md`. Use ASCII frames for concise summaries, diagrams for meaningful flows, progress bars only when measurement is defensible, and clear status labels. Keep layouts readable in narrow terminals and plain Markdown. Never force ordinary conversation into a report or invent a host UI capability. Every resource must be named and explained from its actual content.
 
 ## 10. Safety contract
 - Foundry does not grant tools or permissions.
@@ -104,4 +114,5 @@ Use foundry/RESPONSE_TEMPLATES.md. Keep responses compact, factual and easy to s
 - Never expose secrets or sensitive data.
 - Never silently overwrite user files.
 - Never claim host discovery, model routing, agent spawning or publication succeeded without evidence.
+- For multi-step work, ask one independent owner question per turn, record answers and wait for required approval. Do not treat silence or a skipped optional answer as approval.
 - Foundry is not a sandbox.

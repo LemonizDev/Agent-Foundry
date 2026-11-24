@@ -2,16 +2,15 @@
 id: teach-implementation
 name: Teach Implementation
 type: command
-version: 0.2.0
+version: 0.3.0
 status: draft
+dependencies: [implementation-explanation, response-presentation, conversational-interaction]
 portability: adaptable
 sources:
   - repository: LemonizDev/dhan-chatgpt-connector
     path: .kilo/commands/TEACHING_AFTER_IMPLEMENTATION.md
   - repository: LemonizDev/futuristic-lively-wallpaper
     path: rules/TEACHING_AFTER_IMPLEMENTATION.md
-dependencies:
-  - skills/implementation-explanation/SKILL.md
 ---
 
 # Teach Implementation
@@ -36,3 +35,9 @@ Keep it concise. Explain necessary technical terms. Never invent progress or imp
 ## Adaptation
 
 The source rule says this should run after every implementation response. Projects may enable it globally or selectively based on owner preference and response length. The teaching behaviour is portable; the exact response layout is configurable.
+
+## Presentation
+
+Follow `standards/response-presentation.md` and `standards/conversational-interaction.md`. Use `standards/response-presentation.md` as the canonical layout.
+
+Preserve the five required teaching elements. Use a compact before/after ASCII flow and truthful progress bar; explain three key points and one or two edge cases. Preserve the command's procedure, permissions and required evidence fields.

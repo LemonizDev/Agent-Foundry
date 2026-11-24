@@ -1,5 +1,12 @@
 # Campaign State: [campaign-id]
 
+```text
+╔══════════════════════════════════════════════════════════════════╗
+║ CAMPAIGN STATE                                                  ║
+║ [CAMPAIGN ID]                                                   ║
+╚══════════════════════════════════════════════════════════════════╝
+```
+
 - **Campaign:** [short name]
 - **Lead:** [agent/owner]
 - **Status:** PLANNING

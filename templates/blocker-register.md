@@ -1,5 +1,9 @@
 # Blocker Register
 
+```text
+┌─ BLOCKER REGISTER ──────────────────────────────────────────────
+```
+
 | ID | Opened | Blocker | Impact | Owner | Dependency / resolution condition | Status | Last checked |
 |---|---|---|---|---|---|---|---|
 | BLK-001 | YYYY-MM-DD | [Description] | [Impact] | [Owner] | [What must happen] | OPEN / IN_PROGRESS / RESOLVED | YYYY-MM-DD |

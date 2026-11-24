@@ -2,12 +2,11 @@
 id: contribute
 name: Contribute to Agent Foundry
 type: command
-version: 0.1.0
+version: 0.2.0
 portability: adaptable
 status: draft
+dependencies: [contribution-discovery, resource-inventory, decision-prompt, response-presentation, conversational-interaction]
 aliases: [contribute, "I'd like to contribute"]
-dependencies:
-  - contribution-discovery
 ---
 
 # Contribute to Agent Foundry
@@ -32,6 +31,12 @@ Follow skills/contribution-discovery/SKILL.md.
 7. Draft only the resources the user selects.
 8. Show proposed files and validation gaps. Obtain approval before external publication.
 
+
+## Presentation
+
+Follow `standards/response-presentation.md` and `standards/conversational-interaction.md`. Use `templates/resource-inventory.md and templates/decision-prompt.md` as the canonical layout.
+
+Present a descriptive candidate shortlist and ask one candidate-specific question. Do not draft or publish unselected candidates. Preserve the command's procedure, permissions and required evidence fields.
 ## Output
 A candidate shortlist first; selected resource drafts and an exact change summary only after the user chooses.
 

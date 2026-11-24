@@ -85,7 +85,7 @@ For a project with context problems, consider these existing Foundry resources w
 - `repository-audit` for a read-only evidence-based map of architecture, context sources, quality controls and risks.
 - `documentation-maintenance` for canonical-source selection, navigation, duplication cleanup and keeping docs aligned with verified implementation.
 - `context-management` for durable context boundaries and progressive disclosure.
-- `session-learning` and `close-session` for preserving useful decisions without transcript dumps.
+- `session-learning` and `/done` for preserving useful decisions and curating reusable artefacts without transcript dumps (`/close` is a deprecated compatibility alias).
 
 These are candidate resources, not an automatic bundle. The documentation-maintenance skill is a procedure, not a dedicated autonomous specialist agent. The host may assign it to a suitable agent/profile only if that capability exists.
 
@@ -115,9 +115,37 @@ Use the host-roster-onboarding skill. Identify the active host and version from 
 
 Plan one shared project-local Foundry resource set and host-specific pointers/adapters for the selected hosts. Distinguish project-local configuration from global app settings. Never edit global configuration or create multiple root instruction files silently. Show the exact per-host plan and obtain approval before writing. Verify each selected host separately and report unavailable hosts as pending.
 
+## 4D. Conduct the owner interview
+
+Follow `standards/conversational-interaction.md` whenever installation requires owner input.
+
+- Finish read-only discovery, context-health assessment, first-run planning and host-roster discovery before asking questions.
+- Resolve facts already available in project files or the owner's request; never ask the owner to repeat them.
+- Ask only unresolved decisions that materially affect resource selection, host compatibility, configuration or safety.
+- Ask one independent question per turn. Explain why it matters and give a recommendation when evidence supports one. Then wait for the answer.
+- Record answers as ANSWERED, INFERRED, DEFAULTED, SKIPPED or OPEN. Reuse them and do not restart the interview unnecessarily.
+- If an answer is ambiguous, ask one focused clarification about that answer only. Do not append the next question in the same message.
+- Optional preferences may be skipped. A skipped answer is not approval.
+- Summarise resolved choices in the installation preview and wait for explicit approval before writes.
+
+Example:
+
+\`\`\`text
+DECISION 2 OF [N] · HOST SCOPE
+
+Which additional coding-agent hosts should this project support?
+
+Recommended: [detected host only], based on [evidence].
+1. Current host only (recommended)
+2. Current host + other hosts
+3. Host-neutral context files only
+
+You can also describe a different setup.
+\`\`\`
+
 ## 5. Select resources
 
-Use registry/resources.yaml as the catalog. For each candidate, inspect its full content, status, portability, dependencies and source notes.
+Use registry/resources.yaml as the catalog. For each candidate, inspect its full content, status, portability, dependencies and source notes. Never describe a resource from its registry summary alone.
 
 Selection rules:
 - Include the compact global baseline unless it conflicts with stricter project rules.
@@ -132,19 +160,19 @@ Selection rules:
 
 Create a proposed selection matrix:
 
-| Resource | Why relevant | Destination | Status | Existing equivalent/conflict |
+| Resource name and type | Actual purpose and contents | Why relevant | Dependencies / commands | Destination | Status / conflict |
 |---|---|---|---|---|
 
 ## 6. Present an installation plan
 
-Before writing files, tell the owner:
+Before writing files, use `templates/installation-preview.md` and `templates/resource-inventory.md`. Tell the owner:
 1. What project type you detected and the evidence used.
-2. Which resources you propose to install and why.
-3. What existing instructions overlap or conflict.
-4. Which files will be created.
+2. Every proposed resource by human-readable name and type, what it actually contains, why it is relevant and what depends on it.
+3. What existing instructions overlap or conflict and how they will be preserved.
+4. Which files will be created, with a short explanation of each file's purpose.
 5. Which existing files, if any, need a proposed additive edit.
-6. Which capabilities are unsupported by the host.
-7. The Foundry release tag or exact source commit.
+6. Which capabilities are unsupported or unverified by the host.
+7. The Foundry release tag or exact source commit and verification plan.
 
 Wait for owner approval before changing files.
 
@@ -214,7 +242,7 @@ Report exact checks and results. If native host loading cannot be tested, label 
 Provide:
 - Foundry version/commit.
 - Project classification.
-- Installed resource list and rationale.
+- A resource inventory grouped by type. For every resource, show its name, type, purpose, key contents, relevance, dependencies/related commands, destination and actual outcome.
 - Files created and modified.
 - Existing instructions preserved.
 - Host integration status.

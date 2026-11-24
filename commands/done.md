@@ -2,14 +2,13 @@
 id: done
 name: Done - Curate Session Resources
 type: command
-version: 0.2.0
+version: 0.3.0
 portability: adaptable
 status: draft
+dependencies: [session-learning, resource-inventory, session-handoff, response-presentation, conversational-interaction]
 aliases:
   - /done
   - done
-dependencies:
-  - skills/session-learning/SKILL.md
 ---
 
 # Done
@@ -46,6 +45,12 @@ The invocation authorises justified project-local context and resource updates w
 
 Report whether resources were accepted, their types and destinations, the files changed, and verification results. The command prepares the project for a clean stop; it cannot close the chat UI unless the host exposes a tested session-control capability. The user may close the chat manually.
 
+
+## Presentation
+
+Follow `standards/response-presentation.md` and `standards/conversational-interaction.md`. Use `templates/resource-inventory.md` and `templates/session-handoff.md` as the canonical layouts.
+
+Identify each accepted resource by name, type, purpose, contents, destination and verification outcome. Preserve the existing acceptance threshold and no-empty-output rule. Preserve the command's procedure, permissions and required evidence fields.
 ## Output
 
 - Accepted resources and classifications, or explicit rejection.

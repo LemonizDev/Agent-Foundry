@@ -1,5 +1,9 @@
 # Assignment: [stable-id]
 
+```text
+┌─ DELEGATION ASSIGNMENT ─────────────────────────────────────────
+```
+
 - **Parent task:** [id]
 - **Status:** PENDING
 - **Assigned role:** [role]
